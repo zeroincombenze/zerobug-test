@@ -1,8 +1,14 @@
 
-==================================
-|Zeroincombenze| zerobug-test 10.0
-==================================
-|Build Status| |Codecov Status| |license gpl| |Try Me|
+=======================
+|icon| midea 10.0.0.1.0
+=======================
+
+
+**z0bug_odoo test suite**
+
+.. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/10.0/midea/static/description/icon.png
+
+|Maturity| |Build Status| |Codecov Status| |license gpl| |Try Me|
 
 
 .. contents::
@@ -11,22 +17,31 @@
 Overview / Panoramica
 =====================
 
-|en| Odoo module examples
+|en| z0bug_odoo test suite
+==========================
+
+This module has no specific function for End-user.
+
+The purpose of this test module is just validate the z0bug_odoo package.
+
+The tests/test_midea file executes following unit tests:
+
+* Import z0bug_odoo package -> validate the python package
+* test_common.SingleTransactionCase -> validate test class
+* create_id() function -> test result
+* browse_rec() function -> excpected result
+* write_rec() function -> test result by browsing again
 
 
-|it| Esempi di moduli Odoo
+|
 
-Avaiable Addons / Moduli disponibili
-------------------------------------
+|it| suite di test z0bug_odoo
+=============================
 
-+-------+------------+------------+----------------------------------------------------------------------------------+
-| Name  | Version    | OCA Ver.   | Description / Descrizione                                                        |
-+-------+------------+------------+----------------------------------------------------------------------------------+
-| midea | 10.0.0.1.0 | |no_check| | Odoo Module Example                                                              |
-+-------+------------+------------+----------------------------------------------------------------------------------+
+Modulo a scopo tecnico fornito soltanto con documentazione in inglese.
 
-
-
+|
+|
 
 Getting started / Come iniziare
 ===============================
@@ -34,13 +49,7 @@ Getting started / Come iniziare
 |Try Me|
 
 
-Prerequisites / Prerequisiti
-----------------------------
-
-
-* python 2.7+ (best 2.7.5+)
-* postgresql 9.2+ (best 9.5)
-
+|
 
 Installation / Installazione
 ----------------------------
@@ -71,6 +80,13 @@ Installation / Installazione
     odoo_install_repository zerobug-test -b 10.0 -O zero
     sudo manage_odoo requirements -b 10.0 -vsy -o /opt/odoo/10.0
 
+From UI: go to:
+
+* |menu| Setting > Activate Developer mode 
+* |menu| Apps > Update Apps List
+* |menu| Setting > Apps |right_do| Select **midea** > Install
+
+|
 
 Upgrade / Aggiornamento
 -----------------------
@@ -89,14 +105,23 @@ Upgrade / Aggiornamento
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
+From UI: go to:
+
+* |menu| Setting > Activate Developer mode
+* |menu| Apps > Update Apps List
+* |menu| Setting > Apps |right_do| Select **midea** > Update
+
+|
 
 Support / Supporto
 ------------------
 
 
-|Zeroincombenze| This project is mainly maintained by the `SHS-AV s.r.l. <https://www.zeroincombenze.it/>`__
+|Zeroincombenze| This module is maintained by the `SHS-AV s.r.l. <https://www.zeroincombenze.it/>`__
 
 
+|
+|
 
 Get involved / Ci mettiamo in gioco
 ===================================
@@ -111,10 +136,13 @@ Proposals for enhancement
 -------------------------
 
 
-|en| If you have a proposal to change on oh these modules, you may want to send an email to <cc@shs-av.com> for initial feedback.
+|en| If you have a proposal to change this module, you may want to send an email to <cc@shs-av.com> for initial feedback.
 An Enhancement Proposal may be submitted if your idea gains ground.
 
-|it| Se hai proposte per migliorare uno dei moduli, puoi inviare una mail a <cc@shs-av.com> per un iniziale contatto.
+|it| Se hai proposte per migliorare questo modulo, puoi inviare una mail a <cc@shs-av.com> per un iniziale contatto.
+
+|
+|
 
 Credits / Didascalie
 ====================
@@ -124,6 +152,23 @@ Copyright
 
 Odoo is a trademark of `Odoo S.A. <https://www.odoo.com/>`__ (formerly OpenERP)
 
+
+
+|
+
+Authors / Autori
+----------------
+
+* `SHS-AV s.r.l. <https://www.zeroincombenze.it/>`__
+
+
+Contributors / Collaboratori
+----------------------------
+
+* Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
+
+
+|
 
 ----------------
 
@@ -143,8 +188,9 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 |
 
+This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2019-10-25
+Last Update / Ultimo aggiornamento: 2019-10-26
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status

@@ -6,7 +6,7 @@
 #
 {
     'name': 'midea',
-    'summary': 'Odoo Module Example',
+    'summary': 'z0bug_odoo test suite',
     'version': '10.0.0.1.0',
     'category': 'Generic Modules/Accounting',
     'author': 'SHS-AV s.r.l.',
