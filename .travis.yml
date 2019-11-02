@@ -29,6 +29,7 @@ addons:
 #      https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
     packages:
       - expect-dev
+    chrome: stable
 
 before_install:
 # Use Zeroincombenze(R) tools

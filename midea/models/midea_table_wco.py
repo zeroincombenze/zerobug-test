@@ -6,8 +6,8 @@
 from odoo import models, fields
 
 
-class MideaPartner(models.Model):
-    _name = 'midea.partner'
+class MideaNoCompany(models.Model):
+    _name = 'midea.table_wco'
 
     name = fields.Char('name',
                        required=True,
@@ -20,3 +20,5 @@ class MideaPartner(models.Model):
                              required=True,
                              readonly=True,
                              default='draft')
+    company_id = fields.Many2one('res.company',
+                                 string='Company')

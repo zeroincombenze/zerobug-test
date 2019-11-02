@@ -3,7 +3,7 @@ z0bug_odoo test suite
 
 This module has no specific function for End-user.
 
-The purpose of this test module is just validate the z0bug_odoo package.
+It is a just a Odoo module example baut tha main purpose of this module is to validate the z0bug_odoo package.
 
 The tests/test_midea file executes following unit tests:
 

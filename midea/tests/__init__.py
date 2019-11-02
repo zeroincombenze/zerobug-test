@@ -4,4 +4,5 @@
 #
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 #
-from . import test_midea
+from . import test_midea_01
+from . import test_midea_02
