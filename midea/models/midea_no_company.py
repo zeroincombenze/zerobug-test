@@ -3,20 +3,22 @@
 #
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-from odoo import models, fields
+from openerp.osv import orm, fields
 
 
-class MideaNoCompany(models.Model):
+class MideaNoCompany(orm.Model):
     _name = 'midea.no_company'
 
-    name = fields.Char('name',
-                       required=True,
-                       translate=True)
-    active = fields.Boolean('Active',
-                            default=True)
-    state = fields.Selection([('draft', 'Draft'),
-                              ('confirmed', 'Confirmed')],
-                             'State',
-                             required=True,
-                             readonly=True,
-                             default='draft')
+    _columns = {
+        'name': fields.char('Name',
+                            required=True,
+                            translate=True),
+        'active': fields.boolean('Active',
+                                 default=True),
+        'state': fields.selection([('draft', 'Draft'),
+                                   ('confirmed', 'Confirmed')],
+                                  'State',
+                                  required=True,
+                                  readonly=True,
+                                  default='draft')
+    }

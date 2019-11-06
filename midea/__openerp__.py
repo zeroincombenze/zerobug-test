@@ -2,12 +2,12 @@
 #
 # Copyright 2018-19 - SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
 {
     'name': 'midea',
     'summary': 'z0bug_odoo test suite',
-    'version': '10.0.0.1.1',
+    'version': '7.0.0.1.1',
     'category': 'Generic Modules/Accounting',
     'author': 'SHS-AV s.r.l.',
     'website': 'https://www.zeroincombenze.it/',
@@ -19,3 +19,4 @@
     ],
     'installable': True,
 }
+
