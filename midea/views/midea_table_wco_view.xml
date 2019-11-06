@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
+
         <record model="ir.ui.view" id="midea.table_wco">
             <field name="name">Midea tabel without company</field>
             <field name="model">midea.table_wco</field>
@@ -29,5 +29,4 @@
                   action="midea.action_test"
                   parent="menu_midea_table_wco" sequence="60"/>
 
-    </data>
-</openerp>
+</odoo>

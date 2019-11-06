@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <record model="ir.ui.view" id="midea.no_company">
             <field name="name">Midea tabel without company</field>
             <field name="model">midea.no_company</field>
@@ -29,5 +28,4 @@
                   action="midea.action_test"
                   parent="menu_midea_no_company" sequence="50"/>
 
-    </data>
-</openerp>
+</odoo>
