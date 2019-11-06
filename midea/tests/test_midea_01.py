@@ -20,7 +20,6 @@ class TestMidea(test_common.SingleTransactionCase):
 
     def setUp(self):
         super(TestMidea, self).setUp()
-        # self.set_test_company()
 
     def test_midea_no_company(self):
         model_name = 'midea.no_company'
@@ -28,7 +27,7 @@ class TestMidea(test_common.SingleTransactionCase):
             'name': self.MIDEA_NO_COMPANY_NAME,
             'state': self.MIDEA_NO_COMPANY_STATE,
         }
-        # Test the create function
+        # Test the <create> function
         self.midea_no_company_id = self.create_id(
             model_name, vals)
         self.assertIsInstance(
@@ -37,11 +36,13 @@ class TestMidea(test_common.SingleTransactionCase):
             'z0bug_odoo.create_id does not return an integer id')
         self.assertTrue(self.midea_no_company_id,
                         'z0bug_odoo.create_id does not return a valid id')
-        # Now test browse function
+        # Now test the <browse> function
         rec = self.browse_rec(model_name, self.midea_no_company_id)
         self.assertEqual(rec.name, self.MIDEA_NO_COMPANY_NAME)
-        # Now test write_rec functon
+        self.assertEqual(rec.state, self.MIDEA_NO_COMPANY_STATE)
+        # Now test the <write_rec> functon
         self.write_rec(model_name, self.midea_no_company_id,
                       {'name': self.MIDEA_NO_COMPANY_ALTER_NAME})
         rec = self.browse_rec(model_name, self.midea_no_company_id)
         self.assertEqual(rec.name, self.MIDEA_NO_COMPANY_ALTER_NAME)
+        self.assertEqual(rec.state, self.MIDEA_NO_COMPANY_STATE)
