@@ -2,7 +2,7 @@
 #
 # Copyright 2018-19 - SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 #
 # The purpose of this test module is validate the z0bug_odoo package.
 #
@@ -54,3 +54,4 @@ class TestMidea(test_common.SingleTransactionCase):
         self.assertEqual(rec.name, self.MIDEA_TABLE_WCO_ALTER_NAME)
         self.assertEqual(rec.state, self.MIDEA_TABLE_WCO_STATE)
         self.assertEqual(rec.company_id.id, self.company_id)
+

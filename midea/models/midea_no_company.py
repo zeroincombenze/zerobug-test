@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright 2016-19 Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 #
 from openerp import models, fields
 
@@ -20,3 +20,4 @@ class MideaNoCompany(models.Model):
                              required=True,
                              readonly=True,
                              default='draft')
+
