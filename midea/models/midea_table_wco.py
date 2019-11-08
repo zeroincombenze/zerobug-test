@@ -3,25 +3,22 @@
 #
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-from openerp.osv import orm, fields
+from openerp import models, fields
 
 
-class MideaNoCompany(orm.Model):
+class MideaNoCompany(models.Model):
     _name = 'midea.table_wco'
 
-    _columns = {
-        'name': fields.char('Name',
-                        required=True,
-                        translate=True),
-        'active': fields.boolean('Active',
-                                 default=True),
-        'state': fields.selection([('draft', 'Draft'),
-                                   ('confirmed', 'Confirmed')],
-                                  'State',
-                                  required=True,
-                                  readonly=True,
-                                  default='draft'),
-        'company_id': fields.many2one('res.company',
-                                      string='Company'),
-    }
-
+    name = fields.Char('name',
+                       required=True,
+                       translate=True)
+    active = fields.Boolean('Active',
+                            default=True)
+    state = fields.Selection([('draft', 'Draft'),
+                              ('confirmed', 'Confirmed')],
+                             'State',
+                             required=True,
+                             readonly=True,
+                             default='draft')
+    company_id = fields.Many2one('res.company',
+                                 string='Company')

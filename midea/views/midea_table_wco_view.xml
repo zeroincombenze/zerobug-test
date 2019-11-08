@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
-        <record model="ir.ui.view" id="midea.table_wco">
-            <field name="name">Midea tabel without company</field>
-            <field name="model">midea.table_wco</field>
-            <field name="type">form</field>
-            <field name="priority" eval="16"/>
-            <field name="arch" type="xml">
+<data>
+
+    <record model="ir.ui.view" id="midea.table_wco">
+        <field name="name">Midea tabel without company</field>
+        <field name="model">midea.table_wco</field>
+        <field name="type">form</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
             <!-- view content: <form>, <tree>, <graph>, … -->
-                <form string="Midea form">
-                    <field name="name"/>
-                    <field name="active"/>
-                    <field name="state"/>
-                </form>
-            </field>
-        </record>
+            <form string="Midea form">
+                <field name="name"/>
+                <field name="active"/>
+                <field name="state"/>
+            </form>
+        </field>
+    </record>
 
-        <record id="midea.action_test" model="ir.actions.act_window">
-            <field name="name">My idea test record</field>
-            <field name="res_model">midea.table_wco</field>
-            <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="midea.table_wco"/>
-        </record>
+    <record id="midea.action_test" model="ir.actions.act_window">
+        <field name="name">My idea test record</field>
+        <field name="res_model">midea.table_wco</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="midea.table_wco"/>
+    </record>
 
-        <menuitem id="menu_midea_table_wco" name="My idea"
-                  parent="base.menu_administration" sequence="750" />
-        <menuitem id="menu_midea_table_wco_test" name="My idea test"
-                  action="midea.action_test"
-                  parent="menu_midea_table_wco" sequence="60"/>
+    <menuitem id="menu_midea_table_wco" name="My idea"
+              parent="base.menu_administration" sequence="750" />
+    <menuitem id="menu_midea_table_wco_test" name="My idea test"
+              action="midea.action_test"
+              parent="menu_midea_table_wco" sequence="60"/>
 
-    </data>
+</data>
 </openerp>
+

@@ -46,4 +46,3 @@ class TestMidea(test_common.SingleTransactionCase):
         rec = self.browse_rec(model_name, self.midea_no_company_id)
         self.assertEqual(rec.name, self.MIDEA_NO_COMPANY_ALTER_NAME)
         self.assertEqual(rec.state, self.MIDEA_NO_COMPANY_STATE)
-
