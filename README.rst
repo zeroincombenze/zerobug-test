@@ -1,6 +1,6 @@
 
 ==================================
-|Zeroincombenze| zerobug-test 10.0
+|Zeroincombenze| zerobug-test 12.0
 ==================================
 |Build Status| |Codecov Status| |license gpl| |Try Me|
 
@@ -22,7 +22,7 @@ Avaiable Addons / Moduli disponibili
 +-------+------------+------------+----------------------------------------------------------------------------------+
 | Name  | Version    | OCA Ver.   | Description / Descrizione                                                        |
 +-------+------------+------------+----------------------------------------------------------------------------------+
-| midea | 10.0.0.1.0 | |no_check| | Odoo Module Example                                                              |
+| midea | 12.0.10.0. | |no_check| | z0bug_odoo test suite                                                            |
 +-------+------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -38,8 +38,8 @@ Prerequisites / Prerequisiti
 ----------------------------
 
 
-* python 2.7+ (best 2.7.5+)
-* postgresql 9.2+ (best 9.5)
+* python 3.5+
+* postgresql 9.5+ (experimental 10.0+)
 
 
 Installation / Installazione
@@ -58,7 +58,7 @@ Installation / Installazione
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
-| /opt/odoo/10.0/zerobug-test/                                               |
+| /opt/odoo/12.0/zerobug-test/                                               |
 +----------------------------------------------------------------------------+
 
 ::
@@ -68,8 +68,8 @@ Installation / Installazione
     cd ./tools
     ./install_tools.sh -p
     source /opt/odoo/dev/activate_tools
-    odoo_install_repository zerobug-test -b 10.0 -O zero
-    sudo manage_odoo requirements -b 10.0 -vsy -o /opt/odoo/10.0
+    odoo_install_repository zerobug-test -b 12.0 -O zero
+    sudo manage_odoo requirements -b 12.0 -vsy -o /opt/odoo/12.0
 
 
 Upgrade / Aggiornamento
@@ -85,7 +85,7 @@ Upgrade / Aggiornamento
 
 ::
 
-    odoo_install_repository zerobug-test -b 10.0 -O zero -U
+    odoo_install_repository zerobug-test -b 12.0 -O zero -U
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
@@ -144,12 +144,12 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2019-10-25
+Last Update / Ultimo aggiornamento: 2019-11-10
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
     :alt: Alfa
-.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=10.0
+.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=12.0
     :target: https://travis-ci.org/zeroincombenze/zerobug-test
     :alt: github.com
 .. |license gpl| image:: https://img.shields.io/badge/licence-LGPL--3-7379c3.svg
@@ -158,23 +158,23 @@ Last Update / Ultimo aggiornamento: 2019-10-25
 .. |license opl| image:: https://img.shields.io/badge/licence-OPL-7379c3.svg
     :target: https://www.odoo.com/documentation/user/9.0/legal/licenses/licenses.html
     :alt: License: OPL
-.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=10.0
-    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=10.0
+.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=12.0
+    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=12.0
     :alt: Coverage
-.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/10.0/graph/badge.svg
-    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/10.0
+.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/12.0/graph/badge.svg
+    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/12.0
     :alt: Codecov
-.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-10.svg
-    :target: https://wiki.zeroincombenze.org/en/Odoo/10.0/dev
+.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-12.svg
+    :target: https://wiki.zeroincombenze.org/en/Odoo/12.0/dev
     :alt: Technical Documentation
-.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-10.svg
-    :target: https://wiki.zeroincombenze.org/it/Odoo/10.0/man
+.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-12.svg
+    :target: https://wiki.zeroincombenze.org/it/Odoo/12.0/man
     :alt: Technical Documentation
-.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-10.svg
-    :target: https://erp10.zeroincombenze.it
+.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-12.svg
+    :target: https://erp12.zeroincombenze.it
     :alt: Try Me
-.. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/10.0/graph/badge.svg
-    :target: https://codecov.io/gh/OCA/zerobug-test/branch/10.0
+.. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/12.0/graph/badge.svg
+    :target: https://codecov.io/gh/OCA/zerobug-test/branch/12.0
     :alt: Codecov
 .. |Odoo Italia Associazione| image:: https://www.odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20126x56.png
    :target: https://odoo-italia.org
