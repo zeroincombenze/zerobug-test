@@ -5,6 +5,7 @@
 #
 # The purpose of this test module is validate the z0bug_odoo package.
 #
+from past.builtins import long
 import base64
 import os
 

@@ -9,7 +9,7 @@ cache:
     - $HOME/.cache/pip
 
 python:
-  - "2.7"
+  - "3.5"
 
 virtualenv:
   system_site_packages: true
@@ -54,7 +54,7 @@ env:
   global:
   - TRAVIS_DEBUG_MODE="2"
   - WKHTMLTOPDF_VERSION="0.12.4"
-  - VERSION="10.0" TESTS="0" LINT_CHECK="0" ODOO_TNLBOT="0"
+  - VERSION="11.0" TESTS="0" LINT_CHECK="0" ODOO_TNLBOT="0"
 
 
   matrix:
