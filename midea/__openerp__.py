@@ -7,7 +7,7 @@
 {
     'name': 'midea',
     'summary': 'z0bug_odoo test suite',
-    'version': '7.0.0.1.1',
+    'version': '6.0.0.1.1',
     'category': 'Generic Modules/Accounting',
     'author': 'Odoo Community Association (OCA), SHS-AV s.r.l.',
     'website': 'https://www.zeroincombenze.it/',
