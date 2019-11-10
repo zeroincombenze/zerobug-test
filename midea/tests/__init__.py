@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Copyright 2018-19 - SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
@@ -6,3 +5,4 @@
 #
 from . import test_midea_01
 from . import test_midea_02
+
