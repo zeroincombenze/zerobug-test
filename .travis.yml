@@ -38,8 +38,12 @@ addons:
       # - nodejs                          # Already in TravisCI
       # - npm                             # Already in TravisCI
       - python-dev
-      - zlib
+      - zlib1g
       - zlib1g-dev
+      # - build-essential                 # Already in TravisCI
+      # - curl                            # Already in TravisCI
+      # - nodejs                          # Already in TravisCI
+      # - npm                             # Already in TravisCI
     chrome: stable
 
 before_install:
