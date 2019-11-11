@@ -1,6 +1,6 @@
 
 ======================
-|icon| midea 7.0.0.1.1
+|icon| midea 7.0.0.1.2
 ======================
 
 
@@ -22,7 +22,29 @@ Overview / Panoramica
 
 This module has no specific function for End-user.
 
-It is a just a Odoo module example baut tha main purpose of this module is to validate the z0bug_odoo package.
+It is a just a Odoo module example useful to developers. It is possible to see the differences among different Odoo versions.
+Another purpose of this module is to validate the z0bug_odoo package.
+
+
+Developer info
+--------------
+
+There are two table in this module: one is indipendent from company, the other is company dependent.
+Here some difference among versions:
+
++-----------+------------------------------------------------------------------------------+
+| Parameter | Notes                                                                        |
++-----------+------------------------------------------------------------------------------+
+| Default   | Old api (6.1 and 7.0) use __default variable; new api ia attribute of field. |
++-----------+------------------------------------------------------------------------------+
+| xml tag   | From 10.0 root tab is <odoo>; before it was <openerp><data>                  |
++-----------+------------------------------------------------------------------------------+
+
+Look at how default values are declared in different Odoo versions.
+
+
+Test info
+---------
 
 The tests/test_midea file executes following unit tests:
 
@@ -31,6 +53,8 @@ The tests/test_midea file executes following unit tests:
 * create_id() function -> test result
 * browse_rec() function -> excpected result
 * write_rec() function -> test result by browsing again
+
+*Notice test source code is quite identical across Odoo versions*.
 
 
 |
@@ -188,7 +212,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2019-11-08
+Last Update / Ultimo aggiornamento: 2019-11-11
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status

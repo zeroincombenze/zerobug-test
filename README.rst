@@ -22,7 +22,7 @@ Avaiable Addons / Moduli disponibili
 +-------+------------+------------+----------------------------------------------------------------------------------+
 | Name  | Version    | OCA Ver.   | Description / Descrizione                                                        |
 +-------+------------+------------+----------------------------------------------------------------------------------+
-| midea | 7.0.0.1.1  | |no_check| | z0bug_odoo test suite                                                            |
+| midea | 7.0.0.1.3  | |no_check| | z0bug_odoo test suite                                                            |
 +-------+------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -144,7 +144,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2019-11-08
+Last Update / Ultimo aggiornamento: 2019-11-11
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status

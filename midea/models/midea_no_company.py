@@ -13,12 +13,15 @@ class MideaNoCompany(orm.Model):
         'name': fields.char('Name',
                             required=True,
                             translate=True),
-        'active': fields.boolean('Active',
-                                 default=True),
+        'active': fields.boolean('Active'),
         'state': fields.selection([('draft', 'Draft'),
-                                   ('confirmed', 'Confirmed')],
+                                   ('confirmed', 'Confirmed'),
+                                   ('deleted', 'Deleted')],
                                   'State',
-                                  required=True,
-                                  readonly=True,
-                                  default='draft')
+                                  readonly=True)
+    }
+
+    _defaults = {
+        'active': 1,
+        'state': 'draft',
     }

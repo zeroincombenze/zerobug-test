@@ -13,15 +13,21 @@ class MideaNoCompany(orm.Model):
         'name': fields.char('Name',
                         required=True,
                         translate=True),
-        'active': fields.boolean('Active',
-                                 default=True),
+        'active': fields.boolean('Active'),
         'state': fields.selection([('draft', 'Draft'),
-                                   ('confirmed', 'Confirmed')],
+                                   ('confirmed', 'Confirmed'),
+                                   ('deleted', 'Deleted')],
                                   'State',
-                                  required=True,
-                                  readonly=True,
-                                  default='draft'),
+                                  readonly=True),
         'company_id': fields.many2one('res.company',
                                       string='Company'),
     }
 
+    _defaults = {
+        'active': 1,
+        'state': 'draft',
+        'company_id': lambda self, cr, uid, ctx:
+            self.pool.get('res.company')._company_default_get(
+                cr, uid, 'midea.table_wco', context=ctx),
+
+    }
