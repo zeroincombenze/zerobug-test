@@ -1,6 +1,6 @@
 
 ======================
-|icon| midea 7.0.0.1.2
+|icon| midea 7.0.0.1.3
 ======================
 
 
@@ -29,16 +29,18 @@ Another purpose of this module is to validate the z0bug_odoo package.
 Developer info
 --------------
 
-There are two table in this module: one is indipendent from company, the other is company dependent.
+There are two tables in this module: one is indipendent from company, the other is company dependent.
 Here some difference among versions:
 
-+-----------+------------------------------------------------------------------------------+
-| Parameter | Notes                                                                        |
-+-----------+------------------------------------------------------------------------------+
-| Default   | Old api (6.1 and 7.0) use __default variable; new api ia attribute of field. |
-+-----------+------------------------------------------------------------------------------+
-| xml tag   | From 10.0 root tab is <odoo>; before it was <openerp><data>                  |
-+-----------+------------------------------------------------------------------------------+
++-----------+-----------------------------------------------------------------------------+
+| Parameter | Notes                                                                       |
++-----------+-----------------------------------------------------------------------------+
+| Default   | Old api (6.1 and 7.0) use _default variable; new api ia attribute of field. |
++-----------+-----------------------------------------------------------------------------+
+| xml tag   | From 10.0 root tab is <odoo>; before it was <openerp><data>                 |
++-----------+-----------------------------------------------------------------------------+
+
+
 
 Look at how default values are declared in different Odoo versions.
 
