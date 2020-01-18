@@ -12,17 +12,36 @@
 <p align="justify">
 This module has no specific function for End-user.
 </p><p align="justify">
-The purpose of this test module is just validate the z0bug_odoo package.
+It is a just a Odoo module example useful to developers. It is possible to see the differences among different Odoo versions.
+Another purpose of this module is to validate the z0bug_odoo package.
 </p><p align="justify">
-The tests/test_midea file executes following unit tests:
 </p><p align="justify">
-<ul>
-<li>Import z0bug_odoo package -&gt; validate the python package</li>
-<li>test_common.SingleTransactionCase -&gt; validate test class</li>
-<li>create_id() function -&gt; test result</li>
-<li>browse_rec() function -&gt; excpected result</li>
-<li>write_rec() function -&gt; test result by browsing again</li>
-</ul>
+<h2>z0bug_odoo test suite / suite di test z0bug_odoo</h2>
+</p><p align="justify">
+There are two table in this module: one is independent from company, the other is company dependent.
+Here some difference among versions:
+</p><p align="justify">
+<table style="width:100%; padding:2px; border-spacing:2px; text-align:left;"><tr>
+<td>Parameter</td><td>Notes</td>
+</tr><tr>
+<td>Default</td><td>Old api (6.1 and 7.0) use __default variable; new api is attribute of field.</td>
+</tr><tr>
+<td>xml tag</td><td>From 10.0 root tab is &lt;odoo&gt;; before it was &lt;openerp&gt;&lt;data&gt;</td>
+</tr><tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</tr></table>
 </p></p>
         </div>
         <div class="oe_span6">

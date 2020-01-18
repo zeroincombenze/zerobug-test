@@ -22,7 +22,7 @@ Avaiable Addons / Moduli disponibili
 +-------+------------+------------+----------------------------------------------------------------------------------+
 | Name  | Version    | OCA Ver.   | Description / Descrizione                                                        |
 +-------+------------+------------+----------------------------------------------------------------------------------+
-| midea | 10.0.0.1.0 | |no_check| | Odoo Module Example                                                              |
+| midea | 10.0.0.1.2 | |no_check| | z0bug_odoo test suite                                                            |
 +-------+------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -58,7 +58,7 @@ Installation / Installazione
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
-| /opt/odoo/10.0/zerobug-test/                                               |
+| /home/odoo/10.0/zerobug-test/                                              |
 +----------------------------------------------------------------------------+
 
 ::
@@ -144,7 +144,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2019-10-25
+Last Update / Ultimo aggiornamento: 2020-01-18
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status

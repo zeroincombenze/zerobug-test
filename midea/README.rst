@@ -1,6 +1,6 @@
 
 =======================
-|icon| midea 10.0.0.1.0
+|icon| midea 10.0.0.1.2
 =======================
 
 
@@ -22,7 +22,27 @@ Overview / Panoramica
 
 This module has no specific function for End-user.
 
-The purpose of this test module is just validate the z0bug_odoo package.
+It is a just a Odoo module example useful to developers. It is possible to see the differences among different Odoo versions.
+Another purpose of this module is to validate the z0bug_odoo package.
+
+
+Developer info
+--------------
+
+There are two table in this module: one is independent from company, the other is company dependent.
+Here some difference among versions:
+
++-----------+------------------------------------------------------------------------------+
+| Parameter | Notes                                                                        |
++-----------+------------------------------------------------------------------------------+
+| Default   | Old api (6.1 and 7.0) use __default variable; new api is attribute of field. |
++-----------+------------------------------------------------------------------------------+
+| xml tag   | From 10.0 root tab is <odoo>; before it was <openerp><data>                  |
++-----------+------------------------------------------------------------------------------+
+
+
+Test info
+---------
 
 The tests/test_midea file executes following unit tests:
 
@@ -31,6 +51,8 @@ The tests/test_midea file executes following unit tests:
 * create_id() function -> test result
 * browse_rec() function -> excpected result
 * write_rec() function -> test result by browsing again
+
+*Notice test source code is quite identical across Odoo versions*.
 
 
 |
@@ -67,7 +89,7 @@ Installation / Installazione
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
-| /opt/odoo/10.0/zerobug-test/                                               |
+| /home/odoo/10.0/zerobug-test/                                              |
 +----------------------------------------------------------------------------+
 
 ::
@@ -162,10 +184,12 @@ Authors / Autori
 * `SHS-AV s.r.l. <https://www.zeroincombenze.it/>`__
 
 
+
 Contributors / Collaboratori
 ----------------------------
 
 * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
+
 
 
 |
@@ -190,7 +214,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2019-10-26
+Last Update / Ultimo aggiornamento: 2020-01-18
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
