@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
         <record model="ir.ui.view" id="midea.no_company">
-            <field name="name">Midea tabel without company</field>
+            <field name="name">Midea table without company</field>
             <field name="model">midea.no_company</field>
             <field name="type">form</field>
             <field name="priority" eval="16"/>
