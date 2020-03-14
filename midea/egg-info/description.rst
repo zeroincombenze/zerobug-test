@@ -10,12 +10,16 @@ Another purpose of this module is to validate the z0bug_odoo package.
 Developer info
 --------------
 
-There are two tables in this module: one is indipendent from company, the other is company dependent.
+There are two table in this module: one is independent from company, the other is company dependent.
 Here some difference among versions:
 
-.. $include description_characters.csv
-
-Look at how default values are declared in different Odoo versions.
++-----------+------------------------------------------------------------------------------+
+| Parameter | Notes                                                                        |
++-----------+------------------------------------------------------------------------------+
+| Default   | Old api (6.1 and 7.0) use __default variable; new api is attribute of field. |
++-----------+------------------------------------------------------------------------------+
+| xml tag   | From 10.0 root tab is <odoo>; before it was <openerp><data>                  |
++-----------+------------------------------------------------------------------------------+
 
 
 Test info

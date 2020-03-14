@@ -58,7 +58,7 @@ Installation / Installazione
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
-| /opt/odoo/7.0/zerobug-test/                                                |
+| /home/odoo/7.0/zerobug-test/                                               |
 +----------------------------------------------------------------------------+
 
 ::
@@ -144,7 +144,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2019-11-11
+Last Update / Ultimo aggiornamento: 2020-03-14
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status

@@ -1,21 +1,24 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2018-19 - SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2018-20 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Contributions to development, thanks to:
+# * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
+#
+# License APGL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
 {
     'name': 'midea',
     'summary': 'z0bug_odoo test suite',
     'version': '7.0.0.1.3',
     'category': 'Generic Modules/Accounting',
-    'author': 'Odoo Community Association (OCA), SHS-AV s.r.l.',
+    'author': 'SHS-AV s.r.l.',
     'website': 'https://www.zeroincombenze.it/',
     'depends': ['base'],
     'data': [
         'views/midea_no_company_view.xml',
         'views/midea_table_wco_view.xml',
-        'views/midea_menu.xml',
+        # 'views/midea_menu.xml',
         'security/ir.model.access.csv',
     ],
     'installable': True,
