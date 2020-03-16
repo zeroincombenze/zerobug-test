@@ -1,9 +1,10 @@
 #
-# Copyright 2018-19 - SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2018-20 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+# Contributions to development, thanks to:
+# * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# The purpose of this test module is validate the z0bug_odoo package.
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
 from past.builtins import long
 import base64
@@ -46,4 +47,3 @@ class TestMidea(test_common.SingleTransactionCase):
         rec = self.browse_rec(model_name, self.midea_no_company_id)
         self.assertEqual(rec.name, self.MIDEA_NO_COMPANY_ALTER_NAME)
         self.assertEqual(rec.state, self.MIDEA_NO_COMPANY_STATE)
-

@@ -1,12 +1,12 @@
 
-=======================
-|icon| midea 10.0.0.1.1
-=======================
+=======================================
+|icon| Make Test Environment 10.0.0.1.0
+=======================================
 
 
-**z0bug_odoo test suite**
+**Create or update test environment**
 
-.. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/12.0/midea/static/description/icon.png
+.. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/10.0/mk_test_env/static/description/icon.png
 
 |Maturity| |Build Status| |Codecov Status| |license gpl| |Try Me|
 
@@ -17,50 +17,19 @@
 Overview / Panoramica
 =====================
 
-|en| z0bug_odoo test suite
-==========================
+|en| Create test environment
+----------------------------
 
-This module has no specific function for End-user.
-
-It is a just a Odoo module example useful to developers. It is possible to see the differences among different Odoo versions.
-Another purpose of this module is to validate the z0bug_odoo package.
-
-
-Developer info
---------------
-
-There are two table in this module: one is independent from company, the other is company dependent.
-Here some difference among versions:
-
-+-----------+------------------------------------------------------------------------------+
-| Parameter | Notes                                                                        |
-+-----------+------------------------------------------------------------------------------+
-| Default   | Old api (6.1 and 7.0) use __default variable; new api is attribute of field. |
-+-----------+------------------------------------------------------------------------------+
-| xml tag   | From 10.0 root tab is <odoo>; before it was <openerp><data>                  |
-+-----------+------------------------------------------------------------------------------+
-
-
-Test info
----------
-
-The tests/test_midea file executes following unit tests:
-
-* Import z0bug_odoo package -> validate the python package
-* test_common.SingleTransactionCase -> validate test class
-* create_id() function -> test result
-* browse_rec() function -> excpected result
-* write_rec() function -> test result by browsing again
-
-*Notice test source code is quite identical across Odoo versions*.
+N/D
 
 
 |
 
-|it| suite di test z0bug_odoo
-=============================
+|it| Creazione ambiente di test
+-------------------------------
 
-Modulo a scopo tecnico fornito soltanto con documentazione in inglese.
+N/D
+
 
 |
 |
@@ -89,7 +58,7 @@ Installation / Installazione
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
-| /home/odoo/12.0/zerobug-test/                                              |
+| /home/odoo/10.0/zerobug-test/                                              |
 +----------------------------------------------------------------------------+
 
 ::
@@ -99,10 +68,14 @@ Installation / Installazione
     cd ./tools
     ./install_tools.sh -p
     source /opt/odoo/dev/activate_tools
-    odoo_install_repository zerobug-test -b 12.0 -O zero
-    sudo manage_odoo requirements -b 12.0 -vsy -o /opt/odoo/12.0
+    odoo_install_repository zerobug-test -b 10.0 -O zero
+    sudo manage_odoo requirements -b 10.0 -vsy -o /opt/odoo/10.0
 
 From UI: go to:
+
+* |menu| Setting > Activate Developer mode 
+* |menu| Apps > Update Apps List
+* |menu| Setting > Apps |right_do| Select **mk_test_env** > Install
 
 |
 
@@ -119,11 +92,15 @@ Upgrade / Aggiornamento
 
 ::
 
-    odoo_install_repository zerobug-test -b 12.0 -O zero -U
+    odoo_install_repository zerobug-test -b 10.0 -O zero -U
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
 From UI: go to:
+
+* |menu| Setting > Activate Developer mode
+* |menu| Apps > Update Apps List
+* |menu| Setting > Apps |right_do| Select **mk_test_env** > Update
 
 |
 
@@ -206,12 +183,12 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2020-01-27
+Last Update / Ultimo aggiornamento: 2020-02-29
 
-.. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
+.. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-black.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Alfa
-.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=12.0
+    :alt: Alpha
+.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=10.0
     :target: https://travis-ci.org/zeroincombenze/zerobug-test
     :alt: github.com
 .. |license gpl| image:: https://img.shields.io/badge/licence-LGPL--3-7379c3.svg
@@ -220,23 +197,23 @@ Last Update / Ultimo aggiornamento: 2020-01-27
 .. |license opl| image:: https://img.shields.io/badge/licence-OPL-7379c3.svg
     :target: https://www.odoo.com/documentation/user/9.0/legal/licenses/licenses.html
     :alt: License: OPL
-.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=12.0
-    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=12.0
+.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=10.0
+    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=10.0
     :alt: Coverage
-.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/12.0/graph/badge.svg
-    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/12.0
+.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/10.0/graph/badge.svg
+    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/10.0
     :alt: Codecov
-.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-12.svg
-    :target: https://wiki.zeroincombenze.org/en/Odoo/12.0/dev
+.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-10.svg
+    :target: https://wiki.zeroincombenze.org/en/Odoo/10.0/dev
     :alt: Technical Documentation
-.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-12.svg
-    :target: https://wiki.zeroincombenze.org/it/Odoo/12.0/man
+.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-10.svg
+    :target: https://wiki.zeroincombenze.org/it/Odoo/10.0/man
     :alt: Technical Documentation
-.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-12.svg
-    :target: https://erp12.zeroincombenze.it
+.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-10.svg
+    :target: https://erp10.zeroincombenze.it
     :alt: Try Me
-.. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/12.0/graph/badge.svg
-    :target: https://codecov.io/gh/OCA/zerobug-test/branch/12.0
+.. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/10.0/graph/badge.svg
+    :target: https://codecov.io/gh/OCA/zerobug-test/branch/10.0
     :alt: Codecov
 .. |Odoo Italia Associazione| image:: https://www.odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20126x56.png
    :target: https://odoo-italia.org
