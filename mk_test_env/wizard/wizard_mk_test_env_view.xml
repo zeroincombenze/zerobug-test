@@ -22,11 +22,10 @@
                         <field name="load_partner"/>
                         <field name="load_product"/>
                         <field name="load_image"/>
+                        <field name="load_sale_order"/>
+                        <field name="load_purchase_order"/>
                         <field name="load_invoice"/>
                     </group>
-                </group>
-                <group>
-                    <field name="status_mesg"/>
                 </group>
                 <footer>
                     <button name="make_test_environment" string="Create"
