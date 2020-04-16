@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2018-19 - SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2018-20 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Contributions to development, thanks to:
+# * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# The purpose of this test module is validate the z0bug_odoo package.
+# License APGL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-import base64
-import os
-
+# import os
+import logging
 from z0bug_odoo import test_common
+
+_logger = logging.getLogger(__name__)
 
 
 class TestMidea(test_common.SingleTransactionCase):
@@ -46,4 +48,5 @@ class TestMidea(test_common.SingleTransactionCase):
         rec = self.browse_rec(model_name, self.midea_no_company_id)
         self.assertEqual(rec.name, self.MIDEA_NO_COMPANY_ALTER_NAME)
         self.assertEqual(rec.state, self.MIDEA_NO_COMPANY_STATE)
-
+        _logger.info(
+            'Test %s SUCCESSFULLY ended.' % __file__)

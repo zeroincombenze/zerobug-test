@@ -1,20 +1,24 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2018-19 - SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2018-20 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Contributions to development, thanks to:
+# * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
+#
+# License APGL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
 {
     'name': 'midea',
     'summary': 'z0bug_odoo test suite',
-    'version': '6.0.0.1.1',
+    'version': '6.0.0.1.3',
     'category': 'Generic Modules/Accounting',
-    'author': 'Odoo Community Association (OCA), SHS-AV s.r.l.',
+    'author': 'SHS-AV s.r.l.',
     'website': 'https://www.zeroincombenze.it/',
     'depends': ['base'],
     'data': [
         'views/midea_no_company_view.xml',
         'views/midea_table_wco_view.xml',
+        # 'views/midea_menu.xml',
         'security/ir.model.access.csv',
     ],
     'installable': True,
@@ -27,7 +31,29 @@ Overview / Panoramica
 
 This module has no specific function for End-user.
 
-It is a just a Odoo module example baut tha main purpose of this module is to validate the z0bug_odoo package.
+It is a just a Odoo module example useful to developers. It is possible to see the differences among different Odoo versions.
+Another purpose of this module is to validate the z0bug_odoo package.
+
+
+Developer info
+--------------
+
+There are two table in this module: one is indipendent from company, the other is company dependent.
+Here some difference among versions:
+
++-----------+------------------------------------------------------------------------------+
+| Parameter | Notes                                                                        |
++-----------+------------------------------------------------------------------------------+
+| Default   | Old api (6.1 and 7.0) use __default variable; new api ia attribute of field. |
++-----------+------------------------------------------------------------------------------+
+| xml tag   | From 10.0 root tab is <odoo>; before it was <openerp><data>                  |
++-----------+------------------------------------------------------------------------------+
+
+Look at how default values are declared in different Odoo versions.
+
+
+Test info
+---------
 
 The tests/test_midea file executes following unit tests:
 
@@ -36,6 +62,8 @@ The tests/test_midea file executes following unit tests:
 * create_id() function -> test result
 * browse_rec() function -> excpected result
 * write_rec() function -> test result by browsing again
+
+*Notice test source code is quite identical across Odoo versions*.
 
 
 |
@@ -99,7 +127,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2019-11-08
+Last Update / Ultimo aggiornamento: 2019-11-11
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
