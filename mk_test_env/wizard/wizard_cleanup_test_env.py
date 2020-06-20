@@ -79,10 +79,34 @@ class WizardCleanupTestEnvironment(models.TransientModel):
                 pass
 
     @api.model
-    def drop_xref(self, xref, model):
+    def drop_xref(self, xref, model, action=None, childs=None):
+        def do_action(model_model, action, rec_id):
+            if not isinstance(action, (list, tuple)):
+                action = [action]
+            for act in action:
+                if act == 'move_name=':
+                    model_model.browse(rec_id).write({'move_name': ''})
+                else:
+                    try:
+                        getattr(model_model.browse(rec_id), act)()
+                    except BaseException:
+                        self.env.cr.rollback()  # pylint: disable=invalid-commit
+
+        def do_childs(model_model, childs, rec_id):
+            for rec in model_model.browse(rec_id)[childs]:
+                try:
+                    rec.unlink()
+                    self.ctr_rec_del += 1
+                except BaseException:
+                    self.env.cr.rollback()     # pylint: disable=invalid-commit
+
         model_model = self.env[model]
         rec_id = self.env_ref(xref)
         if rec_id and model_model.search([('id', '=', rec_id)]):
+            if action:
+                do_action(model_model, action, rec_id)
+            if childs:
+                do_childs(model_model, childs, rec_id)
             try:
                 model_model.browse(rec_id).unlink()
                 self.ctr_rec_del += 1
@@ -93,7 +117,13 @@ class WizardCleanupTestEnvironment(models.TransientModel):
 
 
     @api.model
-    def do_clean_coa(self):
+    def clean_model(self, model, action=None):
+        xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
+        for xref in sorted(xrefs):
+            self.drop_xref(xref, model, action=action)
+
+    @api.model
+    def do_clean_account_account(self):
         model = 'account.account'
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
         xrefs.sort()
@@ -111,6 +141,11 @@ class WizardCleanupTestEnvironment(models.TransientModel):
                 self.drop_xref(xref, model)
 
     @api.model
+    def do_clean_account_tax(self):
+        model = 'account.tax'
+        self.clean_model(model, action=None)
+
+    @api.model
     def do_clean_fiscalpos(self):
         model = 'account.fiscal.position'
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
@@ -121,10 +156,7 @@ class WizardCleanupTestEnvironment(models.TransientModel):
     @api.model
     def do_clean_account_invoice(self):
         model = 'account.invoice'
-        xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
-        xrefs.sort()
-        for xref in xrefs:
-            self.drop_xref(xref, model)
+        self.clean_model(model, action=['move_name=', 'action_invoice_cancel'])
 
     def cleanup_test_environment(self):
         self.ctr_rec_new = 0
@@ -132,18 +164,22 @@ class WizardCleanupTestEnvironment(models.TransientModel):
         self.ctr_rec_del = 0
         if self.test_company_id:
             if self.clean_coa:
-                self.do_clean_coa()
+                self.do_clean_account_account()
+                self.do_clean_account_tax()
             if self.clean_fiscalpos:
                 self.do_clean_fiscalpos()
+            if self.clean_invoice:
+                self.do_clean_account_invoice()
         return {
             'name': "Data clean-up",
-            'view_type': 'form',
-            'view_mode': 'form',
             'res_model': 'wizard.cleanup.test.environment',
             'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_id': self.id,
+            'target': 'new',
             'view_id': self.env.ref(
                 'mk_test_env.result_cleanup_test_env_view').id,
-            'target': 'new',
         }
 
     def close_window(self):

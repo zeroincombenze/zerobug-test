@@ -12,7 +12,7 @@ from builtins import int
 # import os
 from datetime import date, datetime, timedelta
 
-from z0bug_odoo import z0bug_odoo_lib, test_common
+from z0bug_odoo import z0bug_odoo_lib
 
 from os0 import os0
 
@@ -49,15 +49,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
         return False
 
     def _new_company(self):
-        if self._test_company():
-            return False
-        return True
+        return not bool(self._test_company())
 
     def _default_company(self):
-        res = self._test_company()
-        if not res:
-            return self.env.user.company_id.id
-        return res
+        return self._test_company() or self.env.user.company_id.id
 
     test_company_id = fields.Many2one(
         'res.company',
@@ -84,6 +79,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
              '"Axilor CoA" is a Zeroincombenze CoA plus multilevel accounts\n'
              '"Test" is internal testing CoA',
         default='test')
+    set_seq = fields.Boolean('Set line sequence')
+    load_coa = fields.Boolean('Load chart of account')
     load_partner = fields.Boolean('Load partners')
     load_product = fields.Boolean('Load products')
     load_image = fields.Boolean('Load record images')
@@ -163,7 +160,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
         """Store model structure into memory"""
         if not model:
             return
-        # self.STRUCT = self.get('STRUCT', {})
         if model in self.STRUCT:
             return
         self.STRUCT[model] = self.STRUCT.get(model, {})
@@ -175,7 +171,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
             if attrs['required']:
                 attrs['readonly'] = False
             if (field.ttype in ('binary', 'reference') or
-                    (field.related and not field.required)):
+                    (hasattr(field, 'related') and field.related and
+                     not field.required)):
                 attrs['readonly'] = True
             attrs['ttype'] = field.ttype
             attrs['relation'] = field.relation
@@ -208,7 +205,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
         for field in vals.copy():
             attrs = self.STRUCT[model].get(field, {})
             if not attrs:
-                # print_error(ctx, 'Invalid field %s!' % field)
                 if (model == 'account.payment.term.line' and
                         field == 'months' and
                         vals[field]):
@@ -378,13 +374,15 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     @api.model
     def store_xref(self, xref, model, company_id,
-                   parent_id=None, parent_model=None):
+                   parent_id=None, parent_model=None, seq=None):
         if parent_id and parent_model:
             xid = False
         else:
             xid = self.env_ref(xref)
         if not xid or self.force_test_values:
             vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(model, xref)
+            if seq:
+                vals['sequence'] = seq
             vals, parent_name = self.bind_fields(
                 model, vals, company_id,
                 parent_id=parent_id, parent_model=parent_model)
@@ -413,7 +411,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
         for xref in sorted(xrefs):
             self.store_xref(xref, model, company_id)
-        # z0bug_odoo_lib.Z0bugOdoo(self).build_model_data(model)
 
     @api.model
     def mk_account_account(self, company_id):
@@ -439,6 +436,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def mk_fiscal_position(self, company_id):
         self.make_model(company_id, 'account.fiscal.position')
+
+    @api.model
+    def mk_journal(self, company_id):
+        self.make_model(company_id, 'account.journal')
 
     @api.model
     def mk_date_range(self, company_id):
@@ -475,6 +476,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
             else:
                 self.store_xref(xref, model, company_id, parent_id=parent_id)
 
+    def mk_partner_bank(self, company_id):
+        self.make_model(company_id, 'res.partner.bank')
+
     def mk_product(self, company_id):
         model = 'product.template'
         model2 = 'product.product'
@@ -488,7 +492,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def mk_account_invoice(self, company_id):
 
         def compute_tax(inv_id):
-            return
+            self.env['account.invoice'].browse(inv_id).compute_taxes()
 
         model = 'account.invoice'
         model2 = 'account.invoice.line'
@@ -516,14 +520,21 @@ class WizardMakeTestEnvironment(models.TransientModel):
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
         xrefs = xrefs + z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model2)
         parent_id = False
+        seq = 0
         for xref in sorted(xrefs):
             if len(xref) <= 22:
                 if parent_id:
                     compute_tax(parent_id)
+                seq = 0
                 parent_id = self.store_xref(xref, model, company_id)
             else:
+                if self.set_seq:
+                    seq += 10
+                else:
+                    seq = 10
                 self.store_xref(xref, model2, company_id,
-                                parent_id=parent_id, parent_model=model)
+                                parent_id=parent_id, parent_model=model,
+                                seq=seq)
         if parent_id:
             compute_tax(parent_id)
 
@@ -568,21 +579,23 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.ctr_rec_new = 0
         self.ctr_rec_upd = 0
         self.ctr_rec_del = 0
-        self.status_mesg = 'Installing modules'
         modules_to_install = []
         if self.new_company:
             modules_to_install = self.add_modules(
                 self.MODULES_COA, self.coa, modules_to_install)
             self.create_company()
         self.install_modules(modules_to_install)
-        if self.coa == 'test':
-            # self.mk_account_account(self.company_id.id)
+        if self.load_coa and self.coa == 'test':
+            self.mk_account_account(self.company_id.id)
             self.mk_account_tax(self.company_id.id)
-        self.mk_fiscal_position(self.company_id.id)
-        self.mk_date_range(self.company_id.id)
-        self.mk_payment(self.company_id.id)
+        if self.load_coa:
+            self.mk_fiscal_position(self.company_id.id)
+            self.mk_date_range(self.company_id.id)
+            self.mk_payment(self.company_id.id)
         if self.load_partner:
             self.mk_partner(self.company_id.id)
+            self.mk_partner_bank(self.company_id.id)
+            self.mk_journal(self.company_id.id)
         if self.load_product:
             self.mk_product(self.company_id.id)
         if self.load_sale_order:
@@ -591,17 +604,19 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.mk_purchase_order(self.company_id.id)
         if self.load_invoice:
             self.mk_account_invoice(self.company_id.id)
+        self.status_mesg = 'Data (re)loaded'
         return {
             'name': "Data created",
+            'type': 'ir.actions.act_window',
+            'res_model': 'wizard.make.test.environment',
             'view_type': 'form',
             'view_mode': 'form',
-            'res_model': 'wizard.make.test.environment',
-            'type': 'ir.actions.act_window',
+            'res_id': self.id,
+            'target': 'new',
+            'context': {'active_id': self.id},
             'view_id': self.env.ref(
                 'mk_test_env.result_mk_test_env_view').id,
-            'target': 'new',
             'domain': [('id', '=', self.id)],
-            'context': {'active_id': self.id},
         }
 
     def close_window(self):

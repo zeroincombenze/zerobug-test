@@ -7,10 +7,12 @@
 #
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-import base64
-import os
+# import os
+import logging
 
 from z0bug_odoo import test_common
+
+_logger = logging.getLogger(__name__)
 
 
 class TestMidea(test_common.SingleTransactionCase):
@@ -55,3 +57,5 @@ class TestMidea(test_common.SingleTransactionCase):
         self.assertEqual(rec.name, self.MIDEA_TABLE_WCO_ALTER_NAME)
         self.assertEqual(rec.state, self.MIDEA_TABLE_WCO_STATE)
         self.assertEqual(rec.company_id.id, self.company_id)
+        _logger.info(
+            'Test %s SUCCESSFULLY ended.' % __file__)

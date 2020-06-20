@@ -38,7 +38,7 @@ coverage.xml
 *.mo
 
 # Pycharm
-.idea
+.idea/
 
 # Mr Developer
 .mr.developer.cfg
@@ -63,4 +63,3 @@ stdout.log
 *.oia
 .gitrepname
 
-!.idea
