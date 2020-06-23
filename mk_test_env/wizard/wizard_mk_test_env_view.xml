@@ -17,16 +17,17 @@
                                attrs="{'readonly': ['|', ('test_company_id', '!=', False), ('new_company', '!=', False)]}"/>
                         <field name="coa"
                                attrs="{'readonly': [('new_company', '=', False)]}"/>
+                        <field name="set_seq"/>
                     </group>
                     <group>
+                        <field name="load_coa"/>
                         <field name="load_partner"/>
                         <field name="load_product"/>
                         <field name="load_image"/>
+                        <field name="load_sale_order"/>
+                        <field name="load_purchase_order"/>
                         <field name="load_invoice"/>
                     </group>
-                </group>
-                <group>
-                    <field name="status_mesg"/>
                 </group>
                 <footer>
                     <button name="make_test_environment" string="Create"
