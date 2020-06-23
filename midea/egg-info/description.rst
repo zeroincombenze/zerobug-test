@@ -1,13 +1,17 @@
-This module has no specific function for End-user.
+This module has no specific function for End-user,
+it is designed for Odoo developers.
 
-It is a just a Odoo module example useful to developers. It is possible to see the differences among different Odoo versions.
-Another purpose of this module is to validate the z0bug_odoo package.
+This module aims to:
+
+* It shows the differences among different Odoo versions
+* It is used to validate the z0bug_odoo package
+* Define the qci table to manage test environment
 
 
 Developer info
 --------------
 
-There are two table in this module: one is independent from company, the other is company dependent.
+There are two table in this module: qci is independent from company, the other is company dependent.
 Here some difference among versions:
 
 .. $include description_characters.csv

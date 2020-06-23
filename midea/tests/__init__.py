@@ -7,6 +7,6 @@
 #
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-from . import test_midea_no_company
+from . import test_midea_qci
 from . import test_midea_table_wco
 from . import test_res_partner

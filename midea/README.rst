@@ -1,6 +1,6 @@
 
 =======================
-|icon| midea 10.0.0.1.3
+|icon| midea 10.0.0.1.4
 =======================
 
 
@@ -17,18 +17,20 @@
 Overview / Panoramica
 =====================
 
-|en| z0bug_odoo test suite
+|en| This module has no specific function for End-user,
+it is designed for Odoo developers.
 
-This module has no specific function for End-user.
+This module aims to:
 
-It is a just a Odoo module example useful to developers. It is possible to see the differences among different Odoo versions.
-Another purpose of this module is to validate the z0bug_odoo package.
+* It shows the differences among different Odoo versions
+* It is used to validate the z0bug_odoo package
+* Define the qci table to manage test environment
 
 
 Developer info
 --------------
 
-There are two table in this module: one is independent from company, the other is company dependent.
+There are two table in this module: qci is independent from company, the other is company dependent.
 Here some difference among versions:
 
 +-----------+------------------------------------------------------------------------------+
@@ -58,9 +60,16 @@ The tests/test_midea file executes following unit tests:
 
 |
 
-|it| suite di test z0bug_odoo
+|it| Suite z0bug_odoo
 
 Modulo a scopo tecnico fornito soltanto con documentazione in inglese.
+
+Permette di:
+
+* Mostrare le differenze dei test tra le varie versioni di Odoo
+* Valida il package z0bug_odoo
+* Definisce la tabella qci per gestire i casi di test
+
 
 |
 |
@@ -217,7 +226,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2020-04-25
+Last Update / Ultimo aggiornamento: 2020-06-20
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
@@ -276,4 +285,5 @@ Last Update / Ultimo aggiornamento: 2020-04-25
 .. |FatturaPA| image:: https://raw.githubusercontent.com/zeroincombenze/grymb/master/certificates/ade/icons/fatturapa.png
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
-   :target: https://tawk.to/85d4f6e06e68dd4e358797643fe5ee67540e408b
+   :target: https://t.me/axitec_helpdesk
+

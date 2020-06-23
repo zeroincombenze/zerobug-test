@@ -10,16 +10,17 @@
 from odoo import models, fields, api
 
 
-class MideaNoCompany(models.Model):
-    _name = 'midea.no_company'
+class MideaQci(models.Model):
+    _name = 'midea.qci'
 
-    name = fields.Char('name',
+    code = fields.Char('Code', required=True)
+    name = fields.Char('Name',
                        required=True,
                        translate=True)
-    active = fields.Boolean('Active',
-                            default=True)
+    active = fields.Boolean('Active', default=True)
     state = fields.Selection([('draft', 'Draft'),
-                              ('confirmed', 'Confirmed')],
+                              ('confirmed', 'Confirmed'),
+                              ('cancel', 'Canceled')],
                              'State',
                              required=True,
                              readonly=True,
