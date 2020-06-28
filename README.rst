@@ -22,7 +22,7 @@ Avaiable Addons / Moduli disponibili
 +-------------+------------+------------+----------------------------------------------------------------------------------+
 | Name / Nome | Version    | OCA Ver.   | Description / Descrizione                                                        |
 +-------------+------------+------------+----------------------------------------------------------------------------------+
-| midea       | 10.0.0.1.3 | |no_check| | z0bug_odoo test suite                                                            |
+| midea       | 10.0.0.1.4 | |no_check| | z0bug_odoo test suite                                                            |
 +-------------+------------+------------+----------------------------------------------------------------------------------+
 | mk_test_env | 10.0.12.0. | |no_check| | Create, update or clean-up test environment                                      |
 +-------------+------------+------------+----------------------------------------------------------------------------------+
@@ -67,12 +67,14 @@ Installation / Installazione
 ::
 
     cd $HOME
+    # Tools installation & activation: skip if you have installed this tool
     git clone https://github.com/zeroincombenze/tools.git
     cd ./tools
     ./install_tools.sh -p
     source /opt/odoo/dev/activate_tools
+    # Odoo installation
     odoo_install_repository zerobug-test -b 10.0 -O zero
-    venv_mgr create /opt/odoo/VENV-10.0 -O 10.0 -DI
+    vem create /opt/odoo/VENV-10.0 -O 10.0 -DI
 
 
 Upgrade / Aggiornamento
@@ -89,8 +91,15 @@ Upgrade / Aggiornamento
 
 ::
 
+    cd $HOME
+    # Tools installation & activation: skip if you have installed this tool
+    git clone https://github.com/zeroincombenze/tools.git
+    cd ./tools
+    ./install_tools.sh -p
+    source /opt/odoo/dev/activate_tools
+    # Odoo upgrade
     odoo_install_repository zerobug-test -b 10.0 -O zero -U
-    venv_mgr amend /opt/odoo/VENV-10.0 -O 10.0 -DI
+    vem amend /opt/odoo/VENV-10.0 -O 10.0 -DI
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
@@ -149,7 +158,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2020-06-20
+Last Update / Ultimo aggiornamento: 2020-06-28
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
