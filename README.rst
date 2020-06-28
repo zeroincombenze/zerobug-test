@@ -19,11 +19,13 @@ Overview / Panoramica
 Avaiable Addons / Moduli disponibili
 ------------------------------------
 
-+-------+------------+------------+----------------------------------------------------------------------------------+
-| Name  | Version    | OCA Ver.   | Description / Descrizione                                                        |
-+-------+------------+------------+----------------------------------------------------------------------------------+
-| midea | 12.0.10.0. | |no_check| | z0bug_odoo test suite                                                            |
-+-------+------------+------------+----------------------------------------------------------------------------------+
++-------------+------------+------------+----------------------------------------------------------------------------------+
+| Name / Nome | Version    | OCA Ver.   | Description / Descrizione                                                        |
++-------------+------------+------------+----------------------------------------------------------------------------------+
+| midea       | 12.0.10.0. | |no_check| | z0bug_odoo test suite                                                            |
++-------------+------------+------------+----------------------------------------------------------------------------------+
+| mk_test_env | 12.0.0.1.3 | |no_check| | Create, update or clean-up test environment                                      |
++-------------+------------+------------+----------------------------------------------------------------------------------+
 
 
 
@@ -38,12 +40,13 @@ Prerequisites / Prerequisiti
 ----------------------------
 
 
-* python 3.5+
+* python 3.7+
 * postgresql 9.5+ (experimental 10.0+)
 
 
 Installation / Installazione
 ----------------------------
+
 
 +---------------------------------+------------------------------------------+
 | |en|                            | |it|                                     |
@@ -58,22 +61,25 @@ Installation / Installazione
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
-| /opt/odoo/12.0/zerobug-test/                                               |
+| /home/odoo/12.0/zerobug-test/                                              |
 +----------------------------------------------------------------------------+
 
 ::
 
     cd $HOME
+    # Tools installation & activation: skip if you have installed this tool
     git clone https://github.com/zeroincombenze/tools.git
     cd ./tools
     ./install_tools.sh -p
     source /opt/odoo/dev/activate_tools
+    # Odoo installation
     odoo_install_repository zerobug-test -b 12.0 -O zero
-    sudo manage_odoo requirements -b 12.0 -vsy -o /opt/odoo/12.0
+    vem create /opt/odoo/VENV-12.0 -O 12.0 -DI
 
 
 Upgrade / Aggiornamento
 -----------------------
+
 
 +---------------------------------+------------------------------------------+
 | |en|                            | |it|                                     |
@@ -85,7 +91,15 @@ Upgrade / Aggiornamento
 
 ::
 
+    cd $HOME
+    # Tools installation & activation: skip if you have installed this tool
+    git clone https://github.com/zeroincombenze/tools.git
+    cd ./tools
+    ./install_tools.sh -p
+    source /opt/odoo/dev/activate_tools
+    # Odoo upgrade
     odoo_install_repository zerobug-test -b 12.0 -O zero -U
+    vem amend /opt/odoo/VENV-12.0 -O 12.0 -DI
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
@@ -144,7 +158,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2019-11-10
+Last Update / Ultimo aggiornamento: 2020-06-28
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
@@ -203,4 +217,5 @@ Last Update / Ultimo aggiornamento: 2019-11-10
 .. |FatturaPA| image:: https://raw.githubusercontent.com/zeroincombenze/grymb/master/certificates/ade/icons/fatturapa.png
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
-   :target: https://tawk.to/85d4f6e06e68dd4e358797643fe5ee67540e408b
+   :target: https://t.me/axitec_helpdesk
+

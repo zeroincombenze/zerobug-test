@@ -52,7 +52,7 @@ install:
 
 env:
   global:
-  - TRAVIS_DEBUG_MODE="2"
+  - TRAVIS_DEBUG_MODE="3"
   - WKHTMLTOPDF_VERSION="0.12.4"
   - VERSION="12.0" TESTS="0" LINT_CHECK="0" ODOO_TNLBOT="0"
 
