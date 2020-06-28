@@ -9,10 +9,10 @@ cache:
     - $HOME/.cache/pip
 
 python:
-  - "3.6"
+  - "3.7"
 
 virtualenv:
-  system_site_packages: true
+  system_site_packages: false
 
 git:
   submodules: false
@@ -40,7 +40,6 @@ before_install:
 
 
 install:
-  - pip install -r requirements.txt
   - travis_install_env
   # tests of document_ftp and delivery fail. The following two are excluded because they depend on delivery
   # account_invoice_sequential_dates fails with FatturaPA 
