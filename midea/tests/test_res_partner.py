@@ -17,7 +17,6 @@ _logger = logging.getLogger(__name__)
 
 class TestMidea(test_common.SingleTransactionCase):
 
-
     def setUp(self):
         super(TestMidea, self).setUp()
 
