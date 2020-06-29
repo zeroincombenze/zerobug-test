@@ -3,6 +3,6 @@
 #
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-from . import midea_no_company
+from . import midea_qci
 from . import midea_table_wco
 

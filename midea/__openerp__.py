@@ -10,14 +10,15 @@
 {
     'name': 'midea',
     'summary': 'z0bug_odoo test suite',
-    'version': '8.0.0.1.3',
+    'version': '8.0.0.1.4',
     'category': 'Generic Modules/Accounting',
     'author': 'SHS-AV s.r.l.',
-    'website': 'https://www.zeroincombenze.it/',
+    'website': 'https://www.zeroincombenze.it/servizi-le-imprese/',
     'depends': ['base'],
     'data': [
-        'views/midea_no_company_view.xml',
+        'views/midea_qci_view.xml',
         'views/midea_table_wco_view.xml',
+        'views/midea_menu.xml',
         'security/ir.model.access.csv',
     ],
     'installable': True,

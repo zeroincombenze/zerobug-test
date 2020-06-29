@@ -14,20 +14,22 @@ from z0bug_odoo import test_common
 _logger = logging.getLogger(__name__)
 
 
-class TestMidea(test_common.SingleTransactionCase):
+class TestMideaQci(test_common.SingleTransactionCase):
 
-    MIDEA_NO_COMPANY_NAME = 'Mario Rossi'
-    MIDEA_NO_COMPANY_STATE = 'draft'
-    MIDEA_NO_COMPANY_ALTER_NAME = 'Giovanni Bianchi'
+    MIDEA_QCI_CODE = 'Test-01'
+    MIDEA_QCI_NAME = 'Test this module'
+    MIDEA_QCI_STATE = 'draft'
+    MIDEA_QCI_ALTER_NAME = 'Test module itself'
 
     def setUp(self):
-        super(TestMidea, self).setUp()
+        super(TestMideaQci, self).setUp()
 
     def test_midea_no_company(self):
-        model_name = 'midea.no_company'
+        model_name = 'midea.qci'
         vals = {
-            'name': self.MIDEA_NO_COMPANY_NAME,
-            'state': self.MIDEA_NO_COMPANY_STATE,
+            'code': self.MIDEA_QCI_CODE,
+            'name': self.MIDEA_QCI_NAME,
+            'state': self.MIDEA_QCI_STATE,
         }
         # Test the <create> function
         self.midea_no_company_id = self.create_id(
@@ -40,13 +42,13 @@ class TestMidea(test_common.SingleTransactionCase):
                         'z0bug_odoo.create_id does not return a valid id')
         # Now test the <browse> function
         rec = self.browse_rec(model_name, self.midea_no_company_id)
-        self.assertEqual(rec.name, self.MIDEA_NO_COMPANY_NAME)
-        self.assertEqual(rec.state, self.MIDEA_NO_COMPANY_STATE)
+        self.assertEqual(rec.name, self.MIDEA_QCI_NAME)
+        self.assertEqual(rec.state, self.MIDEA_QCI_STATE)
         # Now test the <write_rec> functon
         self.write_rec(model_name, self.midea_no_company_id,
-                      {'name': self.MIDEA_NO_COMPANY_ALTER_NAME})
+                      {'name': self.MIDEA_QCI_ALTER_NAME})
         rec = self.browse_rec(model_name, self.midea_no_company_id)
-        self.assertEqual(rec.name, self.MIDEA_NO_COMPANY_ALTER_NAME)
-        self.assertEqual(rec.state, self.MIDEA_NO_COMPANY_STATE)
+        self.assertEqual(rec.name, self.MIDEA_QCI_ALTER_NAME)
+        self.assertEqual(rec.state, self.MIDEA_QCI_STATE)
         _logger.info(
             'Test %s SUCCESSFULLY ended.' % __file__)
