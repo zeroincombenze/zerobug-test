@@ -34,10 +34,9 @@ addons:
 before_install:
 # Use Zeroincombenze(R) tools
   - git clone https://github.com/zeroincombenze/tools.git ${HOME}/tools --single-branch --depth=1
-  - mv ${HOME}/tools/maintainer-quality-tools ${HOME}
-  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  # - mv ${HOME}/tools ${HOME}
+  - export PATH=${HOME}/tools/maintainer-quality-tools/travis:${PATH}
   - export PYTHONPATH=${HOME}/tools
-
 
 install:
   - travis_install_env
@@ -52,7 +51,7 @@ install:
 
 env:
   global:
-  - TRAVIS_DEBUG_MODE="3"
+  - TRAVIS_DEBUG_MODE="2"
   - WKHTMLTOPDF_VERSION="0.12.4"
   - VERSION="12.0" TESTS="0" LINT_CHECK="0" ODOO_TNLBOT="0"
 
