@@ -1,6 +1,6 @@
 
 =================================
-|Zeroincombenze| zerobug-test 7.0
+|Zeroincombenze| zerobug-test 6.1
 =================================
 |Build Status| |Codecov Status| |license gpl| |Try Me|
 
@@ -19,11 +19,13 @@ Overview / Panoramica
 Avaiable Addons / Moduli disponibili
 ------------------------------------
 
-+-------+------------+------------+----------------------------------------------------------------------------------+
-| Name  | Version    | OCA Ver.   | Description / Descrizione                                                        |
-+-------+------------+------------+----------------------------------------------------------------------------------+
-| midea | 7.0.0.1.1  | |no_check| | z0bug_odoo test suite                                                            |
-+-------+------------+------------+----------------------------------------------------------------------------------+
++----------------------+------------+------------+----------------------------------------------------------------------------------+
+| Name / Nome          | Version    | OCA Ver.   | Description / Descrizione                                                        |
++----------------------+------------+------------+----------------------------------------------------------------------------------+
+| midea                | 6.1.6.0.0. | |no_check| | z0bug_odoo test suite                                                            |
++----------------------+------------+------------+----------------------------------------------------------------------------------+
+| midea_extend_partner | 6.1.6.0.0. | |no_check| | Sample module to extend res.partner model                                        |
++----------------------+------------+------------+----------------------------------------------------------------------------------+
 
 
 
@@ -45,6 +47,7 @@ Prerequisites / Prerequisiti
 Installation / Installazione
 ----------------------------
 
+
 +---------------------------------+------------------------------------------+
 | |en|                            | |it|                                     |
 +---------------------------------+------------------------------------------+
@@ -54,26 +57,30 @@ Installation / Installazione
 |                                 |                                          |
 | Installation is built with:     | L'installazione è costruita con:         |
 +---------------------------------+------------------------------------------+
-| `Zeroincombenze Tools <https://github.com/zeroincombenze/tools>`__         |
+| `Zeroincombenze Tools <https://zeroincombenze-tools.readthedocs.io/>`__    |
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
-| /opt/odoo/7.0/zerobug-test/                                                |
+| /home/odoo/6.1/zerobug-test/                                               |
 +----------------------------------------------------------------------------+
 
 ::
 
     cd $HOME
+    # Tools installation & activation: skip if you have installed this tool
     git clone https://github.com/zeroincombenze/tools.git
     cd ./tools
     ./install_tools.sh -p
     source /opt/odoo/dev/activate_tools
-    odoo_install_repository zerobug-test -b 7.0 -O zero
-    sudo manage_odoo requirements -b 7.0 -vsy -o /opt/odoo/7.0
+    # Odoo installation
+    odoo_install_repository zerobug-test -b 6.1 -O zero
+    vem create /opt/odoo/VENV-6.1 -O 6.1 -DI
+
 
 
 Upgrade / Aggiornamento
 -----------------------
+
 
 +---------------------------------+------------------------------------------+
 | |en|                            | |it|                                     |
@@ -85,7 +92,15 @@ Upgrade / Aggiornamento
 
 ::
 
-    odoo_install_repository zerobug-test -b 7.0 -O zero -U
+    cd $HOME
+    # Tools installation & activation: skip if you have installed this tool
+    git clone https://github.com/zeroincombenze/tools.git
+    cd ./tools
+    ./install_tools.sh -p
+    source /opt/odoo/dev/activate_tools
+    # Odoo upgrade
+    odoo_install_repository zerobug-test -b 6.1 -O zero -U
+    vem amend /opt/odoo/VENV-6.1 -O 6.1 -DI
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
@@ -144,12 +159,12 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2019-11-08
+Last Update / Ultimo aggiornamento: 2020-07-12
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
     :alt: Alfa
-.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=7.0
+.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=6.1
     :target: https://travis-ci.org/zeroincombenze/zerobug-test
     :alt: github.com
 .. |license gpl| image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
@@ -158,23 +173,23 @@ Last Update / Ultimo aggiornamento: 2019-11-08
 .. |license opl| image:: https://img.shields.io/badge/licence-OPL-7379c3.svg
     :target: https://www.odoo.com/documentation/user/9.0/legal/licenses/licenses.html
     :alt: License: OPL
-.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=7.0
-    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=7.0
+.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=6.1
+    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=6.1
     :alt: Coverage
-.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/7.0/graph/badge.svg
-    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/7.0
+.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/6.1/graph/badge.svg
+    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/6.1
     :alt: Codecov
-.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-7.svg
-    :target: https://wiki.zeroincombenze.org/en/Odoo/7.0/dev
+.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-6.svg
+    :target: https://wiki.zeroincombenze.org/en/Odoo/6.1/dev
     :alt: Technical Documentation
-.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-7.svg
-    :target: https://wiki.zeroincombenze.org/it/Odoo/7.0/man
+.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-6.svg
+    :target: https://wiki.zeroincombenze.org/it/Odoo/6.1/man
     :alt: Technical Documentation
-.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-7.svg
-    :target: https://erp7.zeroincombenze.it
+.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-6.svg
+    :target: https://erp6.zeroincombenze.it
     :alt: Try Me
-.. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/7.0/graph/badge.svg
-    :target: https://codecov.io/gh/OCA/zerobug-test/branch/7.0
+.. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/6.1/graph/badge.svg
+    :target: https://codecov.io/gh/OCA/zerobug-test/branch/6.1
     :alt: Codecov
 .. |Odoo Italia Associazione| image:: https://www.odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20126x56.png
    :target: https://odoo-italia.org
@@ -203,4 +218,5 @@ Last Update / Ultimo aggiornamento: 2019-11-08
 .. |FatturaPA| image:: https://raw.githubusercontent.com/zeroincombenze/grymb/master/certificates/ade/icons/fatturapa.png
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
-   :target: https://tawk.to/85d4f6e06e68dd4e358797643fe5ee67540e408b
+   :target: https://t.me/axitec_helpdesk
+
