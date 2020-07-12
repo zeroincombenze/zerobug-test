@@ -33,9 +33,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
     _description = "Create Test Environment"
 
     MODULES_COA = {
+        'test': ['date_range'],
         'l10n_it': ['l10n_it', 'date_range'],
         'zero': ['l10n_it_fiscal', 'date_range'],
-        'axilor': ['l10n_it_fiscal', 'l10n_it_coa_base', 'date_range']
+        'axilor': ['l10n_it_coa_base', 'date_range']
     }
     errors = []
     STRUCT = {}
@@ -98,6 +99,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
         # We do not use standard self.env.ref() because we need False value
         # if xref does not exits instead of exception
         # and we need to get id or record by parameter
+        if (xref == 'product.product_uom_unit' and
+                int(release.major_version.split('.')[0]) >= 12):
+            xref = 'uom.product_uom_unit'
         xrefs = xref.split('.')
         if len(xrefs) == 2:
             model = self.env['ir.model.data']
@@ -147,6 +151,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             module_ids = modules_model.search([('name', '=', module)])
             if module_ids and module_ids[0].state == 'uninstalled':
                 to_install_modules += module_ids[0]
+                self.status_mesg += 'Module %s installed\n' % module
         if to_install_modules:
             to_install_modules.button_immediate_install()
         for module in modules_to_install:
@@ -579,10 +584,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.ctr_rec_new = 0
         self.ctr_rec_upd = 0
         self.ctr_rec_del = 0
-        modules_to_install = []
+        self.status_mesg = ''
+        modules_to_install = self.add_modules(
+            self.MODULES_COA, self.coa, [])
         if self.new_company:
-            modules_to_install = self.add_modules(
-                self.MODULES_COA, self.coa, modules_to_install)
             self.create_company()
         self.install_modules(modules_to_install)
         if self.load_coa and self.coa == 'test':
@@ -604,7 +609,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.mk_purchase_order(self.company_id.id)
         if self.load_invoice:
             self.mk_account_invoice(self.company_id.id)
-        self.status_mesg = 'Data (re)loaded'
+        self.status_mesg += 'Data (re)loaded'
         return {
             'name': "Data created",
             'type': 'ir.actions.act_window',
