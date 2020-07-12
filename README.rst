@@ -24,7 +24,7 @@ Avaiable Addons / Moduli disponibili
 +-------------+------------+------------+----------------------------------------------------------------------------------+
 | midea       | 12.0.10.0. | |no_check| | z0bug_odoo test suite                                                            |
 +-------------+------------+------------+----------------------------------------------------------------------------------+
-| mk_test_env | 12.0.0.1.3 | |no_check| | Create, update or clean-up test environment                                      |
+| mk_test_env | 12.0.0.1.4 | |no_check| | Create, update or clean-up test environment                                      |
 +-------------+------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -57,7 +57,7 @@ Installation / Installazione
 |                                 |                                          |
 | Installation is built with:     | L'installazione è costruita con:         |
 +---------------------------------+------------------------------------------+
-| `Zeroincombenze Tools <https://github.com/zeroincombenze/tools>`__         |
+| `Zeroincombenze Tools <https://zeroincombenze-tools.readthedocs.io/>`__    |
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
@@ -75,6 +75,7 @@ Installation / Installazione
     # Odoo installation
     odoo_install_repository zerobug-test -b 12.0 -O zero
     vem create /opt/odoo/VENV-12.0 -O 12.0 -DI
+
 
 
 Upgrade / Aggiornamento
@@ -158,7 +159,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2020-06-28
+Last Update / Ultimo aggiornamento: 2020-07-12
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
