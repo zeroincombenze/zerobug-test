@@ -12,7 +12,7 @@ python:
   - "2.7"
 
 virtualenv:
-  system_site_packages: true
+  system_site_packages: false
 
 git:
   submodules: false
@@ -28,15 +28,7 @@ addons:
 #    Search your sources alias here:
 #      https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
     packages:
-      # - curl                            # Already in TravisCI
-      # - nodejs                          # Already in TravisCI
-      # - npm                             # Already in TravisCI
-      - zlib1g
-      # - build-essential                 # Already in TravisCI
       - expect-dev
-      - libffi-dev
-      - libssl-dev
-      - python-dev
     chrome: stable
 
 before_install:
@@ -59,7 +51,7 @@ install:
 
 env:
   global:
-  - export TRAVIS_DEBUG_MODE="1"
+  - TRAVIS_DEBUG_MODE="2"
   - WKHTMLTOPDF_VERSION="0.12.1"
   - VERSION="7.0" TESTS="0" LINT_CHECK="0" ODOO_TNLBOT="0"
 
