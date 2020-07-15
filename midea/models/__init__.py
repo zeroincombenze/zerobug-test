@@ -1,7 +1,11 @@
-# Copyright 2016-19 Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+# Copyright 2018-20 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
-from . import midea_no_company
+# Contributions to development, thanks to:
+# * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
+#
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+#
+from . import midea_qci
 from . import midea_table_wco
 

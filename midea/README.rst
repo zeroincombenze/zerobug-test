@@ -1,6 +1,6 @@
 
 =======================
-|icon| midea 10.0.0.1.1
+|icon| midea 12.0.0.1.4
 =======================
 
 
@@ -17,19 +17,20 @@
 Overview / Panoramica
 =====================
 
-|en| z0bug_odoo test suite
-==========================
+|en| This module has no specific function for End-user,
+it is designed for Odoo developers.
 
-This module has no specific function for End-user.
+This module aims to:
 
-It is a just a Odoo module example useful to developers. It is possible to see the differences among different Odoo versions.
-Another purpose of this module is to validate the z0bug_odoo package.
+* It shows the differences among different Odoo versions
+* It is used to validate the z0bug_odoo package
+* Define the qci table to manage test environment
 
 
 Developer info
 --------------
 
-There are two table in this module: one is independent from company, the other is company dependent.
+There are two table in this module: qci is independent from company, the other is company dependent.
 Here some difference among versions:
 
 +-----------+------------------------------------------------------------------------------+
@@ -39,6 +40,8 @@ Here some difference among versions:
 +-----------+------------------------------------------------------------------------------+
 | xml tag   | From 10.0 root tab is <odoo>; before it was <openerp><data>                  |
 +-----------+------------------------------------------------------------------------------+
+
+
 
 
 Test info
@@ -57,10 +60,16 @@ The tests/test_midea file executes following unit tests:
 
 |
 
-|it| suite di test z0bug_odoo
-=============================
+|it| Suite z0bug_odoo
 
 Modulo a scopo tecnico fornito soltanto con documentazione in inglese.
+
+Permette di:
+
+* Mostrare le differenze dei test tra le varie versioni di Odoo
+* Valida il package z0bug_odoo
+* Definisce la tabella qci per gestire i casi di test
+
 
 |
 |
@@ -76,6 +85,7 @@ Getting started / Come iniziare
 Installation / Installazione
 ----------------------------
 
+
 +---------------------------------+------------------------------------------+
 | |en|                            | |it|                                     |
 +---------------------------------+------------------------------------------+
@@ -85,7 +95,7 @@ Installation / Installazione
 |                                 |                                          |
 | Installation is built with:     | L'installazione è costruita con:         |
 +---------------------------------+------------------------------------------+
-| `Zeroincombenze Tools <https://github.com/zeroincombenze/tools>`__         |
+| `Zeroincombenze Tools <https://zeroincombenze-tools.readthedocs.io/>`__    |
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
@@ -95,19 +105,27 @@ Installation / Installazione
 ::
 
     cd $HOME
+    # Tools installation & activation: skip if you have installed this tool
     git clone https://github.com/zeroincombenze/tools.git
     cd ./tools
     ./install_tools.sh -p
     source /opt/odoo/dev/activate_tools
+    # Odoo installation
     odoo_install_repository zerobug-test -b 12.0 -O zero
-    sudo manage_odoo requirements -b 12.0 -vsy -o /opt/odoo/12.0
+    vem create /opt/odoo/VENV-12.0 -O 12.0 -DI
 
 From UI: go to:
+
+* |menu| Setting > Activate Developer mode 
+* |menu| Apps > Update Apps List
+* |menu| Setting > Apps |right_do| Select **midea** > Install
+
 
 |
 
 Upgrade / Aggiornamento
 -----------------------
+
 
 +---------------------------------+------------------------------------------+
 | |en|                            | |it|                                     |
@@ -119,7 +137,15 @@ Upgrade / Aggiornamento
 
 ::
 
+    cd $HOME
+    # Tools installation & activation: skip if you have installed this tool
+    git clone https://github.com/zeroincombenze/tools.git
+    cd ./tools
+    ./install_tools.sh -p
+    source /opt/odoo/dev/activate_tools
+    # Odoo upgrade
     odoo_install_repository zerobug-test -b 12.0 -O zero -U
+    vem amend /opt/odoo/VENV-12.0 -O 12.0 -DI
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
@@ -206,11 +232,11 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2020-01-27
+Last Update / Ultimo aggiornamento: 2020-07-15
 
-.. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
+.. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Alfa
+    :alt: Beta
 .. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=12.0
     :target: https://travis-ci.org/zeroincombenze/zerobug-test
     :alt: github.com
@@ -265,4 +291,5 @@ Last Update / Ultimo aggiornamento: 2020-01-27
 .. |FatturaPA| image:: https://raw.githubusercontent.com/zeroincombenze/grymb/master/certificates/ade/icons/fatturapa.png
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
-   :target: https://tawk.to/85d4f6e06e68dd4e358797643fe5ee67540e408b
+   :target: https://t.me/axitec_helpdesk
+
