@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <record model="ir.ui.view" id="view_midea_tree">
+        <field name="name">Midea qci - table without company (tree)</field>
+        <field name="model">midea.qci</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <tree string="Quality Check Id">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="active"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_midea_form">
+        <field name="name">Midea qci - table without company (form)</field>
+        <field name="model">midea.qci</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <form string="Midea form">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="active"/>
+                    <field name="state"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="midea.action_qci" model="ir.actions.act_window">
+        <field name="name">Quality Check Id</field>
+        <field name="res_model">midea.qci</field>
+        <!-- <field name="view_mode">tree</field> -->
+        <field name="view_id" ref="view_midea_tree"/>
+    </record>
+
+    </data>
+</openerp>

@@ -25,17 +25,29 @@ addons:
   apt:
     sources:
       - pov-wkhtmltopdf
-#    Search your sources alias here:
-#      https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
+    # Search your sources alias here:
+    # https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
     packages:
+      # - build-essential                 # Pre-installed
+      # - curl                            # Pre-installed
       - expect-dev
-    chrome: stable
+      # - less-plugin-clean-css           # Pre-installed
+      # - lessc                           # Pre-installed
+      - libffi-dev
+      - libssl-dev
+      # - nodejs                          # Pre-installed
+      # - npm                             # Pre-installed
+      - python-dev
+      # - python-setuptools               # Pre-installed
+      # - wkhtmltopdf                     # Pre-installed
+      - zlib1g
 
 before_install:
-# Use Zeroincombenze(R) tools
+  # Use Zeroincombenze(R) tools
   - git clone https://github.com/zeroincombenze/tools.git ${HOME}/tools --single-branch --depth=1
-  # - mv ${HOME}/tools ${HOME}
-  - export PATH=${HOME}/tools/maintainer-quality-tools/travis:${PATH}
+  # - export PATH=${HOME}/tools/maintainer-quality-tools/travis:${PATH}
+  - ${HOME}/tools/install_tools.sh -qopt
+  - source ${HOME}/dev/activate_tools
   - export PYTHONPATH=${HOME}/tools
 
 install:
@@ -46,7 +58,6 @@ install:
   # - export INSTALL_OPTIONS="--without-demo=account"
   # - cp ${HOME}/maintainer-quality-tools/cfg/.coveragerc .
   # - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
-  # - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   # - export INCLUDE=$(getaddons.py -m ${HOME}/build/${ODOO_REPO}/odoo/addons ${HOME}/build/${ODOO_REPO}/addons)
 
 env:
