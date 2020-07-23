@@ -7,6 +7,7 @@
 #
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
+from past.builtins import long
 # import os
 import logging
 from z0bug_odoo import test_common

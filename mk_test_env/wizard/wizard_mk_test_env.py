@@ -11,6 +11,7 @@ from past.builtins import basestring
 from builtins import int
 # import os
 from datetime import date, datetime, timedelta
+import time
 
 from z0bug_odoo import z0bug_odoo_lib
 
@@ -154,6 +155,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.status_mesg += 'Module %s installed\n' % module
         if to_install_modules:
             to_install_modules.button_immediate_install()
+            time.sleep(4)
         for module in modules_to_install:
             module_ids = modules_model.search([('name', '=', module)])
             if not module_ids or module_ids[0].state != 'installed':
@@ -568,7 +570,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if parent_id:
             compute_tax(parent_id)
 
-
     @api.model
     def create_company(self):
         vals = {
@@ -576,6 +577,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
         }
         company = self.env['res.company'].create(vals)
         self.ctr_rec_new += 1
+        self.set_company_to_test(company)
+
+    @api.model
+    def set_company_to_test(self, company):
         self.add_xref('z0bug.mycompany', 'res.company', company.id)
         self.add_xref(
             'z0bug.partner_mycompany', 'res.partner', company.partner_id.id)
@@ -589,6 +594,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.MODULES_COA, self.coa, [])
         if self.new_company:
             self.create_company()
+        elif not self.test_company_id:
+            self.set_company_to_test(self.company_id)
         self.install_modules(modules_to_install)
         if self.load_coa and self.coa == 'test':
             self.mk_account_account(self.company_id.id)

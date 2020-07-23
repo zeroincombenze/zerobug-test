@@ -25,3 +25,4 @@ class MideaQci(models.Model):
                              required=True,
                              readonly=True,
                              default='draft')
+

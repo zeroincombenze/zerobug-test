@@ -26,3 +26,4 @@
     'maintainer': 'Antonio Maria Vigliotti',
     'development_status': 'Beta',
 }
+
