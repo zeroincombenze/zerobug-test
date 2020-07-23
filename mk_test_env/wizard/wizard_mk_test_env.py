@@ -33,10 +33,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
     _description = "Create Test Environment"
 
     MODULES_COA = {
-        'test': ['date_range'],
-        'l10n_it': ['l10n_it', 'date_range'],
-        'zero': ['l10n_it_fiscal', 'date_range'],
-        'axilor': ['l10n_it_coa_base', 'date_range']
+        'test': ['date_range', 'l10n_it_fiscalcode'],
+        'l10n_it': ['l10n_it', 'date_range', 'l10n_it_fiscalcode'],
+        'zero': ['l10n_it_fiscal', 'date_range', 'l10n_it_fiscalcode'],
+        'axilor': ['l10n_it_coa_base', 'date_range', 'l10n_it_fiscalcode']
     }
     errors = []
     STRUCT = {}
@@ -154,7 +154,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.status_mesg += 'Module %s installed\n' % module
         if to_install_modules:
             to_install_modules.button_immediate_install()
-            time.sleep(4)
+            time.sleep(2 * len(to_install_modules) + 2)
         for module in modules_to_install:
             module_ids = modules_model.search([('name', '=', module)])
             if not module_ids or module_ids[0].state != 'installed':
@@ -417,6 +417,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
         for xref in sorted(xrefs):
             self.store_xref(xref, model, company_id)
+        self._cr.commit()                      # pylint: disable=invalid-commit
 
     @api.model
     def mk_account_account(self, company_id):
@@ -481,6 +482,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 parent_id = self.store_xref(xref, model, company_id)
             else:
                 self.store_xref(xref, model, company_id, parent_id=parent_id)
+        self._cr.commit()  # pylint: disable=invalid-commit
 
     def mk_partner_bank(self, company_id):
         self.make_model(company_id, 'res.partner.bank')
@@ -591,6 +593,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.status_mesg = ''
         modules_to_install = self.add_modules(
             self.MODULES_COA, self.coa, [])
+        if self.load_product:
+            modules_to_install.append('stock')
         if self.new_company:
             self.create_company()
         elif not self.test_company_id:
