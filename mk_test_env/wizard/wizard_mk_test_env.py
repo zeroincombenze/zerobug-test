@@ -407,9 +407,12 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 else:
                     if 'id' in vals:
                         del vals['id']
-                    xid = self.env[model].create(vals).id
-                    self.ctr_rec_new += 1
-                if not parent_id or not parent_model:
+                    try:
+                        xid = self.env[model].create(vals).id
+                        self.ctr_rec_new += 1
+                    except BaseException:
+                        xid = False
+                if xid and (not parent_id or not parent_model):
                     self.add_xref(xref, model, xid)
         return xid
 
