@@ -26,9 +26,8 @@ services:
 addons:
   apt:
     sources:
-      - pov-wkhtmltopdf
-    # Search your sources alias here:
-    # https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
+      # Search your sources alias here:
+      # https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
     packages:
       # - build-essential                 # Pre-installed
       # - curl                            # Pre-installed
@@ -39,7 +38,7 @@ addons:
       - libssl-dev
       # - nodejs                          # Pre-installed
       # - npm                             # Pre-installed
-      - python-dev
+      - python3-dev
       # - python-setuptools               # Pre-installed
       # - wkhtmltopdf                     # Pre-installed
       - zlib1g
@@ -64,7 +63,7 @@ install:
 env:
   global:
   - TRAVIS_DEBUG_MODE="2"
-  - WKHTMLTOPDF_VERSION="0.12.5"
+  - WKHTMLTOPDF_VERSION="0.12.6"
   - VERSION="12.0" TESTS="0" LINT_CHECK="0" ODOO_TNLBOT="0"
 
 
