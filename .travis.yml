@@ -24,9 +24,8 @@ services:
 addons:
   apt:
     sources:
-      - pov-wkhtmltopdf
-    # Search your sources alias here:
-    # https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
+      # Search your sources alias here:
+      # https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
     packages:
       # - build-essential                 # Pre-installed
       # - curl                            # Pre-installed
@@ -45,7 +44,6 @@ addons:
 before_install:
   # Use Zeroincombenze(R) tools
   - git clone https://github.com/zeroincombenze/tools.git ${HOME}/tools --single-branch --depth=1
-  # - export PATH=${HOME}/tools/maintainer-quality-tools/travis:${PATH}
   - ${HOME}/tools/install_tools.sh -qopt
   - source ${HOME}/dev/activate_tools
   - export PYTHONPATH=${HOME}/tools
