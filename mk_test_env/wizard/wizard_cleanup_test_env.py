@@ -6,14 +6,14 @@
 #
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-import os
-from datetime import date, datetime, timedelta
+# import os
+# from datetime import date, datetime, timedelta
 
 from z0bug_odoo import z0bug_odoo_lib
-from os0 import os0
+# from os0 import os0
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+# from odoo.exceptions import UserError
 
 try:
     import odoo.release as release
