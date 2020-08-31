@@ -1,10 +1,10 @@
 
 =======================================
-|icon| Make Test Environment 10.0.0.1.0
+|icon| Manage Test Environment 12.0.0.4
 =======================================
 
 
-**Create or update test environment**
+**Create, update or clean-up test environment**
 
 .. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/10.0/mk_test_env/static/description/icon.png
 
@@ -17,7 +17,7 @@
 Overview / Panoramica
 =====================
 
-|en| Create test environment
+|en| Manage test environment
 ----------------------------
 
 N/D
@@ -45,6 +45,7 @@ Getting started / Come iniziare
 Installation / Installazione
 ----------------------------
 
+
 +---------------------------------+------------------------------------------+
 | |en|                            | |it|                                     |
 +---------------------------------+------------------------------------------+
@@ -54,7 +55,7 @@ Installation / Installazione
 |                                 |                                          |
 | Installation is built with:     | L'installazione è costruita con:         |
 +---------------------------------+------------------------------------------+
-| `Zeroincombenze Tools <https://github.com/zeroincombenze/tools>`__         |
+| `Zeroincombenze Tools <https://zeroincombenze-tools.readthedocs.io/>`__    |
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
@@ -64,12 +65,14 @@ Installation / Installazione
 ::
 
     cd $HOME
+    # Tools installation & activation: skip if you have installed this tool
     git clone https://github.com/zeroincombenze/tools.git
     cd ./tools
     ./install_tools.sh -p
     source /opt/odoo/dev/activate_tools
+    # Odoo installation
     odoo_install_repository zerobug-test -b 10.0 -O zero
-    sudo manage_odoo requirements -b 10.0 -vsy -o /opt/odoo/10.0
+    vem create /opt/odoo/VENV-10.0 -O 10.0 -DI
 
 From UI: go to:
 
@@ -77,10 +80,12 @@ From UI: go to:
 * |menu| Apps > Update Apps List
 * |menu| Setting > Apps |right_do| Select **mk_test_env** > Install
 
+
 |
 
 Upgrade / Aggiornamento
 -----------------------
+
 
 +---------------------------------+------------------------------------------+
 | |en|                            | |it|                                     |
@@ -92,7 +97,15 @@ Upgrade / Aggiornamento
 
 ::
 
+    cd $HOME
+    # Tools installation & activation: skip if you have installed this tool
+    git clone https://github.com/zeroincombenze/tools.git
+    cd ./tools
+    ./install_tools.sh -p
+    source /opt/odoo/dev/activate_tools
+    # Odoo upgrade
     odoo_install_repository zerobug-test -b 10.0 -O zero -U
+    vem amend /opt/odoo/VENV-10.0 -O 10.0 -DI
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
@@ -183,7 +196,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2020-02-29
+Last Update / Ultimo aggiornamento: 2020-08-31
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-black.png
     :target: https://odoo-community.org/page/development-status
@@ -203,14 +216,14 @@ Last Update / Ultimo aggiornamento: 2020-02-29
 .. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/10.0/graph/badge.svg
     :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/10.0
     :alt: Codecov
-.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-10.svg
+.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-12.svg
     :target: https://wiki.zeroincombenze.org/en/Odoo/10.0/dev
     :alt: Technical Documentation
-.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-10.svg
+.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-12.svg
     :target: https://wiki.zeroincombenze.org/it/Odoo/10.0/man
     :alt: Technical Documentation
-.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-10.svg
-    :target: https://erp10.zeroincombenze.it
+.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-12.svg
+    :target: https://erp12.zeroincombenze.it
     :alt: Try Me
 .. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/10.0/graph/badge.svg
     :target: https://codecov.io/gh/OCA/zerobug-test/branch/10.0
@@ -242,4 +255,5 @@ Last Update / Ultimo aggiornamento: 2020-02-29
 .. |FatturaPA| image:: https://raw.githubusercontent.com/zeroincombenze/grymb/master/certificates/ade/icons/fatturapa.png
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
-   :target: https://tawk.to/85d4f6e06e68dd4e358797643fe5ee67540e408b
+   :target: https://t.me/axitec_helpdesk
+
