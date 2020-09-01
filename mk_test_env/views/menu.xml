@@ -2,20 +2,20 @@
 <odoo>
 
     <act_window id="action_mk_test_env"
-                key2="client_action_multi"
-                name="Create Test Environment"
-                res_model="wizard.make.test.environment"
-                view_mode="form"
-                target="new"
-    />
+        key2="client_action_multi"
+        name="Create Test Environment"
+        res_model="wizard.make.test.environment"
+        view_mode="form"
+        target="new"
+        />
 
     <act_window id="action_cleanup_test_env"
-                key2="client_action_multi"
-                name="Clean-up Test Environment"
-                res_model="wizard.cleanup.test.environment"
-                view_mode="form"
-                target="new"
-    />
+        key2="client_action_multi"
+        name="Clean-up Test Environment"
+        res_model="wizard.cleanup.test.environment"
+        view_mode="form"
+        target="new"
+        />
 
     <menuitem id="menu_mk_test_env"
               name="Create Test Environment"
@@ -23,7 +23,7 @@
               parent="base.next_id_9"
               groups="base.group_no_one"
               sequence="90"
-    />
+              />
 
     <menuitem id="menu_cleanup_test_env"
               name="Clean-up Test Environment"
@@ -31,6 +31,7 @@
               parent="base.next_id_9"
               groups="base.group_no_one"
               sequence="91"
-    />
+              />
 
 </odoo>
+

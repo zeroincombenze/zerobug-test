@@ -8,4 +8,3 @@
 #
 from . import midea_qci
 from . import midea_table_wco
-

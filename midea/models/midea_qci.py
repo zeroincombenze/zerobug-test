@@ -6,7 +6,7 @@
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class MideaQci(models.Model):
@@ -24,4 +24,3 @@ class MideaQci(models.Model):
                              required=True,
                              readonly=True,
                              default='draft')
-
