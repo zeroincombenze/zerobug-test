@@ -6,7 +6,7 @@
         <field name="model">wizard.make.test.environment</field>
         <field name="arch" type="xml">
             <form string="Create Test Environment">
-               <separator string="Data selection"/>
+                <separator string="Data selection"/>
                 <group>
                     <group>
                         <field name="force_test_values"/>
@@ -60,3 +60,4 @@
     </record>
 
 </odoo>
+

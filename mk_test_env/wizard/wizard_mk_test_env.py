@@ -74,7 +74,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
          ('zero', 'Zeroincombenze CoA'),
          ('axilor', 'Experimental Axilor CoA'),
          ('test', 'Test Chart od Account')],
-         'Chart of Account',
+        'Chart of Account',
         help='Select Chart od Account to install, if new company\n'
              '"Default Odoo Chart Account" (module l10n_it) is minimal\n'
              '"Zeroincombenze CoA" (module l10n_it_fiscal) is a full CoA\n'
