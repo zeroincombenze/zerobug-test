@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+<data>
 
-        <menuitem id="menu_midea_table" name="My idea"
-                  parent="base.menu_administration" sequence="750" />
-        <menuitem id="menu_midea_no_company_test" name="My idea test (no company)"
-                  action="midea.action_test_noc"
-                  parent="menu_midea_table" sequence="50"/>
-        <menuitem id="menu_midea_table_wco_test" name="My idea test (with company)"
-                  action="midea.action_test_wco"
-                  parent="menu_midea_table" sequence="60"/>
+    <menuitem id="menu_midea_table" name="Dev.Quality" sequence="750"/>
+    <!-- parent="base.menu_administration" sequence="750"/> -->
+    <menuitem id="menu_midea_qci_test" name="Quality Check Id"
+              action="midea.action_qci"
+              parent="menu_midea_table" sequence="50"/>
+    <menuitem id="menu_midea_table_wco_test" name="My idea test (with company)"
+              action="midea.action_test_wco"
+              parent="menu_midea_table" sequence="60"/>
 
-    </data>
+</data>
 </openerp>
+

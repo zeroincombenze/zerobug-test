@@ -10,10 +10,11 @@
 from openerp.osv import orm, fields
 
 
-class MideaNoCompany(orm.Model):
-    _name = 'midea.no_company'
+class MideaQci(orm.Model):
+    _name = 'midea.qci'
 
     _columns = {
+        'code': fields.char('Code', required=True),
         'name': fields.char('Name',
                             required=True,
                             translate=True),

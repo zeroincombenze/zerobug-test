@@ -7,7 +7,6 @@
 #
 # License APGL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-import os
 import logging
 
 from z0bug_odoo import test_common, z0bug_odoo_lib
@@ -17,7 +16,6 @@ _logger = logging.getLogger(__name__)
 
 class TestMidea(test_common.SingleTransactionCase):
 
-
     def setUp(self):
         super(TestMidea, self).setUp()
 
@@ -26,3 +24,6 @@ class TestMidea(test_common.SingleTransactionCase):
             'res.partner', 'z0bug.res_partner_1')
         _logger.info(
             'Test %s SUCCESSFULLY ended.' % __file__)
+        self.assertEqual(res['name'], 'Prima Distribuzione S.p.A.')
+        self.assertEqual(res['zip'], '20022')
+        self.assertEqual(res['city'], 'Castano Primo')

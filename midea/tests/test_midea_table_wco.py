@@ -7,6 +7,7 @@
 #
 # License APGL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
+from past.builtins import long
 # import os
 import logging
 
