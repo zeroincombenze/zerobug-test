@@ -176,4 +176,3 @@ class WizardCleanupTestEnvironment(orm.TransientModel):
 
     def close_window(self):
         return
-

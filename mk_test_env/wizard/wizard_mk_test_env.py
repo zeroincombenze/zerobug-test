@@ -10,7 +10,6 @@
 from past.builtins import basestring
 from builtins import int
 # import os
-from datetime import date, datetime, timedelta
 
 from z0bug_odoo import z0bug_odoo_lib
 

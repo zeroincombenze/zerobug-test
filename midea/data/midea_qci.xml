@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="0">
+<data noupdate="0">
     <record model="midea.qci">
         <field name="code">pay.SCT</field>
         <field name="name">Credit Transfer payment / Pagamento bonifico</field>
@@ -150,5 +150,6 @@
         <field name="name">Sale invoice with out of vat / Fattura di vendita con FC art. 15</field>
     </record>
 
-    </data>
+</data>
 </openerp>
+

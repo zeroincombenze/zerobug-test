@@ -12,29 +12,17 @@ from datetime import datetime, date, timedelta
 
 from z0bug_odoo import z0bug_odoo_lib
 
-from openerp.osv import fields, orm
+from openerp.osv import orm
 from openerp import release
-from openerp.exceptions import Warning as UserError
+# from openerp.exceptions import Warning as UserError
 
 _logger = logging.getLogger(__name__)
-try:
-    from python_plus import unicodes
-except ImportError as err:
-    _logger.error(err)
 try:
     from odoo_score import odoo_score
 except ImportError as err:
     _logger.error(err)
 try:
-    from unidecode import unidecode
-except ImportError as err:
-    _logger.error(err)
-try:
     from os0 import os0
-except ImportError as err:
-    _logger.error(err)
-try:
-    import oerplib
 except ImportError as err:
     _logger.error(err)
 

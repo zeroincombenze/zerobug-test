@@ -38,4 +38,3 @@
     'maintainer': 'Zeroincombenze (R)',
     'development_status': 'Alpha',
 }
-

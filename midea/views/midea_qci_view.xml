@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+<data>
 
     <record model="ir.ui.view" id="view_midea_tree">
         <field name="name">Midea qci - table without company (tree)</field>
@@ -22,10 +22,10 @@
         <field name="priority" eval="16"/>
         <field name="arch" type="xml">
             <form string="Midea form">
-                    <field name="code"/>
-                    <field name="name"/>
-                    <field name="active"/>
-                    <field name="state"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="active"/>
+                <field name="state"/>
             </form>
         </field>
     </record>
@@ -37,5 +37,6 @@
         <field name="view_id" ref="view_midea_tree"/>
     </record>
 
-    </data>
+</data>
 </openerp>
+
