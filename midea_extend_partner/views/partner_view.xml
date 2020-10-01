@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record model="ir.ui.view" id="midea_res_partner">
+        <field name="name">Extend res.partner model</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="customer" position="after">
+                <field name="zone"/>
+            </field>
+        </field>
+    </record>
+
+</data>
+</openerp>
+
