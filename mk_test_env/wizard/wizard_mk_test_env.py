@@ -5,7 +5,7 @@
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 #
 from past.builtins import basestring
 from builtins import int
@@ -33,7 +33,7 @@ class WizardMakeTestEnvironment(orm.TransientModel):
     MODULES_COA = {
         'l10n_it': ['l10n_it', 'date_range'],
         'zero': ['l10n_it_fiscal', 'date_range'],
-        'axilor': ['l10n_it_fiscal', 'l10n_it_coa_base', 'date_range']
+        'axilor': ['l10n_it_coa_base', 'date_range']
     }
     errors = []
 
@@ -99,6 +99,9 @@ class WizardMakeTestEnvironment(orm.TransientModel):
         # We do not use standard self.pool.ref() because we need False value
         # if xref does not exits instead of exception
         # and we need to get id or record by parameter
+        if (xref == 'product.product_uom_unit' and
+                int(release.major_version.split('.')[0]) >= 12):
+            xref = 'uom.product_uom_unit'
         xrefs = xref.split('.')
         if len(xrefs) == 2:
             model = self.pool['ir.model.data']
