@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record model="ir.ui.view" id="midea.no_company_tree">
+            <field name="name">Midea table without company (tree)</field>
+            <field name="model">midea.no_company</field>
+            <field name="type">form</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="Midea table without company">
+                    <field name="name"/>
+                    <field name="active"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="midea.no_company_form">
+            <field name="name">Midea table without company (form)</field>
+            <field name="model">midea.no_company</field>
+            <field name="type">form</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <form string="Midea form">
+                    <field name="name"/>
+                    <field name="active"/>
+                    <field name="state"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="midea.action_test_noc" model="ir.actions.act_window">
+            <field name="name">My idea test record</field>
+            <field name="res_model">midea.no_company</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="midea.no_company_tree"/>
+        </record>
+
+</odoo>
