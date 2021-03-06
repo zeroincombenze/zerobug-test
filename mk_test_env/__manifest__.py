@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2019-20 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
+# Copyright 2019-21 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
 {
     'name': 'Manage Test Environment',
     'summary': 'Create, update or clean-up test environment',
-    'version': '12.0.0.4',
+    'version': '12.0.0.5',
     'category': 'Tools',
     'author': 'SHS-AV s.r.l.',
     'website': 'https://www.zeroincombenze.it/servizi-le-imprese/',
