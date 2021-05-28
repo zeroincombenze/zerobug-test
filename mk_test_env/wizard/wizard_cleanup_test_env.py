@@ -1,14 +1,13 @@
 #
-# Copyright 2019-20 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
+# Copyright 2019-21 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
 # import os
 # from datetime import date, datetime, timedelta
-
 from z0bug_odoo import z0bug_odoo_lib
 # from os0 import os0
 
@@ -113,6 +112,7 @@ class WizardCleanupTestEnvironment(models.TransientModel):
                 self.env.cr.rollback()         # pylint: disable=invalid-commit
         self.rm_ref(xref)
         self.env.cr.commit()                   # pylint: disable=invalid-commit
+
 
     @api.model
     def clean_model(self, model, action=None):

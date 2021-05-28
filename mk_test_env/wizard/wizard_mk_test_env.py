@@ -1,10 +1,10 @@
 #
-# Copyright 2019-20 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
+# Copyright 2019-21 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
 from past.builtins import basestring
 from builtins import int
@@ -36,7 +36,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         'test': ['date_range', 'l10n_it_fiscalcode'],
         'l10n_it': ['l10n_it', 'date_range', 'l10n_it_fiscalcode'],
         'zero': ['l10n_it_fiscal', 'date_range', 'l10n_it_fiscalcode'],
-        'axilor': ['l10n_it_coa_base', 'date_range', 'l10n_it_fiscalcode']
+        'powerp': ['l10n_it_coa_base', 'date_range', 'l10n_it_fiscalcode']
     }
     errors = []
     STRUCT = {}
@@ -100,13 +100,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
         # if xref does not exits instead of exception
         # and we need to get id or record by parameter
         if (xref == 'product.product_uom_unit' and
-                int(release.major_version.split('.')[0]) >= 12):
+                eval(release.major_version.split('.')[0]) >= 12):
             xref = 'uom.product_uom_unit'
         xrefs = xref.split('.')
         if len(xrefs) == 2:
             model = self.env['ir.model.data']
             recs = model.search([('module', '=', xrefs[0]),
-                                ('name', '=', xrefs[1])])
+                                 ('name', '=', xrefs[1])])
             if recs:
                 if retxref_id:
                     return recs[0].id
@@ -214,7 +214,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 if (model == 'account.payment.term.line' and
                         field == 'months' and
                         vals[field]):
-                    vals['days'] = (int(vals[field]) * 30) - 2
+                    vals['days'] = (eval(vals[field]) * 30) - 2
                 del vals[field]
                 continue
             if (model == 'account.account' and
@@ -247,7 +247,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 continue
             elif model == 'account.payment.term.line' and field == 'option':
                 if (vals[field] == 'fix_day_following_month' and
-                        int(release.major_version.split('.')[0]) >= 12):
+                        eval(release.major_version.split('.')[0]) >= 12):
                     vals[field] = 'day_following_month'
             elif field == 'id':
                 continue
@@ -387,6 +387,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
             xid = self.env_ref(xref)
         if not xid or self.force_test_values:
             vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(model, xref)
+            # TODO > Hotfix
+            if model == 'account.payment.term.line':
+                if (vals['option'] == 'fix_day_following_month' and
+                        eval(release.major_version.split('.')[0]) >= 12):
+                    vals['option'] = 'after_invoice_month'
             if seq:
                 vals['sequence'] = seq
             vals, parent_name = self.bind_fields(
@@ -406,9 +411,15 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 else:
                     if 'id' in vals:
                         del vals['id']
-                    xid = self.env[model].create(vals).id
-                    self.ctr_rec_new += 1
-                if not parent_id or not parent_model:
+                    try:
+                        xid = self.env[model].create(vals).id
+                        self.ctr_rec_new += 1
+                    except BaseException as e:
+                        self._cr.rollback()  # pylint: disable=invalid-commit
+                        self.status_mesg += ('Error %s\n' % e)
+                        xid = False
+                        raise UserError(self.status_mesg)
+                if xid and (not parent_id or not parent_model):
                     self.add_xref(xref, model, xid)
         return xid
 
