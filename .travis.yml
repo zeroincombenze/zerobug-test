@@ -32,6 +32,7 @@ addons:
       - expect-dev
       # - less-plugin-clean-css           # Pre-installed
       # - lessc                           # Pre-installed
+      - libevent-dev
       - libffi-dev
       - libssl-dev
       # - nodejs                          # Pre-installed
@@ -44,8 +45,8 @@ addons:
 before_install:
   # Use Zeroincombenze(R) tools
   - git clone https://github.com/zeroincombenze/tools.git ${HOME}/tools --single-branch --depth=1
-  - ${HOME}/tools/install_tools.sh -qopt
-  - source ${HOME}/dev/activate_tools
+  - ${HOME}/tools/install_tools.sh -qpt
+  - source ${HOME}/devel/activate_tools
   - export PYTHONPATH=${HOME}/tools
 
 install:

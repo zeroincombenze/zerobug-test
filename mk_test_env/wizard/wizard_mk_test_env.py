@@ -12,10 +12,7 @@ from builtins import int
 # import os
 from datetime import date, datetime, timedelta
 import time
-
-from z0bug_odoo import z0bug_odoo_lib
-
-from os0 import os0
+import calendar
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -28,17 +25,45 @@ except ImportError:
     except ImportError:
         release = ''
 
+from z0bug_odoo import z0bug_odoo_lib
+from os0 import os0
+from clodoo import transodoo
+
+
+MODULES_NEEDED = {
+    '': ['calendar', 'mail', 'product', 'stock'],
+    'coa': {
+        'test': [],
+        'l10n_it': ['l10n_it'],
+        'zero': ['l10n_it_fiscal'],
+        'powerp': ['l10n_it_coa_base']
+    },
+    'load_coa': {
+        '': [],
+        'coa': ['date_range',
+                'account_payment_term_extension',
+                'l10n_it_fiscalcode'],
+        'sp': ['l10n_it_split_payment'],
+        'li': ['l10n_it_lettera_intento'],
+        'rc': ['l10n_it_reverse_charge'],
+        'wh': ['l10n_it_withholding_tax'],
+        'sct': ['account_banking_sepa_credit_transfer'],
+        'sdd': ['account_banking_sepa_direct_debit'],
+        'conai': ['l10n_it_conai'],
+    },
+    'load_product': [],
+    'load_partner': ['partner_bank'],
+    'load_sale_order': ['sale', 'l10n_it_ddt'],
+    'load_purchase_order': ['purchase'],
+    'load_invoice': ['account', 'account_accountant', 'account_cancel',
+                     'payment', 'l10n_it_einvoice_in', 'l10n_it_einvoice_out'],
+}
+COA_MODULES = ['l10n_it', 'l10n_it_fiscal', 'l10n_it_coa_base']
 
 class WizardMakeTestEnvironment(models.TransientModel):
     _name = "wizard.make.test.environment"
     _description = "Create Test Environment"
 
-    MODULES_COA = {
-        'test': ['date_range', 'l10n_it_fiscalcode'],
-        'l10n_it': ['l10n_it', 'date_range', 'l10n_it_fiscalcode'],
-        'zero': ['l10n_it_fiscal', 'date_range', 'l10n_it_fiscalcode'],
-        'powerp': ['l10n_it_coa_base', 'date_range', 'l10n_it_fiscalcode']
-    }
     errors = []
     STRUCT = {}
 
@@ -72,17 +97,27 @@ class WizardMakeTestEnvironment(models.TransientModel):
         [('none', 'No chart of account'),
          ('l10n_it', 'Default Odoo CoA'),
          ('zero', 'Zeroincombenze CoA'),
-         ('axilor', 'Experimental Axilor CoA'),
+         ('powerp', 'Experimental Powerp CoA'),
          ('test', 'Test Chart od Account')],
         'Chart of Account',
         help='Select Chart od Account to install, if new company\n'
              '"Default Odoo Chart Account" (module l10n_it) is minimal\n'
              '"Zeroincombenze CoA" (module l10n_it_fiscal) is a full CoA\n'
-             '"Axilor CoA" is a Zeroincombenze CoA plus multilevel accounts\n'
+             '"Powero CoA" means manual CoA\n'
              '"Test" is internal testing CoA',
-        default='test')
+        default='zero')
     set_seq = fields.Boolean('Set line sequence')
-    load_coa = fields.Boolean('Load chart of account')
+    load_coa = fields.Selection(
+        [('', 'Minimal'),
+         ('coa', 'Load CoA'),
+         ('sp', 'Split Payment'),
+         ('li', 'Lettere Intento'),
+         ('rc', 'Reverse Charge'),
+         ('wh', 'Withholding Tax'),
+         ('sct', 'Sepa Credit Transfer'),
+         ('sdd', 'Sepa Direct Debit'),
+         ('conai', 'Conai'),
+         ], 'Load specific account')
     load_partner = fields.Boolean('Load partners')
     load_product = fields.Boolean('Load products')
     load_image = fields.Boolean('Load record images')
@@ -135,33 +170,55 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.ctr_rec_upd += 1
         return id
 
-    @api.model
-    def add_modules(self, DICT, selector, module_list):
-        if selector in DICT:
-            modules = DICT[selector]
-            if isinstance(modules, (list, tuple)):
-                return module_list + modules
-            module_list.append(modules)
+    def get_module_list(self):
+        module_list = []
+        for item in MODULES_NEEDED.keys():
+            if not item or getattr(self, item):
+                if isinstance(MODULES_NEEDED[item], (list, tuple)):
+                    module_list += MODULES_NEEDED[item]
+                elif isinstance(MODULES_NEEDED[item], dict):
+                    module_list += MODULES_NEEDED[item].get(getattr(self, item))
+        if not any([x for x in module_list if x in COA_MODULES]):
+            module_list.append('l10n_it_fiscal')
         return module_list
 
     @api.model
     def install_modules(self, modules_to_install):
+        modules_to_install = list(set(modules_to_install))
         modules_model = self.env['ir.module.module']
         to_install_modules = modules_model
         for module in modules_to_install:
             module_ids = modules_model.search([('name', '=', module)])
             if module_ids and module_ids[0].state == 'uninstalled':
+                if len(modules_to_install) != 1 and module in COA_MODULES:
+                    # CoA modules must be installed before others
+                    self.install_modules([module])
+                    continue
                 to_install_modules += module_ids[0]
                 self.status_mesg += 'Module %s installed\n' % module
+        max_time_to_wait = 5
         if to_install_modules:
             to_install_modules.button_immediate_install()
-            time.sleep(2 * len(to_install_modules) + 2)
-        for module in modules_to_install:
-            module_ids = modules_model.search([('name', '=', module)])
-            if not module_ids or module_ids[0].state != 'installed':
-                raise UserError(
-                    'Module %s not installed!' % module)
+            max_time_to_wait = 4 * len(to_install_modules) + 5
+        while max_time_to_wait > 0:
+            time.sleep(1)
+            max_time_to_wait -= 1
+            found_uninstalled = False
+            for module in modules_to_install:
+                module_ids = modules_model.search([('name', '=', module)])
+                if not module_ids or module_ids[0].state != 'installed':
+                    found_uninstalled = module
+                    break
+        if found_uninstalled:
+            raise UserError(
+                'Module %s not installed!' % found_uninstalled)
         return
+
+    def get_tnldict(self):
+        if not hasattr(self, 'tnldict'):
+            self.tnldict = {}
+            transodoo.read_stored_dict(self.tnldict)
+        return self.tnldict
 
     def setup_model_structure(self, model):
         """Store model structure into memory"""
@@ -169,21 +226,22 @@ class WizardMakeTestEnvironment(models.TransientModel):
             return
         if model in self.STRUCT:
             return
-        self.STRUCT[model] = self.STRUCT.get(model, {})
-        for field in self.env['ir.model.fields'].search(
-                [('model', '=', model)]):
-            attrs = {}
-            for attr in ('required', 'readonly'):
-                attrs[attr] = field[attr]
-            if attrs['required']:
-                attrs['readonly'] = False
-            if (field.ttype in ('binary', 'reference') or
-                    (hasattr(field, 'related') and field.related and
-                     not field.required)):
-                attrs['readonly'] = True
-            attrs['ttype'] = field.ttype
-            attrs['relation'] = field.relation
-            self.STRUCT[model][field.name] = attrs
+        self.STRUCT[model] = self.env[model].fields_get()
+        # self.STRUCT[model] = self.STRUCT.get(model, {})
+        # for field in self.env['ir.model.fields'].search(
+        #         [('model', '=', model)]):
+        #     attrs = {}
+        #     for attr in ('required', 'readonly'):
+        #         attrs[attr] = field[attr]
+        #     if attrs['required']:
+        #         attrs['readonly'] = False
+        #     if (field.ttype in ('binary', 'reference') or
+        #             (hasattr(field, 'related') and field.related and
+        #              not field.required)):
+        #         attrs['readonly'] = True
+        #     attrs['ttype'] = field.ttype
+        #     attrs['relation'] = field.relation
+        #     self.STRUCT[model][field.name] = attrs
 
     def get_domain_field(self, model, vals, company_id,
                          field=None, parent_id=None, parent_name=None):
@@ -252,23 +310,26 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     vals[field] = 'day_following_month'
             elif field == 'id':
                 continue
-            elif parent_id and attrs.get('relation') == parent_model:
+            elif parent_id and (
+                    (parent_model and
+                     attrs.get('relation', '/') == parent_model) or
+                    (not parent_model and
+                     attrs.get('relation', '/') == model)):
                 vals[field] = parent_id
                 parent_name = field
             elif field == 'company_id':
                 vals[field] = company_id
                 continue
-            elif (attrs['ttype'] in (
-                    'many2one', 'one2many', 'many2many') and
-                  len(vals[field].split('.')) == 2):
-                if attrs['ttype'] == 'many2one':
-                    vals[field] = self.env_ref(vals[field])
-                else:
-                    vals[field] = [(6, 0, [self.env_ref(vals[field])])]
+            elif attrs['type'] in ('many2one', 'one2many', 'many2many'):
+                if len(vals[field].split('.')) == 2:
+                    if attrs['type'] == 'many2one':
+                        vals[field] = self.env_ref(vals[field])
+                    else:
+                        vals[field] = [(6, 0, [self.env_ref(vals[field])])]
                 continue
-            elif attrs['ttype'] == 'boolean':
+            elif attrs['type'] == 'boolean':
                 vals[field] = os0.str2bool(vals[field], False)
-            elif attrs['ttype'] == 'date':
+            elif attrs['type'] == 'date':
                 if vals[field].startswith('+'):
                     vals[field] = str(
                         date.today() + timedelta(int(vals[field][1:])))
@@ -285,10 +346,19 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                 items[i] = date.today().month - 1
                             elif i == 2:
                                 items[i] = date.today().day - 1
-                            if item[i] == 0:
-                                item[i] = 1
+                        else:
+                            items[i] = int(items[i])
+                    if len(items) > 1:
+                        if items[2] < 1:
+                            items[1] -= 1
+                        if items[1] < 1:
+                            items[1] = 12
+                            items[0] -= 1
+                        if items[2] < 1:
+                            items[2] = calendar.monthrange(items[0],
+                                                           items[1])[1]
                     vals[field] = '%04d-%02d-%02d' % (
-                        int(items[0]), int(items[1]), int(items[2]))
+                        items[0], items[1], items[2])
                 elif vals[field].find('#>') >= 0:
                     items = vals[field].split('-')
                     for i, item in enumerate(items):
@@ -297,14 +367,23 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                 items[i] = date.today().year + 1
                             elif i == 1:
                                 items[i] = date.today().month + 1
-                                if item[i] > 12:
-                                    item[i] = 12
                             elif i == 2:
                                 items[i] = date.today().day + 1
-                                if item[i] > 31:
-                                    item[i] = 31
+                        else:
+                            items[i] = int(items[i])
+                    if len(items) > 1:
+                        if items[1] > 12:
+                            items[1] = 1
+                            items[0] += 1
+                        if items[2] > calendar.monthrange(items[0],
+                                                          items[1])[1]:
+                            items[2] = 1
+                            items[1] += 1
+                            if items[1] > 12:
+                                items[1] = 1
+                                items[0] += 1
                     vals[field] = '%04d-%02d-%02d' % (
-                        int(items[0]), int(items[1]), int(items[2]))
+                        items[0], items[1], items[2])
                 elif vals[field].find('#') >= 0:
                     items = vals[field].split('-')
                     for i, item in enumerate(items):
@@ -315,9 +394,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                 items[i] = date.today().month
                             elif i == 2:
                                 items[i] = date.today().day
+                        else:
+                            items[i] = int(items[i])
                     vals[field] = '%04d-%02d-%02d' % (
-                        int(items[0]), int(items[1]), int(items[2]))
-            elif attrs['ttype'] == 'datetime':
+                        items[0], items[1], items[2])
+            elif attrs['type'] == 'datetime':
                 if vals[field].startswith('+'):
                     vals[field] = str(
                         datetime.today() + timedelta(int(vals[field][1:])))
@@ -356,10 +437,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
             if not attrs:
                 del vals[field]
             if rec:
-                if attrs['ttype'] == 'many2one':
-                    if rec[field] and vals[field] == rec[field].id:
+                if attrs['type'] == 'many2one':
+                    if ((rec[field] and vals[field] == rec[field].id) or
+                            (not rec[field] and not vals[field])):
                         del vals[field]
-                elif attrs['ttype'] == 'boolean':
+                elif attrs['type'] == 'boolean':
                     if isinstance(
                             vals[field], bool) and vals[field] == rec[field]:
                         del vals[field]
@@ -493,6 +575,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             if len(xref) <= 20 or xref == 'z0bug.partner_mycompany':
                 parent_id = self.store_xref(xref, model, company_id)
             else:
+                parent_id = self.env_ref(xref[:-2])
                 self.store_xref(xref, model, company_id, parent_id=parent_id)
         self._cr.commit()  # pylint: disable=invalid-commit
 
@@ -603,19 +686,16 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.ctr_rec_upd = 0
         self.ctr_rec_del = 0
         self.status_mesg = ''
-        modules_to_install = self.add_modules(
-            self.MODULES_COA, self.coa, [])
-        if self.load_product:
-            modules_to_install.append('stock')
+        modules_to_install = self.get_module_list()
+        self.install_modules(modules_to_install)
         if self.new_company:
             self.create_company()
         elif not self.test_company_id:
             self.set_company_to_test(self.company_id)
-        self.install_modules(modules_to_install)
-        if self.load_coa and self.coa == 'test':
+        if self.load_coa and self.coa in ('test', 'powerp'):
             self.mk_account_account(self.company_id.id)
             self.mk_account_tax(self.company_id.id)
-        if self.load_coa:
+        if self.load_coa == 'coa':
             self.mk_fiscal_position(self.company_id.id)
             self.mk_date_range(self.company_id.id)
             self.mk_payment(self.company_id.id)
