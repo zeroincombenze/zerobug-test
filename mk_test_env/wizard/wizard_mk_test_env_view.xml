@@ -14,19 +14,19 @@
                     <field name="new_company"
                            attrs="{'readonly': [('test_company_id', '!=', False)]}"/>
                     <field name="company_id"
-                           attrs="{'readonly': ['|', ('test_company_id', '!=', False), ('new_company', '!=', False)]}"/>
+                           attrs="{'readonly': [('test_company_id', '!=', False)], 'invisible': [('new_company', '!=', False)]}"/>
                     <field name="coa"
-                           attrs="{'readonly': [('load_coa', '=', False)]}"/>
+                           attrs="{'readonly': [('test_company_id', '!=', False)]}"/>
                     <field name="set_seq"/>
                 </group>
                 <group colspan="2">
-                    <field name="load_coa"/>
+                    <field name="load_coa" attrs="{'readonly': [('new_company', '!=', False)]}"/>
                     <field name="load_partner"/>
                     <field name="load_product"/>
                     <field name="load_image"/>
-                    <field name="load_sale_order"/>
-                    <field name="load_purchase_order"/>
-                    <field name="load_invoice"/>
+                    <field name="load_sale_order" attrs="{'readonly': [('new_company', '!=', False)]}"/>
+                    <field name="load_purchase_order" attrs="{'readonly': [('new_company', '!=', False)]}"/>
+                    <field name="load_invoice" attrs="{'readonly': [('new_company', '!=', False)]}"/>
                 </group>
                 <group colspan="4">
                     <button name="make_test_environment" string="Create" type="object" class="oe_highlight"/>

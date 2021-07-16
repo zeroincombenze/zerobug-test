@@ -10,7 +10,7 @@
 {
     'name': 'Manage Test Environment',
     'summary': 'Create, update or clean-up test environment',
-    'version': '8.0.0.1.2',
+    'version': '8.0.0.5',
     'category': 'Tools',
     'author': 'SHS-AV s.r.l.',
     'website': 'https://www.zeroincombenze.it/servizi-le-imprese/',
@@ -33,8 +33,7 @@
         'wizard/wizard_mk_test_env_view.xml',
         # 'wizard/wizard_cleanup_test_env_view.xml',
     ],
-    'installable': False,
+    'installable': True,
     'maintainer': 'Zeroincombenze (R)',
     'development_status': 'Alpha',
 }
-

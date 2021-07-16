@@ -7,14 +7,14 @@
 #
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 #
-import os
-from datetime import date, datetime, timedelta
+# import os
 
 from z0bug_odoo import z0bug_odoo_lib
-from os0 import os0
+# from os0 import os0
 
-from odoo import fields
-from odoo.exceptions import Warning as UserError
+from openerp import fields, models
+#from openerp.exceptions import Warning as UserError
+
 try:
     import odoo.release as release
 except ImportError:
@@ -176,4 +176,3 @@ class WizardCleanupTestEnvironment(models.TransientModel):
 
     def close_window(self):
         return
-

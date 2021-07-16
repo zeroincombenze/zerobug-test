@@ -1,12 +1,12 @@
 
-=======================================
-|icon| Make Test Environment 10.0.0.1.0
-=======================================
+========================================
+|icon| Manage Test Environment 8.0.0.1.2
+========================================
 
 
-**Create or update test environment**
+**Create, update or clean-up test environment**
 
-.. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/10.0/mk_test_env/static/description/icon.png
+.. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/None/8.0//static/description/icon.png
 
 |Maturity| |Build Status| |Codecov Status| |license gpl| |Try Me|
 
@@ -14,10 +14,11 @@
 .. contents::
 
 
+
 Overview / Panoramica
 =====================
 
-|en| Create test environment
+|en| Manage test environment
 ----------------------------
 
 N/D
@@ -45,62 +46,77 @@ Getting started / Come iniziare
 Installation / Installazione
 ----------------------------
 
+
 +---------------------------------+------------------------------------------+
 | |en|                            | |it|                                     |
 +---------------------------------+------------------------------------------+
-| These instruction are just an   | Istruzioni di esempio valide solo per    |
-| example to remember what        | distribuzioni Linux CentOS 7, Ubuntu 14+ |
-| you have to do on Linux.        | e Debian 8+                              |
+| These instructions are just an  | Istruzioni di esempio valide solo per    |
+| example; use on Linux CentOS 7+ | distribuzioni Linux CentOS 7+,           |
+| Ubuntu 14+ and Debian 8+        | Ubuntu 14+ e Debian 8+                   |
 |                                 |                                          |
 | Installation is built with:     | L'installazione è costruita con:         |
 +---------------------------------+------------------------------------------+
-| `Zeroincombenze Tools <https://github.com/zeroincombenze/tools>`__         |
+| `Zeroincombenze Tools <https://zeroincombenze-tools.readthedocs.io/>`__    |
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
-| /home/odoo/10.0/zerobug-test/                                              |
+| $HOME/8.0                                                                  |
 +----------------------------------------------------------------------------+
 
 ::
 
     cd $HOME
+    # *** Tools installation & activation ***
+    # Case 1: you have not installed zeroincombenze tools
     git clone https://github.com/zeroincombenze/tools.git
-    cd ./tools
+    cd $HOME/tools
     ./install_tools.sh -p
-    source /opt/odoo/dev/activate_tools
-    odoo_install_repository zerobug-test -b 10.0 -O zero
-    sudo manage_odoo requirements -b 10.0 -vsy -o /opt/odoo/10.0
+    source $HOME/devel/activate_tools
+    # Case 2: you have already installed zeroincombenze tools
+    cd $HOME/tools
+    ./install_tools.sh -U
+    source $HOME/devel/activate_tools
+    # *** End of tools installation or upgrade ***
+    # Odoo repository installation; OCB repository must be installed
+    odoo_install_repository None -b 8.0 -O zero -o $HOME/8.0
+    vem create $HOME/8.0/venv_odoo -O 8.0 -a "*" -DI -o $HOME/8.0
 
 From UI: go to:
 
-* |menu| Setting > Activate Developer mode 
-* |menu| Apps > Update Apps List
-* |menu| Setting > Apps |right_do| Select **mk_test_env** > Install
+* |menu| Setting > Modules > Update Modules List
+* |menu| Setting > Local Modules |right_do| Select **** > Install
+
 
 |
 
 Upgrade / Aggiornamento
 -----------------------
 
-+---------------------------------+------------------------------------------+
-| |en|                            | |it|                                     |
-+---------------------------------+------------------------------------------+
-| When you want upgrade and you   | Per aggiornare, se avete installato con  |
-| installed using above           | le istruzioni di cui sopra:              |
-| statements:                     |                                          |
-+---------------------------------+------------------------------------------+
 
 ::
 
-    odoo_install_repository zerobug-test -b 10.0 -O zero -U
+    cd $HOME
+    # *** Tools installation & activation ***
+    # Case 1: you have not installed zeroincombenze tools
+    git clone https://github.com/zeroincombenze/tools.git
+    cd $HOME/tools
+    ./install_tools.sh -p
+    source $HOME/devel/activate_tools
+    # Case 2: you have already installed zeroincombenze tools
+    cd $HOME/tools
+    ./install_tools.sh -U
+    source $HOME/devel/activate_tools
+    # *** End of tools installation or upgrade ***
+    # Odoo repository upgrade
+    odoo_install_repository None -b 8.0 -o $HOME/8.0 -U
+    vem amend $HOME/8.0/venv_odoo -o $HOME/8.0
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
 From UI: go to:
 
-* |menu| Setting > Activate Developer mode
-* |menu| Apps > Update Apps List
-* |menu| Setting > Apps |right_do| Select **mk_test_env** > Update
+* |menu| Setting > Modules > Update Modules List
+* |menu| Setting > Local Modules |right_do| Select **** > Update
 
 |
 
@@ -119,7 +135,7 @@ Get involved / Ci mettiamo in gioco
 
 Bug reports are welcome! You can use the issue tracker to report bugs,
 and/or submit pull requests on `GitHub Issues
-<https://github.com/zeroincombenze/zerobug-test/issues>`_.
+<https://github.com/zeroincombenze/None/issues>`_.
 
 In case of trouble, please check there if your issue has already been reported.
 
@@ -131,6 +147,7 @@ Proposals for enhancement
 An Enhancement Proposal may be submitted if your idea gains ground.
 
 |it| Se hai proposte per migliorare questo modulo, puoi inviare una mail a <cc@shs-av.com> per un iniziale contatto.
+
 
 |
 |
@@ -161,6 +178,12 @@ Contributors / Collaboratori
 
 
 
+Maintainer / Manutenzione
+-------------------------
+
+
+
+
 |
 
 ----------------
@@ -176,44 +199,45 @@ che distribuisce e promuove **Odoo** pronto all'uso sulla propria infrastuttura.
 La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ è progettata per le esigenze del mercato italiano.
 
 
+
 |chat_with_us|
 
 
 |
 
-This module is part of zerobug-test project.
+This module is part of None project.
 
-Last Update / Ultimo aggiornamento: 2020-02-29
+Last Update / Ultimo aggiornamento: 2021-07-15
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-black.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Alpha
-.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=10.0
-    :target: https://travis-ci.org/zeroincombenze/zerobug-test
+    :alt: 
+.. |Build Status| image:: https://travis-ci.org/zeroincombenze/None.svg?branch=8.0
+    :target: https://travis-ci.com/zeroincombenze/None
     :alt: github.com
 .. |license gpl| image:: https://img.shields.io/badge/licence-LGPL--3-7379c3.svg
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |license opl| image:: https://img.shields.io/badge/licence-OPL-7379c3.svg
-    :target: https://www.odoo.com/documentation/user/9.0/legal/licenses/licenses.html
+    :target: https://www.odoo.com/documentation/user/14.0/legal/licenses/licenses.html
     :alt: License: OPL
-.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=10.0
-    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=10.0
+.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/None/badge.svg?branch=8.0
+    :target: https://coveralls.io/github/zeroincombenze/None?branch=8.0
     :alt: Coverage
-.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/10.0/graph/badge.svg
-    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/10.0
+.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/None/branch/8.0/graph/badge.svg
+    :target: https://codecov.io/gh/zeroincombenze/None/branch/8.0
     :alt: Codecov
-.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-10.svg
-    :target: https://wiki.zeroincombenze.org/en/Odoo/10.0/dev
+.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-8.svg
+    :target: https://wiki.zeroincombenze.org/en/Odoo/8.0/dev
     :alt: Technical Documentation
-.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-10.svg
-    :target: https://wiki.zeroincombenze.org/it/Odoo/10.0/man
+.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-8.svg
+    :target: https://wiki.zeroincombenze.org/it/Odoo/8.0/man
     :alt: Technical Documentation
-.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-10.svg
-    :target: https://erp10.zeroincombenze.it
+.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-8.svg
+    :target: https://erp8.zeroincombenze.it
     :alt: Try Me
-.. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/10.0/graph/badge.svg
-    :target: https://codecov.io/gh/OCA/zerobug-test/branch/10.0
+.. |OCA Codecov| image:: https://codecov.io/gh/OCA/None/branch/8.0/graph/badge.svg
+    :target: https://codecov.io/gh/OCA/None/branch/8.0
     :alt: Codecov
 .. |Odoo Italia Associazione| image:: https://www.odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20126x56.png
    :target: https://odoo-italia.org
@@ -242,4 +266,5 @@ Last Update / Ultimo aggiornamento: 2020-02-29
 .. |FatturaPA| image:: https://raw.githubusercontent.com/zeroincombenze/grymb/master/certificates/ade/icons/fatturapa.png
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
-   :target: https://tawk.to/85d4f6e06e68dd4e358797643fe5ee67540e408b
+   :target: https://t.me/axitec_helpdesk
+
