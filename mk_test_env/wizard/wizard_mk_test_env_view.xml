@@ -6,29 +6,37 @@
         <field name="model">wizard.make.test.environment</field>
         <field name="arch" type="xml">
             <form string="Create Test Environment">
-                <separator string="Data selection"/>
-                <group>
-                    <group>
-                        <field name="force_test_values"/>
-                        <field name="test_company_id" invisible="1"/>
-                        <field name="new_company"
-                               attrs="{'readonly': [('test_company_id', '!=', False)]}"/>
-                        <field name="company_id"
-                               attrs="{'readonly': [('test_company_id', '!=', False)], 'invisible': [('new_company', '!=', False)]}"/>
-                        <field name="coa"
-                               attrs="{'readonly': [('test_company_id', '!=', False)]}"/>
-                        <field name="set_seq"/>
-                    </group>
-                    <group>
-                        <field name="load_coa" attrs="{'readonly': [('new_company', '!=', False)]}"/>
-                        <field name="load_partner"/>
-                        <field name="load_product"/>
-                        <field name="load_image"/>
-                        <field name="load_sale_order" attrs="{'readonly': [('new_company', '!=', False)]}"/>
-                        <field name="load_purchase_order" attrs="{'readonly': [('new_company', '!=', False)]}"/>
-                        <field name="load_invoice" attrs="{'readonly': [('new_company', '!=', False)]}"/>
-                    </group>
-                </group>
+                <notebook>
+                    <page string="Module selection">
+                        <group>
+                            <!-- <field name="load_sp"/> -->
+                            <field name="force_test_values"/>
+                        </group>
+                    </page>
+                    <page string="Parameters">
+                        <group>
+                            <field name="test_company_id" invisible="1"/>
+                            <field name="new_company"
+                                   attrs="{'readonly': [('test_company_id', '!=', False)]}"/>
+                            <field name="company_id"
+                                   attrs="{'readonly': [('test_company_id', '!=', False)], 'invisible': [('new_company', '!=', False)]}"/>
+                            <field name="coa"
+                                   attrs="{'readonly': [('test_company_id', '!=', False)]}"/>
+                            <field name="set_seq"/>
+                        </group>
+                    </page>
+                    <page string="Data selection">
+                        <group>
+                            <field name="load_coa" attrs="{'readonly': [('new_company', '!=', False)]}"/>
+                            <field name="load_partner"/>
+                            <field name="load_product"/>
+                            <field name="load_image"/>
+                            <field name="load_sale_order" attrs="{'readonly': [('new_company', '!=', False)]}"/>
+                            <field name="load_purchase_order" attrs="{'readonly': [('new_company', '!=', False)]}"/>
+                            <field name="load_invoice" attrs="{'readonly': [('new_company', '!=', False)]}"/>
+                        </group>
+                    </page>
+                </notebook>
                 <footer>
                     <button name="make_test_environment" string="Create"
                             type="object" class="oe_highlight"/>
@@ -41,7 +49,6 @@
     <record id="result_mk_test_env_view" model="ir.ui.view">
         <field name="name">Test Environment Creation result</field>
         <field name="model">wizard.make.test.environment</field>
-        <field name="sequence" eval="20"/>
         <field name="arch" type="xml">
             <form string="Result Test Environment">
                 <group>
@@ -60,4 +67,3 @@
     </record>
 
 </odoo>
-

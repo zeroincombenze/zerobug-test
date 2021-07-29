@@ -13,6 +13,7 @@ from builtins import int
 from datetime import date, datetime, timedelta
 import time
 import calendar
+import re
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -38,6 +39,7 @@ MODULES_NEEDED = {
         'zero': ['l10n_it_fiscal'],
         'powerp': ['l10n_it_coa_base']
     },
+    'load_sp': ['l10n_it_split_payment'],
     'load_coa': {
         '': [],
         'coa': ['date_range',
@@ -59,6 +61,27 @@ MODULES_NEEDED = {
                      'payment', 'l10n_it_einvoice_in', 'l10n_it_einvoice_out'],
 }
 COA_MODULES = ['l10n_it', 'l10n_it_fiscal', 'l10n_it_coa_base']
+COMMIT_FCT = {
+    'account.invoice': {
+        'cancel': ['action_invoice_draft'],
+        'draft': ['compute_taxes', 'action_invoice_open'],
+    },
+    'sale.order': {
+        'cancel': ['action_invoice_draft'],
+        'draft': ['action_confirm'],
+    }
+}
+CANCEL_FCT = {
+    'account.invoice': {
+        'paid': ['action_invoice_re_open'],
+        'open': ['action_invoice_cancel'],
+        'cancel': ['action_invoice_draft'],
+    },
+    'sale.order': {
+        'sale': ['action_cancel'],
+        'cancel': ['action__draft'],
+    }
+}
 
 class WizardMakeTestEnvironment(models.TransientModel):
     _name = "wizard.make.test.environment"
@@ -107,6 +130,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
              '"Test" is internal testing CoA',
         default='zero')
     set_seq = fields.Boolean('Set line sequence')
+    load_sp = fields.Boolean('Activate Split Payment')
     load_coa = fields.Selection(
         [('', 'Minimal'),
          ('coa', 'Load CoA'),
@@ -131,7 +155,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                               readonly=True)
 
     @api.model
-    def env_ref(self, xref, retxref_id=None):
+    def env_ref(self, xref, retxref_id=None, company_id=None, model=None):
         # We do not use standard self.env.ref() because we need False value
         # if xref does not exits instead of exception
         # and we need to get id or record by parameter
@@ -139,20 +163,49 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 eval(release.major_version.split('.')[0]) >= 12):
             xref = 'uom.product_uom_unit'
         xrefs = xref.split('.')
-        if len(xrefs) == 2:
-            model = self.env['ir.model.data']
-            recs = model.search([('module', '=', xrefs[0]),
-                                 ('name', '=', xrefs[1])])
+        if len(xrefs) == 2 and ' ' not in xref:
+            ir_model = self.env['ir.model.data']
+            recs = ir_model.search([('module', '=', xrefs[0]),
+                                    ('name', '=', xrefs[1])])
             if recs:
                 if retxref_id:
                     return recs[0].id
                 return recs[0].res_id
+            elif model:
+                if (model == 'account.account' and
+                        xref.startswith('z0bug.coa_')):
+                    tok = '_%s' % xrefs[1].split('_')[1]
+                    recs = ir_model.search(
+                        [('module', '=', 'l10n_it_fiscal'),
+                         ('name', 'like', r'_\%s' % tok),
+                         ('model', '=', 'account.account')])
+                    for xid in recs:
+                        if xid.name.endswith(tok):
+                            rec = self.env[model].browse(xid.res_id)
+                            if rec.company_id.id == company_id:
+                                if retxref_id:
+                                    return xid.id
+                                return xid.res_id
+                elif (model == 'account.tax' and
+                        xref.startswith('z0bug.tax_')):
+                    tok = '_%s' % xrefs[1].split('_')[1]
+                    recs = ir_model.search(
+                        [('module', '=', 'l10n_it_fiscal'),
+                         ('name', 'like', r'_\%s' % tok),
+                         ('model', '=', 'account.tax')])
+                    for xid in recs:
+                        if xid.name.endswith(tok):
+                            rec = self.env[model].browse(xid.res_id)
+                            if rec.company_id.id == company_id:
+                                if retxref_id:
+                                    return xid.id
+                                return xid.res_id
         return False
 
     @api.model
     def add_xref(self, xref, model, res_id):
         xrefs = xref.split('.')
-        if len(xrefs) != 2:
+        if len(xrefs) != 2 or ' ' in xref:
             raise UserError(
                 'Invalid xref %s' % xref)
         vals = {
@@ -220,6 +273,16 @@ class WizardMakeTestEnvironment(models.TransientModel):
             transodoo.read_stored_dict(self.tnldict)
         return self.tnldict
 
+    def translate(self, model, src, ttype=False, fld_name=False):
+        if release.major_version == '10.0':
+            if ttype == 'valuetnl':
+                return ''
+            return src
+        return transodoo.translate_from_to(
+            self.get_tnldict(),
+            model, src, '10.0', release.major_version,
+            ttype=ttype, fld_name=fld_name)
+
     def setup_model_structure(self, model):
         """Store model structure into memory"""
         if not model:
@@ -243,73 +306,64 @@ class WizardMakeTestEnvironment(models.TransientModel):
         #     attrs['relation'] = field.relation
         #     self.STRUCT[model][field.name] = attrs
 
-    def get_domain_field(self, model, vals, company_id,
-                         field=None, parent_id=None, parent_name=None):
-        for nm in ('code', 'acc_number', 'login', 'description', 'origin',
-                   'sequence', 'name'):
+    def bind_record(self, model, vals, company_id,
+                    field=None, parent_id=None, parent_name=None):
+        domain = []
+        for nm in ('code', 'acc_number', 'login', 'description', 'name',
+                   'number', 'sequence'):
             if nm == 'code' and model == 'product.product':
                 continue
+            elif nm == 'description' and model == 'account.tax':
+                continue
+            elif nm == 'sequence' and not parent_id and not parent_name:
+                continue
             if nm in vals and nm in self.STRUCT[model]:
-                break
-        domain = [(nm, '=', vals[field or nm])]
-        if 'company_id' in self.STRUCT[model]:
-            domain.append(('company_id', '=', company_id))
-        if parent_id and parent_name in self.STRUCT[model]:
-            domain.append((parent_name, '=', parent_id))
-        recs = self.env[model].with_context({'lang': 'en_US'}).search(domain)
-        if len(recs) == 1:
-            return recs[0].id
+                domain.append((nm, '=', vals[field or nm]))
+                if not parent_id or parent_name not in self.STRUCT[model]:
+                    break
+        if domain:
+            if 'company_id' in self.STRUCT[model]:
+                domain.append(('company_id', '=', company_id))
+            if parent_id and parent_name in self.STRUCT[model]:
+                domain.append((parent_name, '=', parent_id))
+            recs = self.env[model].with_context({'lang': 'en_US'}).search(domain)
+            if len(recs) == 1:
+                return recs[0].id
         return False
 
     @api.model
     def bind_fields(self, model, vals, company_id,
                     parent_id=None, parent_model=None):
         self.setup_model_structure(model)
-        model_model = self.env[model]
         parent_name = ''
         for field in vals.copy():
+            if vals[field] == 'None':
+                del vals[field]
+                continue
+            if self.translate(model, field, ttype='valuetnl', fld_name=field):
+                vals[field] = self.translate(
+                    model, vals[field], ttype='value', fld_name=field)
             attrs = self.STRUCT[model].get(field, {})
             if not attrs:
+                # Odoo without payment term extension
                 if (model == 'account.payment.term.line' and
                         field == 'months' and
                         vals[field]):
                     vals['days'] = (eval(vals[field]) * 30) - 2
                 del vals[field]
                 continue
-            if (model == 'account.account' and
-                    field == 'id' and
-                    vals[field].startswith('z0bug.')):
-                xrefs = vals[field].split('.')
-                vals[field] = self.env_ref(vals[field])
-                if not vals[field]:
-                    tok = '_%s' % xrefs[1]
-                    recs = self.env['ir.model.data'].search(
-                        [('module', '=', 'l10n_it_fiscal'),
-                         ('name', 'like', r'_\%s' % tok),
-                         ('model', '=', 'account.account')])
-                    for xref in recs:
-                        if xref.name.endswith(tok):
-                            acc = model_model.browse(xref.res_id)
-                            if acc.company_id.id == company_id:
-                                vals[field] = acc.id
-                                break
-                if 'user_type_id' in vals:
-                    if self.STRUCT[model].get('nature', {}):
-                        if isinstance(vals['user_type_id'], int):
-                            acc = self.env['account.account.type'].browse(
-                                vals['user_type_id'])
-                        else:
-                            acc = self.env['account.account.type'].browse(
-                                self.env_ref(vals['user_type_id']))
-                        if acc.nature:
-                            vals['nature'] = acc.nature
-                continue
-            elif model == 'account.payment.term.line' and field == 'option':
-                if (vals[field] == 'fix_day_following_month' and
-                        eval(release.major_version.split('.')[0]) >= 12):
-                    vals[field] = 'day_following_month'
-            elif field == 'id':
-                continue
+            if field == 'id':
+                if parent_id and parent_model:
+                    del vals[field]
+                elif isinstance(vals[field], basestring):
+                    if vals[field].isdigit():
+                        vals[field] = eval(vals[field])
+                    else:
+                        vals[field] = self.env_ref(vals[field],
+                                       company_id=company_id,
+                                       model=model)
+                    if not vals[field]:
+                        del vals[field]
             elif parent_id and (
                     (parent_model and
                      attrs.get('relation', '/') == parent_model) or
@@ -321,11 +375,14 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 vals[field] = company_id
                 continue
             elif attrs['type'] in ('many2one', 'one2many', 'many2many'):
-                if len(vals[field].split('.')) == 2:
+                if len(vals[field].split('.')) == 2 and ' ' not in vals[field]:
+                    xid = self.env_ref(vals[field],
+                                       company_id=company_id,
+                                       model=attrs['relation'])
                     if attrs['type'] == 'many2one':
-                        vals[field] = self.env_ref(vals[field])
-                    else:
-                        vals[field] = [(6, 0, [self.env_ref(vals[field])])]
+                        vals[field] = xid
+                    elif xid:
+                        vals[field] = [(6, 0, [xid])]
                 continue
             elif attrs['type'] == 'boolean':
                 vals[field] = os0.str2bool(vals[field], False)
@@ -407,14 +464,25 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         datetime.today() - timedelta(int(vals[field][1:])))
             elif attrs.get('relation'):
                 self.setup_model_structure(attrs['relation'])
-                value = self.get_domain_field(model, vals, company_id,
-                                              field=field)
+                value = self.bind_record(model, vals, company_id,
+                                         field=field)
                 if value:
                     vals[field] = value
                 else:
                     del vals[field]
+        if model == 'account.account':
+            if 'user_type_id' in vals:
+                if self.STRUCT[model].get('nature', {}):
+                    if isinstance(vals['user_type_id'], int):
+                        acc = self.env['account.account.type'].browse(
+                            vals['user_type_id'])
+                    else:
+                        acc = self.env['account.account.type'].browse(
+                            self.env_ref(vals['user_type_id']))
+                    if acc.nature:
+                        vals['nature'] = acc.nature
         if parent_id and parent_model:
-            vals['id'] = self.get_domain_field(
+            vals['id'] = self.bind_record(
                 model, vals, company_id,
                 parent_id=parent_id, parent_name=parent_name)
             if not vals['id']:
@@ -436,6 +504,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
             attrs = self.STRUCT[model].get(field, {})
             if not attrs:
                 del vals[field]
+            if isinstance(vals[field], basestring) and vals[field]:
+                if attrs['type'] in ('float', 'integer'):
+                    vals[field] = eval(vals[field])
             if rec:
                 if attrs['type'] == 'many2one':
                     if ((rec[field] and vals[field] == rec[field].id) or
@@ -447,17 +518,23 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         del vals[field]
                     elif os0.str2bool(vals[field], False) == rec[field]:
                         del vals[field]
-                elif (isinstance(vals[field], (basestring, int)) and
-                      vals[field] == rec[field]):
+                elif (isinstance(vals[field],
+                                 (basestring, int, float, date, datetime)) and
+                      (vals[field] == rec[field]) or
+                      (not rec[field] and not vals[field])):
                     del vals[field]
         return vals
 
     @api.model
-    def write_diff(self, model, xid, vals):
+    def write_diff(self, model, xid, vals, parent_id=None, parent_model=None):
         vals = self.drop_unchanged_fields(vals, model, xid)
+        if 'id' in vals:
+            del vals['id']
         if vals:
-            if 'id' in vals:
-                del vals['id']
+            if parent_model and parent_id:
+                self.do_cancel(parent_model, parent_id)
+            else:
+                self.do_cancel(model, xid)
             self.env[model].browse(xid).write(vals)
             self.ctr_rec_upd += 1
 
@@ -467,30 +544,27 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if parent_id and parent_model:
             xid = False
         else:
-            xid = self.env_ref(xref)
+            xid = self.env_ref(xref, company_id=company_id, model=model)
         if not xid or self.force_test_values:
             vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(model, xref)
-            # TODO > Hotfix
-            if model == 'account.payment.term.line':
-                if (vals['option'] == 'fix_day_following_month' and
-                        eval(release.major_version.split('.')[0]) >= 12):
-                    vals['option'] = 'after_invoice_month'
-            if seq:
+            if 'sequence' in self.STRUCT[model] and seq:
                 vals['sequence'] = seq
             vals, parent_name = self.bind_fields(
                 model, vals, company_id,
                 parent_id=parent_id, parent_model=parent_model)
             if xid:
-                self.write_diff(model, xid, vals)
+                self.write_diff(model, xid, vals,
+                                parent_id=parent_id, parent_model=parent_model)
             else:
                 if vals.get('id') and isinstance(vals['id'], int):
                     xid = vals['id']
                 else:
-                    xid = self.get_domain_field(model, vals, company_id,
-                                                parent_id=parent_id,
-                                                parent_name=parent_name)
+                    xid = self.bind_record(model, vals, company_id,
+                                           parent_id=parent_id,
+                                           parent_name=parent_name)
                 if xid:
-                    self.write_diff(model, xid, vals)
+                    self.write_diff(model, xid, vals,
+                                    parent_id=parent_id, parent_model=parent_model)
                 else:
                     if 'id' in vals:
                         del vals['id']
@@ -507,15 +581,73 @@ class WizardMakeTestEnvironment(models.TransientModel):
         return xid
 
     @api.model
+    def do_workflow(self, model, rec_id, FCT):
+        if model in FCT:
+            rec = self.env[model].browse(rec_id)
+            while rec.state in FCT[model]:
+                old_state = rec.state
+                for action in FCT[model][old_state]:
+                    if hasattr(self.env[model], action):
+                        getattr(rec, action)()
+                        if not action.startswith('action'):
+                            rec.write({})
+                # We need to invalidate cache due burst state read
+                self.env.invalidate_all()
+            return
+
+    @api.model
+    def do_cancel(self, model, rec_id):
+        self.do_workflow(model, rec_id, CANCEL_FCT)
+
+    @api.model
+    def do_commit(self, model, rec_id):
+        self.do_workflow(model, rec_id, COMMIT_FCT)
+
+    @api.model
     def make_model(self, company_id, model, mode=None, model2=None):
+        self.setup_model_structure(model)
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
+        if model2:
+            self.setup_model_structure(model2)
+            xrefs = xrefs + z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model2)
+        # z0bug xref has format "MODULE.LABEL_N" where N is a number 1..999
+        # When xref is child of a parent table,
+        # xref has format "MODULE.LABEL_N_M" where M ia a number 1..999
+        seq = 0
+        parent_id = False
         for xref in sorted(xrefs):
-            self.store_xref(xref, model, company_id)
+            if re.match('.*_[0-9]+_[0-9]+$', xref):
+                # Found child xref, evaluate parent xref
+                parent_id = self.env_ref('_'.join(xref.split('_')[0:-1]))
+                if self.set_seq:
+                    seq += 10
+                else:
+                    seq = 10
+                self.store_xref(xref, model2 or model, company_id,
+                                parent_id=parent_id, parent_model=model,
+                                seq=seq)
+            else:
+                if seq:
+                    # Previous write was a detail record
+                    self.do_commit(model, parent_id)
+                parent_id = self.store_xref(xref, model, company_id)
+                if model == 'account.payment.term':
+                    seq = 10
+                    model2_model = self.env[model2]
+                    for rec_line in model2_model.search(
+                            [('payment_id', '=', parent_id)],
+                            order='sequence,id'):
+                        rec_line.write({'sequence': seq})
+                        seq += 10
+                seq = 0
+        if seq:
+            self.do_commit(model, parent_id)
         self._cr.commit()                      # pylint: disable=invalid-commit
 
     @api.model
     def mk_account_account(self, company_id):
         model = 'account.account'
+        self.setup_model_structure(model)
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
         for xref in sorted(xrefs):
             # Prima i mastri
@@ -529,142 +661,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
             # infine i sottoconti
             if len(xref) > 13:
                 self.store_xref(xref, model, company_id)
-
-    @api.model
-    def mk_account_tax(self, company_id):
-        self.make_model(company_id, 'account.tax')
-
-    @api.model
-    def mk_fiscal_position(self, company_id):
-        self.make_model(company_id, 'account.fiscal.position')
-
-    @api.model
-    def mk_journal(self, company_id):
-        self.make_model(company_id, 'account.journal')
-
-    @api.model
-    def mk_date_range(self, company_id):
-        self.make_model(company_id, 'date.range.type')
-        self.make_model(company_id, 'date.range')
-
-    def mk_payment(self, company_id):
-        model = 'account.payment.term'
-        model2 = 'account.payment.term.line'
-        xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
-        xrefs = xrefs + z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model2)
-        parent_id = False
-        for xref in sorted(xrefs):
-            if len(xref) == 15:
-                parent_id = self.store_xref(xref, model, company_id)
-                seq = 10
-                model_model = self.env['account.payment.term.line']
-                for payment_line in model_model.search(
-                        [('payment_id', '=', parent_id)],
-                        order='sequence,id'):
-                    payment_line.write({'sequence': seq})
-                    seq += 10
-            else:
-                self.store_xref(xref, model2, company_id,
-                                parent_id=parent_id, parent_model=model)
-
-    def mk_partner(self, company_id):
-        model = 'res.partner'
-        xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
-        parent_id = False
-        for xref in sorted(xrefs):
-            if len(xref) <= 20 or xref == 'z0bug.partner_mycompany':
-                parent_id = self.store_xref(xref, model, company_id)
-            else:
-                parent_id = self.env_ref(xref[:-2])
-                self.store_xref(xref, model, company_id, parent_id=parent_id)
-        self._cr.commit()  # pylint: disable=invalid-commit
-
-    def mk_partner_bank(self, company_id):
-        self.make_model(company_id, 'res.partner.bank')
-
-    def mk_product(self, company_id):
-        model = 'product.template'
-        model2 = 'product.product'
-        xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
-        for xref in sorted(xrefs):
-            self.store_xref(xref, model, company_id)
-            xref2 = xref.replace('z0bug.product_template',
-                                 'z0bug.product_product')
-            self.store_xref(xref2, model2, company_id)
-
-    def mk_account_invoice(self, company_id):
-
-        def compute_tax(inv_id):
-            self.env['account.invoice'].browse(inv_id).compute_taxes()
-
-        model = 'account.invoice'
-        model2 = 'account.invoice.line'
-        xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
-        xrefs = xrefs + z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model2)
-        parent_id = False
-        for xref in sorted(xrefs):
-            if len(xref) <= 19:
-                if parent_id:
-                    compute_tax(parent_id)
-                parent_id = self.store_xref(xref, model, company_id)
-            else:
-                self.store_xref(xref, model2, company_id,
-                                parent_id=parent_id, parent_model=model)
-        if parent_id:
-            compute_tax(parent_id)
-
-    def mk_sale_order(self, company_id):
-
-        def compute_tax(inv_id):
-            return
-
-        model = 'sale.order'
-        model2 = 'sale.order.line'
-        xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
-        xrefs = xrefs + z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model2)
-        parent_id = False
-        seq = 0
-        for xref in sorted(xrefs):
-            if len(xref) <= 22:
-                if parent_id:
-                    compute_tax(parent_id)
-                seq = 0
-                parent_id = self.store_xref(xref, model, company_id)
-            else:
-                if self.set_seq:
-                    seq += 10
-                else:
-                    seq = 10
-                self.store_xref(xref, model2, company_id,
-                                parent_id=parent_id, parent_model=model,
-                                seq=seq)
-        if parent_id:
-            compute_tax(parent_id)
-
-    def mk_purchase_order(self, company_id):
-
-        def compute_tax(inv_id):
-            return
-
-        model = 'purchase.order'
-        model2 = 'purchase.order.line'
-        xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
-        xrefs = xrefs + z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model2)
-        parent_id = False
-        parent_id_len = 0
-        for xref in sorted(xrefs):
-            if (not parent_id_len or
-                    len(xref) <= parent_id_len):
-                if not parent_id_len:
-                    parent_id_len = len(xref) + 1
-                if parent_id:
-                    compute_tax(parent_id)
-                parent_id = self.store_xref(xref, model, company_id)
-            else:
-                self.store_xref(xref, model2, company_id,
-                                parent_id=parent_id, parent_model=model)
-        if parent_id:
-            compute_tax(parent_id)
 
     @api.model
     def create_company(self):
@@ -681,6 +677,12 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.add_xref(
             'z0bug.partner_mycompany', 'res.partner', company.partner_id.id)
 
+    @api.model
+    def enable_cancel_journal(self):
+        journal_model = self.env['account.journal']
+        for rec in journal_model.search([('update_posted', '=', False)]):
+            rec.write({'update_posted': True})
+
     def make_test_environment(self):
         self.ctr_rec_new = 0
         self.ctr_rec_upd = 0
@@ -694,23 +696,33 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.set_company_to_test(self.company_id)
         if self.load_coa and self.coa in ('test', 'powerp'):
             self.mk_account_account(self.company_id.id)
-            self.mk_account_tax(self.company_id.id)
+            self.make_model(self.company_id.id, 'account.tax')
         if self.load_coa == 'coa':
-            self.mk_fiscal_position(self.company_id.id)
-            self.mk_date_range(self.company_id.id)
-            self.mk_payment(self.company_id.id)
+            self.make_model(self.company_id.id, 'decimal.precision')
+            self.make_model(self.company_id.id, 'account.fiscal.position')
+            self.make_model(self.company_id.id, 'date.range.type')
+            self.make_model(self.company_id.id, 'date.range')
+            self.make_model(self.company_id.id, 'account.payment.term',
+                            model2='account.payment.term.line')
+            self.make_model(self.company_id.id, 'account.journal')
+            self.enable_cancel_journal()
+            self.make_model(self.company_id.id, 'withholding.tax',
+                            model2='withholding.tax.rate')
         if self.load_partner:
-            self.mk_partner(self.company_id.id)
-            self.mk_partner_bank(self.company_id.id)
-            self.mk_journal(self.company_id.id)
+            self.make_model(self.company_id.id, 'res.partner')
+            self.make_model(self.company_id.id, 'res.partner.bank')
         if self.load_product:
-            self.mk_product(self.company_id.id)
+            self.make_model(self.company_id.id, 'product.template')
+            self.make_model(self.company_id.id, 'product.product')
         if self.load_sale_order:
-            self.mk_sale_order(self.company_id.id)
+            self.make_model(self.company_id.id, 'sale.order',
+                            model2='sale.order.line')
         if self.load_purchase_order:
-            self.mk_purchase_order(self.company_id.id)
+            self.make_model(self.company_id.id, 'purchase.order',
+                            model2='purchase.order.line')
         if self.load_invoice:
-            self.mk_account_invoice(self.company_id.id)
+            self.make_model(self.company_id.id, 'account.invoice',
+                            model2='account.invoice.line')
         self.status_mesg += 'Data (re)loaded'
         return {
             'name': "Data created",

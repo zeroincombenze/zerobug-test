@@ -1,20 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* mk_test_env
+# * mk_test_env
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo (VENV-10.0)\n"
+"Project-Id-Version: Odoo (10.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-23 10:45+0000\n"
-"PO-Revision-Date: 2020-06-23 10:45+0000\n"
+"POT-Creation-Date: 2021-07-19 18:33+0000\n"
+"PO-Revision-Date: 2021-07-19 18:33+0000\n"
 "Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
 "Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
 "Language: it_IT\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_activate_sp
+msgid "Activate Split Payment"
+msgstr "Activate Split Payment"
 
 #. module: mk_test_env
 #: model:ir.ui.view,arch_db:mk_test_env.result_cleanup_test_env_view
@@ -42,7 +48,7 @@ msgstr "Clean Account Invoice"
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_clean_coa
 msgid "Clean Chart of Account"
-msgstr "Pulizia P.d.C."
+msgstr "Pulizia P.d.C"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_clean_fiscalpos
@@ -69,9 +75,15 @@ msgid "Company"
 msgstr "Azienda"
 
 #. module: mk_test_env
+#: selection:wizard.make.test.environment,load_coa:0
+#: selection:wizard.make.test.environment,load_coa
+msgid "Conai"
+msgstr "Conai"
+
+#. module: mk_test_env
 #: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
 msgid "Create"
-msgstr "Crea"
+msgstr "Creare"
 
 #. module: mk_test_env
 #: model:ir.actions.act_window,name:mk_test_env.action_mk_test_env
@@ -106,6 +118,7 @@ msgstr "Selezione dati"
 
 #. module: mk_test_env
 #: selection:wizard.make.test.environment,coa:0
+#: selection:wizard.make.test.environment,coa
 msgid "Default Odoo CoA"
 msgstr "PdC predefinito Odoo"
 
@@ -117,8 +130,9 @@ msgstr "Nome visualizzato"
 
 #. module: mk_test_env
 #: selection:wizard.make.test.environment,coa:0
-msgid "Experimental Axilor CoA"
-msgstr "PdC sperimentale Axilor"
+#: selection:wizard.make.test.environment,coa
+msgid "Experimental Powerp CoA"
+msgstr "Experimental Powerp CoA"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_force_test_values
@@ -141,24 +155,31 @@ msgstr "Stato installazione"
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment___last_update
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment___last_update
 msgid "Last Modified on"
-msgstr "Data ultima modifica"
+msgstr "Ultima modifica il"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_write_uid
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_write_uid
 msgid "Last Updated by"
-msgstr "Ultima modifica di"
+msgstr "Ultimo aggiornamento di"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_write_date
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_write_date
 msgid "Last Updated on"
-msgstr "Data ultima modifica"
+msgstr "Ultimo aggiornamento il"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_coa
-msgid "Load chart of account"
-msgstr "Caricare piano dei conti"
+#: selection:wizard.make.test.environment,load_coa:0
+#: selection:wizard.make.test.environment,load_coa
+msgid "Lettere Intento"
+msgstr "Lettere Intento"
+
+#. module: mk_test_env
+#: selection:wizard.make.test.environment,load_coa:0
+#: selection:wizard.make.test.environment,load_coa
+msgid "Load CoA"
+msgstr "Load CoA"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_invoice
@@ -191,6 +212,22 @@ msgid "Load sale orders"
 msgstr "Caricare ordini cliente"
 
 #. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_coa
+msgid "Load specific account"
+msgstr "Load specific account"
+
+#. module: mk_test_env
+#: selection:wizard.make.test.environment,load_coa:0
+#: selection:wizard.make.test.environment,load_coa
+msgid "Minimal"
+msgstr "Minimal"
+
+#. module: mk_test_env
+#: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
+msgid "Module selection"
+msgstr "Module selection"
+
+#. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_ctr_rec_new
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_ctr_rec_new
 msgid "New record inserted"
@@ -198,8 +235,14 @@ msgstr "Nuovi record inseriti"
 
 #. module: mk_test_env
 #: selection:wizard.make.test.environment,coa:0
+#: selection:wizard.make.test.environment,coa
 msgid "No chart of account"
 msgstr "No piano dei conti"
+
+#. module: mk_test_env
+#: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
+msgid "Parameters"
+msgstr "Parametri"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_ctr_rec_del
@@ -220,17 +263,37 @@ msgid "Result Test Environment"
 msgstr "Risultati ambiente test"
 
 #. module: mk_test_env
+#: selection:wizard.make.test.environment,load_coa:0
+#: selection:wizard.make.test.environment,load_coa
+msgid "Reverse Charge"
+msgstr "Reverse Charge"
+
+#. module: mk_test_env
 #: model:ir.model.fields,help:mk_test_env.field_wizard_make_test_environment_coa
-msgid "Select Chart od Account to install, if new company\n"
+msgid ""
+"Select Chart od Account to install, if new company\n"
 "\"Default Odoo Chart Account\" (module l10n_it) is minimal\n"
 "\"Zeroincombenze CoA\" (module l10n_it_fiscal) is a full CoA\n"
-"\"Axilor CoA\" is a Zeroincombenze CoA plus multilevel accounts\n"
+"\"Powero CoA\" means manual CoA\n"
 "\"Test\" is internal testing CoA"
-msgstr "Select Chart od Account to install, if new company\n"
+msgstr ""
+"Select Chart od Account to install, if new company\n"
 "\"Default Odoo Chart Account\" (module l10n_it) is minimal\n"
 "\"Zeroincombenze CoA\" (module l10n_it_fiscal) is a full CoA\n"
-"\"Axilor CoA\" is a Zeroincombenze CoA plus multilevel accounts\n"
+"\"Powero CoA\" means manual CoA\n"
 "\"Test\" is internal testing CoA"
+
+#. module: mk_test_env
+#: selection:wizard.make.test.environment,load_coa:0
+#: selection:wizard.make.test.environment,load_coa
+msgid "Sepa Credit Transfer"
+msgstr "Sepa Credit Transfer"
+
+#. module: mk_test_env
+#: selection:wizard.make.test.environment,load_coa:0
+#: selection:wizard.make.test.environment,load_coa
+msgid "Sepa Direct Debit"
+msgstr "Addebito su conto"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_set_seq
@@ -238,7 +301,14 @@ msgid "Set line sequence"
 msgstr "Impostare numeri riga"
 
 #. module: mk_test_env
+#: selection:wizard.make.test.environment,load_coa:0
+#: selection:wizard.make.test.environment,load_coa
+msgid "Split Payment"
+msgstr "Split Payment"
+
+#. module: mk_test_env
 #: selection:wizard.make.test.environment,coa:0
+#: selection:wizard.make.test.environment,coa
 msgid "Test Chart od Account"
 msgstr "Test piano dei conti"
 
@@ -249,7 +319,14 @@ msgid "Test Company"
 msgstr "Test Company"
 
 #. module: mk_test_env
+#: selection:wizard.make.test.environment,load_coa:0
+#: selection:wizard.make.test.environment,load_coa
+msgid "Withholding Tax"
+msgstr "Withholding Tax"
+
+#. module: mk_test_env
 #: selection:wizard.make.test.environment,coa:0
+#: selection:wizard.make.test.environment,coa
 msgid "Zeroincombenze CoA"
 msgstr "PdC Zeroincombenze"
 
