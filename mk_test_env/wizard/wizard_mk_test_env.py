@@ -32,33 +32,43 @@ from clodoo import transodoo
 
 
 MODULES_NEEDED = {
-    '': ['calendar', 'mail', 'product', 'stock'],
+    '*': ['calendar', 'mail', 'product', 'stock'],
     'coa': {
-        'test': [],
         'l10n_it': ['l10n_it'],
         'zero': ['l10n_it_fiscal'],
         'powerp': ['l10n_it_coa_base']
     },
     'load_sp': ['l10n_it_split_payment'],
+    'load_rc': ['l10n_it_reverse_charge'],
+    'load_li': ['l10n_it_lettera_intento'],
+    'load_wh': ['l10n_it_withholding_tax'],
+    'load_conai': ['l10n_it_conai'],
+    'load_sct': ['account_banking_sepa_credit_transfer'],
+    'load_sdd': ['account_banking_sepa_direct_debit'],
     'load_coa': {
-        '': [],
-        'coa': ['date_range',
-                'account_payment_term_extension',
-                'l10n_it_fiscalcode'],
-        'sp': ['l10n_it_split_payment'],
-        'li': ['l10n_it_lettera_intento'],
-        'rc': ['l10n_it_reverse_charge'],
-        'wh': ['l10n_it_withholding_tax'],
-        'sct': ['account_banking_sepa_credit_transfer'],
-        'sdd': ['account_banking_sepa_direct_debit'],
-        'conai': ['l10n_it_conai'],
+        '*': ['account',
+              'date_range',
+              'account_payment_term_extension',
+              'l10n_it_fiscalcode'],
     },
-    'load_product': [],
-    'load_partner': ['partner_bank'],
-    'load_sale_order': ['sale', 'l10n_it_ddt'],
-    'load_purchase_order': ['purchase'],
-    'load_invoice': ['account', 'account_accountant', 'account_cancel',
-                     'payment', 'l10n_it_einvoice_in', 'l10n_it_einvoice_out'],
+    'load_product': {
+        '*': ['product', 'stock']
+    },
+    'load_partner': {
+        '*': ['partner_bank'],
+    },
+    'load_sale_order': {
+        '*': ['sale', 'l10n_it_ddt']
+    },
+    'load_purchase_order': {
+        '*': ['purchase'],
+    },
+    'load_invoice': {
+        '*': [
+            'account_accountant', 'account_cancel',
+            'payment', 'l10n_it_einvoice_in', 'l10n_it_einvoice_out'
+        ],
+    },
 }
 COA_MODULES = ['l10n_it', 'l10n_it_fiscal', 'l10n_it_coa_base']
 COMMIT_FCT = {
@@ -104,12 +114,35 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def _default_company(self):
         return self._test_company() or self.env.user.company_id.id
 
+    def _set_flag(self, item):
+        module_list = self.get_module_list(item)
+        flag = False
+        for module in self.env['ir.module.module'].search(
+                [('name', 'in', module_list)]):
+            if module and module.state == 'uninstalled':
+                flag = True
+                break
+        return flag
+
+    def _set_coa_2_use(self):
+        module_list = []
+        for item in MODULES_NEEDED['coa'].keys():
+            module_list += MODULES_NEEDED['coa'][item]
+        coa = 'zero'
+        for module in self.env['ir.module.module'].search(
+                [('name', 'in', module_list)]):
+            if module and module.state == 'installed':
+                for item in MODULES_NEEDED['coa'].keys():
+                    if module.name in MODULES_NEEDED['coa'][item]:
+                        coa = item
+                        break
+        return coa
+
     test_company_id = fields.Many2one(
         'res.company',
         string='Test Company',
         read_only=True,
         default=_test_company)
-    force_test_values = fields.Boolean('Force reload test values')
     new_company = fields.Boolean('Create new company',
                                  default=_new_company)
     company_id = fields.Many2one('res.company',
@@ -117,42 +150,75 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                  required=True,
                                  default=_default_company)
     coa = fields.Selection(
-        [('none', 'No chart of account'),
-         ('l10n_it', 'Default Odoo CoA'),
+        [('l10n_it', 'Default Odoo CoA'),
          ('zero', 'Zeroincombenze CoA'),
-         ('powerp', 'Experimental Powerp CoA'),
-         ('test', 'Test Chart od Account')],
+         ('powerp', 'No chart of account')],
         'Chart of Account',
-        help='Select Chart od Account to install, if new company\n'
+        help='Select Chart od Account to install\n'
              '"Default Odoo Chart Account" (module l10n_it) is minimal\n'
              '"Zeroincombenze CoA" (module l10n_it_fiscal) is a full CoA\n'
-             '"Powero CoA" means manual CoA\n'
-             '"Test" is internal testing CoA',
-        default='zero')
+             '"Powero CoA" means manual CoA\n',
+        default=lambda self: self._set_coa_2_use())
     set_seq = fields.Boolean('Set line sequence')
-    load_sp = fields.Boolean('Activate Split Payment')
+    load_sp = fields.Boolean(
+        'Activate Split Payment',
+        default=lambda self: self._set_flag('load_sp'))
+    load_rc = fields.Boolean(
+        'Activate Reverse Charge',
+        default=lambda self: self._set_flag('load_rc'))
+    load_wh = fields.Boolean(
+        'Activate Withholding Tax',
+        default=lambda self: self._set_flag('load_wh'))
+    load_li = fields.Boolean(
+        'Activate Lettera di Intento',
+        default=lambda self: self._set_flag('load_li'))
+    load_conai = fields.Boolean(
+        'Activate Conai',
+        default=False)
+    load_sct = fields.Boolean(
+        'Activate Sepa Credit Transfer',
+        default=False)
+    load_sdd = fields.Boolean(
+        'Activate Sepa Direct Debit',
+        default=False)
     load_coa = fields.Selection(
-        [('', 'Minimal'),
-         ('coa', 'Load CoA'),
-         ('sp', 'Split Payment'),
-         ('li', 'Lettere Intento'),
-         ('rc', 'Reverse Charge'),
-         ('wh', 'Withholding Tax'),
-         ('sct', 'Sepa Credit Transfer'),
-         ('sdd', 'Sepa Direct Debit'),
-         ('conai', 'Conai'),
-         ], 'Load specific account')
-    load_partner = fields.Boolean('Load partners')
-    load_product = fields.Boolean('Load products')
-    load_image = fields.Boolean('Load record images')
-    load_sale_order = fields.Boolean('Load sale orders')
-    load_purchase_order = fields.Boolean('Load purchase orders')
-    load_invoice = fields.Boolean('Load invoices')
+        [('new', 'Only new records'),
+         ('all', 'All records'),
+         ], 'Load Chart of Account')
+    load_image = fields.Boolean('Load record images', default=True)
+    load_partner = fields.Selection(
+        [('new', 'Only new records'),
+         ('all', 'All records'),
+         ], 'Load partners')
+    load_product = fields.Selection(
+        [('new', 'Only new records'),
+         ('all', 'All records'),
+         ], 'Load products')
+    load_sale_order = fields.Selection(
+        [('new', 'Only new records'),
+         ('all', 'All records'),
+         ], 'Load sale orders')
+    load_purchase_order = fields.Selection(
+        [('new', 'Only new records'),
+         ('all', 'All records'),
+         ], 'Load purchase orders')
+    load_invoice = fields.Selection(
+        [('new', 'Only new records'),
+         ('all', 'All records'),
+         ], 'Load invoices')
     ctr_rec_new = fields.Integer('New record inserted', readonly=True)
     ctr_rec_upd = fields.Integer('Record updated', readonly=True)
     ctr_rec_del = fields.Integer('Record deleted', readonly=True)
     status_mesg = fields.Text('Installation status',
                               readonly=True)
+
+    @api.onchange('load_sp', 'load_rc', 'load_wh',
+                  'load_li', 'load_conai', 'load_sct', 'load_sdd')
+    def flag_load_change(self):
+        for item in ('load_sp', 'load_rc', 'load_wh',
+                  'load_li', 'load_conai', 'load_sct', 'load_sdd'):
+            if not getattr(self._origin, item) and getattr(self, item):
+                self.force_test_values = True
 
     @api.model
     def env_ref(self, xref, retxref_id=None, company_id=None, model=None):
@@ -223,23 +289,26 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.ctr_rec_upd += 1
         return id
 
-    def get_module_list(self):
+    def get_module_list(self, scope=None):
+        modules = [scope] if scope else MODULES_NEEDED.keys()
         module_list = []
-        for item in MODULES_NEEDED.keys():
-            if not item or getattr(self, item):
+        for item in modules:
+            if scope or item == '*' or getattr(self, item):
                 if isinstance(MODULES_NEEDED[item], (list, tuple)):
                     module_list += MODULES_NEEDED[item]
                 elif isinstance(MODULES_NEEDED[item], dict):
-                    module_list += MODULES_NEEDED[item].get(getattr(self, item))
+                    if getattr(self, item) and MODULES_NEEDED[item].get('*'):
+                        module_list += MODULES_NEEDED[item]['*']
+                    if MODULES_NEEDED[item].get(getattr(self, item)):
+                        module_list += MODULES_NEEDED[item][getattr(self, item)]
         if not any([x for x in module_list if x in COA_MODULES]):
             module_list.append('l10n_it_fiscal')
         module_list = [self.translate('', module, ttype='module')
                        for module in module_list]
-        return module_list
+        return list(set(module_list))
 
     @api.model
     def install_modules(self, modules_to_install):
-        modules_to_install = list(set(modules_to_install))
         modules_model = self.env['ir.module.module']
         to_install_modules = modules_model
         for module in modules_model.search(
@@ -254,10 +323,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
         max_time_to_wait = 5
         if to_install_modules:
             to_install_modules.button_immediate_install()
-            max_time_to_wait = 4 * len(to_install_modules) + 5
+            max_time_to_wait = len(to_install_modules) + 2
         found_uninstalled = True
         while max_time_to_wait > 0 and found_uninstalled:
             time.sleep(1)
+            self.env.invalidate_all()
             max_time_to_wait -= 1
             found_uninstalled = False
             for module in modules_model.search(
@@ -293,21 +363,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if model in self.STRUCT:
             return
         self.STRUCT[model] = self.env[model].fields_get()
-        # self.STRUCT[model] = self.STRUCT.get(model, {})
-        # for field in self.env['ir.model.fields'].search(
-        #         [('model', '=', model)]):
-        #     attrs = {}
-        #     for attr in ('required', 'readonly'):
-        #         attrs[attr] = field[attr]
-        #     if attrs['required']:
-        #         attrs['readonly'] = False
-        #     if (field.ttype in ('binary', 'reference') or
-        #             (hasattr(field, 'related') and field.related and
-        #              not field.required)):
-        #         attrs['readonly'] = True
-        #     attrs['ttype'] = field.ttype
-        #     attrs['relation'] = field.relation
-        #     self.STRUCT[model][field.name] = attrs
 
     def bind_record(self, model, vals, company_id,
                     field=None, parent_id=None, parent_name=None):
@@ -544,12 +599,12 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     @api.model
     def store_xref(self, xref, model, company_id,
-                   parent_id=None, parent_model=None, seq=None):
+                   parent_id=None, parent_model=None, seq=None, mode=None):
         if parent_id and parent_model:
             xid = False
         else:
             xid = self.env_ref(xref, company_id=company_id, model=model)
-        if not xid or self.force_test_values:
+        if not xid or mode == 'all':
             vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(model, xref)
             if 'sequence' in self.STRUCT[model] and seq:
                 vals['sequence'] = seq
@@ -609,8 +664,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.do_workflow(model, rec_id, COMMIT_FCT)
 
     @api.model
-    def make_model(self, company_id, model, mode=None, model2=None):
+    def make_model(self, model, mode=None, model2=None):
         self.setup_model_structure(model)
+        company_id = False
+        if 'company_id' in self.STRUCT[model]:
+            company_id = self.company_id.id
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
         if model2:
             self.setup_model_structure(model2)
@@ -629,13 +687,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 else:
                     seq = 10
                 self.store_xref(xref, model2 or model, company_id,
-                                parent_id=parent_id, parent_model=model,
-                                seq=seq)
+                                mode=mode, parent_id=parent_id,
+                                parent_model=model, seq=seq)
             else:
                 if seq:
                     # Previous write was a detail record
                     self.do_commit(model, parent_id)
-                parent_id = self.store_xref(xref, model, company_id)
+                parent_id = self.store_xref(xref, model, company_id, mode=mode)
                 if model == 'account.payment.term':
                     seq = 10
                     model2_model = self.env[model2]
@@ -650,22 +708,22 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self._cr.commit()                      # pylint: disable=invalid-commit
 
     @api.model
-    def mk_account_account(self, company_id):
+    def mk_account_account(self, company_id, mode=None):
         model = 'account.account'
         self.setup_model_structure(model)
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
         for xref in sorted(xrefs):
             # Prima i mastri
             if len(xref) == 12:
-                self.store_xref(xref, model, company_id)
+                self.store_xref(xref, model, company_id, mode=mode)
         for xref in xrefs:
             # poi i capoconti
             if len(xref) == 13:
-                self.store_xref(xref, model, company_id)
+                self.store_xref(xref, model, company_id, mode=mode)
         for xref in xrefs:
             # infine i sottoconti
             if len(xref) > 13:
-                self.store_xref(xref, model, company_id)
+                self.store_xref(xref, model, company_id, mode=mode)
 
     @api.model
     def create_company(self):
@@ -699,34 +757,35 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.create_company()
         elif not self.test_company_id:
             self.set_company_to_test(self.company_id)
-        if self.load_coa and self.coa in ('test', 'powerp'):
-            self.mk_account_account(self.company_id.id)
-            self.make_model(self.company_id.id, 'account.tax')
-        if self.load_coa == 'coa':
-            self.make_model(self.company_id.id, 'decimal.precision')
-            self.make_model(self.company_id.id, 'account.fiscal.position')
-            self.make_model(self.company_id.id, 'date.range.type')
-            self.make_model(self.company_id.id, 'date.range')
-            self.make_model(self.company_id.id, 'account.payment.term',
+        if self.load_coa and self.coa == 'powerp':
+            self.mk_account_account(self.company_id.id, mode=self.load_coa)
+            self.make_model('account.tax', mode=self.load_coa)
+        if self.load_coa:
+            self.make_model('decimal.precision', mode=self.load_coa)
+            self.make_model('account.fiscal.position', mode=self.load_coa)
+            self.make_model('date.range.type', mode=self.load_coa)
+            self.make_model('date.range', mode=self.load_coa)
+            self.make_model('account.payment.term', mode=self.load_coa,
                             model2='account.payment.term.line')
-            self.make_model(self.company_id.id, 'account.journal')
+            self.make_model('account.journal', mode=self.load_coa)
             self.enable_cancel_journal()
-            self.make_model(self.company_id.id, 'withholding.tax',
-                            model2='withholding.tax.rate')
+            if self.load_wh:
+                self.make_model('withholding.tax', mode=self.load_coa,
+                                model2='withholding.tax.rate')
         if self.load_partner:
-            self.make_model(self.company_id.id, 'res.partner')
-            self.make_model(self.company_id.id, 'res.partner.bank')
+            self.make_model('res.partner', mode=self.load_partner)
+            self.make_model('res.partner.bank', mode=self.load_partner)
         if self.load_product:
-            self.make_model(self.company_id.id, 'product.template')
-            self.make_model(self.company_id.id, 'product.product')
+            self.make_model('product.template', mode=self.load_product)
+            self.make_model('product.product', mode=self.load_product)
         if self.load_sale_order:
-            self.make_model(self.company_id.id, 'sale.order',
+            self.make_model('sale.order', mode=self.load_sale_order,
                             model2='sale.order.line')
         if self.load_purchase_order:
-            self.make_model(self.company_id.id, 'purchase.order',
+            self.make_model('purchase.order', mode=self.load_purchase_order,
                             model2='purchase.order.line')
         if self.load_invoice:
-            self.make_model(self.company_id.id, 'account.invoice',
+            self.make_model('account.invoice', mode=self.load_invoice,
                             model2='account.invoice.line')
         self.status_mesg += 'Data (re)loaded\n'
         return {
