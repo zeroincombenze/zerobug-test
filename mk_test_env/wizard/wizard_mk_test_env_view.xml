@@ -13,8 +13,11 @@
                             <field name="load_rc"/>
                             <field name="load_wh"/>
                             <field name="load_li"/>
+                            <field name="load_vat"/>
+                            <field name="load_fiscal"/>
                             <field name="load_sct"/>
                             <field name="load_sdd"/>
+                            <field name="load_riba"/>
                             <field name="load_conai"/>
                         </group>
                     </page>

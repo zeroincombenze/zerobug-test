@@ -45,6 +45,12 @@ MODULES_NEEDED = {
     'load_conai': ['l10n_it_conai'],
     'load_sct': ['account_banking_sepa_credit_transfer'],
     'load_sdd': ['account_banking_sepa_direct_debit'],
+    'load_riba': ['l10n_it_ricevute_bancarie'],
+    'load_vat': ['account_vat_period_end_statement',
+                 'l10n_it_vat_registries',
+                 'l10n_it_vat_communication',
+                 'l10n_it_vat_statement_communication'],
+    'load_fiscal': ['l10n_it_central_journal'],
     'load_coa': {
         '*': ['account',
               'date_range',
@@ -180,6 +186,15 @@ class WizardMakeTestEnvironment(models.TransientModel):
         default=False)
     load_sdd = fields.Boolean(
         'Activate Sepa Direct Debit',
+        default=False)
+    load_riba = fields.Boolean(
+        'Activate RiBA',
+        default=False)
+    load_vat = fields.Boolean(
+        'Activate VAT modules',
+        default=False)
+    load_fiscal = fields.Boolean(
+        'Activate fiscal modules',
         default=False)
     load_coa = fields.Selection(
         [('new', 'Only new records'),
@@ -319,7 +334,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     self.install_modules([module])
                     continue
                 to_install_modules += module
-                self.status_mesg += 'Module %s installed\n' % module.name
+                self.status_mesg += 'Module "%s" installed\n' % module.name
         max_time_to_wait = 5
         if to_install_modules:
             to_install_modules.button_immediate_install()
@@ -410,13 +425,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     model, vals[field], ttype='value', fld_name=field)
             attrs = self.STRUCT[model].get(field, {})
             if not attrs:
-                #     # Odoo without payment term extension
-                #     if (model == 'account.payment.term.line' and
-                #             field == 'months' and
-                #             vals[field]):
-                #         vals['days'] = (eval(vals[field]) * 30) - 2
                 del vals[field]
-                self.status_mesg += 'Model %s w/o field %s\n' % (model, field)
+                mesg = 'Model "%s" w/o field "%s"!!!\n' % (model, field)
+                if mesg not in self.status_mesg:
+                    self.status_mesg += mesg
                 continue
             if field == 'id':
                 if parent_id and parent_model:
@@ -449,6 +461,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         vals[field] = xid
                     elif xid:
                         vals[field] = [(6, 0, [xid])]
+                    else:
+                        del vals[field]
                 continue
             elif attrs['type'] == 'boolean':
                 vals[field] = os0.str2bool(vals[field], False)
@@ -571,21 +585,31 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     if ((rec[field] and vals[field] == rec[field].id) or
                             (not rec[field] and not vals[field])):
                         del vals[field]
+                elif attrs['type'] in ('one2many', 'many2many'):
+                    if rec[field]:
+                        value = [(6, 0, [x.id for x in rec[field]])]
+                        if value == vals[field]:
+                            del vals[field]
                 elif attrs['type'] == 'boolean':
                     if isinstance(
                             vals[field], bool) and vals[field] == rec[field]:
                         del vals[field]
                     elif os0.str2bool(vals[field], False) == rec[field]:
                         del vals[field]
+                elif (isinstance(vals[field], float) and
+                      ((not rec[field] and not vals[field]) or
+                       (round(vals[field], 3) == round(rec[field]), 3))):
+                    del vals[field]
                 elif (isinstance(vals[field],
-                                 (basestring, int, float, date, datetime)) and
-                      (vals[field] == rec[field]) or
-                      (not rec[field] and not vals[field])):
+                                 (basestring, int, date, datetime)) and
+                      ((vals[field] == rec[field]) or
+                       (not rec[field] and not vals[field]))):
                     del vals[field]
         return vals
 
     @api.model
-    def write_diff(self, model, xid, vals, parent_id=None, parent_model=None):
+    def write_diff(self, model, xid, vals, xref,
+                   parent_id=None, parent_model=None):
         vals = self.drop_unchanged_fields(vals, model, xid)
         if 'id' in vals:
             del vals['id']
@@ -596,6 +620,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.do_draft(model, xid)
             self.env[model].browse(xid).write(vals)
             self.ctr_rec_upd += 1
+            if not parent_model and not parent_id:
+                mesg = '- Model "%s" updated "%s"\n' % (model, xref)
+                self.status_mesg += mesg
 
     @api.model
     def store_xref(self, xref, model, company_id,
@@ -612,7 +639,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 model, vals, company_id,
                 parent_id=parent_id, parent_model=parent_model)
             if xid:
-                self.write_diff(model, xid, vals,
+                self.write_diff(model, xid, vals, xref,
                                 parent_id=parent_id, parent_model=parent_model)
             else:
                 if vals.get('id') and isinstance(vals['id'], int):
@@ -622,7 +649,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                            parent_id=parent_id,
                                            parent_name=parent_name)
                 if xid:
-                    self.write_diff(model, xid, vals,
+                    self.write_diff(model, xid, vals, xref,
                                     parent_id=parent_id, parent_model=parent_model)
                 else:
                     if 'id' in vals:
@@ -630,9 +657,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     try:
                         xid = self.env[model].create(vals).id
                         self.ctr_rec_new += 1
+                        if not parent_model and not parent_id:
+                            mesg = '- Model "%s" added "%s"\n' % (
+                                model, xref)
+                            self.status_mesg += mesg
                     except BaseException as e:
                         self._cr.rollback()  # pylint: disable=invalid-commit
-                        self.status_mesg += ('Error %s\n' % e)
+                        self.status_mesg += ('*** Error %s!!!\n' % e)
                         xid = False
                         raise UserError(self.status_mesg)
                 if xid and (not parent_id or not parent_model):
@@ -642,18 +673,21 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def do_workflow(self, model, rec_id, FCT):
         if model in FCT:
+            stated = []
             rec = self.env[model].browse(rec_id)
             while rec.state in FCT[model]:
                 old_state = rec.state
+                if old_state in stated:
+                    break
+                stated.append(old_state)
                 for action in FCT[model][old_state]:
                     if hasattr(self.env[model], action):
                         getattr(rec, action)()
                         if not action.startswith('action'):
                             rec.write({})
                 # We need to invalidate cache due burst state read
-                # self.env.invalidate_all()
+                self.env.invalidate_all()
                 rec = self.env[model].browse(rec_id)
-            return
 
     @api.model
     def do_draft(self, model, rec_id):
@@ -787,7 +821,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if self.load_invoice:
             self.make_model('account.invoice', mode=self.load_invoice,
                             model2='account.invoice.line')
-        self.status_mesg += 'Data (re)loaded\n'
+        self.status_mesg += 'Data (re)loaded.\n'
         return {
             'name': "Data created",
             'type': 'ir.actions.act_window',
