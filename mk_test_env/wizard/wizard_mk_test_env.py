@@ -71,7 +71,7 @@ COMMIT_FCT = {
         'draft': ['action_confirm'],
     }
 }
-CANCEL_FCT = {
+DRAFT_FCT = {
     'account.invoice': {
         'paid': ['action_invoice_re_open'],
         'open': ['action_invoice_cancel'],
@@ -151,7 +151,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     ctr_rec_new = fields.Integer('New record inserted', readonly=True)
     ctr_rec_upd = fields.Integer('Record updated', readonly=True)
     ctr_rec_del = fields.Integer('Record deleted', readonly=True)
-    status_mesg = fields.Char('Installation status',
+    status_mesg = fields.Text('Installation status',
                               readonly=True)
 
     @api.model
@@ -159,10 +159,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
         # We do not use standard self.env.ref() because we need False value
         # if xref does not exits instead of exception
         # and we need to get id or record by parameter
-        if (xref == 'product.product_uom_unit' and
-                eval(release.major_version.split('.')[0]) >= 12):
-            xref = 'uom.product_uom_unit'
-        xrefs = xref.split('.')
+        # if (xref == 'product.product_uom_unit' and
+        #         eval(release.major_version.split('.')[0]) >= 12):
+        #     xref = 'uom.product_uom_unit'
+        xrefs = self.translate('', xref, ttype='xref').split('.')
         if len(xrefs) == 2 and ' ' not in xref:
             ir_model = self.env['ir.model.data']
             recs = ir_model.search([('module', '=', xrefs[0]),
@@ -219,7 +219,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if not id:
             self.ctr_rec_new += 1
             return model_model.create(vals)
-        model_model.browse(id).model_model.write(vals)
+        model_model.browse(id).write(vals)
         self.ctr_rec_upd += 1
         return id
 
@@ -233,6 +233,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     module_list += MODULES_NEEDED[item].get(getattr(self, item))
         if not any([x for x in module_list if x in COA_MODULES]):
             module_list.append('l10n_it_fiscal')
+        module_list = [self.translate('', module, ttype='module')
+                       for module in module_list]
         return module_list
 
     @api.model
@@ -240,31 +242,32 @@ class WizardMakeTestEnvironment(models.TransientModel):
         modules_to_install = list(set(modules_to_install))
         modules_model = self.env['ir.module.module']
         to_install_modules = modules_model
-        for module in modules_to_install:
-            module_ids = modules_model.search([('name', '=', module)])
-            if module_ids and module_ids[0].state == 'uninstalled':
+        for module in modules_model.search(
+                [('name', 'in', modules_to_install)]):
+            if module and module.state == 'uninstalled':
                 if len(modules_to_install) != 1 and module in COA_MODULES:
                     # CoA modules must be installed before others
                     self.install_modules([module])
                     continue
-                to_install_modules += module_ids[0]
-                self.status_mesg += 'Module %s installed\n' % module
+                to_install_modules += module
+                self.status_mesg += 'Module %s installed\n' % module.name
         max_time_to_wait = 5
         if to_install_modules:
             to_install_modules.button_immediate_install()
             max_time_to_wait = 4 * len(to_install_modules) + 5
-        while max_time_to_wait > 0:
+        found_uninstalled = True
+        while max_time_to_wait > 0 and found_uninstalled:
             time.sleep(1)
             max_time_to_wait -= 1
             found_uninstalled = False
-            for module in modules_to_install:
-                module_ids = modules_model.search([('name', '=', module)])
-                if not module_ids or module_ids[0].state != 'installed':
+            for module in modules_model.search(
+                    [('name', 'in', modules_to_install)]):
+                if not module or module.state == 'uninstalled':
                     found_uninstalled = module
                     break
         if found_uninstalled:
             raise UserError(
-                'Module %s not installed!' % found_uninstalled)
+                'Module %s not installed!' % found_uninstalled.name)
         return
 
     def get_tnldict(self):
@@ -335,8 +338,15 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def bind_fields(self, model, vals, company_id,
                     parent_id=None, parent_model=None):
         self.setup_model_structure(model)
+        if (self.load_image and vals.get('id') and
+                'image' in self.STRUCT[model]):
+            filename = z0bug_odoo_lib.Z0bugOdoo().get_image_filename(
+                vals['id'])
+            if filename:
+                vals['image'] = z0bug_odoo_lib.Z0bugOdoo().get_image(
+                    vals['id'])
         parent_name = ''
-        for field in vals.copy():
+        for field in vals.copy().keys():
             if vals[field] == 'None':
                 del vals[field]
                 continue
@@ -345,12 +355,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     model, vals[field], ttype='value', fld_name=field)
             attrs = self.STRUCT[model].get(field, {})
             if not attrs:
-                # Odoo without payment term extension
-                if (model == 'account.payment.term.line' and
-                        field == 'months' and
-                        vals[field]):
-                    vals['days'] = (eval(vals[field]) * 30) - 2
+                #     # Odoo without payment term extension
+                #     if (model == 'account.payment.term.line' and
+                #             field == 'months' and
+                #             vals[field]):
+                #         vals['days'] = (eval(vals[field]) * 30) - 2
                 del vals[field]
+                self.status_mesg += 'Model %s w/o field %s\n' % (model, field)
                 continue
             if field == 'id':
                 if parent_id and parent_model:
@@ -487,13 +498,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 parent_id=parent_id, parent_name=parent_name)
             if not vals['id']:
                 del vals['id']
-        if (vals.get('id') and self.load_image and
-                'image' in self.STRUCT[model]):
-            filename = z0bug_odoo_lib.Z0bugOdoo().get_image_filename(
-                vals['id'])
-            if filename:
-                vals['image'] = z0bug_odoo_lib.Z0bugOdoo().get_image(
-                    vals['id'])
         return vals, parent_name
 
     def drop_unchanged_fields(self, vals, model, xid):
@@ -532,9 +536,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
             del vals['id']
         if vals:
             if parent_model and parent_id:
-                self.do_cancel(parent_model, parent_id)
+                self.do_draft(parent_model, parent_id)
             else:
-                self.do_cancel(model, xid)
+                self.do_draft(model, xid)
             self.env[model].browse(xid).write(vals)
             self.ctr_rec_upd += 1
 
@@ -592,12 +596,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         if not action.startswith('action'):
                             rec.write({})
                 # We need to invalidate cache due burst state read
-                self.env.invalidate_all()
+                # self.env.invalidate_all()
+                rec = self.env[model].browse(rec_id)
             return
 
     @api.model
-    def do_cancel(self, model, rec_id):
-        self.do_workflow(model, rec_id, CANCEL_FCT)
+    def do_draft(self, model, rec_id):
+        self.do_workflow(model, rec_id, DRAFT_FCT)
 
     @api.model
     def do_commit(self, model, rec_id):
@@ -723,7 +728,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if self.load_invoice:
             self.make_model(self.company_id.id, 'account.invoice',
                             model2='account.invoice.line')
-        self.status_mesg += 'Data (re)loaded'
+        self.status_mesg += 'Data (re)loaded\n'
         return {
             'name': "Data created",
             'type': 'ir.actions.act_window',

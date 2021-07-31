@@ -11,6 +11,7 @@
                         <group>
                             <!-- <field name="load_sp"/> -->
                             <field name="force_test_values"/>
+                            <field name="load_image"/>
                         </group>
                     </page>
                     <page string="Parameters">
@@ -30,7 +31,6 @@
                             <field name="load_coa" attrs="{'readonly': [('new_company', '!=', False)]}"/>
                             <field name="load_partner"/>
                             <field name="load_product"/>
-                            <field name="load_image"/>
                             <field name="load_sale_order" attrs="{'readonly': [('new_company', '!=', False)]}"/>
                             <field name="load_purchase_order" attrs="{'readonly': [('new_company', '!=', False)]}"/>
                             <field name="load_invoice" attrs="{'readonly': [('new_company', '!=', False)]}"/>
