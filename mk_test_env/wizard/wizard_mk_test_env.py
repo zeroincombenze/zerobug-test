@@ -867,7 +867,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def do_commit(self, model, rec_id):
         self._cr.commit()  # pylint: disable=invalid-commit
-        # self.do_workflow(model, rec_id, COMMIT_FCT)
+        self.do_workflow(model, rec_id, COMMIT_FCT)
 
     @api.model
     def make_model(self, model, mode=None, model2=None, cantdup=None):
