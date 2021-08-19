@@ -430,6 +430,14 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     @api.model
     def get_module_list(self, scope=None):
+
+        def add_2_list(tgt_list, item):
+            if isinstance(item, (tuple, list)):
+                tgt_list += item
+            else:
+                tgt_list.append(item)
+            return tgt_list
+
         modules = [scope] if scope else MODULES_NEEDED.keys()
         modules_2_install = []
         modules_2_remove = []
@@ -443,7 +451,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     if MODULES_NEEDED[item].get(getattr(self, item)):
                         modules_2_install += MODULES_NEEDED[item][getattr(
                             self, item)]
-        coa_module_list= [x[0] for x in self.COA_MODULES]
+        coa_module_list = [x[0] for x in self.COA_MODULES]
         if not any([x for x in modules_2_install if x in coa_module_list]):
             modules_2_install.append('l10n_it_fiscal')
         module_list = []
@@ -451,15 +459,19 @@ class WizardMakeTestEnvironment(models.TransientModel):
             distro_module = self.translate('ir.module.module', module,
                                            ttype='merge')
             if distro_module and distro_module != module:
-                module_list.append(distro_module)
+                module_list = add_2_list(module_list, module)
+                module_list = add_2_list(module_list, distro_module)
             else:
                 distro_module = self.translate('', module, ttype='module')
-                if distro_module != module:
+                if ((isinstance(distro_module, (tuple, list)) and
+                     module not in distro_module) or
+                        distro_module != module):
                     if distro_module:
-                        module_list.append(distro_module)
+                        module_list = add_2_list(module_list, distro_module)
                     modules_2_remove.append(module)
                 else:
-                    module_list.append(module)
+                    module_list = add_2_list(module_list, module)
+        modules_2_install = module_list
         return list(set(modules_2_install)), list(set(modules_2_remove))
 
     @api.model
@@ -473,7 +485,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
         for module in modules_model.search(
                 [('name', 'in', modules_to_install)]):
             if not module:
-                # Module does not existin current Odoo version
+                # Module does not exist in current Odoo version
+                continue
+            elif module.state =='to install':
+                self.install_modules(
+                    [module.name], [], no_clear_cache=True)
                 continue
             elif module.state == 'uninstalled':
                 if (len(modules_to_install) != 1 and
@@ -542,8 +558,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
             time.sleep(1)
         if not no_clear_cache and to_install_modules and modules_to_remove:
             # We need to invalidate cache to load model of installed modules
-            # self.env.invalidate_all()
-            self.invalidate_cache()
+            self.env.invalidate_all()
+            # self.invalidate_cache()
         return
 
     def get_tnldict(self):
