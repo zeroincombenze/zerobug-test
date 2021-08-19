@@ -37,8 +37,8 @@ MODULES_NEEDED = {
           'profile_common'],
     'coa': {
         'l10n_it': ['l10n_it'],
-        'zero': ['l10n_it_fiscal'],
-        'powerp': ['l10n_it_coa_base']
+        'l10n_it_fiscal': ['l10n_it_fiscal'],
+        'l10n_it_coa_base': ['l10n_it_coa_base']
     },
     'distro': {
         'powerp': ['l10n_eu_account', 'assigned_bank', 'account_duedates',
@@ -97,7 +97,6 @@ MODULES_BY_DISTRO = {
     # 'l10n_it_intrastat': 'l10n_it_intrastat_plus',
     # 'l10n_it_intrastat_statement': 'l10n_it_intrastat_statement_plus'
 }
-COA_MODULES = ['l10n_it', 'l10n_it_fiscal', 'l10n_it_coa_base']
 COMMIT_FCT = {
     'account.invoice': {
         'cancel': ['action_invoice_draft'],
@@ -125,10 +124,26 @@ UNIQUE_REFS = ['z0bug.partner_mycompany']
 def _lang_get(self):
     return self.env['res.lang'].get_available()
 # put POSIX 'Etc/*' entries at the end to avoid confusing users - see bug 1086728
+@api.model
 def _tz_get(self):
     return [(tz, tz) for tz in sorted(
         pytz.all_timezones,
         key=lambda tz: tz if not tz.startswith('Etc/') else '_')]
+@api.model
+def _coa_get(self):
+    if not self.COA_MODULES:
+        countries = ['l10n_%s' % x.code.lower()
+                     for x in self.env['res.country'].search([])]
+        countries.insert(0, 'l10n_it_coa_base')
+        countries.insert(0, 'l10n_it_fiscal')
+        for module in self.env['ir.module.module'].search(
+                [('name', 'in', countries),
+                 ('state', '!=', 'uninstallable')], order='name'):
+            if module.name.startswith('l10n_it'):
+                self.COA_MODULES.insert(0, (module.name, module.shortdesc))
+            else:
+                self.COA_MODULES.append((module.name, module.shortdesc))
+    return self.COA_MODULES
 
 
 class WizardMakeTestEnvironment(models.TransientModel):
@@ -136,6 +151,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     _description = "Create Test Environment"
 
     STRUCT = {}
+    COA_MODULES = []
 
     def _test_company(self):
         recs = self.env['ir.model.data'].search(
@@ -167,23 +183,26 @@ class WizardMakeTestEnvironment(models.TransientModel):
         return flag
 
     def _set_coa_2_use(self):
-        module_list = []
-        for item in MODULES_NEEDED['coa'].keys():
-            module_list += MODULES_NEEDED['coa'][item]
-        coa = 'zero'
-        for module in self.env['ir.module.module'].search(
-                [('name', 'in', module_list)]):
-            if module and module.state == 'installed':
-                for item in MODULES_NEEDED['coa'].keys():
-                    if module.name in MODULES_NEEDED['coa'][item]:
-                        coa = item
-                        break
+        coa = ''
+        module_list = [x[0] for x in self.COA_MODULES]
+        res = self.env['ir.module.module'].search(
+            [('name', 'in', module_list),
+             ('state', '=', 'installed')])
+        if res:
+            coa = res[0].name
+        if not coa:
+            if 'l10n_it_fiscal' in module_list:
+                coa = 'l10n_it_fiscal'
+            elif 'l10n_it' in module_list:
+                coa = 'l10n_it'
+            elif module_list:
+                coa = module_list[0]
         return coa
 
     def _set_distro(self):
         if self.coa == 'l10n_it':
             distro = 'odoo_ce'
-        elif self.coa in ('zero', 'powerp'):
+        elif self.coa in ('l10n_it_fiscal', 'l10n_it_coa_base'):
             distro = 'powerp' if release.version_info[0] >= 12 else 'zero'
         else:
             distro = 'odoo_ce'
@@ -208,7 +227,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
     test_company_id = fields.Many2one(
         'res.company',
         string='Test Company',
-        # readonly=True,
         default=_test_company)
     new_company = fields.Boolean('Create new company',
                                  default=_new_company)
@@ -225,14 +243,12 @@ class WizardMakeTestEnvironment(models.TransientModel):
         string='Timezone',
         default=lambda self: self._set_tz())
     coa = fields.Selection(
-        [('l10n_it', 'Default Odoo CoA'),
-         ('zero', 'Zeroincombenze CoA'),
-         ('powerp', 'No chart of account')],
+        _coa_get,
         'Chart of Account',
         help='Select Chart od Account to install\n'
-             '"Default Odoo Chart Account" (module l10n_it) is minimal\n'
-             '"Zeroincombenze CoA" (module l10n_it_fiscal) is a full CoA\n'
-             '"Powero CoA" means manual CoA\n',
+             '"Local IT Odoo" (module l10n_it) is the minimal one\n'
+             '"Powerp/Zeroincombenze" (module l10n_it_fiscal) is the full CoA\n'
+             '"No CoA" means manual CoA\n',
         default=lambda self: self._set_coa_2_use())
     distro = fields.Selection(
         [('odoo_ce', 'Odoo/OCA CE'),
@@ -414,7 +430,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     if MODULES_NEEDED[item].get(getattr(self, item)):
                         modules_2_install += MODULES_NEEDED[item][getattr(
                             self, item)]
-        if not any([x for x in modules_2_install if x in COA_MODULES]):
+        if not any([x for x in modules_2_install if x in self.COA_MODULES]):
             modules_2_install.append('l10n_it_fiscal')
         module_list = []
         for module in modules_2_install:
@@ -445,7 +461,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 # Module of 10.0 does not exist
                 continue
             elif module.state == 'uninstalled':
-                if len(modules_to_install) != 1 and module.name in COA_MODULES:
+                if (len(modules_to_install) != 1 and
+                        module.name in self.COA_MODULES):
                     # CoA modules must be installed before others
                     self.install_modules([module.name], [], no_clear_cache=True)
                     continue
@@ -1002,7 +1019,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.create_company()
         elif not self.test_company_id:
             self.set_company_to_test(self.company_id)
-        if self.load_coa and self.coa == 'powerp':
+        if self.load_coa and self.coa == 'l10n_it_coa_base':
             self.mk_account_account(
                 self.company_id.id, mode=self.load_coa, cantdup=True)
             self.make_model('account.tax', mode=self.load_coa, cantdup=True)
