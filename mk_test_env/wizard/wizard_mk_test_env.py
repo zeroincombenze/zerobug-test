@@ -33,21 +33,22 @@ from clodoo import transodoo
 
 
 MODULES_NEEDED = {
-    '*': ['calendar', 'mail', 'product', 'stock',
-          'profile_common'],
+    '*': ['calendar', 'mail', 'product', 'stock'],
     'coa': {
         'l10n_it': ['l10n_it'],
         'l10n_it_fiscal': ['l10n_it_fiscal'],
-        'l10n_it_coa_base': ['l10n_it_coa_base']
+        'l10n_it_nocoa': ['l10n_it_nocoa']
     },
     'distro': {
         'powerp': ['l10n_eu_account', 'assigned_bank', 'account_duedates',
                    'assets_management_plus', 'l10n_it_balance',
                    'l10n_it_efattura_sdi_2c', 'l10n_it_mastrini']
     },
-    'load_sp': ['l10n_it_split_payment'],
+    'load_sp': ['l10n_it_split_payment',
+                'l10n_it_vat_registries_split_payment',
+                'l10n_it_vat_statement_split_payment'],
     'load_rc': ['l10n_it_reverse_charge'],
-    'load_li': ['l10n_it_lettera_intento'],
+    'load_li': ['l10n_it_dichiarazione_intento'],
     'load_wh': ['l10n_it_withholding_tax'],
     'load_conai': ['l10n_it_conai'],
     'load_sct': ['account_banking_sepa_credit_transfer'],
@@ -55,12 +56,13 @@ MODULES_NEEDED = {
     'load_riba': ['l10n_it_ricevute_bancarie'],
     'load_vat': ['account_vat_period_end_statement',
                  'l10n_it_vat_registries',
-                 'l10n_it_vat_communication',
-                 'l10n_it_vat_statement_communication'],
+                 'l10n_it_vat_statement_communication',
+                 'l10n_it_vat_statement_split_payment',
+                 'l10n_it_invoices_data_communication',
+                 'l10n_it_invoices_data_communication_fatturapa'],
     'load_fiscal': ['l10n_it_central_journal',
                     'l10n_it_intrastat',
-                    'l10n_it_invoices_data_communication',
-                    'l10n_it_invoices_data_communication_fatturapa'],
+                    'l10n_it_intrastat_statement'],
     'load_coa': {
         '*': ['account',
               'date_range',
@@ -134,7 +136,7 @@ def _coa_get(self):
     if not self.COA_MODULES:
         countries = ['l10n_%s' % x.code.lower()
                      for x in self.env['res.country'].search([])]
-        countries.insert(0, 'l10n_it_coa_base')
+        countries.insert(0, 'l10n_it_nocoa')
         countries.insert(0, 'l10n_it_fiscal')
         for module in self.env['ir.module.module'].search(
                 [('name', 'in', countries),
@@ -152,6 +154,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     STRUCT = {}
     COA_MODULES = []
+    NOT_INSTALL = []
 
     def _test_company(self):
         recs = self.env['ir.model.data'].search(
@@ -172,6 +175,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def _default_company(self):
         return self._test_company() or self.env.user.company_id.id
 
+    @api.depends('distro')
     def _set_flag(self, item):
         module_list, modules_to_remove = self.get_module_list(item)
         flag = False
@@ -184,26 +188,34 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     def _set_coa_2_use(self):
         coa = ''
-        module_list = [x[0] for x in self.COA_MODULES]
+        if not self.COA_MODULES:
+            _coa_get(self)
+        coa_module_list= [x[0] for x in self.COA_MODULES]
         res = self.env['ir.module.module'].search(
-            [('name', 'in', module_list),
+            [('name', 'in', coa_module_list),
              ('state', '=', 'installed')])
         if res:
-            coa = res[0].name
-        if not coa:
-            if 'l10n_it_fiscal' in module_list:
-                coa = 'l10n_it_fiscal'
-            elif 'l10n_it' in module_list:
-                coa = 'l10n_it'
-            elif module_list:
-                coa = module_list[0]
+            # coa = res[0].name
+            coa_module_list = [x.name for x in res]
+        # if not coa:
+        if 'l10n_it_fiscal' in coa_module_list:
+            coa = 'l10n_it_fiscal'
+        elif 'l10n_it' in coa_module_list:
+            coa = 'l10n_it'
+        elif coa_module_list:
+            coa = coa_module_list[0]
         return coa
 
+    @api.depends('coa')
     def _set_distro(self):
-        if self.coa == 'l10n_it':
-            distro = 'odoo_ce'
-        elif self.coa in ('l10n_it_fiscal', 'l10n_it_coa_base'):
-            distro = 'powerp' if release.version_info[0] >= 12 else 'zero'
+        coa = self.coa if self.coa else self._set_coa_2_use()
+        if coa in ('l10n_it_fiscal', 'l10n_it_nocoa'):
+            if release.version_info[0] == 6:
+                distro = 'librerp'
+            elif release.version_info[0] < 12:
+                distro = 'zero'
+            else:
+                distro = 'powerp'
         else:
             distro = 'odoo_ce'
         return distro
@@ -254,7 +266,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
         [('odoo_ce', 'Odoo/OCA CE'),
          ('odoo_ee', 'Odoo EE'),
          ('zero', 'Zeroincombenze + OCA'),
-         ('powerp', 'Powerp + OCA')],
+         ('powerp', 'Powerp + OCA'),
+         ('librerp', 'Librerp + OCA')],
         'Odoo Ditribution/Edition',
         default=lambda self: self._set_distro())
     set_seq = fields.Boolean('Set line sequence')
@@ -341,6 +354,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def _onchange_distro(self):
         if self.distro == 'powerp' and release.version_info[0] < 12:
             self.distro = 'zero'
+        elif self.distro == 'powerp' and release.version_info[0] == 6:
+            self.distro = 'librerp'
+        elif self.distro == 'librerp' and release.version_info[0] != 6:
+            self.distro = 'zero'
 
     @api.model
     def env_ref(self, xref, retxref_id=None, company_id=None, model=None):
@@ -417,6 +434,14 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     @api.model
     def get_module_list(self, scope=None):
+
+        def add_2_list(tgt_list, item):
+            if isinstance(item, (tuple, list)):
+                tgt_list += item
+            else:
+                tgt_list.append(item)
+            return tgt_list
+
         modules = [scope] if scope else MODULES_NEEDED.keys()
         modules_2_install = []
         modules_2_remove = []
@@ -430,22 +455,28 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     if MODULES_NEEDED[item].get(getattr(self, item)):
                         modules_2_install += MODULES_NEEDED[item][getattr(
                             self, item)]
-        if not any([x for x in modules_2_install if x in self.COA_MODULES]):
-            modules_2_install.append('l10n_it_fiscal')
+        if not scope:
+            coa_module_list = [x[0] for x in self.COA_MODULES]
+            if not any([x for x in modules_2_install if x in coa_module_list]):
+                modules_2_install.append('l10n_it_fiscal')
         module_list = []
         for module in modules_2_install:
-            distro_module = self.name_by_distro(module)
-            if distro_module != module:
-                if self.distro == 'powerp':
-                    modules_2_remove.append(module)
-                    module_list.append(distro_module)
-                else:
-                    modules_2_remove.append(distro_module)
-                    module_list.append(module)
+            distro_module = self.translate('ir.module.module', module,
+                                           ttype='merge')
+            if distro_module and distro_module != module:
+                module_list = add_2_list(module_list, module)
+                module_list = add_2_list(module_list, distro_module)
             else:
-                module_list.append(module)
-        modules_2_install = [self.translate('', module, ttype='module')
-                       for module in module_list]
+                distro_module = self.translate('', module, ttype='module')
+                if ((isinstance(distro_module, (tuple, list)) and
+                     module not in distro_module) or
+                        distro_module != module):
+                    if distro_module:
+                        module_list = add_2_list(module_list, distro_module)
+                    modules_2_remove.append(module)
+                else:
+                    module_list = add_2_list(module_list, module)
+        modules_2_install = module_list
         return list(set(modules_2_install)), list(set(modules_2_remove))
 
     @api.model
@@ -455,16 +486,28 @@ class WizardMakeTestEnvironment(models.TransientModel):
         to_install_modules = modules_model
         modules_found = []
         modules_2_test = []
+        coa_module_list = [x[0] for x in self.COA_MODULES]
         for module in modules_model.search(
                 [('name', 'in', modules_to_install)]):
             if not module:
-                # Module of 10.0 does not exist
+                # Module does not exist in current Odoo version
+                continue
+            elif module.state == 'to install':
+                if module.name not in self.NOT_INSTALL:
+                    self.NOT_INSTALL.append(module.name)
+                    self.install_modules(
+                        [module.name], [], no_clear_cache=True)
+                modules_found.append(module.name)
+                modules_2_test.append(module.name)
                 continue
             elif module.state == 'uninstalled':
                 if (len(modules_to_install) != 1 and
-                        module.name in self.COA_MODULES):
+                        module.name in coa_module_list):
                     # CoA modules must be installed before others
-                    self.install_modules([module.name], [], no_clear_cache=True)
+                    self.install_modules(
+                        [module.name], [], no_clear_cache=True)
+                    modules_found.append(module.name)
+                    modules_2_test.append(module.name)
                     continue
                 to_install_modules += module
                 self.status_mesg += 'Module "%s" installed\n' % module.name
@@ -483,6 +526,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
             if module:
                 self.status_mesg += \
                     'Module "%s" not found in this database!\n' % module
+        for module in self.NOT_INSTALL:
+            self.status_mesg += \
+                'Module "%s" may be inconsistent;'\
+                ' please try to install manually!\n' % module
         max_time_to_wait = 2
         if to_install_modules:
             to_install_modules.button_immediate_install()
@@ -526,8 +573,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
             time.sleep(1)
         if not no_clear_cache and to_install_modules and modules_to_remove:
             # We need to invalidate cache to load model of installed modules
-            # self.env.invalidate_all()
-            self.invalidate_cache()
+            if release.version_info[0] < 12:
+                self.env.invalidate_all()
+            # else:
+            #     self.invalidate_cache()
         return
 
     def get_tnldict(self):
@@ -537,13 +586,19 @@ class WizardMakeTestEnvironment(models.TransientModel):
         return self.tnldict
 
     def translate(self, model, src, ttype=False, fld_name=False):
-        if release.major_version == '10.0':
+        distro = self.distro if self.distro else self._set_distro()
+        if distro:
+            tgtver = '%s%d' % (distro, release.version_info[0])
+        else:
+            tgtver = release.major_version
+        srcver = '12.0'
+        if release.major_version == tgtver:
             if ttype == 'valuetnl':
                 return ''
             return src
         return transodoo.translate_from_to(
             self.get_tnldict(),
-            model, src, '10.0', release.major_version,
+            model, src, srcver, tgtver,
             ttype=ttype, fld_name=fld_name)
 
     def setup_model_structure(self, model):
