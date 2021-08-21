@@ -1,6 +1,6 @@
 
 =========================================
-|icon| Manage Test Environment 12.0.0.5.1
+|icon| Manage Test Environment 12.0.0.5.2
 =========================================
 
 
@@ -215,7 +215,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2021-08-20
+Last Update / Ultimo aggiornamento: 2021-08-21
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-black.png
     :target: https://odoo-community.org/page/development-status

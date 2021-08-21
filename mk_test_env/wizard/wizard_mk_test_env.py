@@ -40,8 +40,8 @@ MODULES_NEEDED = {
         'l10n_it_nocoa': ['l10n_it_nocoa']
     },
     'distro': {
-        'powerp': ['l10n_eu_account', 'assigned_bank', 'account_duedates',
-                   'assets_management_plus', 'l10n_it_balance',
+        'powerp': ['l10n_eu_account', 'assigned_bank',
+                   'account_duedates', 'l10n_it_balance',
                    'l10n_it_efattura_sdi_2c', 'l10n_it_mastrini']
     },
     'load_sp': ['l10n_it_split_payment',
@@ -88,6 +88,9 @@ MODULES_NEEDED = {
             'payment', 'l10n_it_einvoice_in', 'l10n_it_einvoice_out'
         ],
     },
+    'load_assets': {
+        '*': ['assets_management_plus'],
+    },
 }
 MODULES_BY_DISTRO = {
     'account_vat_period_end_statement': 'l10n_it_vat_statement',
@@ -123,16 +126,16 @@ DRAFT_FCT = {
 UNIQUE_REFS = ['z0bug.partner_mycompany']
 
 @api.model
-def _lang_get(self):
+def _selection_lang(self):
     return self.env['res.lang'].get_available()
 # put POSIX 'Etc/*' entries at the end to avoid confusing users - see bug 1086728
 @api.model
-def _tz_get(self):
+def _selection_tz(self):
     return [(tz, tz) for tz in sorted(
         pytz.all_timezones,
         key=lambda tz: tz if not tz.startswith('Etc/') else '_')]
 @api.model
-def _coa_get(self):
+def _selection_coa(self):
     if not self.COA_MODULES:
         countries = ['l10n_%s' % x.code.lower()
                      for x in self.env['res.country'].search([])]
@@ -146,6 +149,16 @@ def _coa_get(self):
             else:
                 self.COA_MODULES.append((module.name, module.shortdesc))
     return self.COA_MODULES
+@api.model
+def _selection_distro(self):
+    distros = [('odoo_ce', 'Odoo/OCA CE'),
+               ('odoo_ee', 'Odoo EE'),
+               ('zero', 'Zeroincombenze + OCA')]
+    if release.version_info[0] >= 12:
+        distros.append(('powerp', 'Powerp + OCA'))
+    elif release.version_info[0] == 8:
+        distros.append(('librerp', 'Librerp + OCA'))
+    return distros
 
 
 class WizardMakeTestEnvironment(models.TransientModel):
@@ -155,6 +168,16 @@ class WizardMakeTestEnvironment(models.TransientModel):
     STRUCT = {}
     COA_MODULES = []
     NOT_INSTALL = []
+
+    @api.model
+    def _selection_action(self, scope):
+        res = [('add', 'Add only new records'),
+               ('all', 'Add or rewrite all records')]
+        if scope == 'coa':
+            res.append(('bot', 'Upgrade or Amend records by bot'))
+        elif scope not in ('partner', 'product'):
+            res.append(('dup', 'Add/duplicate all records'))
+        return res
 
     def _test_company(self):
         recs = self.env['ir.model.data'].search(
@@ -189,7 +212,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def _set_coa_2_use(self):
         coa = ''
         if not self.COA_MODULES:
-            _coa_get(self)
+            _selection_coa(self)
         coa_module_list= [x[0] for x in self.COA_MODULES]
         res = self.env['ir.module.module'].search(
             [('name', 'in', coa_module_list),
@@ -247,15 +270,15 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                  required=True,
                                  default=_default_company)
     lang = fields.Selection(
-        _lang_get,
+        _selection_lang,
         string='Language',
         default=os.environ.get('LANG', 'en_US').split('.')[0])
     tz = fields.Selection(
-        _tz_get,
+        _selection_tz,
         string='Timezone',
         default=lambda self: self._set_tz())
     coa = fields.Selection(
-        _coa_get,
+        _selection_coa,
         'Chart of Account',
         help='Select Chart od Account to install\n'
              '"Local IT Odoo" (module l10n_it) is the minimal one\n'
@@ -263,11 +286,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
              '"No CoA" means manual CoA\n',
         default=lambda self: self._set_coa_2_use())
     distro = fields.Selection(
-        [('odoo_ce', 'Odoo/OCA CE'),
-         ('odoo_ee', 'Odoo EE'),
-         ('zero', 'Zeroincombenze + OCA'),
-         ('powerp', 'Powerp + OCA'),
-         ('librerp', 'Librerp + OCA')],
+        _selection_distro,
         'Odoo Ditribution/Edition',
         default=lambda self: self._set_distro())
     set_seq = fields.Boolean('Set line sequence')
@@ -301,37 +320,25 @@ class WizardMakeTestEnvironment(models.TransientModel):
     load_riba = fields.Boolean(
         'Activate RiBA',
         default=False)
+    load_assets = fields.Boolean(
+        'Activate Assets',
+        default=False)
     load_coa = fields.Selection(
-        [('add', 'Add only new records'),
-         ('all', 'Add or rewrite all records'),
-         ('dup', 'Add/duplicate all records'),
-         ], 'Load Chart of Account')
+        lambda self: self._selection_action('coa'), 'Load Chart of Account')
     load_image = fields.Boolean('Load record images', default=True)
     load_partner = fields.Selection(
-        [('add', 'Add only new records'),
-         ('all', 'Add or rewrite all records'),
-         ('dup', 'Add/duplicate all records'),
-         ], 'Load partners')
+        lambda self: self._selection_action('partner'), 'Load Partners')
     load_product = fields.Selection(
-        [('add', 'Add only new records'),
-         ('all', 'Add or rewrite all records'),
-         ('dup', 'Add/duplicate all records'),
-         ], 'Load products')
+        lambda self: self._selection_action('product'), 'Load Products')
     load_sale_order = fields.Selection(
-        [('add', 'Add only new records'),
-         ('all', 'Add or rewrite all records'),
-         ('dup', 'Add/duplicate all records'),
-         ], 'Load sale orders')
+        lambda self: self._selection_action('sale'), 'Load Sale Orders')
     load_purchase_order = fields.Selection(
-        [('add', 'Add only new records'),
-         ('all', 'Add or rewrite all records'),
-         ('dup', 'Add/duplicate all records'),
-         ], 'Load purchase orders')
+        lambda self: self._selection_action('purchase'),
+        'Load Purchase Orders')
     load_invoice = fields.Selection(
-        [('add', 'Add only new records'),
-         ('all', 'Add or rewrite all records'),
-         ('dup', 'Add/duplicate all records'),
-         ], 'Load invoices')
+        lambda self: self._selection_action('invoice'), 'Load Invoices')
+    load_rec_assets = fields.Selection(
+        lambda self: self._selection_action('assets'), 'Load Assets')
     ctr_rec_new = fields.Integer('New record inserted', readonly=True)
     ctr_rec_upd = fields.Integer('Record updated', readonly=True)
     ctr_rec_del = fields.Integer('Record deleted', readonly=True)
@@ -633,7 +640,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 domain.append(('company_id', '=', company_id))
             if parent_id and parent_name in self.STRUCT[model]:
                 domain.append((parent_name, '=', parent_id))
-            recs = self.env[model].with_context({'lang': 'en_US'}).search(domain)
+            recs = self.env[model].with_context(
+                {'lang': 'en_US'}).search(domain)
             if len(recs) == 1:
                 return recs[0] if retrec else recs[0].id
         return False
@@ -641,6 +649,14 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def bind_fields(self, model, vals, company_id,
                     parent_id=None, parent_model=None, mode=None):
+
+        def expand_many(item):
+            try:
+                item = [x for x in item.split(',')]
+            except BaseException:
+                pass
+            return item
+
         self.setup_model_structure(model)
         if (self.load_image and vals.get('id') and
                 'image' in self.STRUCT[model]):
@@ -689,16 +705,27 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 vals[field] = company_id
                 continue
             elif attrs['type'] in ('many2one', 'one2many', 'many2many'):
-                if len(vals[field].split('.')) == 2 and ' ' not in vals[field]:
-                    xid = self.env_ref(vals[field],
-                                       company_id=company_id,
-                                       model=attrs['relation'])
+                items = [vals[field]] if attrs['type'] == 'many2one' \
+                    else expand_many(vals[field])
+                res = []
+                for item in items:
+                    if len(item.split('.')) == 2 and ' ' not in item:
+                        xid = self.env_ref(item,
+                                           company_id=company_id,
+                                           model=attrs['relation'])
+                        if xid:
+                            res.append(item)
+                    elif isinstance(item, basestring) and item.isdigit():
+                        res.appen(eval(item))
+                    elif item:
+                        res.appen(item)
+                if len(res):
                     if attrs['type'] == 'many2one':
-                        vals[field] = xid
-                    elif xid:
-                        vals[field] = [(6, 0, [xid])]
+                        vals[field] = res[0]
                     else:
-                        del vals[field]
+                        vals[field] = [(6, 0, res)]
+                else:
+                    del vals[field]
                 continue
             elif attrs['type'] == 'boolean':
                 vals[field] = os0.str2bool(vals[field], False)
@@ -1028,6 +1055,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
         })
 
     @api.model
+    def runbot_account(self):
+        self.status_mesg = self.env['account.tax'].runbot_tax(
+            log=self.status_mesg)
+
+    @api.model
     def enable_cancel_journal(self):
         journal_model = self.env['account.journal']
         for rec in journal_model.search([('update_posted', '=', False)]):
@@ -1074,11 +1106,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.create_company()
         elif not self.test_company_id:
             self.set_company_to_test(self.company_id)
-        if self.load_coa and self.coa == 'l10n_it_coa_base':
+        if self.load_coa and self.coa == 'l10n_it_no_coa':
             self.mk_account_account(
                 self.company_id.id, mode=self.load_coa, cantdup=True)
             self.make_model('account.tax', mode=self.load_coa, cantdup=True)
-        if self.load_coa:
+        if self.load_coa == 'bot':
+            self.runbot_account()
+        elif self.load_coa:
             self.make_model(
                 'decimal.precision', mode=self.load_coa, cantdup=True)
             self.make_model('account.fiscal.position', mode=self.load_coa)
