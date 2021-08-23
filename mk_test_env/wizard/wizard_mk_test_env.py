@@ -12,7 +12,7 @@ import os
 from datetime import date, datetime, timedelta
 import time
 import calendar
-import re
+# import re
 
 import pytz
 
@@ -85,7 +85,7 @@ MODULES_NEEDED = {
     'load_invoice': {
         '*': [
             'account_accountant', 'account_cancel',
-            'payment', 'l10n_it_einvoice_in', 'l10n_it_einvoice_out'
+            'payment', 'l10n_it_fatturapa_in', 'l10n_it_fatturapa_out'
         ],
     },
     'load_assets': {
@@ -624,7 +624,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     field=None, parent_id=None, parent_name=None, retrec=None):
         domain = []
         for nm in ('code', 'acc_number', 'login', 'description', 'name',
-                   'number', 'sequence'):
+                   'number', 'sequence', 'tax_src_id', 'tax_dest_id'):
             if nm == 'code' and model == 'product.product':
                 continue
             elif nm == 'description' and model == 'account.tax':
@@ -714,11 +714,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                            company_id=company_id,
                                            model=attrs['relation'])
                         if xid:
-                            res.append(item)
+                            res.append(xid)
                     elif isinstance(item, basestring) and item.isdigit():
                         res.appen(eval(item))
                     elif item:
-                        res.appen(item)
+                        res.append(item)
                 if len(res):
                     if attrs['type'] == 'many2one':
                         vals[field] = res[0]
@@ -977,6 +977,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if 'company_id' in self.STRUCT[model]:
             company_id = self.company_id.id
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
+        hdr_list = [x for x in xrefs]
         if model2:
             self.setup_model_structure(model2)
             xrefs = xrefs + z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model2)
@@ -986,7 +987,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
         seq = 0
         parent_id = False
         for xref in sorted(xrefs):
-            if re.match('.*_[0-9]+_[0-9]+$', xref):
+            # if re.match('.*_[0-9]+_[0-9]+$', xref):
+            if model2 and xref not in hdr_list:
                 # Found child xref, evaluate parent xref
                 parent_id = self.env_ref('_'.join(xref.split('_')[0:-1]))
                 if self.set_seq:
@@ -1115,7 +1117,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
         elif self.load_coa:
             self.make_model(
                 'decimal.precision', mode=self.load_coa, cantdup=True)
-            self.make_model('account.fiscal.position', mode=self.load_coa)
+            self.make_model('account.fiscal.position', mode=self.load_coa,
+                            model2='account.fiscal.position.tax')
             self.make_model(
                 'date.range.type', mode=self.load_coa, cantdup=True)
             self.make_model(
