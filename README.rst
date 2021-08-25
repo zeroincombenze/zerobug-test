@@ -25,7 +25,7 @@ Avaiable Addons / Moduli disponibili
 +-------------+------------+----------------------------------------------------------------------------------+
 | midea       | 12.0.0.1.4 | z0bug_odoo test suite                                                            |
 +-------------+------------+----------------------------------------------------------------------------------+
-| mk_test_env | 12.0.0.5.1 | Create, update or clean-up test environment                                      |
+| mk_test_env | 12.0.0.6   | Create, update or clean-up test environment                                      |
 +-------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -43,6 +43,13 @@ Prerequisites / Prerequisiti
 
 * python 3.7+
 * postgresql 9.5+ (experimental 10.0+)
+* python_plus
+* odoo_score
+* os0
+* clodoo
+* z0lib
+* jsonlib-python3
+* unidecode
 
 
 Installation / Installazione
@@ -174,7 +181,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2021-08-20
+Last Update / Ultimo aggiornamento: 2021-08-25
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
