@@ -54,6 +54,7 @@ MODULES_NEEDED = {
     'load_sct': ['account_banking_sepa_credit_transfer'],
     'load_sdd': ['account_banking_sepa_direct_debit'],
     'load_riba': ['l10n_it_ricevute_bancarie'],
+    'load_financing': ['account_banking_invoice_financing'],
     'load_vat': ['account_vat_period_end_statement',
                  'l10n_it_vat_registries',
                  'l10n_it_vat_statement_communication',
@@ -91,16 +92,6 @@ MODULES_NEEDED = {
     'load_assets': {
         '*': ['assets_management_plus'],
     },
-}
-MODULES_BY_DISTRO = {
-    'account_vat_period_end_statement': 'l10n_it_vat_statement',
-    'l10n_it_einvoice_in': 'l10n_it_fatturapa_in_improved',
-    'l10n_it_einvoice_ou': 'l10n_it_fatturapa_out_improved',
-    # 'l10n_it_reverse_charge': 'l10n_it_reverse_charge_plus',
-    # 'l10n_it_split_payment': 'l10n_it_vat_statement_split_payment_plus',
-    # 'l10n_it_withholding_tax': '',
-    # 'l10n_it_intrastat': 'l10n_it_intrastat_plus',
-    # 'l10n_it_intrastat_statement': 'l10n_it_intrastat_statement_plus'
 }
 COMMIT_FCT = {
     'account.invoice': {
@@ -174,7 +165,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         res = [('add', 'Add only new records'),
                ('all', 'Add or rewrite all records')]
         if scope == 'coa':
-            res.append(('bot', 'Upgrade or Amend records by bot'))
+            res.append(('wiz', 'Upgrade or Amend records by bot'))
         elif scope not in ('partner', 'product'):
             res.append(('dup', 'Add/duplicate all records'))
         return res
@@ -320,6 +311,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
     load_riba = fields.Boolean(
         'Activate RiBA',
         default=False)
+    load_financing = fields.Boolean(
+        'Activate Anticipo fatture',
+        default=False)
     load_assets = fields.Boolean(
         'Activate Assets',
         default=False)
@@ -374,6 +368,34 @@ class WizardMakeTestEnvironment(models.TransientModel):
         # if (xref == 'product.product_uom_unit' and
         #         eval(release.major_version.split('.')[0]) >= 12):
         #     xref = 'uom.product_uom_unit'
+        def sim_xref_account(xrefs, company_id):
+            tok = '_%s' % xrefs[1].split('_')[1]
+            recs = ir_model.search(
+                [('module', '=', 'l10n_it_fiscal'),
+                 ('name', 'like', r'%%\%s' % tok),
+                 ('model', '=', 'account.account')])
+            for xid in recs:
+                if xid.name.endswith(tok):
+                    rec = self.env[model].browse(xid.res_id)
+                    if rec.company_id.id == company_id:
+                        if retxref_id:
+                            return xid.id
+                        return xid.res_id
+
+        def sim_xref_tax(xrefs, company_id):
+            tok = '_%s' % xrefs[1].split('_')[1]
+            recs = ir_model.search(
+                [('module', '=', 'l10n_it_fiscal'),
+                 ('name', 'like', r'%%\%s' % tok),
+                 ('model', '=', 'account.tax')])
+            for xid in recs:
+                if xid.name.endswith(tok):
+                    rec = self.env[model].browse(xid.res_id)
+                    if rec.company_id.id == company_id:
+                        if retxref_id:
+                            return xid.id
+                        return xid.res_id
+
         xrefs = self.translate('', xref, ttype='xref').split('.')
         if len(xrefs) == 2 and ' ' not in xref:
             ir_model = self.env['ir.model.data']
@@ -386,32 +408,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
             elif model:
                 if (model == 'account.account' and
                         xref.startswith('z0bug.coa_')):
-                    tok = '_%s' % xrefs[1].split('_')[1]
-                    recs = ir_model.search(
-                        [('module', '=', 'l10n_it_fiscal'),
-                         ('name', 'like', r'%%\%s' % tok),
-                         ('model', '=', 'account.account')])
-                    for xid in recs:
-                        if xid.name.endswith(tok):
-                            rec = self.env[model].browse(xid.res_id)
-                            if rec.company_id.id == company_id:
-                                if retxref_id:
-                                    return xid.id
-                                return xid.res_id
+                    return sim_xref_account(xrefs, company_id)
                 elif (model == 'account.tax' and
                         xref.startswith('z0bug.tax_')):
-                    tok = '_%s' % xrefs[1].split('_')[1]
-                    recs = ir_model.search(
-                        [('module', '=', 'l10n_it_fiscal'),
-                         ('name', 'like', r'%%\%s' % tok),
-                         ('model', '=', 'account.tax')])
-                    for xid in recs:
-                        if xid.name.endswith(tok):
-                            rec = self.env[model].browse(xid.res_id)
-                            if rec.company_id.id == company_id:
-                                if retxref_id:
-                                    return xid.id
-                                return xid.res_id
+                    return sim_xref_tax(xrefs, company_id)
         return False
 
     @api.model
@@ -434,10 +434,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
         model_model.browse(id).write(vals)
         self.ctr_rec_upd += 1
         return id
-
-    @api.model
-    def name_by_distro(self, module):
-        return MODULES_BY_DISTRO.get(module, module)
 
     @api.model
     def get_module_list(self, scope=None):
@@ -648,7 +644,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     @api.model
     def bind_fields(self, model, vals, company_id,
-                    parent_id=None, parent_model=None, mode=None):
+                    parent_id=None, parent_model=None, mode=None,
+                    only_fields=[]):
 
         def expand_many(item):
             try:
@@ -669,7 +666,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
             del vals['id']
         parent_name = ''
         for field in vals.copy().keys():
-            if vals[field] is None or vals[field] in ('None', r'\N'):
+            if ((only_fields and field not in only_fields) or
+                    vals[field] is None or
+                    vals[field] in ('None', r'\N')):
                 del vals[field]
                 continue
             if self.translate(model, field, ttype='valuetnl', fld_name=field):
@@ -705,8 +704,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 vals[field] = company_id
                 continue
             elif attrs['type'] in ('many2one', 'one2many', 'many2many'):
-                items = [vals[field]] if attrs['type'] == 'many2one' \
-                    else expand_many(vals[field])
+                if attrs['type'] == 'many2one':
+                    items = [vals[field]]
+                else:
+                    items = expand_many(vals[field])
                 res = []
                 for item in items:
                     if len(item.split('.')) == 2 and ' ' not in item:
@@ -729,7 +730,12 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 continue
             elif attrs['type'] == 'boolean':
                 vals[field] = os0.str2bool(vals[field], False)
-            elif attrs['type'] == 'date':
+            elif attrs['type'] == 'date' and isinstance(vals[field], int):
+                vals[field] = str(date.today() + timedelta(vals[field]))
+            elif attrs['type'] == 'datetime' and isinstance(vals[field], int):
+                vals[field] = str(datetime.today() + timedelta(vals[field]))
+            elif attrs['type'] == 'date' and isinstance(vals[field],
+                                                        basestring):
                 if vals[field].startswith('+'):
                     vals[field] = str(
                         date.today() + timedelta(int(vals[field][1:])))
@@ -798,7 +804,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                             items[i] = int(items[i])
                     vals[field] = '%04d-%02d-%02d' % (
                         items[0], items[1], items[2])
-            elif attrs['type'] == 'datetime':
+            elif attrs['type'] == 'datetime' and isinstance(vals[field],
+                                                        basestring):
                 if vals[field].startswith('+'):
                     vals[field] = str(
                         datetime.today() + timedelta(int(vals[field][1:])))
@@ -824,12 +831,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
                             self.env_ref(vals['user_type_id']))
                     if acc.nature:
                         vals['nature'] = acc.nature
+        if (model == 'res.partner' and
+                vals.get('parent_id') and
+                release.version_info[0] > 10 and
+                not vals.get('name')):
+            vals['name'] = '%s (Magazzino)' % self.env[model].browse(
+                vals['parent_id']).name
         if parent_id and parent_model:
-            if (model == 'res.partner' and
-                    parent_id and
-                    release.version_info[0] > 10 and
-                    not vals.get('name')):
-                vals['name'] = self.env[model].browse(parent_id).name
             if mode != 'dup':
                 rec = self.bind_record(
                     model, vals, company_id,
@@ -896,8 +904,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.status_mesg += mesg
 
     @api.model
-    def store_xref(self, xref, model, company_id,
-                   parent_id=None, parent_model=None, seq=None, mode=None):
+    def store_rec_with_xref(self, xref, model, company_id,
+                            parent_id=None, parent_model=None,
+                            seq=None, mode=None, only_fields=[]):
         if mode == 'dup' and xref in UNIQUE_REFS:
             mode = 'all'
         if parent_id and parent_model:
@@ -906,11 +915,14 @@ class WizardMakeTestEnvironment(models.TransientModel):
             xid = self.env_ref(xref, company_id=company_id, model=model)
         if not xid or mode in ('all', 'dup'):
             vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(model, xref)
-            if 'sequence' in self.STRUCT[model] and seq:
+            if ('sequence' in self.STRUCT[model] and
+                    seq and
+                    not vals.get('sequence')):
                 vals['sequence'] = seq
             vals, parent_name = self.bind_fields(
                 model, vals, company_id,
-                parent_id=parent_id, parent_model=parent_model, mode=mode)
+                parent_id=parent_id, parent_model=parent_model, mode=mode,
+                only_fields=only_fields)
             if mode == 'dup':
                 xid = False
             else:
@@ -924,8 +936,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.write_diff(model, xid, vals, xref,
                                 parent_id=parent_id, parent_model=parent_model)
             else:
-                if 'id' in vals:
-                    del vals['id']
+                for name in ('id', 'valid_for_dichiarazione_intento'):
+                    if name in vals:
+                        del vals[name]
                 try:
                     xid = self.env[model].create(vals).id
                     self.ctr_rec_new += 1
@@ -943,7 +956,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         return xid
 
     @api.model
-    def do_workflow(self, model, rec_id, FCT):
+    def do_workflow(self, model, rec_id, FCT, ignore_error=True):
         if model in FCT:
             stated = []
             rec = self.env[model].browse(rec_id)
@@ -954,9 +967,12 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 stated.append(old_state)
                 for action in FCT[model][old_state]:
                     if hasattr(self.env[model], action):
-                        getattr(rec, action)()
-                        if not action.startswith('action'):
-                            rec.write({})
+                        try:
+                            getattr(rec, action)()
+                        except:
+                            if not ignore_error:
+                                raise UserError(
+                                    'Invalid action %s.%s' % (model, action))
                 rec = self.env[model].browse(rec_id)
 
     @api.model
@@ -965,11 +981,47 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     @api.model
     def do_commit(self, model, rec_id):
+        if model == 'account.fiscal.position':
+            if rec_id == self.env_ref('z0bug.fiscalpos_li'):
+                self.env[model].browse(rec_id).write(
+                    {'valid_for_dichiarazione_intento': True})
         self._cr.commit()  # pylint: disable=invalid-commit
-        self.do_workflow(model, rec_id, COMMIT_FCT)
+        self.do_workflow(model, rec_id, COMMIT_FCT, ignore_error=True)
+
+    def make_misc(self):
+
+        def split_field(value):
+            values = value.split('.')
+            return '.'.join(values[0: -1]), values[-1]
+
+        def write_rec(model, vals):
+            rec = self.env[model].browse(self.company_id.id)
+            vals, parent_name = self.bind_fields(
+                model, vals, self.company_id.id)
+            rec.write(vals)
+            self.ctr_rec_upd += 1
+            self.status_mesg += '- Model "%s" updated "%s"\n' % (
+                model, vals.keys())
+
+        xmodel = 'miscellaneous'
+        xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(xmodel)
+        prior_model = ''
+        vals = {}
+        for xref in sorted(xrefs):
+            xvals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(xmodel, xref)
+            model, field = split_field(xvals['id'])
+            if model != prior_model:
+                if prior_model and vals:
+                    write_rec(prior_model, vals)
+                prior_model = model
+                vals = {}
+            vals[field] = xvals['value']
+        if prior_model and vals:
+            write_rec(prior_model, vals)
 
     @api.model
-    def make_model(self, model, mode=None, model2=None, cantdup=None):
+    def make_model(self, model, mode=None, model2=None, cantdup=None,
+                   only_fields=[]):
         if cantdup and mode == 'dup':
             mode = 'all'
         self.setup_model_structure(model)
@@ -995,22 +1047,24 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     seq += 10
                 else:
                     seq = 10
-                self.store_xref(xref, model2 or model, company_id,
-                                mode=mode, parent_id=parent_id,
-                                parent_model=model, seq=seq)
+                self.store_rec_with_xref(xref, model2 or model, company_id,
+                                         mode=mode, parent_id=parent_id,
+                                         parent_model=model, seq=seq,
+                                         only_fields=only_fields)
             else:
                 if seq:
                     # Previous write was a detail record
                     self.do_commit(model, parent_id)
-                parent_id = self.store_xref(xref, model, company_id, mode=mode)
+                parent_id = self.store_rec_with_xref(
+                    xref, model, company_id, mode=mode, only_fields=only_fields)
                 if model == 'account.payment.term':
-                    seq = 10
+                    seq = 1
                     model2_model = self.env[model2]
                     for rec_line in model2_model.search(
                             [('payment_id', '=', parent_id)],
                             order='sequence,id'):
                         rec_line.write({'sequence': seq})
-                        seq += 10
+                        seq += 1
                 seq = 0
         if seq:
             self.do_commit(model, parent_id)
@@ -1024,15 +1078,15 @@ class WizardMakeTestEnvironment(models.TransientModel):
         for xref in sorted(xrefs):
             # Prima i mastri
             if len(xref) == 12:
-                self.store_xref(xref, model, company_id, mode=mode)
+                self.store_rec_with_xref(xref, model, company_id, mode=mode)
         for xref in xrefs:
             # poi i capoconti
             if len(xref) == 13:
-                self.store_xref(xref, model, company_id, mode=mode)
+                self.store_rec_with_xref(xref, model, company_id, mode=mode)
         for xref in xrefs:
             # infine i sottoconti
             if len(xref) > 13:
-                self.store_xref(xref, model, company_id, mode=mode)
+                self.store_rec_with_xref(xref, model, company_id, mode=mode)
 
     @api.model
     def create_company(self):
@@ -1057,7 +1111,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         })
 
     @api.model
-    def runbot_account(self):
+    def run_wizard_account(self):
         self.status_mesg = self.env['account.tax'].runbot_tax(
             log=self.status_mesg)
 
@@ -1112,9 +1166,25 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.mk_account_account(
                 self.company_id.id, mode=self.load_coa, cantdup=True)
             self.make_model('account.tax', mode=self.load_coa, cantdup=True)
-        if self.load_coa == 'bot':
-            self.runbot_account()
+        if self.load_coa == 'wiz':
+            self.run_wizard_account()
         elif self.load_coa:
+            only_fields = []
+            # if flag(load_rc) is False, it means RC modules are instaled
+            if not self._set_flag('load_rc'):
+                model = 'account.tax'
+                for name in ('kind_id', 'rc_type', 'rc_sale_tax_id'):
+                    name = self.translate(model, name, ttype='field')
+                    only_fields.append(name)
+            # if flag(load_sp) is False, it means SP modules are instaled
+            if not self._set_flag('load_sp'):
+                model = 'account.tax'
+                for name in ('payability',):
+                    name = self.translate(model, name, ttype='field')
+                    only_fields.append(name)
+            if only_fields:
+                self.make_model(model, mode=self.load_coa,
+                                cantdup=True, only_fields=only_fields)
             self.make_model(
                 'decimal.precision', mode=self.load_coa, cantdup=True)
             self.make_model('account.fiscal.position', mode=self.load_coa,
@@ -1129,9 +1199,17 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.make_model(
                 'account.journal', mode=self.load_coa, cantdup=True)
             self.enable_cancel_journal()
-            if self.load_wh:
+            self.make_model('account.payment.method', mode=self.load_coa)
+            # if flag(load_wh) is False, it means WH modules are instaled
+            if not self._set_flag('load_wh'):
                 self.make_model('withholding.tax', mode=self.load_coa,
                                 model2='withholding.tax.rate', cantdup=True)
+            # if flag(load_li) is False, it means LI modules are instaled
+            if not self._set_flag('load_li'):
+                self.make_model('dichiarazione.intento.yearly.limit',
+                                mode=self.load_coa, cantdup=True)
+                self.make_model('dichiarazione.intento',
+                                mode=self.load_coa, cantdup=True)
         if self.load_partner:
             self.make_model('res.partner', mode=self.load_partner)
             self.make_model(
@@ -1141,6 +1219,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 'product.template', mode=self.load_product, cantdup=True)
             self.make_model(
                 'product.product', mode=self.load_product, cantdup=True)
+        self.make_misc()
         self.state = '2'
 
         # Block 2: TODO> Separate function
