@@ -41,12 +41,13 @@ MODULES_NEEDED = {
     },
     'distro': {
         'powerp': ['l10n_eu_account', 'assigned_bank',
-                   'account_duedates',
+                   'account_duedates', 'l10_it_coa_base',
                    'l10n_it_efattura_sdi_2c']
     },
-    'load_sp': ['l10n_it_split_payment',
-                'l10n_it_vat_registries_split_payment',
-                'l10n_it_vat_statement_split_payment'],
+    'einvoice': ['account',
+                 'l10n_it_fatturapa_in',
+                 'l10n_it_fatturapa_out'],
+    'load_sp': ['l10n_it_split_payment'],
     'load_rc': ['l10n_it_reverse_charge'],
     'load_li': ['l10n_it_dichiarazione_intento'],
     'load_wh': ['l10n_it_withholding_tax'],
@@ -297,6 +298,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
         'Odoo Ditribution/Edition',
         default=lambda self: self._set_distro())
     set_seq = fields.Boolean('Set line sequence')
+    einvoice = fields.Boolean(
+        'Activate e-Invoice',
+        default=lambda self: self._feature_2_install('einvoice'))
     load_sp = fields.Boolean(
         'Activate Split Payment',
         default=lambda self: self._feature_2_install('load_sp'))
@@ -461,10 +465,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 tgt_list.append(item)
             return tgt_list
 
-        modules = [scope] if scope else MODULES_NEEDED.keys()
+        groups = [scope] if scope else MODULES_NEEDED.keys()
         modules_2_install = []
         modules_2_remove = []
-        for item in modules:
+        for item in groups:
             if item == 'distro' and not getattr(self, 'load_vat'):
                 continue
             if scope or item == '*' or getattr(self, item):
@@ -919,7 +923,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.env[model].browse(xid).write(vals)
             self.ctr_rec_upd += 1
             if not parent_model and not parent_id:
-                mesg = '- Model "%s" updated "%s"\n' % (model, xref)
+                mesg = '- Xref "%s":"%s" updated\n' % (model, xref)
                 self.status_mesg += mesg
 
     @api.model
@@ -963,7 +967,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     xid = self.env[model].create(vals).id
                     self.ctr_rec_new += 1
                     if not parent_model and not parent_id:
-                        mesg = '- Model "%s" added "%s"\n' % (
+                        mesg = '- Xref "%s":"%s" added\n' % (
                             model, xref)
                         self.status_mesg += mesg
                 except BaseException as e:
@@ -985,7 +989,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 except:
                     if not ignore_error:
                         raise UserError(
-                            'Invalid action %s.%s' % (model, action))
+                            'Action %s.%s FAILED (or invalid)!' % (model, action))
 
         self._cr.commit()  # pylint: disable=invalid-commit
         if model in FCT:
@@ -1079,12 +1083,12 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 # rec.write(vals)
                 self.company_id.write(vals)
                 self.ctr_rec_upd += 1
-                self.status_mesg += '- Model "%s" updated "%s"\n' % (
+                self.status_mesg += '- Xref "%s":"%s" updated\n' % (
                     model, vals.keys())
             elif model == 'res.groups':
                 self.env.user.write(vals)
                 self.ctr_rec_upd += 1
-                self.status_mesg += '- Model "%s" updated "%s"\n' % (
+                self.status_mesg += '- Xref "%s":"%s" updated\n' % (
                     model, vals.keys())
 
         def is_to_apply(key, field):

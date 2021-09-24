@@ -35,6 +35,7 @@
                         <group>
                             <field name="distro"/>
                             <group>
+                                <field name="einvoice"/>
                                 <field name="load_sp"/>
                                 <field name="load_rc"/>
                                 <field name="load_wh"/>

@@ -1,6 +1,6 @@
 
 =========================================
-|icon| Manage Test Environment 12.0.0.6.1
+|icon| Manage Test Environment 12.0.0.6.2
 =========================================
 
 
@@ -23,6 +23,12 @@ Overview / Panoramica
 
 This module creates an test environment with test data.
 
+The behaviour of this module, depends heavily from following PYPI modules:
+
+* z0bug_odoo: contains records data
+* clodoo: contains the odoo version depending translation
+* odoo_score: odoo supercore
+
 
 |
 
@@ -30,6 +36,29 @@ This module creates an test environment with test data.
 -------------------------------
 
 Questo modulo crea un ambiente di test con dati di test.
+Il comportamento di quesot modulo dipende pesantemente dai sequenti package PYPI:
+
+* z0bug_odoo: contiene i dati dei record
+* clodoo: contains le traduzioni dipendenti dalla versione di Odoo
+* odoo_score: odoo supercore
+
+
+|
+
+Features / Caratteristiche
+--------------------------
+
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
+| Description / Descrizione                | 6.1        | 7.0        | 8.0        | 9.0        | 10.0    | 11.0       | 12.0    |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
+| Partner & Products / Soggetti e prodotti | |check|    | |check|    | |check|    | |check|    | |check| | |check|    | |check| |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
+| Sale orders / Ordini clienti             | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
+| Purchase orders / Ordini fornitori       | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
+| Invoices / Fatture                       | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
 
 
 |
@@ -149,6 +178,12 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
+
+12.0.0.6.2 (2021-09-23)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: added l10n_it_coa_base for distro powerp
+* [FIX] mk_test_env: removed OCA supplemental SP modules for distro powerp
 
 12.0.0.6.1 (2021-08-02)
 ~~~~~~~~~~~~~~~~~~~~~~~

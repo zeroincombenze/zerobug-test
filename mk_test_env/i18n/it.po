@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo (12.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-29 17:48+0000\n"
-"PO-Revision-Date: 2020-02-29 18:57+0100\n"
+"POT-Creation-Date: 2021-09-24 10:10+0000\n"
+"PO-Revision-Date: 2021-09-24 10:10+0000\n"
 "Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
 "Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
 "Language: it_IT\n"
@@ -15,33 +15,98 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.0\n"
+"Generated-By: Babel 2.9.1\n"
 
 #. module: mk_test_env
-#: model:ir.ui.view,arch_db:mk_test_env.result_cleanup_test_env_view
-#: model:ir.ui.view,arch_db:mk_test_env.result_mk_test_env_view
-#: model:ir.ui.view,arch_db:mk_test_env.wizard_cleanup_test_env_view
-#: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_financing
+msgid "Activate Anticipo fatture"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_assets
+msgid "Activate Assets"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_conai
+msgid "Activate Conai"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_li
+msgid "Activate Lettera di Intento"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_rc
+msgid "Activate Reverse Charge"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_riba
+msgid "Activate RiBA"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_sct
+msgid "Activate Sepa Credit Transfer"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_sdd
+msgid "Activate Sepa Direct Debit"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_sp
+msgid "Activate Split Payment"
+msgstr "Activate Split Payment"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_vat
+msgid "Activate VAT modules"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_wh
+msgid "Activate Withholding Tax"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_fiscal
+msgid "Activate fiscal modules"
+msgstr ""
+
+#. module: mk_test_env
+#: model_terms:ir.ui.view,arch_db:mk_test_env.result_cleanup_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.result_mk_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.wizard_cleanup_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
 msgid "Cancel"
 msgstr "Annullare"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_coa
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__coa
 msgid "Chart of Account"
 msgstr "Piano dei conti"
 
 #. module: mk_test_env
-#: model:ir.ui.view,arch_db:mk_test_env.wizard_cleanup_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.wizard_cleanup_test_env_view
 msgid "Clean"
 msgstr "Pulizia"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_clean_coa
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__clean_invoice
+msgid "Clean Account Invoice"
+msgstr "Clean Account Invoice"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__clean_coa
 msgid "Clean Chart of Account"
 msgstr "Pulizia P.d.C"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_clean_fiscalpos
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__clean_fiscalpos
 msgid "Clean Fiscal Position"
 msgstr "Pulizia posizioni fiscali"
 
@@ -49,23 +114,36 @@ msgstr "Pulizia posizioni fiscali"
 #: model:ir.actions.act_window,name:mk_test_env.action_cleanup_test_env
 #: model:ir.model,name:mk_test_env.model_wizard_cleanup_test_environment
 #: model:ir.ui.menu,name:mk_test_env.menu_cleanup_test_env
-#: model:ir.ui.view,arch_db:mk_test_env.wizard_cleanup_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.wizard_cleanup_test_env_view
 msgid "Clean-up Test Environment"
 msgstr "Pulizia ambiente di test"
 
 #. module: mk_test_env
-#: model:ir.ui.view,arch_db:mk_test_env.result_cleanup_test_env_view
-#: model:ir.ui.view,arch_db:mk_test_env.result_mk_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.result_cleanup_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.result_mk_test_env_view
 msgid "Close"
 msgstr "Chiudere"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_company_id
+#: model:ir.model.fields,field_description:mk_test_env.field_italy_ade_tax_assosoftware__code
+msgid "Code"
+msgstr "Codice"
+
+#. module: mk_test_env
+#: sql_constraint:italy.ade.tax.assosoftware:0
+#: sql_constraint:italy.ade.tax.assosoftware
+#: sql_constraint:italy.ade.tax.assosoftware
+#: sql_constraint:italy.ade.tax.assosoftware
+msgid "Code already exists!"
+msgstr "!"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__company_id
 msgid "Company"
 msgstr "Azienda"
 
 #. module: mk_test_env
-#: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
 msgid "Create"
 msgstr "Creare"
 
@@ -73,152 +151,246 @@ msgstr "Creare"
 #: model:ir.actions.act_window,name:mk_test_env.action_mk_test_env
 #: model:ir.model,name:mk_test_env.model_wizard_make_test_environment
 #: model:ir.ui.menu,name:mk_test_env.menu_mk_test_env
-#: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
 msgid "Create Test Environment"
 msgstr "Crea ambiente di test"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_new_company
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__new_company
 msgid "Create new company"
 msgstr "Creare nuova azienda"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_create_uid
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_create_uid
+#: model:ir.model.fields,field_description:mk_test_env.field_italy_ade_tax_assosoftware__create_uid
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__create_uid
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__create_uid
 msgid "Created by"
 msgstr "Creato da"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_create_date
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_create_date
+#: model:ir.model.fields,field_description:mk_test_env.field_italy_ade_tax_assosoftware__create_date
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__create_date
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__create_date
 msgid "Created on"
 msgstr "Creato il"
 
 #. module: mk_test_env
-#: model:ir.ui.view,arch_db:mk_test_env.wizard_cleanup_test_env_view
-#: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.wizard_cleanup_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
 msgid "Data selection"
 msgstr "Selezione dati"
 
 #. module: mk_test_env
-#: selection:wizard.make.test.environment,coa:0
-#: selection:wizard.make.test.environment,coa
-msgid "Default Odoo CoA"
-msgstr "PdC predefinito Odoo"
-
-#. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_display_name
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_display_name
+#: model:ir.model.fields,field_description:mk_test_env.field_italy_ade_tax_assosoftware__display_name
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__display_name
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: mk_test_env
-#: selection:wizard.make.test.environment,coa:0
-#: selection:wizard.make.test.environment,coa
-msgid "Experimental Axilor CoA"
-msgstr "PdC sperimentale Axilor"
-
-#. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_force_test_values
-msgid "Force reload test values"
-msgstr "Forzare caricamento valori di test"
-
-#. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_id
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_id
+#: model:ir.model.fields,field_description:mk_test_env.field_italy_ade_tax_assosoftware__id
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__id
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__id
 msgid "ID"
 msgstr "ID"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_status_mesg
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_status_mesg
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__status_mesg
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__status_mesg
 msgid "Installation status"
 msgstr "Stato installazione"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment___last_update
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment___last_update
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__lang
+msgid "Language"
+msgstr "Lingua"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_italy_ade_tax_assosoftware____last_update
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment____last_update
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_write_uid
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_write_uid
+#: model:ir.model.fields,field_description:mk_test_env.field_italy_ade_tax_assosoftware__write_uid
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__write_uid
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__write_uid
 msgid "Last Updated by"
 msgstr "Ultimo aggiornamento di"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_write_date
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_write_date
+#: model:ir.model.fields,field_description:mk_test_env.field_italy_ade_tax_assosoftware__write_date
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__write_date
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__write_date
 msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_images
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_rec_assets
+msgid "Load Assets"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_coa
+msgid "Load Chart of Account"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_invoice
+msgid "Load Invoices"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_partner
+msgid "Load Partners"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_product
+msgid "Load Products"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_purchase_order
+msgid "Load Purchase Orders"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_sale_order
+msgid "Load Sale Orders"
+msgstr ""
+
+#. module: mk_test_env
+#: selection:wizard.make.test.environment,state:0
+#: selection:wizard.make.test.environment,state
+#: selection:wizard.make.test.environment,state
+#: selection:wizard.make.test.environment,state
+msgid "Load general data"
+msgstr ""
+
+#. module: mk_test_env
+#: selection:wizard.make.test.environment,state:0
+#: selection:wizard.make.test.environment,state
+#: selection:wizard.make.test.environment,state
+#: selection:wizard.make.test.environment,state
+msgid "Load modules"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__load_image
 msgid "Load record images"
 msgstr "Carica immagini"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_ctr_rec_new
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_ctr_rec_new
+#: selection:wizard.make.test.environment,state:0
+#: selection:wizard.make.test.environment,state
+#: selection:wizard.make.test.environment,state
+#: selection:wizard.make.test.environment,state
+msgid "Load structured data"
+msgstr ""
+
+#. module: mk_test_env
+#: model_terms:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
+msgid "Module selection"
+msgstr "Module selection"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_italy_ade_tax_assosoftware__name
+msgid "Name"
+msgstr "Descrizione"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_italy_ade_tax_assosoftware__nature
+msgid "Nature"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,help:mk_test_env.field_italy_ade_tax_assosoftware__nature
+msgid "Nature of tax code: may be taxable, out of scope, etc ..."
+msgstr "."
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__ctr_rec_new
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__ctr_rec_new
 msgid "New record inserted"
 msgstr "Nuovi record inseriti"
 
 #. module: mk_test_env
-#: selection:wizard.make.test.environment,coa:0
-#: selection:wizard.make.test.environment,coa
-msgid "No chart of account"
-msgstr "No piano dei conti"
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__distro
+msgid "Odoo Ditribution/Edition"
+msgstr ""
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_ctr_rec_del
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_ctr_rec_del
+#: model_terms:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
+msgid "Parameters"
+msgstr "Parametri"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__ctr_rec_del
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__ctr_rec_del
 msgid "Record deleted"
 msgstr "Record eliminati"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_ctr_rec_upd
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_ctr_rec_upd
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__ctr_rec_upd
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__ctr_rec_upd
 msgid "Record updated"
 msgstr "Record modificati"
 
 #. module: mk_test_env
-#: model:ir.ui.view,arch_db:mk_test_env.result_cleanup_test_env_view
-#: model:ir.ui.view,arch_db:mk_test_env.result_mk_test_env_view
+#: selection:wizard.make.test.environment,state:0
+#: selection:wizard.make.test.environment,state
+#: selection:wizard.make.test.environment,state
+#: selection:wizard.make.test.environment,state
+msgid "Result"
+msgstr ""
+
+#. module: mk_test_env
+#: model_terms:ir.ui.view,arch_db:mk_test_env.result_cleanup_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.result_mk_test_env_view
+#: model_terms:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
 msgid "Result Test Environment"
 msgstr "Risultati ambiente test"
 
 #. module: mk_test_env
-#: model:ir.model.fields,help:mk_test_env.field_wizard_make_test_environment_coa
+#: model:ir.model.fields,help:mk_test_env.field_wizard_make_test_environment__coa
 msgid ""
-"Select Chart od Account to install, if new company\n"
-"\"Default Odoo Chart Account\" (module l10n_it) is minimal\n"
-"\"Zeroincombenze CoA\" (module l10n_it_fiscal) is a full CoA\n"
-"\"Axilor CoA\" is a Zeroincombenze CoA plus multilevel accounts\n"
-"\"Test\" is internal testing CoA"
+"Select Chart od Account to install\n"
+"\"Local IT Odoo\" (module l10n_it) is the minimal one\n"
+"\"Powerp/Zeroincombenze\" (module l10n_it_fiscal) is the full CoA\n"
+"\"No CoA\" means manual CoA\n"
 msgstr ""
-"Select Chart od Account to install, if new company\n"
-"\"Default Odoo Chart Account\" (module l10n_it) is minimal\n"
-"\"Zeroincombenze CoA\" (module l10n_it_fiscal) is a full CoA\n"
-"\"Axilor CoA\" is a Zeroincombenze CoA plus multilevel accounts\n"
-"\"Test\" is internal testing CoA"
 
 #. module: mk_test_env
-#: selection:wizard.make.test.environment,coa:0
-#: selection:wizard.make.test.environment,coa
-msgid "Test Chart od Account"
-msgstr "Test piano dei conti"
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__set_seq
+msgid "Set line sequence"
+msgstr "Impostare numeri riga"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment_test_company_id
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_test_company_id
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__state
+msgid "State"
+msgstr "Provincia"
+
+#. module: mk_test_env
+#: model:ir.model,name:mk_test_env.model_account_tax
+msgid "Tax"
+msgstr "Imposta"
+
+#. module: mk_test_env
+#: model:ir.model,name:mk_test_env.model_italy_ade_tax_assosoftware
+msgid "Tax Assosoftware classification"
+msgstr ""
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_cleanup_test_environment__test_company_id
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__test_company_id
 msgid "Test Company"
 msgstr "Test Company"
 
 #. module: mk_test_env
-#: selection:wizard.make.test.environment,coa:0
-#: selection:wizard.make.test.environment,coa
-msgid "Zeroincombenze CoA"
-msgstr "PdC Zeroincombenze"
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment__tz
+msgid "Timezone"
+msgstr "Fuso orario"
 
 
