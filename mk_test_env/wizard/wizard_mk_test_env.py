@@ -18,7 +18,6 @@ import pytz
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
-
 try:
     import odoo.release as release
 except ImportError:
@@ -31,9 +30,9 @@ from z0bug_odoo import z0bug_odoo_lib
 from os0 import os0
 from clodoo import transodoo
 
-
+VERSION_ERROR = 'Invalid package version! Use: pip install "%s>=%s" -U'
 MODULES_NEEDED = {
-    '*': ['calendar', 'mail', 'product', 'stock'],
+    '*': ['calendar', 'mail', 'product', 'stock', 'sale', 'purchase'],
     'coa': {
         'l10n_it': ['l10n_it'],
         'l10n_it_fiscal': ['l10n_it_fiscal'],
@@ -41,7 +40,7 @@ MODULES_NEEDED = {
     },
     'distro': {
         'powerp': ['l10n_eu_account', 'assigned_bank',
-                   'account_duedates', 'l10_it_coa_base',
+                   'account_duedates', 'l10n_it_coa_base'
                    'l10n_it_efattura_sdi_2c']
     },
     'einvoice': ['account',
@@ -1277,6 +1276,17 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.status_mesg += 'Update translation "%s"\n' % iso
 
     def make_test_environment(self):
+        if ('.'.join(['%03d' % eval(x)
+                      for x in z0bug_odoo_lib.__version__.split(
+                '.')]) < '001.000.005.001'):
+            raise UserError(
+                VERSION_ERROR % ('z0bug_odoo', '1.0.5.1'))
+        if ('.'.join(['%03d' % eval(x)
+                      for x in transodoo.__version__.split(
+                '.')]) < '000.003.005.003'):
+            raise UserError(
+                VERSION_ERROR % ('clodoo', '0.3.5.2'))
+
         # Block 0: TODO> Separate function
         self.ctr_rec_new = 0
         self.ctr_rec_upd = 0
@@ -1323,11 +1333,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
             if not self._feature_2_install('load_wh'):
                 self.make_model('withholding.tax', mode=self.load_coa,
                                 model2='withholding.tax.rate', cantdup=True)
-            if not self._feature_2_install('load_li'):
-                self.make_model('dichiarazione.intento.yearly.limit',
-                                mode=self.load_coa, cantdup=True)
-                self.make_model('dichiarazione.intento',
-                                mode=self.load_coa, cantdup=True)
         if self.load_partner:
             self.make_model('res.partner', mode=self.load_partner)
             self.make_model(
@@ -1337,6 +1342,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 'product.template', mode=self.load_product, cantdup=True)
             self.make_model(
                 'product.product', mode=self.load_product, cantdup=True)
+        if ((self.load_coa or self.load_partner) and
+                self.env_ref('z0bug.res_partner_6') and
+                not self._feature_2_install('load_li')):
+            self.make_model('dichiarazione.intento.yearly.limit',
+                            mode=self.load_coa, cantdup=True)
+            self.make_model('dichiarazione.intento',
+                            mode=self.load_coa, cantdup=True)
         self.make_misc()
         self.state = '2'
 
