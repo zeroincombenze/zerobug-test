@@ -42,7 +42,11 @@ Prerequisites / Prerequisiti
 
 
 * python 3.7+
+<<<<<<< HEAD
 * postgresql 9.6+ (experimental 10.0+)
+=======
+* postgresql 9.5+ (experimental 10.0+)
+>>>>>>> 195a32ba298ff50713e26b85ef8b4fcbaacc90c2
 * python_plus
 * odoo_score
 * os0
@@ -148,12 +152,15 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 History / Cronologia
 --------------------
 
+<<<<<<< HEAD
 mk_test_env: 12.0.0.6 (2021-07-31)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [REF] Refactoring
 
 
+=======
+>>>>>>> 195a32ba298ff50713e26b85ef8b4fcbaacc90c2
 
 
 
@@ -187,7 +194,11 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
+<<<<<<< HEAD
 Last Update / Ultimo aggiornamento: 2021-09-24
+=======
+Last Update / Ultimo aggiornamento: 2021-08-26
+>>>>>>> 195a32ba298ff50713e26b85ef8b4fcbaacc90c2
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
