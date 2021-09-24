@@ -1,0 +1,7 @@
+python_plus
+odoo_score
+os0
+clodoo
+z0lib
+jsonlib-python3
+unidecode

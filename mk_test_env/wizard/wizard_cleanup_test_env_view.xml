@@ -28,7 +28,6 @@
     <record id="result_cleanup_test_env_view" model="ir.ui.view">
         <field name="name">Clean-up Test Environment</field>
         <field name="model">wizard.cleanup.test.environment</field>
-        <field name="sequence" eval="20"/>
         <field name="arch" type="xml">
             <form string="Result Test Environment">
                 <group>
@@ -47,4 +46,3 @@
     </record>
 
 </odoo>
-

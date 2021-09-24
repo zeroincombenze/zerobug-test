@@ -1,4 +1,4 @@
 Manage test environment
 -----------------------
 
-N/D
+This module creates an test environment with test data.

@@ -8,6 +8,7 @@
 .. contents::
 
 
+
 Overview / Panoramica
 =====================
 
@@ -24,7 +25,7 @@ Avaiable Addons / Moduli disponibili
 +-------------+------------+----------------------------------------------------------------------------------+
 | midea       | 12.0.0.1.4 | z0bug_odoo test suite                                                            |
 +-------------+------------+----------------------------------------------------------------------------------+
-| mk_test_env | 12.0.0.1.4 | Create, update or clean-up test environment                                      |
+| mk_test_env | 12.0.0.6   | Create, update or clean-up test environment                                      |
 +-------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -41,7 +42,14 @@ Prerequisites / Prerequisiti
 
 
 * python 3.7+
-* postgresql 9.5+ (experimental 10.0+)
+* postgresql 9.6+ (experimental 10.0+)
+* python_plus
+* odoo_score
+* os0
+* clodoo
+* z0lib
+* jsonlib-python3
+* unidecode
 
 
 Installation / Installazione
@@ -117,6 +125,7 @@ Support / Supporto
 
 
 
+
 Get involved / Ci mettiamo in gioco
 ===================================
 
@@ -134,6 +143,20 @@ Proposals for enhancement
 An Enhancement Proposal may be submitted if your idea gains ground.
 
 |it| Se hai proposte per migliorare uno dei moduli, puoi inviare una mail a <cc@shs-av.com> per un iniziale contatto.
+
+
+History / Cronologia
+--------------------
+
+mk_test_env: 12.0.0.6 (2021-07-31)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [REF] Refactoring
+
+
+
+
+
 
 Credits / Didascalie
 ====================
@@ -157,25 +180,26 @@ che distribuisce e promuove **Odoo** pronto all'uso sulla propria infrastuttura.
 La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ è progettata per le esigenze del mercato italiano.
 
 
+
 |chat_with_us|
 
 
 |
 
 
-Last Update / Ultimo aggiornamento: 2020-11-25
+Last Update / Ultimo aggiornamento: 2021-09-24
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Alfa
+    :alt: 
 .. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=12.0
-    :target: https://travis-ci.org/zeroincombenze/zerobug-test
+    :target: https://travis-ci.com/zeroincombenze/zerobug-test
     :alt: github.com
 .. |license gpl| image:: https://img.shields.io/badge/licence-LGPL--3-7379c3.svg
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |license opl| image:: https://img.shields.io/badge/licence-OPL-7379c3.svg
-    :target: https://www.odoo.com/documentation/user/9.0/legal/licenses/licenses.html
+    :target: https://www.odoo.com/documentation/user/14.0/legal/licenses/licenses.html
     :alt: License: OPL
 .. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=12.0
     :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=12.0
@@ -223,4 +247,5 @@ Last Update / Ultimo aggiornamento: 2020-11-25
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
    :target: https://t.me/axitec_helpdesk
+
 
