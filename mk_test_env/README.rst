@@ -1,6 +1,6 @@
 
 =========================================
-|icon| Manage Test Environment 12.0.0.6.2
+|icon| Manage Test Environment 12.0.0.6.3
 =========================================
 
 
@@ -179,6 +179,12 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
+12.0.0.6.3 (2021-10-13)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: default language and timezone from user
+* [IMP] mk_test_env: new configuration for wallet management  / Nuova configurazione per conti di portafoglio
+
 12.0.0.6.2 (2021-09-23)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -253,7 +259,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2021-09-24
+Last Update / Ultimo aggiornamento: 2021-10-17
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-black.png
     :target: https://odoo-community.org/page/development-status

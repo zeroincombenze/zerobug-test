@@ -25,7 +25,7 @@ Avaiable Addons / Moduli disponibili
 +-------------+------------+----------------------------------------------------------------------------------+
 | midea       | 12.0.0.1.4 | z0bug_odoo test suite                                                            |
 +-------------+------------+----------------------------------------------------------------------------------+
-| mk_test_env | 12.0.0.6.2 | Create, update or clean-up test environment                                      |
+| mk_test_env | 12.0.0.6.3 | Create, update or clean-up test environment                                      |
 +-------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -141,6 +141,13 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 History / Cronologia
 --------------------
 
+mk_test_env: 12.0.0.6.3 (2021-10-13)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: default language and timezone from user
+* [IMP] mk_test_env: new configuration for wallet management  / Nuova configurazione per conti di portafoglio
+
+
 mk_test_env: 12.0.0.6.2 (2021-09-23)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -193,7 +200,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2021-09-24
+Last Update / Ultimo aggiornamento: 2021-10-17
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status

@@ -18,6 +18,7 @@ import pytz
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
+
 try:
     import odoo.release as release
 except ImportError:
@@ -33,6 +34,7 @@ from clodoo import transodoo
 VERSION_ERROR = 'Invalid package version! Use: pip install "%s>=%s" -U'
 MODULES_NEEDED = {
     '*': ['calendar', 'mail', 'product', 'stock', 'sale', 'purchase'],
+    # 'contacts', 'web_decimal_numpad_dot'],
     'coa': {
         'l10n_it': ['l10n_it'],
         'l10n_it_fiscal': ['l10n_it_fiscal'],
@@ -250,14 +252,24 @@ class WizardMakeTestEnvironment(models.TransientModel):
             distro = 'odoo_ce'
         return distro
 
+    def _set_lang(self):
+        if self.env.user.lang and self.env.user.lang != 'en_US':
+            lang = self.env.user.lang
+        else:
+            lang = os.environ.get('LANG', 'en_US').split('.')[0]
+        return lang
+
     def _set_tz(self):
-        tz = self._context.get('tz')
-        if not tz:
-            try:
-                tz = os.path.join(
-                    *os.readlink('/etc/localtime').split('/')[-2:])
-            except:
-                tz = 'Europe/Rome'
+        if self.env.user.tz:
+            tz = self.env.user.tz
+        else:
+            tz = self._context.get('tz')
+            if not tz:
+                try:
+                    tz = os.path.join(
+                        *os.readlink('/etc/localtime').split('/')[-2:])
+                except:
+                    tz = 'Europe/Rome'
         return tz
 
     state = fields.Selection(
@@ -279,7 +291,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     lang = fields.Selection(
         _selection_lang,
         string='Language',
-        default=os.environ.get('LANG', 'en_US').split('.')[0])
+        default=lambda self: self._set_lang())
     tz = fields.Selection(
         _selection_tz,
         string='Timezone',
@@ -299,7 +311,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
     set_seq = fields.Boolean('Set line sequence')
     einvoice = fields.Boolean(
         'Activate e-Invoice',
-        default=lambda self: self._feature_2_install('einvoice'))
+        # default=lambda self: self._feature_2_install('einvoice'))
+        default=False)
     load_sp = fields.Boolean(
         'Activate Split Payment',
         default=lambda self: self._feature_2_install('load_sp'))
@@ -314,10 +327,12 @@ class WizardMakeTestEnvironment(models.TransientModel):
         default=lambda self: self._feature_2_install('load_li'))
     load_vat = fields.Boolean(
         'Activate VAT modules',
-        default=lambda self: self._feature_2_install('load_vat'))
+        # default=lambda self: self._feature_2_install('load_vat'))
+        default=False)
     load_fiscal = fields.Boolean(
         'Activate fiscal modules',
-        default=lambda self: self._feature_2_install('load_fiscal'))
+        # default=lambda self: self._feature_2_install('load_fiscal'))
+        default=False)
     load_conai = fields.Boolean(
         'Activate Conai',
         default=False)
@@ -1120,7 +1135,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 prior_model = model
                 vals = {}
             if model == 'res.company':
-                vals[field] = xvals['value']
+                if field in self.STRUCT[model]:
+                    vals[field] = xvals['value']
             elif model == 'res.groups':
                 vals['groups_id'] = setup_group(key, xvals['value'])
         if prior_model and vals:
@@ -1268,22 +1284,28 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 'lang': iso,
                 'overwrite': False
             }
-            self.env['base.language.install'].create(vals).lang_install()
-            self.status_mesg += 'Language "%s" installed\n' % iso
+            try:
+                self.env['base.language.install'].create(vals).lang_install()
+                self.status_mesg += 'Language "%s" installed\n' % iso
+            except BaseException:
+                self.status_mesg += 'Cannot install language "%s"!!!\n' % iso
         if iso != 'en_US':
             vals = {'lang': iso}
-            self.env['base.update.translations'].create(vals).act_update()
-            self.status_mesg += 'Update translation "%s"\n' % iso
+            try:
+                self.env['base.update.translations'].create(vals).act_update()
+                self.status_mesg += 'Update translation "%s"\n' % iso
+            except BaseException:
+                self.status_mesg += 'Cannot translate "%s"!!!\n' % iso
 
     def make_test_environment(self):
         if ('.'.join(['%03d' % eval(x)
                       for x in z0bug_odoo_lib.__version__.split(
-                '.')]) < '001.000.005.001'):
+                '.')]) < '001.000.005.003'):
             raise UserError(
-                VERSION_ERROR % ('z0bug_odoo', '1.0.5.1'))
+                VERSION_ERROR % ('z0bug_odoo', '1.0.5.3'))
         if ('.'.join(['%03d' % eval(x)
                       for x in transodoo.__version__.split(
-                '.')]) < '000.003.005.003'):
+                '.')]) < '000.003.005.002'):
             raise UserError(
                 VERSION_ERROR % ('clodoo', '0.3.5.2'))
 
@@ -1333,10 +1355,18 @@ class WizardMakeTestEnvironment(models.TransientModel):
             if not self._feature_2_install('load_wh'):
                 self.make_model('withholding.tax', mode=self.load_coa,
                                 model2='withholding.tax.rate', cantdup=True)
+            self.make_model(
+                'res.bank', mode=self.load_coa, cantdup=True)
         if self.load_partner:
             self.make_model('res.partner', mode=self.load_partner)
             self.make_model(
                 'res.partner.bank', mode=self.load_partner, cantdup=True)
+            if self.load_coa:
+                # Reload to link bank account to journal
+                self.make_model(
+                    'account.journal', mode=self.load_coa, cantdup=True)
+                self.make_model(
+                    'account.payment.mode', mode=self.load_coa, cantdup=True)
         if self.load_product:
             self.make_model(
                 'product.template', mode=self.load_product, cantdup=True)
