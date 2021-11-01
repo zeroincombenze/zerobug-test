@@ -1,7 +1,4 @@
 
-==================================
-|Zeroincombenze| zerobug-test 12.0
-==================================
 |Build Status| |Codecov Status| |license gpl| |Try Me|
 
 
@@ -80,7 +77,7 @@ Installation / Installazione
     source $HOME/devel/activate_tools
     # *** End of tools installation or upgrade ***
     # Odoo repository installation; OCB repository must be installed
-    odoo_install_repository zerobug-test -b 12.0 -O zero -o $HOME/12.0
+    odoo_install_repository zerobug-test -b 12.0 -O oca -o $HOME/12.0
     vem create $HOME/12.0/venv_odoo -O 12.0 -a "*" -DI -o $HOME/12.0
 
 
@@ -114,8 +111,6 @@ Support / Supporto
 ------------------
 
 
-|Zeroincombenze| This project is mainly maintained by the `SHS-AV s.r.l. <https://www.zeroincombenze.it/>`__
-
 
 
 
@@ -124,7 +119,7 @@ Get involved / Ci mettiamo in gioco
 
 Bug reports are welcome! You can use the issue tracker to report bugs,
 and/or submit pull requests on `GitHub Issues
-<https://github.com/zeroincombenze/zerobug-test/issues>`_.
+<https://github.com/OCA/zerobug-test/issues>`_.
 
 In case of trouble, please check there if your issue has already been reported.
 
@@ -132,10 +127,6 @@ Proposals for enhancement
 -------------------------
 
 
-|en| If you have a proposal to change on oh these modules, you may want to send an email to <cc@shs-av.com> for initial feedback.
-An Enhancement Proposal may be submitted if your idea gains ground.
-
-|it| Se hai proposte per migliorare uno dei moduli, puoi inviare una mail a <cc@shs-av.com> per un iniziale contatto.
 
 
 History / Cronologia
@@ -200,13 +191,13 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2021-10-17
+Last Update / Ultimo aggiornamento: 2021-11-01
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
     :alt: 
-.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=12.0
-    :target: https://travis-ci.com/zeroincombenze/zerobug-test
+.. |Build Status| image:: https://travis-ci.org/OCA/zerobug-test.svg?branch=12.0
+    :target: https://travis-ci.com/OCA/zerobug-test
     :alt: github.com
 .. |license gpl| image:: https://img.shields.io/badge/licence-LGPL--3-7379c3.svg
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
@@ -214,11 +205,11 @@ Last Update / Ultimo aggiornamento: 2021-10-17
 .. |license opl| image:: https://img.shields.io/badge/licence-OPL-7379c3.svg
     :target: https://www.odoo.com/documentation/user/14.0/legal/licenses/licenses.html
     :alt: License: OPL
-.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=12.0
-    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=12.0
+.. |Coverage Status| image:: https://coveralls.io/repos/github/OCA/zerobug-test/badge.svg?branch=12.0
+    :target: https://coveralls.io/github/OCA/zerobug-test?branch=12.0
     :alt: Coverage
-.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/12.0/graph/badge.svg
-    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/12.0
+.. |Codecov Status| image:: https://codecov.io/gh/OCA/zerobug-test/branch/12.0/graph/badge.svg
+    :target: https://codecov.io/gh/OCA/zerobug-test/branch/12.0
     :alt: Codecov
 .. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-12.svg
     :target: https://wiki.zeroincombenze.org/en/Odoo/12.0/dev
@@ -227,7 +218,7 @@ Last Update / Ultimo aggiornamento: 2021-10-17
     :target: https://wiki.zeroincombenze.org/it/Odoo/12.0/man
     :alt: Technical Documentation
 .. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-12.svg
-    :target: https://erp12.zeroincombenze.it
+    :target: http://runbot.odoo.com/runbot
     :alt: Try Me
 .. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/12.0/graph/badge.svg
     :target: https://codecov.io/gh/OCA/zerobug-test/branch/12.0
@@ -259,6 +250,6 @@ Last Update / Ultimo aggiornamento: 2021-10-17
 .. |FatturaPA| image:: https://raw.githubusercontent.com/zeroincombenze/grymb/master/certificates/ade/icons/fatturapa.png
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
-   :target: https://t.me/axitec_helpdesk
+   :target: https://t.me/Assitenza_clienti_powERP
 
 

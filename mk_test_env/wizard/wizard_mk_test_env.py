@@ -375,8 +375,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     set_seq = fields.Boolean('Set line sequence')
     einvoice = fields.Boolean(
         'Activate e-Invoice',
-        # default=lambda self: self._feature_2_install('einvoice'))
-        default=False)
+        default=lambda self: self._feature_2_install('einvoice'))
     load_sp = fields.Boolean(
         'Activate Split Payment',
         default=lambda self: self._feature_2_install('load_sp'))
@@ -391,30 +390,28 @@ class WizardMakeTestEnvironment(models.TransientModel):
         default=lambda self: self._feature_2_install('load_li'))
     load_vat = fields.Boolean(
         'Activate VAT modules',
-        # default=lambda self: self._feature_2_install('load_vat'))
-        default=False)
+        default=lambda self: self._feature_2_install('load_vat'))
     load_fiscal = fields.Boolean(
         'Activate fiscal modules',
-        # default=lambda self: self._feature_2_install('load_fiscal'))
-        default=False)
+        default=lambda self: self._feature_2_install('load_fiscal'))
     load_conai = fields.Boolean(
         'Activate Conai',
         default=False)
     load_sct = fields.Boolean(
         'Activate Sepa Credit Transfer',
-        default=False)
+        default=lambda self: self._feature_2_install('load_sct'))
     load_sdd = fields.Boolean(
         'Activate Sepa Direct Debit',
-        default=False)
+        default=lambda self: self._feature_2_install('load_sdd'))
     load_riba = fields.Boolean(
         'Activate RiBA',
-        default=False)
+        default=lambda self: self._feature_2_install('load_sdd'))
     load_financing = fields.Boolean(
         'Activate Anticipo fatture',
-        default=False)
+        default=lambda self: self._feature_2_install('load_financing'))
     load_assets = fields.Boolean(
         'Activate Assets',
-        default=False)
+        default=lambda self: self._feature_2_install('load_assets'))
     load_coa = fields.Selection(
         lambda self: self._selection_action('coa'), 'Load Chart of Account')
     load_image = fields.Boolean('Load record images', default=True)
