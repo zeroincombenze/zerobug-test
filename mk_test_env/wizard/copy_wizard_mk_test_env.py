@@ -5,7 +5,7 @@
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 #
 from past.builtins import basestring
 from builtins import int
@@ -14,9 +14,7 @@ from datetime import date, datetime, timedelta
 import time
 import calendar
 
-import pytz
-
-from openerp import api, fields, models, _
+from openerp import api, fields, models
 from openerp.exceptions import Warning as UserError
 
 try:
@@ -31,214 +29,63 @@ from z0bug_odoo import z0bug_odoo_lib
 from os0 import os0
 from clodoo import transodoo
 
-VERSION_ERROR = 'Invalid package version! Use: pip install "%s>=%s" -U'
+
 MODULES_NEEDED = {
-    '*': ['calendar', 'mail', 'product', 'stock', 'sale', 'purchase',
-          'contacts', 'web_decimal_numpad_dot'],
+    '': ['calendar', 'mail', 'product', 'stock'],
     'coa': {
+        'test': [],
         'l10n_it': ['l10n_it'],
-        'l10n_it_fiscal': ['l10n_it_fiscal'],
-        'l10n_it_nocoa': ['l10n_it_nocoa']
+        'zero': ['l10n_it_fiscal'],
+        'powerp': ['l10n_it_coa_base']
     },
-    'distro': {
-        'powerp': ['l10n_eu_account', 'assigned_bank',
-                   'account_duedates', 'l10n_it_coa_base',
-                   'l10n_it_efattura_sdi_2c']
-    },
-    'einvoice': ['account',
-                 'l10n_it_fatturapa_in',
-                 'l10n_it_fatturapa_out'],
-    'load_sp': ['l10n_it_split_payment'],
-    'load_rc': ['l10n_it_reverse_charge'],
-    'load_li': ['l10n_it_dichiarazione_intento'],
-    'load_wh': ['l10n_it_withholding_tax'],
-    'load_conai': ['l10n_it_conai'],
-    'load_sct': ['account_banking_sepa_credit_transfer'],
-    'load_sdd': ['account_banking_sepa_direct_debit'],
-    'load_riba': ['l10n_it_ricevute_bancarie'],
-    'load_financing': ['account_banking_invoice_financing'],
-    'load_vat': ['account_vat_period_end_statement',
-                 'l10n_it_vat_registries',
-                 'l10n_it_vat_statement_communication',
-                 'l10n_it_vat_statement_split_payment',
-                 'l10n_it_invoices_data_communication',
-                 'l10n_it_invoices_data_communication_fatturapa',
-                 'l10n_it_fatturapa_export_zip',
-                 'l10n_it_fatturapa_in',
-                 'l10n_it_fatturapa_out'],
-    'load_fiscal': ['l10n_it_central_journal',
-                    'l10n_it_intrastat',
-                    'l10n_it_intrastat_statement',
-                    'l10n_it_account_balance_report',
-                    'account_financial_report',
-                    'accounting_pdf_reports',
-                    'l10n_it_mis_reports_pl_bs',
-                    'l10n_it_mastrini'],
     'load_coa': {
-        '*': ['account',
-              'date_range',
-              'account_payment_term_extension',
-              'l10n_it_fiscalcode',
-              'account_move_template'],
+        '': [],
+        'coa': ['date_range',
+                'account_payment_term_extension',
+                'l10n_it_fiscalcode'],
+        'sp': ['l10n_it_split_payment'],
+        'li': ['l10n_it_lettera_intento'],
+        'rc': ['l10n_it_reverse_charge'],
+        'wh': ['l10n_it_withholding_tax'],
+        'sct': ['account_banking_sepa_credit_transfer'],
+        'sdd': ['account_banking_sepa_direct_debit'],
+        'conai': ['l10n_it_conai'],
     },
-    'load_product': {
-        '*': ['product', 'stock']
-    },
-    'load_partner': {
-        '*': ['partner_bank'],
-    },
-    'load_sale_order': {
-        '*': ['sale', 'l10n_it_ddt']
-    },
-    'load_purchase_order': {
-        '*': ['purchase'],
-    },
-    'load_invoice': {
-        '*': [
-            'account_accountant', 'account_cancel',
-            'payment', 'l10n_it_fatturapa_in', 'l10n_it_fatturapa_out'
-        ],
-    },
-    'load_assets': {
-        '*': ['assets_management_plus', 'l10n_it_balance_assets'],
-    },
+    'load_product': [],
+    'load_partner': ['partner_bank'],
+    'load_sale_order': ['sale', 'l10n_it_ddt'],
+    'load_purchase_order': ['purchase'],
+    'load_invoice': ['account', 'account_accountant', 'account_cancel',
+                     'payment', 'l10n_it_einvoice_in', 'l10n_it_einvoice_out'],
 }
-COMMIT_FCT = {
-    'account.invoice': {
-        'cancel': ['action_invoice_draft'],
-        'draft': ['compute_taxes', 'action_invoice_open'],
-    },
-    'sale.order': {
-        'cancel': ['action_invoice_draft'],
-        'draft': ['action_confirm'],
-    },
-    'account.move': {
-        'draft': ['post'],
-    },
-
-}
-DRAFT_FCT = {
-    'account.invoice': {
-        'paid': ['action_invoice_re_open'],
-        'open': ['action_invoice_cancel'],
-        'cancel': ['action_invoice_draft'],
-        'draft': ['compute_taxes'],
-    },
-    'sale.order': {
-        'sale': ['action_cancel'],
-        'cancel': ['action__draft'],
-    },
-    'account.move': {
-        'posted': ['button_cancel'],
-    },
-}
-UNIQUE_REFS = ['z0bug.partner_mycompany']
-
-@api.model
-def _selection_lang(self):
-    return self.env['res.lang'].get_available()
-# put POSIX 'Etc/*' entries at the end to avoid confusing users - see bug 1086728
-
-@api.model
-def _selection_tz(self):
-    return [(tz, tz) for tz in sorted(
-        pytz.all_timezones,
-        key=lambda tz: tz if not tz.startswith('Etc/') else '_')]
-
-@api.model
-def _selection_coa(self):
-    if not self.COA_MODULES:
-        countries = ['l10n_%s' % x.code.lower()
-                     for x in self.env['res.country'].search([])]
-        countries.insert(0, 'l10n_it_nocoa')
-        countries.insert(0, 'l10n_it_fiscal')
-        for module in self.env['ir.module.module'].search(
-                [('name', 'in', countries),
-                 ('state', '!=', 'uninstallable')], order='name'):
-            if module.name.startswith('l10n_it'):
-                self.COA_MODULES.insert(0, (module.name, module.shortdesc))
-            else:
-                self.COA_MODULES.append((module.name, module.shortdesc))
-    return self.COA_MODULES
-
-@api.model
-def _selection_distro(self):
-    distros = [('odoo_ce', 'Odoo/OCA CE'),
-               ('odoo_ee', 'Odoo EE'),
-               ('zero', 'Zeroincombenze + OCA')]
-    if release.version_info[0] >= 12:
-        distros.append(('powerp', 'Powerp + OCA'))
-    elif release.version_info[0] == 8:
-        distros.append(('librerp', 'Librerp + OCA'))
-    return distros
-
-
-def evaluate_date(value):
-    if not value:
-        return value
-    sep = tm = None
-    if 'T' in value:
-        sep = 'T'
-    elif ' ' in value:
-        sep = ' '
-    if sep:
-        value, tm = value.split(sep)
-    if value.startswith('+'):
-        value = str(
-            date.today() + timedelta(int(value[1:])))
-    elif value.startswith('-'):
-        value = str(
-            date.today() - timedelta(int(value[1:])))
-    else:
-        items = value.split('-')
-        refs = [date.today().year, date.today().month, date.today().day]
-        for i, item in enumerate(items):
-            if item.startswith('<'):
-                v = int(item[1:]) if item[1:].isdigit() else 1
-                items[i] = refs[i] - v
-            elif item in ('#>', '1>', '2>', '3>', '4>', '5>'):
-                v = int(item[0]) if item[0].isdigit() else 1
-                items[i] = refs[i] + v
-            elif item in ('#', '##', '####'):
-                items[i] = refs[i]
-            else:
-                items[i] = int(items[i]) or refs[i]
-        if items[2] < 1:
-            items[1] -= 1
-        if items[1] < 1:
-            items[1] = 12
-            items[0] -= 1
-        if items[2] < 1:
-            items[2] = calendar.monthrange(items[0],
-                                           items[1])[1]
-        if items[1] > 12:
-            items[1] = 1
-            items[0] += 1
-        if items[2] == 99:
-            items[2] = calendar.monthrange(items[0],
-                                           items[1])[1]
-        elif items[2] > calendar.monthrange(items[0],
-                                            items[1])[1]:
-            items[2] = 1
-            items[1] += 1
-            if items[1] > 12:
-                items[1] = 1
-                items[0] += 1
-        value = '%04d-%02d-%02d' % (
-            items[0], items[1], items[2])
-    if tm:
-        value = '%s%s%s' % (value, sep, tm)
-    return value
-
+COA_MODULES = ['l10n_it', 'l10n_it_fiscal', 'l10n_it_coa_base']
 
 
 class WizardMakeTestEnvironment(models.TransientModel):
     _name = "wizard.make.test.environment"
     _description = "Create Test Environment"
 
+    errors = []
     STRUCT = {}
-    COA_MODULES = []
-    NOT_INSTALL = []
+
+    @api.model
+    def _test_company(self):
+        recs = self.pool['ir.model.data'].search(
+            self._cr, self._uid,
+            [('module', '=', 'z0bug'),
+             ('name', '=', 'mycompany')])
+        if recs:
+            return recs[0].res_id
+        return False
+
+    @api.model
+    def _new_company(self):
+        return not bool(self._test_company())
+
+    @api.model
+    def _default_company(self):
+        return self._test_company() or self.pool['res.users']._get_company(
+            self._cr, self._uid)
 
     test_company_id = fields.Many2one(
         'res.company',
@@ -852,20 +699,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
     #         'z0bug.partner_mycompany', 'res.partner', company.partner_id.id)
 
     def make_test_environment(self, cr, uid, ids, context=None):
-        wizard = self.browse(cr, uid, ids[0], context=context)
-        # wizard._cr = cr
-        # wizard._uid = uid
-        if ('.'.join(['%03d' % eval(x)
-                      for x in z0bug_odoo_lib.__version__.split(
-                '.')]) < '001.000.005.003'):
-            raise UserError(
-                VERSION_ERROR % ('z0bug_odoo', '1.0.5.3'))
-        if ('.'.join(['%03d' % eval(x)
-                      for x in transodoo.__version__.split(
-                '.')]) < '000.003.005.002'):
-            raise UserError(
-                VERSION_ERROR % ('clodoo', '0.3.5.2'))
-
+        # wiz_id = context.get('active_id', False)
+        # wiz = self.browse(cr, uid, ids[0], context=context)
+        # self._cr = cr
+        # self._uid = uid
         # self.wiz.ctr_rec_new = 0
         # self.wiz.ctr_rec_upd = 0
         # self.wiz.ctr_rec_del = 0
@@ -896,21 +733,18 @@ class WizardMakeTestEnvironment(models.TransientModel):
         # if self.wiz.load_invoice:
         #     self.mk_account_invoice(self.wiz.company_id.id)
         # self.wiz.status_mesg += 'Data (re)loaded'
-        view_rec = self.pool['ir.model.data'].get_object_reference(
-            cr, uid, 'mk_test_env', 'result_mk_test_env_view')
-        view_id = view_rec and view_rec[1] or False,
         return {
-            'name': _('Data created'),
-            'context': context,
+            'name': "Data created",
+            'type': 'ir.actions.act_window',
+            'res_model': 'self.wizard.make.test.environment',
             'view_type': 'form',
             'view_mode': 'form',
-            'res_model': 'wizard.make.test.environment',
-            'view_rec': self.pool['ir.model.data'].get_object_reference(
-                cr, uid, 'mk_test_env', 'result_mk_test_env_view')[1],
-            'view_id': [view_id],
-            'type': 'ir.actions.act_window',
-            'res_id': wizard.id,
+            'res_id': ids[0],
             'target': 'new',
+            'context': {'active_id': ids[0]},
+            'view_id': self.pool.get('ir.model.data').get_object_reference(
+                cr, uid, 'mk_test_env', 'result_mk_test_env_view')[1],
+            'domain': [('id', '=', ids[0])],
         }
 
     @api.model

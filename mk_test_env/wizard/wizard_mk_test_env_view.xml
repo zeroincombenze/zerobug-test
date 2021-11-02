@@ -9,16 +9,20 @@
         <field name="arch" type="xml">
             <form string="Create Test Environment">
                 <group colspan="2">
+                    <!--
                     <field name="force_test_values"/>
                     <field name="test_company_id" invisible="1"/>
                     <field name="new_company"
                            attrs="{'readonly': [('test_company_id', '!=', False)]}"/>
-                    <field name="company_id"
-                           attrs="{'readonly': [('test_company_id', '!=', False)], 'invisible': [('new_company', '!=', False)]}"/>
+                    -->
+                    <field name="company_id"/>
+                    <!--
                     <field name="coa"
                            attrs="{'readonly': [('test_company_id', '!=', False)]}"/>
                     <field name="set_seq"/>
+                    -->
                 </group>
+                <!--
                 <group colspan="2">
                     <field name="load_coa" attrs="{'readonly': [('new_company', '!=', False)]}"/>
                     <field name="load_partner"/>
@@ -28,6 +32,7 @@
                     <field name="load_purchase_order" attrs="{'readonly': [('new_company', '!=', False)]}"/>
                     <field name="load_invoice" attrs="{'readonly': [('new_company', '!=', False)]}"/>
                 </group>
+                -->
                 <group colspan="4">
                     <button name="make_test_environment" string="Create" type="object" class="oe_highlight"/>
                     <button special="cancel" string="Cancel"/>
@@ -59,4 +64,3 @@
 
 </data>
 </openerp>
-
