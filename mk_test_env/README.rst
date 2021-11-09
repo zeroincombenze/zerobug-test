@@ -1,6 +1,6 @@
 
 ==============================================
-|icon| Manage Test Environment 12.0.10.0.0.6.3
+|icon| Manage Test Environment 12.0.10.0.0.6.4
 ==============================================
 
 
@@ -21,7 +21,13 @@ Overview / Panoramica
 |en| Manage test environment
 ----------------------------
 
-N/D
+This module creates an test environment with test data.
+
+The behaviour of this module, depends heavily from following PYPI modules:
+
+* z0bug_odoo==1.0.5: contains records data
+* clodoo==0.3.52.2: contains the odoo version depending translation
+* odoo_score==1.0.3: odoo supercore
 
 
 |
@@ -29,7 +35,30 @@ N/D
 |it| Creazione ambiente di test
 -------------------------------
 
-N/D
+Questo modulo crea un ambiente di test con dati di test.
+Il comportamento di quesot modulo dipende pesantemente dai sequenti package PYPI:
+
+* z0bug_odoo: contiene i dati dei record
+* clodoo: contains le traduzioni dipendenti dalla versione di Odoo
+* odoo_score: odoo supercore
+
+
+|
+
+Features / Caratteristiche
+--------------------------
+
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
+| Description / Descrizione                | 6.1        | 7.0        | 8.0        | 9.0        | 10.0    | 11.0       | 12.0    |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
+| Partner & Products / Soggetti e prodotti | |check|    | |check|    | |check|    | |check|    | |check| | |check|    | |check| |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
+| Sale orders / Ordini clienti             | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
+| Purchase orders / Ordini fornitori       | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
+| Invoices / Fatture                       | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
 
 
 |
@@ -145,6 +174,38 @@ Proposals for enhancement
 An Enhancement Proposal may be submitted if your idea gains ground.
 
 |it| Se hai proposte per migliorare questo modulo, puoi inviare una mail a <cc@shs-av.com> per un iniziale contatto.
+
+
+ChangeLog History / Cronologia modifiche
+----------------------------------------
+
+12.0.0.6.4 (2021-11-09)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: available for Odoo 10.0
+
+12.0.0.6.3 (2021-10-13)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: default language and timezone from user
+* [IMP] mk_test_env: new configuration for wallet management  / Nuova configurazione per conti di portafoglio
+
+12.0.0.6.2 (2021-09-23)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: added l10n_it_coa_base for distro powerp
+* [FIX] mk_test_env: removed OCA supplemental SP modules for distro powerp
+
+12.0.0.6.1 (2021-08-02)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Minor improvements
+
+12.0.0.6 (2021-07-31)
+~~~~~~~~~~~~~~~~~~~~~
+
+* [REF] Refactoring
+
 
 
 |

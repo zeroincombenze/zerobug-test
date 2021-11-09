@@ -246,7 +246,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         res = [('add', 'Add only new records'),
                ('all', 'Add or rewrite all records')]
         if scope == 'coa':
-            res.append(('wiz', 'Upgrade or Amend records by wizard'))
+            res.append(('Upgrade or Amend records by wizard'))
         elif scope not in ('partner', 'product', 'assets'):
             res.append(('dup', 'Add/duplicate all records'))
             res.append(('add-draft', 'Add only new records, leave them draft'))
@@ -1340,14 +1340,14 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def make_test_environment(self):
         if ('.'.join(['%03d' % eval(x)
                       for x in z0bug_odoo_lib.__version__.split(
-                '.')]) < '001.000.005.003'):
+                '.')]) < '001.000.005.004'):
             raise UserError(
-                VERSION_ERROR % ('z0bug_odoo', '1.0.5.3'))
+                VERSION_ERROR % ('z0bug_odoo', '1.0.5.4'))
         if ('.'.join(['%03d' % eval(x)
                       for x in transodoo.__version__.split(
-                '.')]) < '000.003.005.002'):
+                '.')]) < '000.003.036.002'):
             raise UserError(
-                VERSION_ERROR % ('clodoo', '0.3.5.2'))
+                VERSION_ERROR % ('clodoo', '0.3.36.2'))
 
         # Block 0: TODO> Separate function
         self.ctr_rec_new = 0
@@ -1372,9 +1372,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.make_model(
                 'account.account', mode=self.load_coa, cantdup=True)
             self.make_model('account.tax', mode=self.load_coa, cantdup=True)
-        if self.load_coa == 'wiz':
-            self.run_wizard_account()
-        elif self.load_coa:
+        if self.load_coa:
             self.make_model_limited(
                 'account.tax', mode=self.load_coa, cantdup=True)
             self.make_model(
