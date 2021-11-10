@@ -8,15 +8,14 @@
 #
 {
     'name': 'Manage Test Environment',
-    'summary': 'Create, update or clean-up test environment',
-    'version': '12.0.0.6.3',
+    'summary': 'Create or update test environment',
+    'version': '12.0.0.6.4',
     'category': 'Tools',
     'author': 'SHS-AV s.r.l.',
     'website': 'https://www.zeroincombenze.it/servizi-le-imprese/',
     'license': 'LGPL-3',
     'depends': [
         'base',
-        'account',
     ],
     'external_dependencies': {
         'python': [
@@ -29,13 +28,12 @@
         ],
     },
     'data': [
-        'security/ir.model.access.csv',
+        # 'security/ir.model.access.csv',
         'views/menu.xml',
         'wizard/wizard_mk_test_env_view.xml',
-        'wizard/wizard_cleanup_test_env_view.xml',
-        'data/italy_ade_tax_assosoftware.xml',
+        # 'wizard/wizard_cleanup_test_env_view.xml',
     ],
     'installable': True,
     'maintainer': 'Zeroincombenze (R)',
-    'development_status': 'Alpha',
+    'development_status': 'Beta',
 }
