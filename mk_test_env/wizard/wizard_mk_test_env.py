@@ -169,7 +169,7 @@ def _selection_distro(self):
                ('zero', 'Zeroincombenze + OCA')]
     if release.version_info[0] >= 12:
         distros.append(('powerp', 'Powerp + OCA'))
-    elif release.version_info[0] == 8:
+    elif release.version_info[0] == 6:
         distros.append(('librerp', 'Librerp + OCA'))
     return distros
 
@@ -245,9 +245,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def _selection_action(self, scope):
         res = [('add', 'Add only new records'),
                ('all', 'Add or rewrite all records')]
-        if scope == 'coa':
-            res.append(('Upgrade or Amend records by wizard'))
-        elif scope not in ('partner', 'product', 'assets'):
+        if scope not in ('partner', 'product', 'assets'):
             res.append(('dup', 'Add/duplicate all records'))
             res.append(('add-draft', 'Add only new records, leave them draft'))
             res.append(('all-draft', 'Set all records to draft'))
@@ -278,7 +276,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
         flag = False
         for module in self.env['ir.module.module'].search(
                 [('name', 'in', module_list)]):
-            if module and module.state == 'uninstalled':
+            if (module and
+                    module.state == 'uninstalled' and
+                    module.state != 'uninstallable'):
                 flag = True
                 break
         return flag
@@ -397,7 +397,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         default=lambda self: self._feature_2_install('load_fiscal'))
     load_conai = fields.Boolean(
         'Activate Conai',
-        default=False)
+        default=lambda self: self._feature_2_install('load_conai'))
     load_sct = fields.Boolean(
         'Activate Sepa Credit Transfer',
         default=lambda self: self._feature_2_install('load_sct'))
@@ -692,12 +692,16 @@ class WizardMakeTestEnvironment(models.TransientModel):
             transodoo.read_stored_dict(self.tnldict)
         return self.tnldict
 
-    def translate(self, model, src, ttype=False, fld_name=False):
+    def get_tgtver(self):
         distro = self.distro if self.distro else self._set_distro()
-        if distro:
+        if distro and not distro.startswith('odoo'):
             tgtver = '%s%d' % (distro, release.version_info[0])
         else:
             tgtver = release.major_version
+        return tgtver
+
+    def translate(self, model, src, ttype=False, fld_name=False):
+        tgtver = self.get_tgtver()
         srcver = '12.0'
         if release.major_version == tgtver:
             if ttype == 'valuetnl':
@@ -753,9 +757,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
         return False
 
     @api.model
-    def bind_fields(self, model, vals, company_id,
-                    parent_id=None, parent_model=None, mode=None,
-                    only_fields=[]):        # pylint: dangerous-default-value
+    def map_fields(self, model, vals, company_id,
+                   parent_id=None, parent_model=None, mode=None,
+                   only_fields=[]):        # pylint: dangerous-default-value
 
         def expand_many(item):
             try:
@@ -774,6 +778,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     vals['id'])
         if mode == 'dup':
             del vals['id']
+        for field in vals.copy().keys():
+            name = self.translate(model, field, ttype='field')
+            if name != field:
+                vals[name] = vals[field]
+                del vals[field]
         parent_name = ''
         for field in vals.copy().keys():
             if ((only_fields and field not in only_fields) or
@@ -948,6 +957,25 @@ class WizardMakeTestEnvironment(models.TransientModel):
                             parent_id=None, parent_model=None,
                             seq=None, mode=None,
                             only_fields=[]):   # pylint: dangerous-default-value
+        """Store record into DB
+        Args:
+            xref (str): external reference (format 'module.key')
+            model (str): odoo model name
+            company_id (m2o): company id
+            parent_id (m2o): parent record id (id current record is child)
+            parent_model (str): parent record odoo model name
+            seq (int): sequence number (if model has sequence field)
+            mode (str): action behavior; value are:
+                'add' -> add only new records
+                'add-draft' -> add only new records but keep them draft
+                'all' -> write all records
+                'all-draft' -> write all records but keep them draft
+                'dup' -> duplicate record
+            only_fields (list): list fo field to manage (empty means all)
+
+        Returns:
+            record
+        """
         if mode == 'dup' and xref in UNIQUE_REFS:
             mode = 'all'
         if parent_id and parent_model:
@@ -960,7 +988,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     seq and
                     not vals.get('sequence')):
                 vals['sequence'] = seq
-            vals, parent_name = self.bind_fields(
+            vals, parent_name = self.map_fields(
                 model, vals, company_id,
                 parent_id=parent_id, parent_model=parent_model, mode=mode,
                 only_fields=only_fields)
@@ -974,8 +1002,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                            parent_id=parent_id,
                                            parent_name=parent_name)
             if xid:
-                self.write_diff(model, xid, vals, xref,
-                                parent_id=parent_id, parent_model=parent_model)
+                if not mode.startswith('add'):
+                    self.write_diff(model, xid, vals, xref,
+                                    parent_id=parent_id,
+                                    parent_model=parent_model)
             else:
                 for name in ('id', 'valid_for_dichiarazione_intento'):
                     if name in vals:
@@ -1105,7 +1135,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         def write_rec(model, vals):
             if model == 'res.company':
                 # rec = self.env[model].browse(self.company_id.id)
-                vals, parent_name = self.bind_fields(
+                vals, parent_name = self.map_fields(
                     model, vals, self.company_id.id)
                 # rec.write(vals)
                 self.company_id.write(vals)
@@ -1298,11 +1328,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
         })
 
     @api.model
-    def run_wizard_account(self):
-        self.status_mesg = self.env['account.tax'].runbot_tax(
-            log=self.status_mesg)
-
-    @api.model
     def enable_cancel_journal(self):
         if not self._feature_2_install('load_vat'):
             journal_model = self.env['account.journal']
@@ -1353,7 +1378,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.ctr_rec_new = 0
         self.ctr_rec_upd = 0
         self.ctr_rec_del = 0
-        self.status_mesg = ''
+        self.status_mesg = 'Target distro/version "%s"\n' % self.get_tgtver()
         self.load_language()
         if self.lang and self.lang != self.env.user.lang:
             self.load_language(iso=self.lang)
@@ -1456,4 +1481,4 @@ class WizardMakeTestEnvironment(models.TransientModel):
         }
 
     def close_window(self):
-        return
+        return {'type': 'ir.actions.act_window_close'}

@@ -4,7 +4,7 @@
 ==============================================
 
 
-**Create, update or clean-up test environment**
+**Create or update test environment**
 
 .. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/12.0/mk_test_env/static/description/icon.png
 
@@ -183,6 +183,9 @@ ChangeLog History / Cronologia modifiche
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: available for Odoo 10.0
+* [IMP] mk_test_env: clean-up removed
+* [IMP] mk_test_env: account wizard removed
+* [FIX] mk_test_env: add does not change existing records
 
 12.0.0.6.3 (2021-10-13)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -264,7 +267,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2021-11-09
+Last Update / Ultimo aggiornamento: 2021-11-10
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status

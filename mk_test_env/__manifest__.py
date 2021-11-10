@@ -9,14 +9,14 @@
 #
 {
     'name': 'Manage Test Environment',
-    'summary': 'Create, update or clean-up test environment',
+    'summary': 'Create or update test environment',
     'version': '10.0.0.6.4',
     'category': 'Tools',
     'author': 'SHS-AV s.r.l.',
     'website': 'https://www.zeroincombenze.it/servizi-le-imprese/',
     'license': 'LGPL-3',
     'depends': [
-        'base'
+        'base',
     ],
     'external_dependencies': {
         'python': [

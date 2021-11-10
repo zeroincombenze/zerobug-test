@@ -2,6 +2,9 @@
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: available for Odoo 10.0
+* [IMP] mk_test_env: clean-up removed
+* [IMP] mk_test_env: account wizard removed
+* [FIX] mk_test_env: add does not change existing records
 
 12.0.0.6.3 (2021-10-13)
 ~~~~~~~~~~~~~~~~~~~~~~~
