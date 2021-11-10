@@ -1,6 +1,6 @@
 
 ==============================================
-|icon| Manage Test Environment 12.0.10.0.0.6.4
+|icon| Manage Test Environment 12.0.10.0.0.6.5
 ==============================================
 
 
@@ -178,6 +178,11 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
+
+12.0.0.6.5 (2021-11-10)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: data for test MtO
 
 12.0.0.6.4 (2021-11-09)
 ~~~~~~~~~~~~~~~~~~~~~~~

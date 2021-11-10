@@ -134,6 +134,10 @@ DRAFT_FCT = {
     },
 }
 UNIQUE_REFS = ['z0bug.partner_mycompany']
+SKEYS = {
+    'account.move.line': ['account_id', 'credit', 'debit'],
+    'sale.order.line': ['product_id', 'name'],
+}
 
 @api.model
 def _selection_lang(self):
@@ -726,25 +730,28 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     def bind_record(self, model, vals, company_id,
                     field=None, parent_id=None, parent_name=None, retrec=None):
-        if model == 'account.move.line':
-            domain = [('account_id', '=', vals['account_id']),
-                      ('credit', '=', vals['credit']),
-                      ('debit', '=', vals['debit'])]
+        domain = []
+        if model == 'account.payment.term.line' or (
+                self.set_seq and parent_id and parent_name and
+                'sequence' in self.STRUCT[model]):
+            fields = ['sequence']
+        elif model in SKEYS:
+            fields = SKEYS[model]
         else:
-            domain = []
-            for nm in ('code', 'acc_number', 'login', 'description',
-                       'depreciation_type_id', 'name',
-                       'number', 'sequence', 'tax_src_id', 'tax_dest_id'):
-                if nm == 'code' and model == 'product.product':
-                    continue
-                elif nm == 'description' and model == 'account.tax':
-                    continue
-                elif nm == 'sequence' and not parent_id and not parent_name:
-                    continue
-                if nm in vals and nm in self.STRUCT[model]:
-                    domain.append((nm, '=', vals[field or nm]))
-                    if not parent_id or parent_name not in self.STRUCT[model]:
-                        break
+            fields = ('code', 'acc_number', 'login', 'description',
+                      'depreciation_type_id', 'name', 'number',
+                      'product_id', 'sequence', 'tax_src_id', 'tax_dest_id')
+        for nm in fields:
+            if nm == 'code' and model == 'product.product':
+                continue
+            elif nm == 'description' and model != 'account.tax':
+                continue
+            elif nm == 'sequence' and not parent_id and not parent_name:
+                continue
+            if nm in vals and nm in self.STRUCT[model]:
+                domain.append((nm, '=', vals[field or nm]))
+                if not parent_id or parent_name not in self.STRUCT[model]:
+                    break
         if domain:
             if 'company_id' in self.STRUCT[model]:
                 domain.append(('company_id', '=', company_id))
@@ -974,7 +981,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             only_fields (list): list fo field to manage (empty means all)
 
         Returns:
-            record
+            record id
         """
         if mode == 'dup' and xref in UNIQUE_REFS:
             mode = 'all'
@@ -1192,32 +1199,36 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def make_model(self, model, mode=None, model2=None, cantdup=None,
                    only_fields=[]):  # pylint: dangerous-default-value
 
-        def store_1_rec(xref, seq, parent_id):
+        def store_1_rec(xref, seq, parent_id, deline_list):
+            if model2:
+                model2_model = self.env[model2]
             if model2 and xref not in hdr_list:
                 # Found child xref, evaluate parent xref
                 parent_id = self.env_ref('_'.join(xref.split('_')[0:-1]))
                 if parent_id:
-                    if self.set_seq:
+                    if model == 'account.payment.term':
+                        seq += 1
+                    elif self.set_seq:
                         seq += 10
                     else:
                         seq = 10
-                    self.store_rec_with_xref(xref, model2 or model, company_id,
-                                             mode=mode, parent_id=parent_id,
-                                             parent_model=model, seq=seq,
-                                             only_fields=only_fields)
+                    rec_line_id = self.store_rec_with_xref(
+                        xref, model2 or model, company_id,
+                        mode=mode, parent_id=parent_id,
+                        parent_model=model, seq=seq,
+                        only_fields=only_fields)
+                    if rec_line_id in deline_list:
+                        del deline_list[deline_list.index(rec_line_id)]
             else:
                 if seq:
+                    if deline_list:
+                        model2_model.browse(deline_list).unlink()
                     # Previous write was a detail record
                     self.do_commit(model, parent_id, mode=mode)
+                deline_list = []
                 parent_id = self.store_rec_with_xref(
                     xref, model, company_id, mode=mode, only_fields=only_fields)
                 if parent_id and model2:
-                    parent_name = ''
-                    for name, field in self.STRUCT[model2].items():
-                        if field.get('relation') == model:
-                            parent_name = name
-                            break
-                    model2_model = self.env[model2]
                     if 'sequence' in self.STRUCT[model2]:
                         seq = 1 if model == 'account.payment.term' else 10
                         for rec_line in model2_model.search(
@@ -1226,13 +1237,16 @@ class WizardMakeTestEnvironment(models.TransientModel):
                             rec_line.write({'sequence': seq})
                             if model == 'account.payment.term':
                                 seq += 1
-                            else:
+                            elif self.set_seq:
                                 seq += 10
+                            else:
+                                seq = 10
+                            deline_list.append(rec_line.id)
                     else:
                         model2_model.search(
                             [(parent_name, '=', parent_id)]).unlink()
                 seq = 0
-            return parent_id, seq
+            return parent_id, seq, deline_list
 
         if cantdup and mode == 'dup':
             mode = 'all'
@@ -1251,6 +1265,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
             raise UserError(
                 'Detected a NULL record in test data for model %s!' % model)
         hdr_list = [x for x in xrefs]
+        deline_list = []
+        parent_id = False
+        parent_name = ''
         if model2:
             if model2 not in self.env:
                 self.status_mesg += '- Model "%s" not found!\n' % model2
@@ -1261,25 +1278,33 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 raise UserError(
                     'Detected a NULL record in test data for model %s!' %
                     model2)
+            for name, field in self.STRUCT[model2].items():
+                if field.get('relation') == model:
+                    parent_name = name
         seq = 0
-        parent_id = False
         if model == 'account.account':
             for xref in sorted(xrefs):
                 # Prima i mastri
                 if len(xref) == 12:
-                    parent_id, seq = store_1_rec(xref, seq, parent_id)
+                    parent_id, seq, deline_list = store_1_rec(
+                        xref, seq, parent_id, deline_list)
             for xref in sorted(xrefs):
                 # poi i capoconti
                 if len(xref) == 13:
-                    parent_id, seq = store_1_rec(xref, seq, parent_id)
+                    parent_id, seq, deline_list = store_1_rec(
+                        xref, seq, parent_id, deline_list)
             for xref in sorted(xrefs):
                 # infine i sottoconti
                 if len(xref) > 13:
-                    parent_id, seq = store_1_rec(xref, seq, parent_id)
+                    parent_id, seq, deline_list = store_1_rec(
+                        xref, seq, parent_id, deline_list)
         else:
             for xref in sorted(xrefs):
-                parent_id, seq = store_1_rec(xref, seq, parent_id)
+                parent_id, seq, deline_list = store_1_rec(
+                    xref, seq, parent_id, deline_list)
         if seq:
+            if deline_list:
+                self.env[model2].browse(deline_list).unlink()
             self.do_commit(model, parent_id, mode=mode)
         self._cr.commit()                      # pylint: disable=invalid-commit
 
@@ -1303,7 +1328,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
             only_fields = make_model_limited_tax(self, model)
             if only_fields:
                 return self.make_model(
-                    model, mode=mode, model2=model2, cantdup=cantdup)
+                    model, mode=mode, model2=model2, cantdup=cantdup,
+                    only_fields=only_fields)
 
     @api.model
     def create_company(self):
@@ -1365,9 +1391,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def make_test_environment(self):
         if ('.'.join(['%03d' % eval(x)
                       for x in z0bug_odoo_lib.__version__.split(
-                '.')]) < '001.000.005.004'):
+                '.')]) < '001.000.005.005'):
             raise UserError(
-                VERSION_ERROR % ('z0bug_odoo', '1.0.5.4'))
+                VERSION_ERROR % ('z0bug_odoo', '1.0.5.5'))
         if ('.'.join(['%03d' % eval(x)
                       for x in transodoo.__version__.split(
                 '.')]) < '000.003.036.002'):
