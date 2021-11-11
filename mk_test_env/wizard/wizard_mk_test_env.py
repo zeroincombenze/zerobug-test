@@ -650,11 +650,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         [module.name], [], no_clear_cache=True)
                     modules_found.append(module.name)
                     modules_2_test.append(module.name)
+                    self.T[module.name] = True
                     continue
                 to_install_modules += module
                 self.status_mesg += 'Module "%s" installed\n' % module.name
                 modules_found.append(module.name)
                 modules_2_test.append(module.name)
+                self.T[module.name] = True
                 self.ctr_rec_new += 1
             elif module.state == 'uninstallable':
                 self.status_mesg += \
@@ -697,6 +699,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     [('name', 'in', modules_to_remove),
                      ('state', '=', 'installed')]):
                 to_remove_modules += module
+                self.T[module.name] = False
                 self.status_mesg += 'Module "%s" uninstalled\n' % module.name
                 self.ctr_rec_upd += 1
             to_remove_modules.module_uninstall()
