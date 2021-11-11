@@ -25,8 +25,8 @@ This module creates an test environment with test data.
 
 The behaviour of this module, depends heavily from following PYPI modules:
 
-* z0bug_odoo==1.0.5: contains records data
-* clodoo==0.3.52.2: contains the odoo version depending translation
+* z0bug_odoo>=1.0.5.6: contains records data
+* clodoo>=0.3.53.1: contains the odoo version depending translation
 * odoo_score==1.0.3: odoo supercore
 
 
@@ -183,6 +183,7 @@ ChangeLog History / Cronologia modifiche
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: data for test MtO
+* [FIX] mk_test_env: minor fixes
 
 12.0.0.6.4 (2021-11-09)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -272,7 +273,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2021-11-10
+Last Update / Ultimo aggiornamento: 2021-11-11
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status

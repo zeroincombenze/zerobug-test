@@ -57,6 +57,7 @@ MODULES_NEEDED = {
     'load_sdd': ['account_banking_sepa_direct_debit'],
     'load_riba': ['l10n_it_ricevute_bancarie'],
     'load_financing': ['account_banking_invoice_financing'],
+    'load_assets': ['assets_management_plus', 'l10n_it_balance_assets'],
     'load_vat': ['account_vat_period_end_statement',
                  'l10n_it_vat_registries',
                  'l10n_it_vat_statement_communication',
@@ -99,7 +100,7 @@ MODULES_NEEDED = {
             'payment', 'l10n_it_fatturapa_in', 'l10n_it_fatturapa_out'
         ],
     },
-    'load_assets': {
+    'load_rec_assets': {
         '*': ['assets_management_plus', 'l10n_it_balance_assets'],
     },
 }
@@ -243,6 +244,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     STRUCT = {}
     COA_MODULES = []
     NOT_INSTALL = []
+    T = {}
 
     @api.model
     def _selection_action(self, scope):
@@ -541,6 +543,36 @@ class WizardMakeTestEnvironment(models.TransientModel):
         return id
 
     @api.model
+    def is_to_apply(self, requirements):
+        flag = True
+        if requirements:
+            for module in self.env['ir.module.module'].search(
+                    [('name', 'in', requirements.split(','))]):
+                if module and module.state != 'installed':
+                    flag = False
+                    break
+        return flag
+
+    @api.model
+    def eval_expr(self, expr):
+        if not expr:
+            res = True
+            recalc = False
+        else:
+            res = False
+            recalc = True
+        max_ctr = 3
+        while recalc and max_ctr:
+            max_ctr -= 1
+            try:
+                res = eval(expr, globals(), self.T)
+                recalc = False
+            except NameError as e:
+                n = str(e).split("'")[1]
+                self.T[n] = self.is_to_apply(n)
+        return res
+
+    @api.model
     def get_module_list(self, scope=None):
 
         def add_2_list(tgt_list, item):
@@ -784,6 +816,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     vals['id'])
         if mode == 'dup':
             del vals['id']
+        # Translate field name from Odoo 12.0
         for field in vals.copy().keys():
             name = self.translate(model, field, ttype='field')
             if name != field:
@@ -1042,6 +1075,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
         def do_action(model, action):
             if hasattr(self.env[model], action):
+                if action == 'compute_taxes':
+                    # Please, do not remove this write: set default values
+                    saved_date = rec.date
+                    rec.write({'date': False})
+                    rec.write({'date': saved_date})
                 try:
                     getattr(rec, action)()
                 except:
@@ -1049,10 +1087,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         raise UserError(
                             'Action %s.%s FAILED (or invalid)!' % (model,
                                                                    action))
-                if action == 'compute_taxes':
-                    # Please, do not remove this write: set default values
-                    # rec._compute_net_pay()
-                    rec.write({})
 
         self._cr.commit()  # pylint: disable=invalid-commit
         if model in FCT:
@@ -1143,7 +1177,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 # rec = self.env[model].browse(self.company_id.id)
                 vals, parent_name = self.map_fields(
                     model, vals, self.company_id.id)
-                # rec.write(vals)
                 self.company_id.write(vals)
                 self.ctr_rec_upd += 1
                 self.status_mesg += '- Xref "%s":"%s" updated\n' % (
@@ -1153,16 +1186,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.ctr_rec_upd += 1
                 self.status_mesg += '- Xref "%s":"%s" updated\n' % (
                     model, vals.keys())
-
-        def is_to_apply(requirements):
-            flag = True
-            if requirements:
-                for module in self.env['ir.module.module'].search(
-                        [('name', 'in', requirements.split(','))]):
-                    if module and module.state != 'installed':
-                        flag = False
-                        break
-            return flag
 
         for model in ('res.company', 'res.groups'):
             self.setup_model_structure(model)
@@ -1179,7 +1202,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 model = xvals['id']
                 key = xvals['key']
                 field = None
-            if not is_to_apply(xvals['requirements']):
+            if not self.eval_expr(xvals['_requirements']):
                 continue
             if model != prior_model:
                 if prior_model and vals:
@@ -1390,14 +1413,17 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def make_test_environment(self):
         if ('.'.join(['%03d' % eval(x)
                       for x in z0bug_odoo_lib.__version__.split(
-                '.')]) < '001.000.005.005'):
+                '.')]) < '001.000.005.006'):
             raise UserError(
-                VERSION_ERROR % ('z0bug_odoo', '1.0.5.5'))
+                VERSION_ERROR % ('z0bug_odoo', '1.0.5.6'))
         if ('.'.join(['%03d' % eval(x)
                       for x in transodoo.__version__.split(
-                '.')]) < '000.003.036.002'):
+                '.')]) < '000.003.053.001'):
             raise UserError(
-                VERSION_ERROR % ('clodoo', '0.3.36.2'))
+                VERSION_ERROR % ('clodoo', '0.3.53.1'))
+
+        self.T['v'] = release.version_info[0]
+        self.T['G'] = self.distro if self.distro else self._set_distro()
 
         # Block 0: TODO> Separate function
         self.ctr_rec_new = 0
