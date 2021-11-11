@@ -145,6 +145,7 @@ mk_test_env: 12.0.0.6.5 (2021-11-10)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: data for test MtO
+* [FIX] mk_test_env: minor fixes
 
 
 mk_test_env: 12.0.0.6.4 (2021-11-09)
@@ -215,7 +216,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2021-11-10
+Last Update / Ultimo aggiornamento: 2021-11-11
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status

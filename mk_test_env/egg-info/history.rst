@@ -2,6 +2,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: data for test MtO
+* [FIX] mk_test_env: minor fixes
 
 12.0.0.6.4 (2021-11-09)
 ~~~~~~~~~~~~~~~~~~~~~~~
