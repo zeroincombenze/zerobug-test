@@ -502,6 +502,20 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         if retxref_id:
                             return xid.id
                         return xid.res_id
+            recs = self.env['account.tax'].search(
+                [('description', '=', xrefs[1].split('_')[1]),
+                 ('company_id', '=', company_id)])
+            if recs:
+                return recs[0].id
+            return False
+
+        def sim_xref_journal(xrefs, company_id):
+            recs = self.env['account.journal'].search(
+                [('code', '=', xrefs[1].split('_')[1].upper()),
+                 ('company_id', '=', company_id)])
+            if recs:
+                return recs[0].id
+            return False
 
         xrefs = self.translate('', xref, ttype='xref').split('.')
         if len(xrefs) == 2 and ' ' not in xref:
@@ -519,6 +533,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 elif (model == 'account.tax' and
                         xref.startswith('z0bug.tax_')):
                     return sim_xref_tax(xrefs, company_id)
+                elif (model == 'account.journal' and
+                      xref.startswith('z0bug.jou_')):
+                    return sim_xref_journal(xrefs, company_id)
         return False
 
     @api.model
@@ -569,7 +586,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 recalc = False
             except NameError as e:
                 n = str(e).split("'")[1]
-                self.T[n] = self.is_to_apply(n)
+                if len(n.split('.')) == 2 and ' ' not in n:
+                    self.T[n] = os0.str2bool(self.env_ref(n))
+                else:
+                    self.T[n] = self.is_to_apply(n)
         return res
 
     @api.model
@@ -1026,6 +1046,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
             xid = self.env_ref(xref, company_id=company_id, model=model)
         if not xid or mode in ('all', 'all-draft', 'dup'):
             vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(model, xref)
+            if ('_requirements' in vals and
+                    not self.eval_expr(vals['_requirements'])):
+                return False
             if ('sequence' in self.STRUCT[model] and
                     seq and
                     not vals.get('sequence')):
@@ -1069,7 +1092,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                             '*** Record %s: error %s!!!\n' % (xref, e))
                     xid = False
                     # raise UserError(self.status_mesg)
-            if xid and (not parent_id or not parent_model):
+            if xid and not parent_id and not parent_model:
                 self.add_xref(xref, model, xid)
         return xid
 
@@ -1222,9 +1245,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     @api.model
     def make_model(self, model, mode=None, model2=None, cantdup=None,
-                   only_fields=[]):  # pylint: dangerous-default-value
+                   only_fields=[], only_xrefs=[]):  # pylint: dangerous-default-value
 
         def store_1_rec(xref, seq, parent_id, deline_list):
+            if only_xrefs and xref not in only_xrefs:
+                return False, seq, deline_list
             if model2:
                 model2_model = self.env[model2]
             if model2 and xref not in hdr_list:
@@ -1275,6 +1300,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
         if cantdup and mode == 'dup':
             mode = 'all'
+        mode = mode or 'all'
         if model not in self.env:
             self.status_mesg += '- Model "%s" not found!\n' % model
             return
@@ -1336,7 +1362,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def make_model_limited(self, model, mode=None, model2=None, cantdup=None):
 
-        def make_model_limited_tax(self, model):
+        def make_model_limited_partner(self):
+            return [], ['z0bug.partner_mycompany']
+
+        def make_model_limited_tax(self):
             model = 'account.tax'
             if not self._feature_2_install('load_rc'):
                 for name in ('kind_id', 'rc_type', 'rc_sale_tax_id'):
@@ -1346,24 +1375,18 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 for name in ('payability',):
                     name = self.translate(model, name, ttype='field')
                     only_fields.append(name)
-            return only_fields
+            return only_fields, []
 
         only_fields = []
-        if model == 'account.tax':
-            only_fields = make_model_limited_tax(self, model)
-            if only_fields:
-                return self.make_model(
-                    model, mode=mode, model2=model2, cantdup=cantdup,
-                    only_fields=only_fields)
-
-    @api.model
-    def create_company(self):
-        vals = {
-            'name': 'Test Company',
-        }
-        company = self.env['res.company'].create(vals)
-        self.ctr_rec_new += 1
-        self.set_company_to_test(company)
+        only_xrefs = []
+        if model == 'res.partner':
+            only_fields, only_xrefs = make_model_limited_partner(self)
+        elif model == 'account.tax':
+            only_fields, only_xrefs = make_model_limited_tax(self)
+        if only_fields or only_xrefs:
+            return self.make_model(
+                model, mode=mode, model2=model2, cantdup=cantdup,
+                only_fields=only_fields, only_xrefs=only_xrefs)
 
     @api.model
     def set_company_to_test(self, company):
@@ -1416,9 +1439,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def make_test_environment(self):
         if ('.'.join(['%03d' % eval(x)
                       for x in z0bug_odoo_lib.__version__.split(
-                '.')]) < '001.000.005.006'):
+                '.')]) < '001.000.006'):
             raise UserError(
-                VERSION_ERROR % ('z0bug_odoo', '1.0.5.6'))
+                VERSION_ERROR % ('z0bug_odoo', '1.0.6'))
         if ('.'.join(['%03d' % eval(x)
                       for x in transodoo.__version__.split(
                 '.')]) < '000.003.053.001'):
@@ -1427,6 +1450,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
         self.T['v'] = release.version_info[0]
         self.T['G'] = self.distro if self.distro else self._set_distro()
+        self.T['C'] = self.coa
 
         # Block 0: TODO> Separate function
         self.ctr_rec_new = 0
@@ -1437,16 +1461,25 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if self.lang and self.lang != self.env.user.lang:
             self.load_language(iso=self.lang)
         self.set_user_preference()
+        if self.new_company:
+            self.make_model_limited('res.partner', cantdup=True)
+            self.make_model('res.company', cantdup=True)
+            self.env.user.write(
+                {'company_ids': [4, self.env_ref('z0bug.mycompany'), 0]}
+            )
+        elif not self.test_company_id:
+            self.set_company_to_test(self.company_id)
+            self.make_model_limited('res.partner', cantdup=True)
+            self.make_model('res.company', cantdup=True)
+        self.env.user.write(
+            {'company_id': self.env_ref('z0bug.mycompany')}
+        )
         self._cr.commit()  # pylint: disable=invalid-commit
         modules_to_install, modules_to_remove = self.get_module_list()
         self.install_modules(modules_to_install, modules_to_remove)
         self.state = '1'
 
         # Block 1: TODO> Separate function
-        if self.new_company:
-            self.create_company()
-        elif not self.test_company_id:
-            self.set_company_to_test(self.company_id)
         if self.load_coa and self.coa == 'l10n_it_no_coa':
             self.make_model(
                 'account.account', mode=self.load_coa, cantdup=True)
@@ -1456,6 +1489,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 'account.tax', mode=self.load_coa, cantdup=True)
             self.make_model(
                 'decimal.precision', mode=self.load_coa, cantdup=True)
+            if (release.version_info[0] == 10 and
+                    not self._feature_2_install('load_rc')):
+                self.make_model('account_rc_type', mode=self.load_coa,
+                                model2='account_rc_type.tax')
             self.make_model('account.fiscal.position', mode=self.load_coa,
                             model2='account.fiscal.position.tax')
             self.make_model(
@@ -1478,24 +1515,27 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.make_model('res.partner', mode=self.load_partner)
             self.make_model(
                 'res.partner.bank', mode=self.load_partner, cantdup=True)
-            if self.load_coa:
-                # Reload to link bank account to journal
-                self.make_model(
-                    'account.journal', mode=self.load_coa, cantdup=True)
-                self.make_model(
-                    'account.payment.mode', mode=self.load_coa, cantdup=True)
         if self.load_product:
             self.make_model(
                 'product.template', mode=self.load_product, cantdup=True)
             self.make_model(
                 'product.product', mode=self.load_product, cantdup=True)
-        if ((self.load_coa or self.load_partner) and
-                self.env_ref('z0bug.res_partner_6') and
-                not self._feature_2_install('load_li')):
-            self.make_model('dichiarazione.intento.yearly.limit',
-                            mode=self.load_coa, cantdup=True)
-            self.make_model('dichiarazione.intento',
-                            mode=self.load_coa, cantdup=True)
+        if self.load_partner or self.load_coa:
+            if (self.env_ref('z0bug.res_partner_1') and
+                    self.env_ref('z0bug.misc')):
+                # Reload to link bank account to journal
+                self.make_model('account.journal',
+                                mode=self.load_coa or self.load_partner,
+                                cantdup=True)
+                self.make_model('account.payment.mode',
+                                mode=self.load_coa or self.load_partner,
+                                cantdup=True)
+            if (self.env_ref('z0bug.res_partner_6') and
+                             not self._feature_2_install('load_li')):
+                self.make_model('dichiarazione.intento.yearly.limit',
+                                mode=self.load_coa, cantdup=True)
+                self.make_model('dichiarazione.intento',
+                                mode=self.load_coa, cantdup=True)
         if self.load_rec_assets and not self._feature_2_install('load_assets'):
             self.make_model('asset.category',
                             mode=self.load_rec_assets, cantdup=True,
