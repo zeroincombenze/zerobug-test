@@ -1,6 +1,6 @@
 
 ==============================================
-|icon| Manage Test Environment 12.0.10.0.0.6.5
+|icon| Manage Test Environment 12.0.10.0.0.6.7
 ==============================================
 
 
@@ -179,6 +179,17 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
+12.0.0.6.7 (2021-11-12)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: conditioned import
+* [IMP] mk_test_env: virtyal xref for journal
+
+12.0.0.6.6 (2021-11-11)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] mk_test_env: sometime does not load pyament modes
+
 12.0.0.6.5 (2021-11-10)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -273,7 +284,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2021-11-11
+Last Update / Ultimo aggiornamento: 2021-11-13
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status

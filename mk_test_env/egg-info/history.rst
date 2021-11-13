@@ -1,3 +1,14 @@
+12.0.0.6.7 (2021-11-12)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: conditioned import
+* [IMP] mk_test_env: virtyal xref for journal
+
+12.0.0.6.6 (2021-11-11)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] mk_test_env: sometime does not load pyament modes
+
 12.0.0.6.5 (2021-11-10)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
