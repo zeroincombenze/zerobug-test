@@ -116,6 +116,10 @@ COMMIT_FCT = {
     'account.move': {
         'draft': ['post'],
     },
+    'stock.inventory': {
+        'cancel': ['action_start'],
+        'draft': ['action_validate'],
+    },
 
 }
 DRAFT_FCT = {
@@ -132,7 +136,11 @@ DRAFT_FCT = {
     'account.move': {
         'posted': ['button_cancel'],
     },
+    'stock.inventory': {
+        'cancel': ['action_start'],
+    },
 }
+
 UNIQUE_REFS = ['z0bug.partner_mycompany']
 SKEYS = {
     'account.move.line': ['account_id', 'credit', 'debit'],
@@ -466,9 +474,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
         # We do not use standard self.env.ref() because we need False value
         # if xref does not exits instead of exception
         # and we need to get id or record by parameter
-        # if (xref == 'product.product_uom_unit' and
-        #         eval(release.major_version.split('.')[0]) >= 12):
-        #     xref = 'uom.product_uom_unit'
         def sim_xref_account(xrefs, company_id):
             tok = '_%s' % xrefs[1].split('_')[1]
             recs = ir_model.search(
@@ -1439,9 +1444,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def make_test_environment(self):
         if ('.'.join(['%03d' % eval(x)
                       for x in z0bug_odoo_lib.__version__.split(
-                '.')]) < '001.000.006'):
+                '.')]) < '001.000.006.2'):
             raise UserError(
-                VERSION_ERROR % ('z0bug_odoo', '1.0.6'))
+                VERSION_ERROR % ('z0bug_odoo', '1.0.6.2'))
         if ('.'.join(['%03d' % eval(x)
                       for x in transodoo.__version__.split(
                 '.')]) < '000.003.053.001'):
@@ -1465,7 +1470,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.make_model_limited('res.partner', cantdup=True)
             self.make_model('res.company', cantdup=True)
             self.env.user.write(
-                {'company_ids': [4, self.env_ref('z0bug.mycompany'), 0]}
+                {'company_ids': (4, self.env_ref('z0bug.mycompany'))}
             )
         elif not self.test_company_id:
             self.set_company_to_test(self.company_id)
@@ -1546,6 +1551,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.state = '2'
 
         # Block 2: TODO> Separate function
+        if self.load_sale_order or self.load_purchase_order:
+            self.make_model('stock.inventory', mode=self.load_sale_order,
+                            model2='stock.inventory.line')
         if self.load_sale_order:
             self.make_model('sale.order', mode=self.load_sale_order,
                             model2='sale.order.line')
