@@ -2,6 +2,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: inventory data
+* [IMP] mk_test_env: multiple journals
 
 12.0.0.6.7 (2021-11-12)
 ~~~~~~~~~~~~~~~~~~~~~~~

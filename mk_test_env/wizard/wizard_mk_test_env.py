@@ -1444,7 +1444,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def make_test_environment(self):
         if ('.'.join(['%03d' % eval(x)
                       for x in z0bug_odoo_lib.__version__.split(
-                '.')]) < '001.000.006.2'):
+                '.')]) < '001.000.006.002'):
             raise UserError(
                 VERSION_ERROR % ('z0bug_odoo', '1.0.6.2'))
         if ('.'.join(['%03d' % eval(x)

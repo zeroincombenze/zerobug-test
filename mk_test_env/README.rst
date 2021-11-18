@@ -183,6 +183,7 @@ ChangeLog History / Cronologia modifiche
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: inventory data
+* [IMP] mk_test_env: multiple journals
 
 12.0.0.6.7 (2021-11-12)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -289,7 +290,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2021-11-17
+Last Update / Ultimo aggiornamento: 2021-11-18
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
