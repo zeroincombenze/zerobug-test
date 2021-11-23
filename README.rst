@@ -22,7 +22,7 @@ Avaiable Addons / Moduli disponibili
 +-------------+------------+----------------------------------------------------------------------------------+
 | midea       | 12.0.0.1.4 | z0bug_odoo test suite                                                            |
 +-------------+------------+----------------------------------------------------------------------------------+
-| mk_test_env | 12.0.0.6.8 | Create or update test environment                                                |
+| mk_test_env | 12.0.0.6.9 | Create or update test environment                                                |
 +-------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -132,10 +132,17 @@ Proposals for enhancement
 History / Cronologia
 --------------------
 
+mk_test_env: 12.0.0.6.8 (2021-11-22)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: account mode
+
+
 mk_test_env: 12.0.0.6.8 (2021-11-16)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: inventory data
+* [IMP] mk_test_env: multiple journals
 
 
 mk_test_env: 12.0.0.6.7 (2021-11-12)
@@ -226,7 +233,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2021-11-17
+Last Update / Ultimo aggiornamento: 2021-11-22
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status

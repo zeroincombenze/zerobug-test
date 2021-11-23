@@ -1444,9 +1444,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def make_test_environment(self):
         if ('.'.join(['%03d' % eval(x)
                       for x in z0bug_odoo_lib.__version__.split(
-                '.')]) < '001.000.006.002'):
+                '.')]) < '001.000.006.003'):
             raise UserError(
-                VERSION_ERROR % ('z0bug_odoo', '1.0.6.2'))
+                VERSION_ERROR % ('z0bug_odoo', '1.0.6.3'))
         if ('.'.join(['%03d' % eval(x)
                       for x in transodoo.__version__.split(
                 '.')]) < '000.003.053.001'):
@@ -1527,7 +1527,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 'product.product', mode=self.load_product, cantdup=True)
         if self.load_partner or self.load_coa:
             if (self.env_ref('z0bug.res_partner_1') and
-                    self.env_ref('z0bug.misc')):
+                    self.env_ref('z0bug.jou_misc')):
                 # Reload to link bank account to journal
                 self.make_model('account.journal',
                                 mode=self.load_coa or self.load_partner,
