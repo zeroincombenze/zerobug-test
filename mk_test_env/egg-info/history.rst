@@ -1,3 +1,15 @@
+12.0.0.6.10 (2021-11-26)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: set banck account
+* [IMP] mk_test_env: new wallet bank configuration
+
+12.0.0.6.10 (2021-11-23)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: italy.profile.account
+* [IMP] mk_test_env: intrastat
+
 12.0.0.6.8 (2021-11-22)
 ~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -1,7 +1,7 @@
 
-=========================================
-|icon| Manage Test Environment 12.0.0.6.9
-=========================================
+==========================================
+|icon| Manage Test Environment 12.0.0.6.11
+==========================================
 
 
 **Create or update test environment**
@@ -179,6 +179,18 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
+12.0.0.6.10 (2021-11-26)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: set banck account
+* [IMP] mk_test_env: new wallet bank configuration
+
+12.0.0.6.10 (2021-11-23)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] mk_test_env: italy.profile.account
+* [IMP] mk_test_env: intrastat
+
 12.0.0.6.8 (2021-11-22)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -295,7 +307,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2021-11-22
+Last Update / Ultimo aggiornamento: 2021-11-27
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status

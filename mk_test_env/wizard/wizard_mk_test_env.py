@@ -522,6 +522,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 return recs[0].id
             return False
 
+        def sim_xref_intrastat(xrefs, company_id):
+            recs = self.env['report.intrastat.code'].search(
+                [('name', '=', xrefs[1].split('_')[1].upper())])
+            if recs:
+                return recs[0].id
+            return False
+
         xrefs = self.translate('', xref, ttype='xref').split('.')
         if len(xrefs) == 2 and ' ' not in xref:
             ir_model = self.env['ir.model.data']
@@ -541,6 +548,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 elif (model == 'account.journal' and
                       xref.startswith('z0bug.jou_')):
                     return sim_xref_journal(xrefs, company_id)
+                elif (model == 'report.intrastat.code' and
+                      xref.startswith('z0bug.istat_')):
+                    return sim_xref_intrastat(xrefs, company_id)
         return False
 
     @api.model
@@ -1146,6 +1156,24 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.do_workflow(model, rec_id, COMMIT_FCT, ignore_error=True)
 
     @api.model
+    def set_bank_acc(self):
+        if self.coa == 'l10n_it_fiscal':
+            model = 'account.account'
+            self.setup_model_structure(model)
+            acc_model = self.env[model]
+            for rec in acc_model.search(
+                    [('code', 'like', '180%')]):
+                if not rec.code.startswith('180'):
+                    continue
+                vals = {}
+                if not rec.group_id:
+                    vals['group_id'] = self.env_ref('l10n_it_fiscal.180')
+                if 'nature' in self.STRUCT[model] and not rec.nature:
+                    vals['nature'] = 'P'
+                if vals:
+                    rec.write(vals)
+
+    @api.model
     def make_misc(self):
 
         # group_model = self.env['res.groups']
@@ -1218,6 +1246,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.status_mesg += '- Xref "%s":"%s" updated\n' % (
                     model, vals.keys())
 
+        self.set_bank_acc()
         for model in ('res.company', 'res.groups'):
             self.setup_model_structure(model)
         xmodel = 'miscellaneous'
@@ -1382,12 +1411,24 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     only_fields.append(name)
             return only_fields, []
 
+        def make_model_limited_account(self):
+            model = 'account.account'
+            return [], [
+                'z0bug.coa_180003',
+                'z0bug.coa_180004',
+                'z0bug.coa_180005',
+                'z0bug.coa_180006',
+                'z0bug.coa_180007',
+            ]
+
         only_fields = []
         only_xrefs = []
         if model == 'res.partner':
             only_fields, only_xrefs = make_model_limited_partner(self)
         elif model == 'account.tax':
             only_fields, only_xrefs = make_model_limited_tax(self)
+        elif model == 'account.account':
+            only_fields, only_xrefs = make_model_limited_account(self)
         if only_fields or only_xrefs:
             return self.make_model(
                 model, mode=mode, model2=model2, cantdup=cantdup,
@@ -1444,9 +1485,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def make_test_environment(self):
         if ('.'.join(['%03d' % eval(x)
                       for x in z0bug_odoo_lib.__version__.split(
-                '.')]) < '001.000.006.003'):
+                '.')]) < '001.000.006.004'):
             raise UserError(
-                VERSION_ERROR % ('z0bug_odoo', '1.0.6.3'))
+                VERSION_ERROR % ('z0bug_odoo', '1.0.6.4'))
         if ('.'.join(['%03d' % eval(x)
                       for x in transodoo.__version__.split(
                 '.')]) < '000.003.053.001'):
@@ -1491,6 +1532,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.make_model('account.tax', mode=self.load_coa, cantdup=True)
         if self.load_coa:
             self.make_model_limited(
+                'account.account', mode=self.load_coa, cantdup=True)
+            self.make_model_limited(
                 'account.tax', mode=self.load_coa, cantdup=True)
             self.make_model(
                 'decimal.precision', mode=self.load_coa, cantdup=True)
@@ -1500,6 +1543,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                 model2='account_rc_type.tax')
             self.make_model('account.fiscal.position', mode=self.load_coa,
                             model2='account.fiscal.position.tax')
+            self.make_model('italy.profile.account', mode=self.load_coa)
             self.make_model(
                 'date.range.type', mode=self.load_coa, cantdup=True)
             self.make_model(
