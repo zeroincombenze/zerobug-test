@@ -1,8 +1,16 @@
+12.0.0.6.11 (2021-12-31)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] Sometime does not load values (maily tax codes)
+* [FIX] Limited records
+* [FIX] Many2one multiple values
+* [FIX] Multiple groups
+
 12.0.0.6.10 (2021-11-26)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-* [IMP] mk_test_env: set banck account
-* [IMP] mk_test_env: new wallet bank configuration
+* [IMP] mk_test_env: set bank account
+* [IMP] mk_test_env:new wallet bank configuration
 
 12.0.0.6.10 (2021-11-23)
 ~~~~~~~~~~~~~~~~~~~~~~~~
