@@ -48,17 +48,17 @@ Il comportamento di quesot modulo dipende pesantemente dai sequenti package PYPI
 Features / Caratteristiche
 --------------------------
 
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
-| Description / Descrizione                | 6.1        | 7.0        | 8.0        | 9.0        | 10.0    | 11.0       | 12.0    |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
-| Partner & Products / Soggetti e prodotti | |check|    | |check|    | |check|    | |check|    | |check| | |check|    | |check| |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
-| Sale orders / Ordini clienti             | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
-| Purchase orders / Ordini fornitori       | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
-| Invoices / Fatture                       | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
+| Description / Descrizione                | 6.1        | 7.0        | 8.0        | 9.0        | 10.0    | 11.0       | 12.0    | 13.0       | 14.0       | 15.0       |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
+| Partner & Products / Soggetti e prodotti | |check|    | |check|    | |check|    | |check|    | |check| | |check|    | |check| | |no_check| | |no_check| | |no_check| |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
+| Sale orders / Ordini clienti             | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| | |no_check| | |no_check| | |no_check| |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
+| Purchase orders / Ordini fornitori       | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| | |no_check| | |no_check| | |no_check| |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
+| Invoices / Fatture                       | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| | |no_check| | |no_check| | |no_check| |
++------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
 
 
 |
@@ -179,11 +179,20 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
+12.0.0.6.11 (2021-12-31)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] Sometime does not load values (mainly tax codes)
+* [FIX] Limited records
+* [FIX] Many2one multiple values
+* [FIX] Multiple groups
+* [IMP] New CoA module name
+
 12.0.0.6.10 (2021-11-26)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-* [IMP] mk_test_env: set banck account
-* [IMP] mk_test_env: new wallet bank configuration
+* [IMP] mk_test_env: set bank account
+* [IMP] mk_test_env:new wallet bank configuration
 
 12.0.0.6.10 (2021-11-23)
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -244,11 +253,6 @@ ChangeLog History / Cronologia modifiche
 
 * [IMP] Minor improvements
 
-12.0.0.6 (2021-07-31)
-~~~~~~~~~~~~~~~~~~~~~
-
-* [REF] Refactoring
-
 
 
 |
@@ -307,7 +311,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2021-11-27
+Last Update / Ultimo aggiornamento: 2022-01-05
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status

@@ -12,8 +12,6 @@ import os
 from datetime import date, datetime, timedelta
 import time
 import calendar
-# import re
-
 import pytz
 
 from odoo import api, fields, models
@@ -37,7 +35,7 @@ MODULES_NEEDED = {
           'contacts', 'web_decimal_numpad_dot'],
     'coa': {
         'l10n_it': ['l10n_it'],
-        'l10n_it_fiscal': ['l10n_it_fiscal'],
+        'l10n_it_coa': ['l10n_it_coa'],
         'l10n_it_nocoa': ['l10n_it_nocoa']
     },
     'distro': {
@@ -164,7 +162,7 @@ def _selection_coa(self):
         countries = ['l10n_%s' % x.code.lower()
                      for x in self.env['res.country'].search([])]
         countries.insert(0, 'l10n_it_nocoa')
-        countries.insert(0, 'l10n_it_fiscal')
+        countries.insert(0, 'l10n_it_coa')
         for module in self.env['ir.module.module'].search(
                 [('name', 'in', countries),
                  ('state', '!=', 'uninstallable')], order='name'):
@@ -308,8 +306,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
             # coa = res[0].name
             coa_module_list = [x.name for x in res]
         # if not coa:
-        if 'l10n_it_fiscal' in coa_module_list:
-            coa = 'l10n_it_fiscal'
+        if 'l10n_it_coa' in coa_module_list:
+            coa = 'l10n_it_coa'
         elif 'l10n_it' in coa_module_list:
             coa = 'l10n_it'
         elif coa_module_list:
@@ -319,7 +317,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.depends('coa')
     def _set_distro(self):
         coa = self.coa if self.coa else self._set_coa_2_use()
-        if coa in ('l10n_it_fiscal', 'l10n_it_nocoa'):
+        if coa in ('l10n_it_coa', 'l10n_it_nocoa'):
             if release.version_info[0] == 6:
                 distro = 'librerp'
             elif release.version_info[0] < 12:
@@ -379,7 +377,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         'Chart of Account',
         help='Select Chart od Account to install\n'
              '"Local IT Odoo" (module l10n_it) is the minimal one\n'
-             '"Powerp/Zeroincombenze" (module l10n_it_fiscal) is the full CoA\n'
+             '"Powerp/Zeroincombenze" (module l10n_it_coa) is the full CoA\n'
              '"No CoA" means manual CoA\n',
         default=lambda self: self._set_coa_2_use())
     distro = fields.Selection(
@@ -579,7 +577,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         G (str) -> Git distro;
                    one of ('odoo_ce', 'odoo_ee', 'zero', 'powerp','librerp')
         C (str) -> Chart of Account;
-                   one of ('l10n_it_nocoa', 'l10n_it_fiscal', l10n_XX)
+                   one of ('l10n_it_nocoa', 'l10n_it_coa', l10n_XX)
         xref -> Any Odoo  external reference
         """
         if not expr:
@@ -630,7 +628,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if not scope:
             coa_module_list = [x[0] for x in self.COA_MODULES]
             if not any([x for x in modules_2_install if x in coa_module_list]):
-                modules_2_install.append('l10n_it_fiscal')
+                modules_2_install.append('l10n_it_coa')
         module_list = []
         for module in modules_2_install:
             distro_module = self.translate('ir.module.module', module,
@@ -1160,7 +1158,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def set_bank_acc(self):
         model = 'account.account'
-        if self.coa == 'l10n_it_fiscal' and model in self.env:
+        if self.coa == 'l10n_it_coa' and model in self.env:
             self.setup_model_structure(model)
             acc_model = self.env[model]
             for rec in acc_model.search(
@@ -1169,7 +1167,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     continue
                 vals = {}
                 if not rec.group_id:
-                    vals['group_id'] = self.env_ref('l10n_it_fiscal.180')
+                    vals['group_id'] = self.env_ref('l10n_it_coa.180')
                 if 'nature' in self.STRUCT[model] and not rec.nature:
                     vals['nature'] = 'P'
                 if vals:
@@ -1460,18 +1458,27 @@ class WizardMakeTestEnvironment(models.TransientModel):
             except BaseException:
                 self.status_mesg += 'Cannot translate "%s"!!!\n' % iso
 
-    def make_test_environment(self):
-        if ('.'.join(['%03d' % eval(x)
-                      for x in z0bug_odoo_lib.__version__.split(
-                '.')]) < '001.000.007.003'):
+    def diff_ver(self, min_version, module, comp):
+        if hasattr(globals()[comp], '__version__'):
+            text_module_ver = '.'.join(
+                ['%03d' % int(x)
+                 for x in getattr(globals()[comp], '__version__').split('.')])
+        elif hasattr(globals()[comp], 'version'):
+            text_module_ver = '.'.join(
+                ['%03d' % int(x)
+                 for x in getattr(globals()[comp], 'version').split('.')])
+        else:
+            text_module_ver = '0'
+        text_min_ver = '.'.join(
+            ['%03d' % int(x) for x in min_version.split('.')])
+        if text_module_ver < text_min_ver:
             raise UserError(
-                VERSION_ERROR % ('z0bug_odoo', '1.0.7.3'))
-        if ('.'.join(['%03d' % eval(x)
-                      for x in transodoo.__version__.split(
-                '.')]) < '001.000.000'):
-            raise UserError(
-                VERSION_ERROR % ('clodoo', '1.0.0'))
+                VERSION_ERROR % (module, min_version))
 
+    def make_test_environment(self):
+        self.diff_ver('1.0.8', 'z0bug_odoo', 'z0bug_odoo_lib')
+        self.diff_ver('1.0.0', 'clodoo', 'transodoo')
+        self.diff_ver('1.0.3', 'os0', 'os0')
         self.T['v'] = release.version_info[0]
         self.T['G'] = self.distro if self.distro else self._set_distro()
         self.T['C'] = self.coa

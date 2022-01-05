@@ -132,11 +132,21 @@ Proposals for enhancement
 History / Cronologia
 --------------------
 
+mk_test_env: 12.0.0.6.11 (2021-12-31)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] Sometime does not load values (mainly tax codes)
+* [FIX] Limited records
+* [FIX] Many2one multiple values
+* [FIX] Multiple groups
+* [IMP] New CoA module name
+
+
 mk_test_env: 12.0.0.6.10 (2021-11-26)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* [IMP] mk_test_env: set banck account
-* [IMP] mk_test_env: new wallet bank configuration
+* [IMP] mk_test_env: set bank account
+* [IMP] mk_test_env:new wallet bank configuration
 
 
 mk_test_env: 12.0.0.6.10 (2021-11-23)
@@ -208,12 +218,6 @@ mk_test_env: 12.0.0.6.1 (2021-08-02)
 * [IMP] Minor improvements
 
 
-mk_test_env: 12.0.0.6 (2021-07-31)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [REF] Refactoring
-
-
 
 
 
@@ -247,7 +251,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2021-11-27
+Last Update / Ultimo aggiornamento: 2022-01-05
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status

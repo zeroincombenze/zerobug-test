@@ -1,10 +1,11 @@
 12.0.0.6.11 (2021-12-31)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-* [FIX] Sometime does not load values (maily tax codes)
+* [FIX] Sometime does not load values (mainly tax codes)
 * [FIX] Limited records
 * [FIX] Many2one multiple values
 * [FIX] Multiple groups
+* [IMP] New CoA module name
 
 12.0.0.6.10 (2021-11-26)
 ~~~~~~~~~~~~~~~~~~~~~~~~
