@@ -186,7 +186,10 @@ ChangeLog History / Cronologia modifiche
 * [IMP] Use python-plus to calculate date
 * [IMP] New 'external.' prefix to set direct values
 * [IMP] Supplierinfo data
+* [IMP] Sepa mandate data
 * [FIX] Minor fixes
+* [FIX] Do not do load data after module installation
+* [IMP] State management for flat table too
 
 12.0.0.6.11 (2021-12-31)
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -316,7 +319,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2022-01-08
+Last Update / Ultimo aggiornamento: 2022-01-10
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status

@@ -104,6 +104,10 @@ MODULES_NEEDED = {
     },
 }
 COMMIT_FCT = {
+    'account.banking.mandate': {
+        'cancel': ['back2draft'],
+        'draft': ['validate'],
+    },
     'account.invoice': {
         'cancel': ['action_invoice_draft'],
         'draft': ['compute_taxes', 'action_invoice_open'],
@@ -122,6 +126,10 @@ COMMIT_FCT = {
 
 }
 DRAFT_FCT = {
+    'account.banking.mandate': {
+        'valid': ['cancel'],
+        'cancel': ['back2draft'],
+    },
     'account.invoice': {
         'paid': ['action_invoice_re_open'],
         'open': ['action_invoice_cancel'],
@@ -626,6 +634,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def install_modules(self, modules_to_install, modules_to_remove,
                         no_clear_cache=None):
+        flag_module_installed = False
         modules_model = self.env['ir.module.module']
         to_install_modules = modules_model
         modules_found = []
@@ -653,6 +662,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     modules_found.append(module.name)
                     modules_2_test.append(module.name)
                     self.T[module.name] = True
+                    flag_module_installed = True
                     continue
                 to_install_modules += module
                 self.status_mesg += 'Module "%s" installed\n' % module.name
@@ -704,6 +714,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.T[module.name] = False
                 self.status_mesg += 'Module "%s" uninstalled\n' % module.name
                 self.ctr_rec_upd += 1
+                flag_module_installed = True
             to_remove_modules.module_uninstall()
             max_time_to_wait += len(to_remove_modules)
             while max_time_to_wait > 0:
@@ -724,7 +735,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.env.invalidate_all()
             # else:
             #     self.invalidate_cache()
-        return
+        return flag_module_installed
 
     def get_tnldict(self):
         if not hasattr(self, 'tnldict'):
@@ -1004,9 +1015,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if 'id' in vals:
             del vals['id']
         if vals:
-            if parent_model and parent_id:
+            if parent_model and parent_id and parent_model in DRAFT_FCT:
                 self.do_draft(parent_model, parent_id)
-            else:
+            elif model in DRAFT_FCT:
                 self.do_draft(model, xid)
             if model.startswith('account.move'):
                 self.env[model].browse(xid).with_context(
@@ -1286,6 +1297,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 deline_list = []
                 parent_id = self.store_rec_with_xref(
                     xref, model, company_id, mode=mode, only_fields=only_fields)
+                if not seq and model in COMMIT_FCT:
+                   self.do_commit(model, parent_id, mode=mode)
                 if parent_id and model2:
                     if 'sequence' in self.STRUCT[model2]:
                         seq = 1 if model == 'account.payment.term' else 10
@@ -1364,6 +1377,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if seq:
             if deline_list:
                 self.env[model2].browse(deline_list).unlink()
+            self.do_commit(model, parent_id, mode=mode)
+        elif model in COMMIT_FCT:
             self.do_commit(model, parent_id, mode=mode)
         self._cr.commit()                      # pylint: disable=invalid-commit
 
@@ -1474,7 +1489,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 VERSION_ERROR % (module, min_version))
 
     def make_test_environment(self):
-        self.diff_ver('1.0.8.1', 'z0bug_odoo', 'z0bug_odoo_lib')
+        self.diff_ver('1.0.8.2', 'z0bug_odoo', 'z0bug_odoo_lib')
         self.diff_ver('1.0.0', 'clodoo', 'transodoo')
         self.diff_ver('1.0.3', 'os0', 'os0')
         self.diff_ver('1.0.6.1', 'python_plus', 'python_plus')
@@ -1503,7 +1518,22 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.set_user_preference()
         self._cr.commit()  # pylint: disable=invalid-commit
         modules_to_install, modules_to_remove = self.get_module_list()
-        self.install_modules(modules_to_install, modules_to_remove)
+        flag_module_installed = self.install_modules(
+            modules_to_install, modules_to_remove)
+        if flag_module_installed:
+            return {
+                'name': "Data created",
+                'type': 'ir.actions.act_window',
+                'res_model': 'wizard.make.test.environment',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_id': self.id,
+                'target': 'new',
+                'context': {'active_id': self.id},
+                'view_id': self.env.ref(
+                    'mk_test_env.result_mk_test_env_view').id,
+                'domain': [('id', '=', self.id)],
+            }
         self.state = '1'
 
         # Block 1: TODO> Separate function
@@ -1545,6 +1575,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.make_model('res.partner', mode=self.load_partner)
             self.make_model(
                 'res.partner.bank', mode=self.load_partner, cantdup=True)
+            if not self._feature_2_install('load_sdd'):
+                self.make_model('account.banking.mandate',
+                                mode=self.load_partner, cantdup=True)
         if self.load_product:
             self.make_model(
                 'product.template', mode=self.load_product, cantdup=True)

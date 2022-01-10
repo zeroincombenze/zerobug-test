@@ -5,7 +5,10 @@
 * [IMP] Use python-plus to calculate date
 * [IMP] New 'external.' prefix to set direct values
 * [IMP] Supplierinfo data
+* [IMP] Sepa mandate data
 * [FIX] Minor fixes
+* [FIX] Do not do load data after module installation
+* [IMP] State management for flat table too
 
 12.0.0.6.11 (2021-12-31)
 ~~~~~~~~~~~~~~~~~~~~~~~~

@@ -22,7 +22,7 @@ Avaiable Addons / Moduli disponibili
 +-------------+------------+----------------------------------------------------------------------------------+
 | midea       | 12.0.0.1.4 | z0bug_odoo test suite                                                            |
 +-------------+------------+----------------------------------------------------------------------------------+
-| mk_test_env | 12.0.0.6.1 | Create or update test environment                                                |
+| mk_test_env | 12.0.0.7   | Create or update test environment                                                |
 +-------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -132,6 +132,19 @@ Proposals for enhancement
 History / Cronologia
 --------------------
 
+mk_test_env: 12.0.0.7 (2022-01-07)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] Recognizing l10n_it_fiscal or l10n_it_coa
+* [IMP] Use python-plus to calculate date
+* [IMP] New 'external.' prefix to set direct values
+* [IMP] Supplierinfo data
+* [IMP] Sepa mandate data
+* [FIX] Minor fixes
+* [FIX] Do not do load data after module installation
+* [IMP] State management for flat table too
+
+
 mk_test_env: 12.0.0.6.11 (2021-12-31)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -149,16 +162,11 @@ mk_test_env: 12.0.0.6.10 (2021-11-26)
 * [IMP] mk_test_env:new wallet bank configuration
 
 
-mk_test_env: 12.0.0.6.10 (2021-11-23)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mk_test_env: 12.0.0.6.9 (2021-11-23)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: italy.profile.account
 * [IMP] mk_test_env: intrastat
-
-
-mk_test_env: 12.0.0.6.8 (2021-11-22)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 * [IMP] mk_test_env: account mode
 
 
@@ -251,7 +259,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2022-01-05
+Last Update / Ultimo aggiornamento: 2022-01-10
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
