@@ -11,6 +11,7 @@ from builtins import int
 import os
 from datetime import date, datetime
 import time
+import re
 import pytz
 
 from odoo import api, fields, models
@@ -576,10 +577,18 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 recalc = False
             except NameError as e:
                 n = str(e).split("'")[1]
-                if len(n.split('.')) == 2 and ' ' not in n:
-                    self.T[n] = os0.str2bool(self.env_ref(n))
+                i = expr.find(n)
+                x = re.match(r'[-\w]+\.[-\w]+', expr[i:])
+                if x:
+                    n = expr[i:x.end()]
+                if len(n.split('.')) == 2:
+                    m = n.replace('.', '__')
+                    expr = expr.replace(n, m)
+                    self.T[m] = os0.str2bool(self.env_ref(n), False)
                 else:
                     self.T[n] = self.is_to_apply(n)
+            except AttributeError as e:
+                max_ctr = 0
         return res
 
     @api.model
@@ -782,7 +791,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         domain = []
         multi_key = parent_id and parent_name in self.STRUCT[model]
         if model == 'account.payment.term.line' or (
-                self.set_seq and parent_id and parent_name and
+                self.set_seq and multi_key and
                 'sequence' in self.STRUCT[model]):
             fields = ['sequence']
         elif model in SKEYS:
@@ -798,7 +807,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 continue
             elif nm == 'description' and model != 'account.tax':
                 continue
-            elif nm == 'sequence' and not parent_id and not parent_name:
+            elif nm == 'sequence' and not multi_key:
                 continue
             if nm in vals and nm in self.STRUCT[model]:
                 if (isinstance(vals[field or nm], basestring) and
@@ -854,6 +863,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.setup_model_structure(
                 self.STRUCT[model].get(name, {}).get('relation'))
         parent_name = ''
+        multi_model = parent_id and parent_name
         for field in vals.copy().keys():
             if ((only_fields and field != 'id' and field not in only_fields) or
                     vals[field] is None or
@@ -871,7 +881,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     self.status_mesg += mesg
                 continue
             if field == 'id':
-                if parent_id and parent_model:
+                if multi_model:
                     del vals[field]
                 elif isinstance(vals[field], basestring):
                     if vals[field].isdigit():
@@ -889,6 +899,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                      attrs.get('relation', '/') == model)):
                 vals[field] = parent_id
                 parent_name = field
+                multi_model = True
             elif field == 'company_id':
                 vals[field] = company_id
                 continue
@@ -958,7 +969,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 not vals.get('name')):
             vals['name'] = '%s (Spedizione)' % self.env[model].browse(
                 vals['parent_id']).name
-        if parent_id and parent_model:
+        if multi_model:
             if mode != 'dup':
                 rec = self.bind_record(
                     model, vals, company_id,
@@ -1014,9 +1025,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
         vals = self.drop_unchanged_fields(vals, model, xid)
         if 'id' in vals:
             del vals['id']
+        multi_model = parent_id and parent_model
         if vals:
-            if parent_model and parent_id and parent_model in DRAFT_FCT:
-                self.do_draft(parent_model, parent_id)
+            if multi_model:
+                if parent_model in DRAFT_FCT:
+                    self.do_draft(parent_model, parent_id)
             elif model in DRAFT_FCT:
                 self.do_draft(model, xid)
             if model.startswith('account.move'):
@@ -1056,8 +1069,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if mode == 'dup' and xref in UNIQUE_REFS:
             mode = 'all'
         if parent_id and parent_model:
+            multi_model = True
             xid = False
         else:
+            multi_model = False
             xid = self.env_ref(xref, company_id=company_id, model=model)
         if not xid or mode in ('all', 'all-draft', 'dup'):
             vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(model, xref)
@@ -1297,7 +1312,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 deline_list = []
                 parent_id = self.store_rec_with_xref(
                     xref, model, company_id, mode=mode, only_fields=only_fields)
-                if not seq and model in COMMIT_FCT:
+                if (not parent_id and not model2 and
+                        not not seq and model in COMMIT_FCT):
                    self.do_commit(model, parent_id, mode=mode)
                 if parent_id and model2:
                     if 'sequence' in self.STRUCT[model2]:
@@ -1378,7 +1394,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
             if deline_list:
                 self.env[model2].browse(deline_list).unlink()
             self.do_commit(model, parent_id, mode=mode)
-        elif model in COMMIT_FCT:
+        elif (not parent_id and not model2 and
+                        not not seq and model in COMMIT_FCT):
             self.do_commit(model, parent_id, mode=mode)
         self._cr.commit()                      # pylint: disable=invalid-commit
 
@@ -1489,8 +1506,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 VERSION_ERROR % (module, min_version))
 
     def make_test_environment(self):
-        self.diff_ver('1.0.8.2', 'z0bug_odoo', 'z0bug_odoo_lib')
-        self.diff_ver('1.0.0', 'clodoo', 'transodoo')
+        self.diff_ver('1.0.9.1', 'z0bug_odoo', 'z0bug_odoo_lib')
+        self.diff_ver('1.0.0.1', 'clodoo', 'transodoo')
         self.diff_ver('1.0.3', 'os0', 'os0')
         self.diff_ver('1.0.6.1', 'python_plus', 'python_plus')
         self.T['v'] = release.version_info[0]
