@@ -8,15 +8,14 @@
         view_mode="form"
         target="new"
         />
-    <!--
-    <act_window id="action_cleanup_test_env"
+    <act_window id="action_mk_test_pyfile"
         key2="client_action_multi"
-        name="Clean-up Test Environment"
-        res_model="wizard.cleanup.test.environment"
+        name="Create python source test file"
+        res_model="wizard.mk.test.pyfile"
         view_mode="form"
         target="new"
         />
-    -->
+
     <menuitem id="menu_mk_test_env"
               name="Create Test Environment"
               action="action_mk_test_env"
@@ -24,13 +23,11 @@
               groups="base.group_no_one"
               sequence="90"
               />
-    <!--
-    <menuitem id="menu_cleanup_test_env"
-              name="Clean-up Test Environment"
-              action="action_cleanup_test_env"
+    <menuitem id="menu_mk_test_pyfile"
+              name="Create python source test file"
+              action="action_mk_test_pyfile"
               parent="base.next_id_9"
               groups="base.group_no_one"
               sequence="91"
               />
-    -->
 </odoo>

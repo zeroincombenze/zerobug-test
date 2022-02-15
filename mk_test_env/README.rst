@@ -1,7 +1,7 @@
 
-=======================================
-|icon| Manage Test Environment 12.0.0.7
-=======================================
+=========================================
+|icon| Manage Test Environment 12.0.0.7.1
+=========================================
 
 
 **Create or update test environment**
@@ -179,7 +179,13 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
-12.0.0.7 (2022-01-07)
+12.0.0.7.1 (2022-01-11)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] expression to evaluate _requirements
+* [FIX] multi-model with state
+
+10.0.0.7 (2022-01-07)
 ~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Recognizing l10n_it_fiscal or l10n_it_coa
@@ -256,11 +262,6 @@ ChangeLog History / Cronologia modifiche
 * [IMP] mk_test_env: added l10n_it_coa_base for distro powerp
 * [FIX] mk_test_env: removed OCA supplemental SP modules for distro powerp
 
-12.0.0.6.1 (2021-08-02)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] Minor improvements
-
 
 
 |
@@ -319,7 +320,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2022-01-10
+Last Update / Ultimo aggiornamento: 2022-02-15
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status

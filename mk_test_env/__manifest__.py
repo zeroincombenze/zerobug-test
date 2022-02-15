@@ -30,6 +30,7 @@
     'data': [
         'views/menu.xml',
         'wizard/wizard_mk_test_env_view.xml',
+        'wizard/wizard_mk_test_pyfile_view.xml',
     ],
     'installable': True,
     'maintainer': 'Zeroincombenze (R)',

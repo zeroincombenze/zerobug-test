@@ -7,3 +7,4 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
 from . import wizard_mk_test_env
+from . import wizard_mk_test_pyfile

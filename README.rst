@@ -22,7 +22,7 @@ Avaiable Addons / Moduli disponibili
 +-------------+------------+----------------------------------------------------------------------------------+
 | midea       | 12.0.0.1.4 | z0bug_odoo test suite                                                            |
 +-------------+------------+----------------------------------------------------------------------------------+
-| mk_test_env | 12.0.0.7   | Create or update test environment                                                |
+| mk_test_env | 12.0.0.7.1 | Create or update test environment                                                |
 +-------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -132,7 +132,14 @@ Proposals for enhancement
 History / Cronologia
 --------------------
 
-mk_test_env: 12.0.0.7 (2022-01-07)
+mk_test_env: 12.0.0.7.1 (2022-01-11)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] expression to evaluate _requirements
+* [FIX] multi-model with state
+
+
+mk_test_env: 10.0.0.7 (2022-01-07)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Recognizing l10n_it_fiscal or l10n_it_coa
@@ -220,12 +227,6 @@ mk_test_env: 12.0.0.6.2 (2021-09-23)
 * [FIX] mk_test_env: removed OCA supplemental SP modules for distro powerp
 
 
-mk_test_env: 12.0.0.6.1 (2021-08-02)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] Minor improvements
-
-
 
 
 
@@ -259,7 +260,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2022-01-10
+Last Update / Ultimo aggiornamento: 2022-02-15
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
