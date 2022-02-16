@@ -1,6 +1,6 @@
 
 =========================================
-|icon| Manage Test Environment 12.0.0.7.1
+|icon| Manage Test Environment 12.0.0.7.2
 =========================================
 
 
@@ -179,6 +179,11 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
+12.0.0.7.2 (2022-02-15)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] New action to generate source test python file
+
 12.0.0.7.1 (2022-01-11)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -256,12 +261,6 @@ ChangeLog History / Cronologia modifiche
 * [IMP] mk_test_env: default language and timezone from user
 * [IMP] mk_test_env: new configuration for wallet management  / Nuova configurazione per conti di portafoglio
 
-12.0.0.6.2 (2021-09-23)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: added l10n_it_coa_base for distro powerp
-* [FIX] mk_test_env: removed OCA supplemental SP modules for distro powerp
-
 
 
 |
@@ -320,7 +319,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2022-02-15
+Last Update / Ultimo aggiornamento: 2022-02-16
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status

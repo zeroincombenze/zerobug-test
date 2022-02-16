@@ -41,16 +41,33 @@ class WizardMkTestPyfile(models.TransientModel):
         string='External references')
     source = fields.Text('Source code')
     oca_coding = fields.Boolean('OCA coding', default=True)
+    product_variant = fields.Boolean('Add product variant', default=False)
+    max_child_records = fields.Integer('Max child records', default=0)
 
     OCA_TNL = {
         'z0bug.coa_260010': 'external.2601',
         'z0bug.coa_153010': 'external.1601',
-        'z0bug.coa_510000': 'external.3101',
-        'z0bug.coa_510100': 'external.3112',
+        'z0bug.coa_510000': 'external.3112',
+        'z0bug.coa_510100': 'external.3101',
         'z0bug.coa_610100': 'external.4101',
         'external.FAT|FATT|INV': 'external.INV',
         'z0bug.tax_22v': 'external.22v',
         'z0bug.tax_22a': 'external.22a',
+        'z0bug.partner_mycompany': 'base.main_partner',
+    }
+    MODEL_BY = {
+        'account.tax': 'description',
+        'product.template': 'default_code',
+        'product.product': 'default_code',
+    }
+    HIDDEN_FIELDS = {
+        'account.account': ['group_id'],
+        'account.fiscal.position': ['sequence'],
+        'account.journal': ['sequence', 'group_inv_lines_mode'],
+        'account.tax': ['sequence'],
+        'account.invoice.line': ['invoice_id'],
+        'product.template': ['categ_id', 'route_ids'],
+        'product.product': ['categ_id', 'route_ids'],
     }
 
     def get_xref_obj(self, xref):
@@ -108,7 +125,10 @@ class WizardMkTestPyfile(models.TransientModel):
         if xref not in self.top_child_xrefs:
             self.top_child_xrefs[xref] = []
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model_child)
+        record_ctr = 0
         for xref_child in xrefs:
+            if record_ctr >= self.max_child_records:
+                break
             self.model_of_xref[xref_child] = model_child
             vals = self.get_test_values(model_child, xref_child)
             for field in vals.keys():
@@ -122,15 +142,20 @@ class WizardMkTestPyfile(models.TransientModel):
                              'relation'] == model and
                          vals[field] == xref)):
                     self.top_child_xrefs[xref].append(xref_child)
+                    record_ctr += 1
         for xref_child in self.top_child_xrefs[xref]:
             self.push_xref(xref_child, model_child)
 
     def write_source_model(self, model, xrefs, exclude_xref=None):
+        if not self.product_variant and model == 'product.product':
+            return '', False, ''
         exclude_xref = exclude_xref or []
         xrefs = xrefs or self.sound_xrefs
         valid = False
         title = "TEST_%s" % model.replace('.', '_').upper()
         source = "%s = {\n" % title
+        if model in self.MODEL_BY:
+            source += "    'by': '%s',\n" % self.MODEL_BY[model]
         toc = ''
         for xref in xrefs:
             if xref in exclude_xref or self.model_of_xref[xref] != model:
@@ -139,16 +164,18 @@ class WizardMkTestPyfile(models.TransientModel):
                 oca_xref = self.OCA_TNL.get(xref, xref)
             else:
                 oca_xref = xref
-            source += "    '%s' = {\n" % oca_xref
+            source += "    '%s': {\n" % oca_xref
             valid = True
             toc = "    '%s': %s,\n" % (model, title)
             vals = self.get_test_values(model, xref)
+            if model in self.HIDDEN_FIELDS:
+                for field in self.HIDDEN_FIELDS[model]:
+                    if field in vals:
+                        del vals[field]
             if oca_xref != xref:
                 module, oca_name = oca_xref.split('.', 1)
                 if model == 'account.account':
                     vals['code'] = oca_name
-                    if 'group_id' in vals:
-                        del vals['group_id']
                 elif model == 'account.tax':
                     vals['description'] = oca_name
                 elif model == 'account.journal':
@@ -162,11 +189,13 @@ class WizardMkTestPyfile(models.TransientModel):
                     vals[field] = python_plus.compute_date(vals[field])
                 if self.oca_coding:
                     vals[field] = self.OCA_TNL.get(vals[field], vals[field])
-                if self.struct[model][field]['type'] in ('boolean',
-                                                         'integer',
+                if self.struct[model][field]['type'] in ('integer',
                                                          'float',
                                                          'monetary'):
                     source += "        '%s': %s,\n" % (field, vals[field])
+                elif self.struct[model][field]['type'] == 'boolean':
+                    source += "        '%s': %s,\n" % (
+                        field, 'True' if vals[field] else 'False')
                 else:
                     source += "        '%s': '%s',\n" % (field, vals[field])
             source += "    },\n"
@@ -207,8 +236,7 @@ class WizardMkTestPyfile(models.TransientModel):
                     itertools.chain(*self.top_child_xrefs.values())))
             if valid:
                 self.source += source
-                if model != 'product,product':
-                    test_setup += toc
+                test_setup += toc
         test_setup += "}\n"
         self.source += test_setup
 
