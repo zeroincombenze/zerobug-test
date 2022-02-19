@@ -153,7 +153,7 @@ DRAFT_FCT = {
 UNIQUE_REFS = ['z0bug.partner_mycompany']
 SKEYS = {
     'account.move.line': ['account_id', 'credit', 'debit'],
-    'account.invoice': ['partner_id', 'origin', 'date_invoice'],
+    'account.invoice': ['partner_id', 'origin', 'type', 'date_invoice'],
     'product.supplierinfo': ['product_tmpl_id', 'name'],
     'purchase.order': ['partner_id', 'origin', 'date_order'],
     # 'purchase.order.line': ['product_id', 'name'],
@@ -832,7 +832,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def map_fields(self, model, vals, company_id,
                    parent_id=None, parent_model=None, mode=None,
-                   only_fields=[]):        # pylint: dangerous-default-value
+                   only_fields=[]):   # pylint: disable=dangerous-default-value
 
         def expand_many(item):
             try:
@@ -852,8 +852,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if mode == 'dup':
             del vals['id']
         params = {
-            'year': str(date.today().year) if date.today().month > 1
-                                           else str(date.today().year - 1)
+            'year': str(date.today().year)
+            if date.today().month > 1 else str(date.today().year - 1)
         }
         # Translate field name from Odoo 12.0
         for field in vals.copy().keys():
@@ -917,7 +917,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                 xid = self.env_ref(item % params,
                                                    company_id=company_id,
                                                    model=attrs['relation'])
-                            except ValueError as e:
+                            except ValueError:
                                 raise UserError(
                                     'Invalid xref %s' % item)
                             if xid:
@@ -1044,10 +1044,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.status_mesg += mesg
 
     @api.model
-    def store_rec_with_xref(self, xref, model, company_id,
-                            parent_id=None, parent_model=None,
-                            seq=None, mode=None,
-                            only_fields=[]):   # pylint: dangerous-default-value
+    def store_rec_with_xref(
+            self, xref, model, company_id,
+            parent_id=None, parent_model=None,
+            seq=None, mode=None,
+            only_fields=[]):         # pylint: disable=dangerous-default-value
         """Store record into DB
         Args:
             xref (str): external reference (format 'module.key')
@@ -1070,10 +1071,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if mode == 'dup' and xref in UNIQUE_REFS:
             mode = 'all'
         if parent_id and parent_model:
-            multi_model = True
+            # multi_model = True
             xid = False
         else:
-            multi_model = False
+            # multi_model = False
             xid = self.env_ref(xref, company_id=company_id, model=model)
         if not xid or mode in ('all', 'all-draft', 'dup'):
             vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(model, xref)
@@ -1280,7 +1281,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     @api.model
     def make_model(self, model, mode=None, model2=None, cantdup=None,
-                   only_fields=[], only_xrefs=[]):  # pylint: dangerous-default-value
+                   only_fields=[],    # pylint: disable=dangerous-default-value
+                   only_xrefs=[]):    # pylint: disable=dangerous-default-value
 
         def store_1_rec(xref, seq, parent_id, deline_list):
             if only_xrefs and xref not in only_xrefs:
@@ -1315,7 +1317,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     xref, model, company_id, mode=mode, only_fields=only_fields)
                 if (not parent_id and not model2 and
                         not not seq and model in COMMIT_FCT):
-                   self.do_commit(model, parent_id, mode=mode)
+                    self.do_commit(model, parent_id, mode=mode)
                 if parent_id and model2:
                     if 'sequence' in self.STRUCT[model2]:
                         seq = 1 if model == 'account.payment.term' else 10
@@ -1396,7 +1398,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.env[model2].browse(deline_list).unlink()
             self.do_commit(model, parent_id, mode=mode)
         elif (not parent_id and not model2 and
-                        not not seq and model in COMMIT_FCT):
+              not not seq and model in COMMIT_FCT):
             self.do_commit(model, parent_id, mode=mode)
         self._cr.commit()                      # pylint: disable=invalid-commit
 
@@ -1614,7 +1616,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                 mode=self.load_coa or self.load_partner,
                                 cantdup=True)
             if (self.env_ref('z0bug.res_partner_6') and
-                             not self._feature_2_install('load_li')):
+                    not self._feature_2_install('load_li')):
                 self.make_model('dichiarazione.intento.yearly.limit',
                                 mode=self.load_coa, cantdup=True)
                 self.make_model('dichiarazione.intento',

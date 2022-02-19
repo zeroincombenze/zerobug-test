@@ -10,7 +10,7 @@
 {
     'name': 'Manage Test Environment',
     'summary': 'Create or update test environment',
-    'version': '10.0.0.7.1',
+    'version': '10.0.0.7.2',
     'category': 'Tools',
     'author': 'SHS-AV s.r.l.',
     'website': 'https://www.zeroincombenze.it/servizi-le-imprese/',
@@ -31,6 +31,7 @@
     'data': [
         'views/menu.xml',
         'wizard/wizard_mk_test_env_view.xml',
+        'wizard/wizard_mk_test_pyfile_view.xml',
     ],
     'installable': True,
     'maintainer': 'Zeroincombenze (R)',
