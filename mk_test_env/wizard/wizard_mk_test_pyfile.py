@@ -15,7 +15,7 @@ from datetime import datetime
 # import pytz
 import itertools
 
-from odoo import api, fields, models
+from odoo import fields, models
 # from odoo.exceptions import UserError
 
 try:
@@ -151,7 +151,7 @@ class TestAccountMove(common.TransactionCase):
             xref (str): external reference, format is "module.name"
             raise_if_not_found (bool): raise exception if xref not found
             model (str): external ref. model; required for "external." prefix
-            by (str): field to search object record, default is 'code' or 'name'
+            by (str): field to search for object record (def 'code' or 'name')
             company (obj): default company
 
         Returns:
@@ -306,8 +306,9 @@ class TestAccountMove(common.TransactionCase):
             vals = {'lang': iso}
             self.env['base.update.translations'].create(vals).act_update()
 
-    def setup_records(self, lang=None, locale=None, company=None,
-                      save_as_demo=None):
+    def setup_records(
+        self, lang=None, locale=None, company=None, save_as_demo=None
+    ):
         \"\"\"Create all record from declared data. See above doc
 
         Args:
@@ -362,7 +363,6 @@ class TestAccountMove(common.TransactionCase):
             if by:
                 self.by[model] = by
         company = company or self.default_company()
-        import pdb; pdb.set_trace()
         for model, model_data in TEST_SETUP.items():
             by = model_data.get('by')
             iter_data(model, model_data, company)
@@ -375,27 +375,34 @@ class TestAccountMove(common.TransactionCase):
         self.setup_records(lang='it_IT')
 
     def tearDown(self):
+        super().tearDown()
         if self.save_as_demo:
             self.env.cr.commit()               # pylint: disable=invalid-commit
 
     def test_something(self):
         # Here an example of code you should insert to test
-        for item in %(title)s:
-            model = '%(model)s'
-            _logger.debug(
-                "... Testing %%s[%%s]" %% (model, item)
+        # Example is based on account.invoice
+        model = '%(model)s'
+        model_child = '%(model_child)s'
+        for xref in %(title)s:
+            _logger.info(
+                "🎺 Testing %%s[%%s]" %% (model, xref)
             )
             vals = self.get_values(
                 model,
-                %(title)s[item])
-            rec = self.model_make(model, vals, item)
+                %(title)s[xref])
+            res = self.model_make(model, vals, xref)
 
-            model = '%(model)s.line'
-            for line in %(title)s_LINE.values():
-                vals = self.get_values(model, line)
-            vals['parent_id'] = rec.id
-            self.model_make(model, vals, False)
-            # inv.compute_taxes()
+            for xref_child in %(title_child)s.values():
+                if xref_child['%(parent_id_name)s'] == xref:
+                    vals = self.get_values(model_child, xref_child)
+                    vals['%(parent_id_name)s'] = res.id
+                    self.model_make(model_child, vals, False)
+            # res.compute_taxes()
+
+            self.assertEqual(
+                'left', 'right'',
+                msg='Left value is different from right value')
 """
 
 
@@ -433,7 +440,7 @@ class WizardMkTestPyfile(models.TransientModel):
         'account.fiscal.position': ['sequence'],
         'account.journal': ['sequence', 'group_inv_lines_mode'],
         'account.tax': ['sequence'],
-        'account.invoice.line': ['invoice_id'],
+        # 'account.invoice.line': ['invoice_id'],
         'product.template': ['categ_id', 'route_ids'],
         'product.product': ['categ_id', 'route_ids'],
     }
@@ -494,6 +501,7 @@ class WizardMkTestPyfile(models.TransientModel):
             self.top_child_xrefs[xref] = []
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model_child)
         record_ctr = 0
+        parent_id_name = ''
         for xref_child in xrefs:
             if self.max_child_records and record_ctr >= self.max_child_records:
                 break
@@ -510,9 +518,11 @@ class WizardMkTestPyfile(models.TransientModel):
                              'relation'] == model and
                          vals[field] == xref)):
                     self.top_child_xrefs[xref].append(xref_child)
+                    parent_id_name = field
                     record_ctr += 1
         for xref_child in self.top_child_xrefs[xref]:
             self.push_xref(xref_child, model_child)
+        return parent_id_name
 
     def write_source_model(self, model, xrefs, exclude_xref=None):
         if not self.product_variant and model == 'product.product':
@@ -574,6 +584,7 @@ class WizardMkTestPyfile(models.TransientModel):
         self.modules_to_declare = ('z0bug', 'external', 'l10n_it')
         self.model_of_xref = {}
         self.top_xrefs = []
+        self.top_model_xrefs = {}
         self.top_child_xrefs = {}
         self.sound_xrefs = []
         self.sound_models = []
@@ -582,15 +593,20 @@ class WizardMkTestPyfile(models.TransientModel):
 
         # Phase 1:
         # find & store all xrefs child or depending on required xrefs
+        parent_id_name = ''
         for xref_obj in self.xref_ids:
             xref = '%s.%s' % (xref_obj.module, xref_obj.name)
             if xref in self.top_xrefs:
                 continue
             self.top_xrefs.append(xref)
             model = xref_obj.model
+            if model not in self.top_model_xrefs:
+                self.top_model_xrefs[model] = []
+            if xref not in self.top_model_xrefs[model]:
+                self.top_model_xrefs[model].append(xref)
             model_child = self.get_child_model(model)
             if model_child:
-                self.push_child_xref(xref, model, model_child)
+                parent_id_name = self.push_child_xref(xref, model, model_child)
             self.push_xref(xref, model)
 
         # Phase 2:
@@ -599,6 +615,7 @@ class WizardMkTestPyfile(models.TransientModel):
             datetime.today(),
             self.env['ir.module.module'].search(
                 [('name', '=', 'mk_test_env')]).latest_version)
+        self.source += "# Record data for base models\n"
         test_setup = 'TEST_SETUP = {\n'
         for model in sorted(self.sound_models):
             source, valid, toc = self.write_source_model(
@@ -613,36 +630,33 @@ class WizardMkTestPyfile(models.TransientModel):
 
         # Phase 3:
         # For every model child of required model, write field data
-        self.source += '\n'
-        sound_model_child = []
-        for xref_obj in self.xref_ids:
-            xref = '%s.%s' % (xref_obj.module, xref_obj.name)
-            model = xref_obj.model
+        self.source += "\n# Record data for child models\n"
+        for model in self.top_model_xrefs.keys():
             model_child = self.get_child_model(model)
-            if model_child and model_child not in sound_model_child:
-                source, valid, toc = self.write_source_model(
-                    model_child, self.top_child_xrefs[xref])
-                if valid:
-                    self.source += source
-                sound_model_child.append(model_child)
+            child_xrefs = []
+            for xref in self.top_model_xrefs[model]:
+                child_xrefs += self.top_child_xrefs[xref]
+            source, valid, toc = self.write_source_model(
+                model_child, child_xrefs)
+            if valid:
+                self.source += source
 
         # Phase 4:
         # Finally write required model field data
-        self.source += '\n'
-        sound_model = []
-        for xref_obj in self.xref_ids:
-            # xref = '%s.%s' % (xref_obj.module, xref_obj.name)
-            model = xref_obj.model
-            if model not in sound_model:
-                source, valid, toc = self.write_source_model(
-                    model, self.top_xrefs)
-                if valid:
-                    self.source += source
-                    sound_model.append(model)
+        self.source += "\n# Record data for models to test\n"
+        for model in self.top_model_xrefs.keys():
+            source, valid, toc = self.write_source_model(
+                model, self.top_model_xrefs[model])
+            if valid:
+                self.source += source
 
         self.source += SOURCE_BODY % {
             'model': model,
+            'model_child': self.get_child_model(model),
             'title': ("TEST_%s" % model.replace('.', '_').upper()),
+            'title_child': ("TEST_%s" % self.get_child_model(
+                model).replace('.', '_').upper()),
+            'parent_id_name': parent_id_name,
         }
 
         return {
