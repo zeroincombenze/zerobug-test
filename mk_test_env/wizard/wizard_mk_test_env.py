@@ -1144,6 +1144,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     rec.write({'date': saved_date})
                 try:
                     getattr(rec, action)()
+                    if action == 'compute_taxes' and rec.intrastat:
+                        # Compute intrastat lines
+                        rec.compute_intrastat_lines()
                 except:
                     if not ignore_error:
                         raise UserError(
@@ -1337,6 +1340,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 seq = 0
             return parent_id, seq, deline_list
 
+        # V14.0 has different model for invoices
+        model = self.translate('', model, ttype='model')
         if cantdup and mode == 'dup':
             mode = 'all'
         mode = mode or 'all'
@@ -1508,10 +1513,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 VERSION_ERROR % (module, min_version))
 
     def make_test_environment(self):
-        self.diff_ver('1.0.9.1', 'z0bug_odoo', 'z0bug_odoo_lib')
-        self.diff_ver('1.0.0.1', 'clodoo', 'transodoo')
+        self.diff_ver('1.0.11', 'z0bug_odoo', 'z0bug_odoo_lib')
+        self.diff_ver('1.0.1', 'clodoo', 'transodoo')
         self.diff_ver('1.0.3', 'os0', 'os0')
-        self.diff_ver('1.0.6.1', 'python_plus', 'python_plus')
+        self.diff_ver('1.0.7', 'python_plus', 'python_plus')
         self.T['v'] = release.version_info[0]
         self.T['G'] = self.distro if self.distro else self._set_distro()
         self.T['C'] = self.coa
