@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2019-21 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2019-22 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -72,6 +72,58 @@ from odoo.tests import common
 _logger = logging.getLogger(__name__)
 
 """
+SYSTEM_MODEL_ROOT = [
+    'base.config.',
+    'base_import.',
+    'base.language.',
+    'base.module.',
+    'base.setup.',
+    'base.update.',
+    'ir.actions.',
+    'ir.exports.',
+    'ir.model.',
+    'ir.module.',
+    'ir.qweb.',
+    'report.',
+    'res.config.',
+    'web_editor.',
+    'web_tour.',
+    'workflow.',
+]
+SYSTEM_MODELS = [
+    '_unknown',
+    'base',
+    'base.config.settings',
+    'base_import',
+    'change.password.wizard',
+    'ir.autovacuum',
+    'ir.config_parameter',
+    'ir.exports',
+    'ir.fields.converter',
+    'ir.filters',
+    'ir.http',
+    'ir.logging',
+    'ir.model',
+    'ir.needaction_mixin',
+    'ir.qweb',
+    'ir.rule',
+    'ir.translation',
+    'ir.ui.menu',
+    'ir.ui.view',
+    'ir.values',
+    'mail.alias',
+    'mail.followers',
+    'mail.message',
+    'mail.notification',
+    'report',
+    'res.config',
+    'res.font',
+    'res.groups',
+    'res.request.link',
+    'res.users.log',
+    'web_tour',
+    'workflow',
+]
 SOURCE_BODY = """
 TNL_RECORDS = {
     'product.product': {
@@ -237,7 +289,11 @@ class TestAccountMove(common.TransactionCase):
 
     def model_create(self, model, values, xref=None):
         \"\"\"Create a test record and set external ID to next tests\"\"\"
-        res = self.env[model].create(values)
+        if model.startswith('account.move'):
+            res = self.env[model].with_context(
+                check_move_validity=False).create(values)
+        else:
+            res = self.env[model].create(values)
         if xref and ' ' not in xref:
             self.add_xref(xref, model, res.id)
         return res
@@ -263,7 +319,10 @@ class TestAccountMove(common.TransactionCase):
                                 by=by,
                                 raise_if_not_found=False)
         if res:
-            res.write(values)
+            if model.startswith('account.move'):
+                res.with_context(check_move_validity=False).write(values)
+            else:
+                res.write(values)
             return res
         return self.model_create(model, values, xref=xref)
 
@@ -414,21 +473,42 @@ class WizardMkTestPyfile(models.TransientModel):
     xref_ids = fields.Many2many(
         'ir.model.data',
         string='External references')
-    source = fields.Text('Source code')
     oca_coding = fields.Boolean('OCA coding', default=True)
     product_variant = fields.Boolean('Add product variant', default=False)
     max_child_records = fields.Integer('Max child records', default=0)
+    model2ignore_ids = fields.Many2many(
+        'ir.model',
+        string='Models to ignore')
+    source = fields.Text('Source code')
 
     OCA_TNL = {
-        'z0bug.coa_260010': 'external.2601',
+        'z0bug.coa_123380': 'external.1205',
         'z0bug.coa_153010': 'external.1601',
+        'z0bug.coa_153050': 'external.1611',
+        'z0bug.coa_153110': 'external.1609',
+        'z0bug.coa_260010': 'external.2601',
+        'z0bug.coa_260060': 'external.2611',
+        'z0bug.coa_260110': 'external.2602',
         'z0bug.coa_510000': 'external.3112',
         'z0bug.coa_510100': 'external.3101',
+        'z0bug.coa_510200': 'external.3202',
+        'z0bug.coa_512000': 'external.3103',
         'z0bug.coa_610100': 'external.4101',
+        'z0bug.coa_610110': 'external.4102',
+        'z0bug.coa_621200': 'external.4105',
+        'z0bug.coa_623460': 'external.4204',
         'external.FAT|FATT|INV': 'external.INV',
         'external.ACQ|FATTU|BILL': 'external.BILL',
+        'z0bug.tax_a15v': 'external.00art15v',
+        'z0bug.tax_a15a': 'external.00art15a',
+        'z0bug.tax_10v': 'external.10v',
+        'z0bug.tax_10a': 'external.10a',
         'z0bug.tax_22v': 'external.22v',
         'z0bug.tax_22a': 'external.22a',
+        'z0bug.tax_4v': 'external.4v',
+        'z0bug.tax_4a': 'external.4a',
+        'z0bug.tax_5v': 'external.5v',
+        'z0bug.tax_5a': 'external.5a',
         'z0bug.partner_mycompany': 'base.main_partner',
     }
     MODEL_BY = {
@@ -445,6 +525,11 @@ class WizardMkTestPyfile(models.TransientModel):
         'product.template': ['categ_id', 'route_ids'],
         'product.product': ['categ_id', 'route_ids'],
     }
+
+    def model_to_manage(self, model, exclude=None):
+        return (model not in SYSTEM_MODEL_ROOT and
+                model not in SYSTEM_MODELS and
+                model not in (exclude or []))
 
     def get_xref_obj(self, xref):
         ir_model = self.env['ir.model.data']
@@ -488,7 +573,9 @@ class WizardMkTestPyfile(models.TransientModel):
                     vals[field] is None):
                 continue
             if self.struct[model][field].get('relation'):
-                if vals[field] not in self.dep_xrefs:
+                if (self.struct[model][field][
+                    'relation'] not in self.model2ignore_ids and
+                        vals[field] not in self.dep_xrefs):
                     self.dep_xrefs.append(vals[field])
                     self.push_xref(vals[field],
                                    self.struct[model][field]['relation'])
@@ -515,9 +602,8 @@ class WizardMkTestPyfile(models.TransientModel):
                     continue
                 if (self.struct[model_child][field]['type'] == 'many2one' and
                         self.struct[model_child][field].get('relation') and
-                        (self.struct[model_child][field][
-                             'relation'] == model and
-                         vals[field] == xref)):
+                        self.struct[model_child][field]['relation'] == model and
+                        vals[field] == xref):
                     self.top_child_xrefs[xref].append(xref_child)
                     parent_id_name = field
                     record_ctr += 1
@@ -591,6 +677,7 @@ class WizardMkTestPyfile(models.TransientModel):
         self.sound_models = []
         self.struct = {}
         self.dep_xrefs = []
+        # models_to_ignore = [x.model for x in self.model2ignore_ids]
 
         # Phase 1:
         # find & store all xrefs child or depending on required xrefs
@@ -632,7 +719,7 @@ class WizardMkTestPyfile(models.TransientModel):
         # Phase 3:
         # For every model child of required model, write field data
         self.source += "\n# Record data for child models\n"
-        for model in self.top_model_xrefs.keys():
+        for model in sorted(self.top_model_xrefs.keys()):
             model_child = self.get_child_model(model)
             child_xrefs = []
             for xref in self.top_model_xrefs[model]:

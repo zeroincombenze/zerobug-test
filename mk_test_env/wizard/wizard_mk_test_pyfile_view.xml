@@ -11,6 +11,7 @@
                     <field name="product_variant"/>
                     <field name="max_child_records"/>
                     <field name="xref_ids"/>
+                    <field name="model2ignore_ids"/>
                 </group>
                 <footer>
                     <button name="make_test_pyfile" string="Create"
