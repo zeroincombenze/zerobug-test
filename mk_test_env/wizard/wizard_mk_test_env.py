@@ -1,5 +1,5 @@
 #
-# Copyright 2019-21 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2019-22 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -160,16 +160,19 @@ SKEYS = {
     # 'sale.order.line': ['product_id', 'name'],
 }
 
+
 @api.model
 def _selection_lang(self):
     return self.env['res.lang'].get_available()
 # put POSIX 'Etc/*' entries at the end to avoid confusing users - see bug 1086728
+
 
 @api.model
 def _selection_tz(self):
     return [(tz, tz) for tz in sorted(
         pytz.all_timezones,
         key=lambda tz: tz if not tz.startswith('Etc/') else '_')]
+
 
 @api.model
 def _selection_coa(self):
@@ -187,6 +190,7 @@ def _selection_coa(self):
             else:
                 self.COA_MODULES.append((module.name, module.shortdesc))
     return self.COA_MODULES
+
 
 @api.model
 def _selection_distro(self):
@@ -255,7 +259,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         coa = ''
         if not self.COA_MODULES:
             _selection_coa(self)
-        coa_module_list= [x[0] for x in self.COA_MODULES]
+        coa_module_list = [x[0] for x in self.COA_MODULES]
         res = self.env['ir.module.module'].search(
             [('name', 'in', coa_module_list),
              ('state', '=', 'installed')])
@@ -303,7 +307,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 try:
                     tz = os.path.join(
                         *os.readlink('/etc/localtime').split('/')[-2:])
-                except:
+                except BaseException:
                     tz = 'Europe/Rome'
         return tz
 
@@ -409,7 +413,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                   'load_li', 'load_conai', 'load_sct', 'load_sdd')
     def flag_load_change(self):
         for item in ('load_sp', 'load_rc', 'load_wh',
-                  'load_li', 'load_conai', 'load_sct', 'load_sdd'):
+                     'load_li', 'load_conai', 'load_sct', 'load_sdd'):
             if not getattr(self._origin, item) and getattr(self, item):
                 self.force_test_values = True
 
@@ -464,7 +468,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 # xref like 'z0bug.coa_KEY', it matches 'l10n_it.*_KEY'
                 domain = [('module', '=', module),
                           ('model', '=', model)]
-                for tok in toks[:-1]:
+                for _tok in toks[:-1]:
                     domain.append('|')
                 for tok in toks:
                     domain.append(('name', 'like', r'%%\_%s' % tok))
@@ -532,13 +536,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
             'res_id': res_id
         }
         model_model = self.env['ir.model.data']
-        id = self.env_ref(xref, retxref_id=True)
-        if not id:
+        xid = self.env_ref(xref, retxref_id=True)
+        if not xid:
             self.ctr_rec_new += 1
             return model_model.create(vals)
-        model_model.browse(id).write(vals)
+        model_model.browse(xid).write(vals)
         self.ctr_rec_upd += 1
-        return id
+        return xid
 
     @api.model
     def is_to_apply(self, requirements):
@@ -587,7 +591,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     self.T[m] = os0.str2bool(self.env_ref(n), False)
                 else:
                     self.T[n] = self.is_to_apply(n)
-            except AttributeError as e:
+            except AttributeError:
                 max_ctr = 0
         return res
 
@@ -605,7 +609,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         modules_2_install = []
         modules_2_remove = []
         for item in groups:
-            if item == 'distro' and not getattr(self, 'load_vat'):
+            if item == 'distro' and not self.load_vat:
                 continue
             if scope or item == '*' or getattr(self, item):
                 if isinstance(MODULES_NEEDED[item], (list, tuple)):
@@ -888,8 +892,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         vals[field] = eval(vals[field])
                     else:
                         vals[field] = self.env_ref(vals[field],
-                                       company_id=company_id,
-                                       model=model)
+                                                   company_id=company_id,
+                                                   model=model)
                     if not vals[field]:
                         del vals[field]
             elif parent_id and (
@@ -916,7 +920,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                 xid = self.env_ref(item % params,
                                                    company_id=company_id,
                                                    model=attrs['relation'])
-                            except ValueError as e:
+                            except ValueError:
                                 raise UserError(
                                     'Invalid xref %s' % item)
                             if xid:
@@ -1045,7 +1049,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def store_rec_with_xref(
             self, xref, model, company_id,
-            parent_id=None, parent_model=None,
+            ref_model=None, parent_id=None, parent_model=None,
             seq=None, mode=None,
             only_fields=[]):         # pylint: disable=dangerous-default-value
         """Store record into DB
@@ -1067,6 +1071,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         Returns:
             record id
         """
+        ref_model = ref_model or model
         if mode == 'dup' and xref in UNIQUE_REFS:
             mode = 'all'
         if parent_id and parent_model:
@@ -1076,7 +1081,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             # multi_model = False
             xid = self.env_ref(xref, company_id=company_id, model=model)
         if not xid or mode in ('all', 'all-draft', 'dup'):
-            vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(model, xref)
+            vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(ref_model, xref)
             if '_requirements' in vals:
                 if not self.eval_expr(vals['_requirements']):
                     return False
@@ -1111,6 +1116,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 for name in ('id', 'valid_for_dichiarazione_intento'):
                     if name in vals:
                         del vals[name]
+                if 'code' in self.STRUCT[model] and 'code' not in vals:
+                    vals['code'] = vals.get('name')
                 try:
                     if model.startswith('account.move'):
                         xid = self.env[model].with_context(
@@ -1125,9 +1132,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 except BaseException as e:
                     self._cr.rollback()  # pylint: disable=invalid-commit
                     self.status_mesg += (
-                            '*** Record %s: error %s!!!\n' % (xref, e))
+                        '*** Record %s: error %s!!!\n' % (xref, e))
                     xid = False
-                    # raise UserError(self.status_mesg)
             if xid and not parent_id and not parent_model:
                 self.add_xref(xref, model, xid)
         return xid
@@ -1147,7 +1153,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     if action == 'compute_taxes' and rec.intrastat:
                         # Compute intrastat lines
                         rec.compute_intrastat_lines()
-                except:
+                except BaseException:
                     if not ignore_error:
                         raise UserError(
                             'Action %s.%s FAILED (or invalid)!' % (model,
@@ -1196,7 +1202,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         vals['group_id'] = self.env_ref(
                             'external.%s' % prefix,
                             model='account.group', by='code_prefix')
-                    if 'nature' in self.STRUCT[model] and not rec.nature:
+                    if hasattr(rec, 'nature') and not rec.nature:
                         vals['nature'] = 'P'
                     if vals:
                         rec.write(vals)
@@ -1303,7 +1309,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         seq = 10
                     rec_line_id = self.store_rec_with_xref(
                         xref, model2 or model, company_id,
-                        mode=mode, parent_id=parent_id,
+                        ref_model=ref_model2, mode=mode, parent_id=parent_id,
                         parent_model=model, seq=seq,
                         only_fields=only_fields)
                     if rec_line_id in deline_list:
@@ -1316,7 +1322,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     self.do_commit(model, parent_id, mode=mode)
                 deline_list = []
                 parent_id = self.store_rec_with_xref(
-                    xref, model, company_id, mode=mode, only_fields=only_fields)
+                    xref, model, company_id,
+                    ref_model=ref_model, mode=mode, only_fields=only_fields)
                 if (not parent_id and not model2 and
                         not not seq and model in COMMIT_FCT):
                     self.do_commit(model, parent_id, mode=mode)
@@ -1341,6 +1348,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             return parent_id, seq, deline_list
 
         # V14.0 has different model for invoices
+        ref_model = model
         model = self.translate('', model, ttype='model')
         if cantdup and mode == 'dup':
             mode = 'all'
@@ -1352,7 +1360,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         company_id = False
         if 'company_id' in self.STRUCT[model]:
             company_id = self.company_id.id
-        xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model)
+        xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(ref_model)
         if not xrefs:
             raise UserError(
                 'No test record found for model %s!' % model)
@@ -1364,11 +1372,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
         parent_id = False
         parent_name = ''
         if model2:
+            ref_model2 = model2
+            model2 = self.translate('', model2, ttype='model')
             if model2 not in self.env:
                 self.status_mesg += '- Model "%s" not found!\n' % model2
                 return
             self.setup_model_structure(model2)
-            xrefs = xrefs + z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model2)
+            xrefs = xrefs + z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(ref_model2)
             if None in xrefs:
                 raise UserError(
                     'Detected a NULL record in test data for model %s!' %
@@ -1376,6 +1386,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             for name, field in self.STRUCT[model2].items():
                 if field.get('relation') == model:
                     parent_name = name
+                    break
         seq = 0
         if model == 'account.account':
             for xref in sorted(xrefs):
@@ -1496,16 +1507,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.status_mesg += 'Cannot translate "%s"!!!\n' % iso
 
     def diff_ver(self, min_version, module, comp):
-        if hasattr(globals()[comp], '__version__'):
-            text_module_ver = '.'.join(
-                ['%03d' % int(x)
-                 for x in getattr(globals()[comp], '__version__').split('.')])
-        elif hasattr(globals()[comp], 'version'):
-            text_module_ver = '.'.join(
-                ['%03d' % int(x)
-                 for x in getattr(globals()[comp], 'version').split('.')])
-        else:
-            text_module_ver = '0'
+        text_module_ver = '0'
+        for ver_name in ('__version__', 'version'):
+            if hasattr(globals()[comp], ver_name):
+                text_module_ver = '.'.join(
+                    ['%03d' % int(x)
+                     for x in getattr(globals()[comp], ver_name).split('.')])
+                break
         text_min_ver = '.'.join(
             ['%03d' % int(x) for x in min_version.split('.')])
         if text_module_ver < text_min_ver:

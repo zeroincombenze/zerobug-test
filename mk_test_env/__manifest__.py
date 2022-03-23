@@ -1,5 +1,5 @@
 #
-# Copyright 2019-21 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2019-22 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -9,7 +9,7 @@
 {
     'name': 'Manage Test Environment',
     'summary': 'Create or update test environment',
-    'version': '12.0.0.7.2',
+    'version': '12.0.0.7.3',
     'category': 'Tools',
     'author': 'SHS-AV s.r.l.',
     'website': 'https://www.zeroincombenze.it/servizi-le-imprese/',
