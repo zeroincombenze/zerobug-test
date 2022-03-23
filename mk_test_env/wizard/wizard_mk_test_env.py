@@ -21,7 +21,7 @@ try:
     import odoo.release as release
 except ImportError:
     try:
-        import openerp.release as release
+        import odoo.release as release
     except ImportError:
         release = ''
 

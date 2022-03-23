@@ -9,7 +9,7 @@
 {
     'name': 'Manage Test Environment',
     'summary': 'Create or update test environment',
-    'version': '12.0.0.7.2',
+    'version': "14.0.1.0.0",
     'category': 'Tools',
     'author': 'SHS-AV s.r.l.',
     'website': 'https://www.zeroincombenze.it/servizi-le-imprese/',
