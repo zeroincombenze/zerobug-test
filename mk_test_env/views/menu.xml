@@ -2,14 +2,13 @@
 <odoo>
 
     <record id="action_mk_test_env" model="ir.actions.act_window">
-        <field name="key2">client_action_multi</field>
         <field name="name">Create Test Environment</field>
         <field name="res_model">wizard.make.test.environment</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
+
     <record id="action_mk_test_pyfile" model="ir.actions.act_window">
-        <field name="key2">client_action_multi</field>
         <field name="name">Create python source test file</field>
         <field name="res_model">wizard.mk.test.pyfile</field>
         <field name="view_mode">form</field>
@@ -23,6 +22,7 @@
               groups="base.group_no_one"
               sequence="90"
               />
+
     <menuitem id="menu_mk_test_pyfile"
               name="Create python source test file"
               action="action_mk_test_pyfile"

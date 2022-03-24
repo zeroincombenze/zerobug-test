@@ -1,5 +1,5 @@
 #
-# Copyright 2019-21 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2019-22 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -28,6 +28,7 @@
         ],
     },
     'data': [
+        'security/ir.model.access.csv',
         'views/menu.xml',
         'wizard/wizard_mk_test_env_view.xml',
         'wizard/wizard_mk_test_pyfile_view.xml',

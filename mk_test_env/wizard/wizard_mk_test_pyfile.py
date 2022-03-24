@@ -1,5 +1,5 @@
 #
-# Copyright 2019-21 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2019-22 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -601,9 +601,8 @@ class WizardMkTestPyfile(models.TransientModel):
                     continue
                 if (self.struct[model_child][field]['type'] == 'many2one' and
                         self.struct[model_child][field].get('relation') and
-                        self.struct[model_child][field][
-                             'relation'] == model and
-                           vals[field] == xref):
+                        self.struct[model_child][field]['relation'] == model and
+                        vals[field] == xref):
                     self.top_child_xrefs[xref].append(xref_child)
                     parent_id_name = field
                     record_ctr += 1
@@ -677,7 +676,7 @@ class WizardMkTestPyfile(models.TransientModel):
         self.sound_models = []
         self.struct = {}
         self.dep_xrefs = []
-        models_to_ignore = [x.model for x in self.model2ignore_ids]
+        # models_to_ignore = [x.model for x in self.model2ignore_ids]
 
         # Phase 1:
         # find & store all xrefs child or depending on required xrefs
