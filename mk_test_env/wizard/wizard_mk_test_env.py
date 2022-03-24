@@ -233,10 +233,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def _new_company(self):
         flag = False
         if not bool(self._test_company()):
-            flag = bool(self.env['res.partner'].search(
-                # ['|', ('customer', '!=', False), ('supplier', '!=', False)]
-                []
-            ))
+            partner_model = self.env['res.partner']
+            domain = ['|',
+                      ('customer', '!=', False),
+                      ('supplier', '!=', False)] if 'customer' in partner_model else []
+            flag = bool(self.env['res.partner'].search(domain))
         return flag
 
     def _default_company(self):
@@ -909,6 +910,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
             elif field == 'company_id':
                 vals[field] = company_id
                 continue
+            elif (field == 'reconcile' and
+                  model == 'account.account' and
+                  release.version_info[0] >= 14):
+                del vals[field]
             elif attrs['type'] in ('many2one', 'one2many', 'many2many'):
                 if isinstance(vals[field], basestring):
                     if attrs['type'] == 'many2one':
@@ -1181,7 +1186,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def do_commit(self, model, rec_id, mode=None):
         if model == 'account.fiscal.position':
-            if rec_id == self.env_ref('z0bug.fiscalpos_li'):
+            if (rec_id == self.env_ref('z0bug.fiscalpos_li') and
+                    'valid_for_dichiarazione_intento' in self.STRUCT[model]):
                 self.env[model].browse(rec_id).write(
                     {'valid_for_dichiarazione_intento': True})
         if not mode or not mode.endswith('-draft'):
@@ -1475,8 +1481,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     @api.model
     def enable_cancel_journal(self):
-        if not self._feature_2_install('load_vat'):
-            journal_model = self.env['account.journal']
+        model = 'account.journal'
+        if (not self._feature_2_install('load_vat') and
+                'update_posted' in self.STRUCT[model]):
+            journal_model = self.env[model]
             for rec in journal_model.search([('update_posted', '=', False)]):
                 rec.write({'update_posted': True})
 
@@ -1570,6 +1578,98 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 'domain': [('id', '=', self.id)],
             }
         self.state = '1'
+
+        # Block 1: TODO> Separate function
+        if self.load_coa:
+            if self.coa == 'l10n_it_no_coa':
+                self.make_model(
+                    'account.account', mode=self.load_coa, cantdup=True)
+                self.make_model('account.tax', mode=self.load_coa, cantdup=True)
+            self.make_model_limited(
+                'account.account', mode=self.load_coa, cantdup=True)
+            self.make_model_limited(
+                'account.tax', mode=self.load_coa, cantdup=True)
+            self.make_model(
+                'decimal.precision', mode=self.load_coa, cantdup=True)
+            if (release.version_info[0] == 10 and
+                    not self._feature_2_install('load_rc')):
+                self.make_model('account_rc_type', mode=self.load_coa,
+                                model2='account_rc_type.tax')
+            self.make_model('account.fiscal.position', mode=self.load_coa,
+                            model2='account.fiscal.position.tax')
+            self.make_model('italy.profile.account', mode=self.load_coa)
+            self.make_model(
+                'date.range.type', mode=self.load_coa, cantdup=True)
+            self.make_model(
+                'date.range', mode=self.load_coa, cantdup=True)
+            self.make_model('account.fiscal.year', mode=self.load_coa)
+            self.make_model('account.payment.term', mode=self.load_coa,
+                            model2='account.payment.term.line')
+            self.make_model(
+                'account.journal', mode=self.load_coa, cantdup=True)
+            self.enable_cancel_journal()
+            # self.make_model('account.payment.method', mode=self.load_coa)
+            if not self._feature_2_install('load_wh'):
+                self.make_model('withholding.tax', mode=self.load_coa,
+                                model2='withholding.tax.rate', cantdup=True)
+            self.make_model(
+                'res.bank', mode=self.load_coa, cantdup=True)
+        if self.load_partner:
+            self.make_model('res.partner', mode=self.load_partner)
+            self.make_model(
+                'res.partner.bank', mode=self.load_partner, cantdup=True)
+            if not self._feature_2_install('load_sdd'):
+                self.make_model('account.banking.mandate',
+                                mode=self.load_partner, cantdup=True)
+        if self.load_product:
+            self.make_model(
+                'product.template', mode=self.load_product, cantdup=True)
+            self.make_model(
+                'product.product', mode=self.load_product, cantdup=True)
+            self.make_model(
+                'product.supplierinfo', mode=self.load_product, cantdup=True)
+        if self.load_partner or self.load_coa:
+            if (self.env_ref('z0bug.res_partner_1') and
+                    self.env_ref('z0bug.jou_ncc')):
+                # Reload to link bank account to journal
+                self.make_model('account.journal',
+                                mode=self.load_coa or self.load_partner,
+                                cantdup=True)
+                self.make_model('account.payment.mode',
+                                mode=self.load_coa or self.load_partner,
+                                cantdup=True)
+            if (self.env_ref('z0bug.res_partner_6') and
+                    not self._feature_2_install('load_li')):
+                self.make_model('dichiarazione.intento.yearly.limit',
+                                mode=self.load_coa, cantdup=True)
+                self.make_model('dichiarazione.intento',
+                                mode=self.load_coa, cantdup=True)
+        if self.load_rec_assets and not self._feature_2_install('load_assets'):
+            self.make_model('asset.category',
+                            mode=self.load_rec_assets, cantdup=True,
+                            model2='asset.category.depreciation.type')
+            self.make_model('asset.asset',
+                            mode=self.load_rec_assets, cantdup=True)
+        self.make_misc()
+        self.state = '2'
+
+        # Block 2: TODO> Separate function
+        if self.load_sale_order or self.load_purchase_order:
+            self.make_model('stock.inventory', mode=self.load_sale_order,
+                            model2='stock.inventory.line')
+        if self.load_sale_order:
+            self.make_model('sale.order', mode=self.load_sale_order,
+                            model2='sale.order.line')
+        if self.load_purchase_order:
+            self.make_model('purchase.order', mode=self.load_purchase_order,
+                            model2='purchase.order.line')
+        if self.load_invoice:
+            self.make_model('account.invoice', mode=self.load_invoice,
+                            model2='account.invoice.line')
+            self.make_model('account.move', mode=self.load_invoice,
+                            model2='account.move.line')
+        self.status_mesg += 'Data (re)loaded.\n'
+        self.state = '9'
 
         return {
             'name': "Data created",
