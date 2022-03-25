@@ -800,7 +800,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if model == 'account.payment.term.line' or (
                 self.set_seq and multi_key and
                 'sequence' in self.STRUCT[model]):
-            fields = ['sequence']
+            fields = ('sequence',)
         elif model in SKEYS:
             fields = SKEYS[model]
             multi_key = True
@@ -810,7 +810,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
                       'partner_id', 'product_id', 'product_tmpl_id',
                       'sequence', 'tax_src_id', 'tax_dest_id')
         for nm in fields:
-            if nm == 'code' and model == 'product.product':
+            if nm == parent_name:
+                continue
+            elif nm == 'code' and model == 'product.product':
                 continue
             elif nm == 'description' and model != 'account.tax':
                 continue
@@ -825,12 +827,16 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 if not multi_key:
                     break
         if domain:
-            if 'company_id' in self.STRUCT[model]:
-                domain.append(('company_id', '=', company_id))
             if parent_id and parent_name in self.STRUCT[model]:
                 domain.append((parent_name, '=', parent_id))
+            if 'company_id' in self.STRUCT[model]:
+                domain.append(('company_id', '=', company_id))
             recs = self.env[model].with_context(
                 {'lang': 'en_US'}).search(domain)
+            if not recs and model == 'product.product':
+                del domain[-1]
+                recs = self.env[model].with_context(
+                    {'lang': 'en_US'}).search(domain)
             if len(recs) == 1:
                 return recs[0] if retrec else recs[0].id
         return False
@@ -1081,7 +1087,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         ref_model = ref_model or model
         if mode == 'dup' and xref in UNIQUE_REFS:
             mode = 'all'
-        if parent_id and parent_model:
+        if parent_id and parent_model and parent_model != 'product.template':
             # multi_model = True
             xid = False
         else:
@@ -1141,7 +1147,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     self.status_mesg += (
                         '*** Record %s: error %s!!!\n' % (xref, e))
                     xid = False
-            if xid and not parent_id and not parent_model:
+            if xid and parent_model == 'product.template' or (not parent_id and
+                                                              not parent_model):
                 self.add_xref(xref, model, xid)
         return xid
 
@@ -1307,7 +1314,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 model2_model = self.env[model2]
             if model2 and xref not in hdr_list:
                 # Found child xref, evaluate parent xref
-                parent_id = self.env_ref('_'.join(xref.split('_')[0:-1]))
+                if model2 == 'product.product':
+                    parent_id = self.env_ref(xref.replace('_product', '_template'))
+                else:
+                    parent_id = self.env_ref('_'.join(xref.split('_')[0:-1]))
                 if parent_id:
                     if model == 'account.payment.term':
                         seq += 1
@@ -1379,6 +1389,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         deline_list = []
         parent_id = False
         parent_name = ''
+        xrefs2 = []
         if model2:
             ref_model2 = model2
             model2 = self.translate('', model2, ttype='model')
@@ -1386,36 +1397,45 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.status_mesg += '- Model "%s" not found!\n' % model2
                 return
             self.setup_model_structure(model2)
-            xrefs = xrefs + z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(ref_model2)
-            if None in xrefs:
-                raise UserError(
-                    'Detected a NULL record in test data for model %s!' %
-                    model2)
             for name, field in self.STRUCT[model2].items():
                 if field.get('relation') == model:
                     parent_name = name
                     break
-        seq = 0
+            xrefs2 = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(ref_model2)
         if model == 'account.account':
+            xrefs_list = []
             for xref in sorted(xrefs):
                 # Prima i mastri
                 if len(xref) == 12:
-                    parent_id, seq, deline_list = store_1_rec(
-                        xref, seq, parent_id, deline_list)
+                    xrefs_list.append(xref)
             for xref in sorted(xrefs):
                 # poi i capoconti
                 if len(xref) == 13:
-                    parent_id, seq, deline_list = store_1_rec(
-                        xref, seq, parent_id, deline_list)
+                    xrefs_list.append(xref)
             for xref in sorted(xrefs):
                 # infine i sottoconti
-                if len(xref) > 13:
-                    parent_id, seq, deline_list = store_1_rec(
-                        xref, seq, parent_id, deline_list)
+                if 12 < len(xref) > 13:
+                    xrefs_list.append(xref)
+        elif model == 'product.template':
+            xrefs_list = sorted(xrefs)
+            for xref in xrefs2:
+                xref_parent = xref.replace('_product', '_template')
+                xrefs_list.insert(xrefs_list.index(xref_parent) + 1, xref)
+        elif xrefs2:
+            xrefs_list = sorted(xrefs + xrefs2)
+            del xrefs2
         else:
-            for xref in sorted(xrefs):
-                parent_id, seq, deline_list = store_1_rec(
-                    xref, seq, parent_id, deline_list)
+            xrefs_list = sorted(xrefs)
+
+        if None in xrefs:
+            raise UserError(
+                'Detected a NULL record in test data for model %s!' %
+                model2)
+
+        seq = 0
+        for xref in xrefs_list:
+            parent_id, seq, deline_list = store_1_rec(
+                xref, seq, parent_id, deline_list)
         if seq:
             if deline_list:
                 self.env[model2].browse(deline_list).unlink()
@@ -1623,9 +1643,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                 mode=self.load_partner, cantdup=True)
         if self.load_product:
             self.make_model(
-                'product.template', mode=self.load_product, cantdup=True)
-            self.make_model(
-                'product.product', mode=self.load_product, cantdup=True)
+                'product.template', mode=self.load_product, cantdup=True,
+                model2='product.product')
+            # self.make_model(
+            #     'product.product', mode=self.load_product, cantdup=True)
             self.make_model(
                 'product.supplierinfo', mode=self.load_product, cantdup=True)
         if self.load_partner or self.load_coa:
