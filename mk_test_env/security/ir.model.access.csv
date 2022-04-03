@@ -1,1 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wizard_make_test_environment,access_wizard_make_test_environment,model_wizard_make_test_environment,base.group_user,1,1,1,1
+access_wizard_mk_test_pyfile,access_wizard_mk_test_pyfile,model_wizard_mk_test_pyfile,base.group_user,1,1,1,1
