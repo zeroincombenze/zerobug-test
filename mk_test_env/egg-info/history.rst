@@ -9,7 +9,7 @@
 * [FIX] expression to evaluate _requirements
 * [FIX] multi-model with state
 
-10.0.0.7 (2022-01-07)
+12.0.0.7 (2022-01-07)
 ~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Recognizing l10n_it_fiscal or l10n_it_coa
