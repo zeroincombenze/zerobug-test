@@ -43,7 +43,10 @@ MODULES_NEEDED = {
     'distro': {
         'powerp': ['l10n_eu_account', 'assigned_bank',
                    'account_duedates', 'l10n_it_coa_base',
-                   'l10n_it_efattura_sdi_2c']
+                   'l10n_it_efattura_sdi_2c'],
+        'librerp': ['l10n_eu_account', 'assigned_bank',
+                    'account_duedates', 'l10n_it_coa_base',
+                    'l10n_it_efattura_sdi_2c'],
     },
     'einvoice': ['account',
                  'l10n_it_fatturapa_in',
@@ -118,7 +121,7 @@ COMMIT_FCT = {
         'draft': ['action_confirm'],
     },
     'account.move': {
-        'draft': ['post'],
+        'draft': ['_recompute_tax_lines', 'post'],      # for 14.0
     },
     'stock.inventory': {
         'cancel': ['action_start'],
@@ -163,6 +166,8 @@ SKEYS = {
 
 @api.model
 def _selection_lang(self):
+    if release.version_info[0] < 13:
+        return self.env['res.lang'].get_available()
     return [(x, y) for x, y, _2, _3, _4 in self.env['res.lang'].get_available()]
 
 
@@ -194,12 +199,12 @@ def _selection_coa(self):
 @api.model
 def _selection_distro(self):
     distros = [('odoo_ce', 'Odoo/OCA CE'),
-               ('odoo_ee', 'Odoo EE'),
-               ('zero', 'Zeroincombenze + OCA')]
-    if release.version_info[0] >= 12:
-        distros.append(('powerp', 'Powerp + OCA'))
-    elif release.version_info[0] == 6:
-        distros.append(('librerp', 'Librerp + OCA'))
+               ('odoo_ee', 'Odoo EE/OCA'),
+               ('zero', 'Zeroincombenze/OCA')]
+    if release.version_info[0] in (6, 12, 14):
+        distros.append(('librerp', 'Librerp/OCA'))
+    if release.version_info[0] in (12, 14):
+        distros.append(('powerp', 'Powerp (deprecated)/OCA'))
     return distros
 
 
@@ -212,14 +217,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
     NOT_INSTALL = []
     T = {}
     _tnldict = {}
-    # def __init__(self, pool, cr):
-    #     super().__init__(pool, cr)
-    #     self.STRUCT = {}
-    #     self.COA_MODULES = []
-    #     self.NOT_INSTALL = []
-    #     self.T = {}
-    #     self._force_test_values = False
-    #     self._tnldict = {}
 
     @api.model
     def _selection_action(self, scope):
@@ -299,12 +296,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def _set_distro(self):
         coa = self.coa if self.coa else self._set_coa_2_use()
         if coa in ('l10n_it_coa', 'l10n_it_fiscal', 'l10n_it_nocoa'):
-            if release.version_info[0] == 6:
+            if release.version_info[0] in (6, 12, 14):
                 distro = 'librerp'
-            elif release.version_info[0] < 12:
-                distro = 'zero'
             else:
-                distro = 'powerp'
+                distro = 'zero'
         else:
             distro = 'odoo_ce'
         return distro
@@ -443,16 +438,14 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     @api.onchange('distro')
     def _onchange_distro(self):
-        if self.distro == 'powerp' and release.version_info[0] < 12:
+        if self.distro == 'powerp' and release.version_info[0] not in (12, 14):
             self.distro = 'zero'
-        elif self.distro == 'powerp' and release.version_info[0] == 6:
-            self.distro = 'librerp'
-        elif self.distro == 'librerp' and release.version_info[0] != 6:
+        elif self.distro == 'librerp' and release.version_info[0] not in (6, 12, 14):
             self.distro = 'zero'
 
     @api.model
     def get_value_by_coa(self, value):
-        if self.distro == 'powerp':
+        if self.distro in ('powerp', 'librerp'):
             value = {
                 'l10n_it': 'l10n_it_coa',
             }.get(value, value)
@@ -604,6 +597,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
         else:
             res = False
             recalc = True
+            self.T = {
+                'v': release.version_info[0],
+                'G': self.distro if self.distro else self._set_distro(),
+                'C': self.coa,
+            }
         max_ctr = 3
         while recalc and max_ctr:
             max_ctr -= 1
@@ -611,17 +609,17 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 res = eval(expr, globals(), self.T)
                 recalc = False
             except NameError as e:
-                n = str(e).split("'")[1]
-                i = expr.find(n)
-                x = re.match(r'[-\w]+\.[-\w]+', expr[i:])
+                name = str(e).split("'")[1]
+                ix = expr.find(name)
+                x = re.match(r'[-\w]+\.[-\w]+', expr[ix:])
                 if x:
-                    n = expr[i:x.end()]
-                if len(n.split('.')) == 2:
-                    m = n.replace('.', '__')
-                    expr = expr.replace(n, m)
-                    self.T[m] = os0.str2bool(self.env_ref(n), False)
+                    name = expr[ix:x.end()]
+                    if len(name.split('.')) == 2:
+                        m = name.replace('.', '__')
+                        expr = expr.replace(name, m)
+                        self.T[m] = os0.str2bool(self.env_ref(name), False)
                 else:
-                    self.T[n] = self.is_to_apply(n)
+                        self.T[name] = self.is_to_apply(name)
             except AttributeError:
                 max_ctr = 0
         return res
@@ -705,14 +703,14 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         [module.name], [], no_clear_cache=True)
                     modules_found.append(module.name)
                     modules_2_test.append(module.name)
-                    self.T[module.name] = True
+                    # self.T[module.name] = True
                     flag_module_installed = True
                     continue
                 to_install_modules += module
                 self.status_mesg += 'Module "%s" installed\n' % module.name
                 modules_found.append(module.name)
                 modules_2_test.append(module.name)
-                self.T[module.name] = True
+                # self.T[module.name] = True
                 self.ctr_rec_new += 1
             elif module.state == 'uninstallable':
                 self.status_mesg += \
@@ -747,6 +745,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if found_uninstalled:
             raise UserError(
                 'Module %s not installed!' % found_uninstalled.name)
+        modules_to_remove = list(set(modules_to_remove)-set(modules_to_install))
         if modules_to_remove:
             if to_install_modules:
                 time.sleep(2)
@@ -755,7 +754,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     [('name', 'in', modules_to_remove),
                      ('state', '=', 'installed')]):
                 to_remove_modules += module
-                self.T[module.name] = False
+                # self.T[module.name] = False
                 self.status_mesg += 'Module "%s" uninstalled\n' % module.name
                 self.ctr_rec_upd += 1
                 flag_module_installed = True
@@ -777,14 +776,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
             # We need to invalidate cache to load model of installed modules
             if release.version_info[0] < 12:
                 self.env.invalidate_all()
-            # else:
-            #     self.invalidate_cache()
         return flag_module_installed
 
     def get_tnldict(self):
-        # if not hasattr(self, '_tnldict'):
-        #     self._tnldict = {}
-        #     transodoo.read_stored_dict(self._tnldict)
         if not self._tnldict:
             transodoo.read_stored_dict(self._tnldict)
         return self._tnldict
@@ -799,7 +793,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     def translate(self, model, src, ttype=False, fld_name=False):
         tgtver = self.get_tgtver()
-        srcver = 'powerp12'
+        srcver = 'librerp12'
         if release.major_version == srcver:
             if ttype == 'valuetnl':
                 return ''
@@ -941,7 +935,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     self.status_mesg += mesg
                 continue
             vals = cast_type(field, attrs, vals)
-            if self.translate(ref_model, vals[field], ttype='valuetnl', fld_name=field):
+            if self.translate(
+                    ref_model, vals[field], ttype='valuetnl', fld_name=field):
                 vals[field] = self.translate(
                     ref_model, vals[field], ttype='value', fld_name=field)
             if field == 'id':
@@ -1039,10 +1034,18 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     del vals['id']
         return vals, parent_name
 
-    def drop_unchanged_fields(self, vals, model, xid):
+    def browse_xid(self, model, xid):
         rec = None
-        if model and xid:
+        if model == 'res.company' and xid == -1:
+            rec = self.company_id
+        elif model in ('res.groups', 'res.users') and xid == -1:
+            rec = self.env.user
+        elif model and xid:
             rec = self.env[model].browse(xid)
+        return rec
+
+    def drop_unchanged_fields(self, vals, model, xid):
+        rec = self.browse_xid(model, xid)
         for field in vals.copy():
             attrs = self.STRUCT[model].get(field, {})
             if not attrs:
@@ -1090,15 +1093,46 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     self.do_draft(parent_model, parent_id)
             elif model in DRAFT_FCT:
                 self.do_draft(model, xid)
+            try:
+                if model.startswith('account.move'):
+                    self.browse_xid(model, xid).with_context(
+                        check_move_validity=False).write(vals)
+                else:
+                    self.browse_xid(model, xid).write(vals)
+                self.ctr_rec_upd += 1
+                if not parent_model and not parent_id:
+                    mesg = '- Xref "%s":"%s" updated\n' % (model, xref)
+                    self.status_mesg += mesg
+            except BaseException as e:
+                self._cr.rollback()  # pylint: disable=invalid-commit
+                self.status_mesg += (
+                        '*** Record %s: error %s!!!\n' % (xref, e))
+
+    @api.model
+    def create_new(self, model, xid, vals, xref,
+                   parent_id=None, parent_model=None):
+        for name in ('id', 'valid_for_dichiarazione_intento'):
+            if name in vals:
+                del vals[name]
+        if 'code' in self.STRUCT[model] and 'code' not in vals:
+            vals['code'] = vals.get('name')
+        try:
             if model.startswith('account.move'):
-                self.env[model].browse(xid).with_context(
-                    check_move_validity=False).write(vals)
+                xid = self.env[model].with_context(
+                    check_move_validity=False).create(vals).id
             else:
-                self.env[model].browse(xid).write(vals)
-            self.ctr_rec_upd += 1
+                xid = self.env[model].create(vals).id
+            self.ctr_rec_new += 1
             if not parent_model and not parent_id:
-                mesg = '- Xref "%s":"%s" updated\n' % (model, xref)
+                mesg = '- Xref "%s":"%s" added\n' % (
+                    model, xref)
                 self.status_mesg += mesg
+        except BaseException as e:
+            self._cr.rollback()  # pylint: disable=invalid-commit
+            self.status_mesg += (
+                    '*** Record %s: error %s!!!\n' % (xref, e))
+            xid = False
+        return xid
 
     @api.model
     def store_rec_with_xref(
@@ -1167,30 +1201,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                     parent_id=parent_id,
                                     parent_model=parent_model)
             else:
-                for name in ('id', 'valid_for_dichiarazione_intento'):
-                    if name in vals:
-                        del vals[name]
-                if 'code' in self.STRUCT[model] and 'code' not in vals:
-                    vals['code'] = vals.get('name')
-                # for nm in ('quantity', 'price_unit', 'discount', 0.0):
-                #     if nm not in vals and nm in self.STRUCT[model]:
-                #         vals[nm] = 0.0
-                try:
-                    if model.startswith('account.move'):
-                        xid = self.env[model].with_context(
-                            check_move_validity=False).create(vals).id
-                    else:
-                        xid = self.env[model].create(vals).id
-                    self.ctr_rec_new += 1
-                    if not parent_model and not parent_id:
-                        mesg = '- Xref "%s":"%s" added\n' % (
-                            model, xref)
-                        self.status_mesg += mesg
-                except BaseException as e:
-                    self._cr.rollback()  # pylint: disable=invalid-commit
-                    self.status_mesg += (
-                        '*** Record %s: error %s!!!\n' % (xref, e))
-                    xid = False
+                xid = self.create_new(model, xid, vals, xref,
+                                      parent_id=None, parent_model=None)
             if xid and parent_model == 'product.template' or (not parent_id and
                                                               not parent_model):
                 self.add_xref(xref, model, xid)
@@ -1200,22 +1212,24 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def do_workflow(self, model, rec_id, FCT, ignore_error=None):
 
         def do_action(model, action):
-            if hasattr(self.env[model], action):
-                if action == 'compute_taxes':
-                    # Please, do not remove this write: set default values
-                    saved_date = rec.date
-                    rec.write({'date': False})
-                    rec.write({'date': saved_date})
+            action = self.translate(model, action, ttype='action')
+            if action and hasattr(self.env[model], action):
+                if action in ('compute_taxes', '_recompute_tax_lines'):
+                    if release.version_info[0] < 13:
+                        # Please, do not remove this write: set default values
+                        saved_date = rec.date
+                        rec.write({'date': False})
+                        rec.write({'date': saved_date})
                 try:
                     getattr(rec, action)()
-                    if action == 'compute_taxes' and rec.intrastat:
+                    if rec.intrastat and action in ('compute_taxes',
+                                                    '_recompute_tax_lines'):
                         # Compute intrastat lines
                         rec.compute_intrastat_lines()
-                except BaseException:
+                except BaseException as e:
                     if not ignore_error:
                         raise UserError(
-                            'Action %s.%s FAILED (or invalid)!' % (model,
-                                                                   action))
+                            'Action %s.%s FAILED (%s)!' % (model, action, e))
 
         self._cr.commit()  # pylint: disable=invalid-commit
         if model in FCT:
@@ -1282,13 +1296,12 @@ class WizardMakeTestEnvironment(models.TransientModel):
             return
         vals, parent_name = self.map_fields(
             model, vals, self.company_id.id)
-        if model == 'res.company':
-            self.company_id.write(vals)
-        elif model in ('res.groups', 'res.users'):
-            self.env.user.write(vals)
-        self.ctr_rec_upd += 1
-        self.status_mesg += '- Xref "%s":"%s" updated\n' % (
-            model, vals.keys())
+        vals = self.drop_unchanged_fields(vals, model, -1)
+        if vals:
+            self.browse_xid(model, -1).write(vals)
+            self.ctr_rec_upd += 1
+            self.status_mesg += '- Xref "%s":"%s" updated\n' % (
+                model, vals.keys())
 
     @api.model
     def make_misc(self):
@@ -1595,14 +1608,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 VERSION_ERROR % (module, min_version))
 
     def make_test_environment(self):
-        # breakpoint()
         self.diff_ver('1.0.11', 'z0bug_odoo', 'z0bug_odoo_lib')
         self.diff_ver('1.0.1', 'clodoo', 'transodoo')
         self.diff_ver('1.0.3', 'os0', 'os0')
         self.diff_ver('1.0.7', 'python_plus', 'python_plus')
-        self.T['v'] = release.version_info[0]
-        self.T['G'] = self.distro if self.distro else self._set_distro()
-        self.T['C'] = self.coa
+        # self.T['v'] = release.version_info[0]
+        # self.T['G'] = self.distro if self.distro else self._set_distro()
+        # self.T['C'] = self.coa
 
         # Block 0: TODO> Separate function
         self.ctr_rec_new = 0
@@ -1644,6 +1656,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 'domain': [('id', '=', self.id)],
             }
         self.state = '1'
+        self.make_misc()
 
         # Block 1: TODO> Separate function
         if self.load_coa:
@@ -1737,6 +1750,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                             model2='account.move.line')
         self.status_mesg += 'Data (re)loaded.\n'
         self.state = '9'
+        self.make_misc()
 
         return {
             'name': "Data created",
