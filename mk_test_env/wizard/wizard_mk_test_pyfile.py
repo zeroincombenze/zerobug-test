@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#  -*- coding: utf-8 -*-
 #
 # Copyright 2019-22 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
@@ -23,7 +23,7 @@ try:
     import odoo.release as release
 except ImportError:
     try:
-        import openerp.release as release
+        import odoo.release as release
     except ImportError:
         release = ''
 

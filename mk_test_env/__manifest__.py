@@ -29,6 +29,7 @@
         ],
     },
     'data': [
+        'security/ir.model.access.csv',
         'views/menu.xml',
         'wizard/wizard_mk_test_env_view.xml',
         'wizard/wizard_mk_test_pyfile_view.xml',
