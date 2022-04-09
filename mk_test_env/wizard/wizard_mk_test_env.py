@@ -21,9 +21,10 @@ try:
     import odoo.release as release
 except ImportError:
     try:
-        import odoo.release as release
+        import openerp.release as release
     except ImportError:
         release = ''
+from .mixin import BaseTestMixin
 
 from z0bug_odoo import z0bug_odoo_lib
 from os0 import os0
@@ -208,7 +209,7 @@ def _selection_distro(self):
     return distros
 
 
-class WizardMakeTestEnvironment(models.TransientModel):
+class WizardMakeTestEnvironment(models.TransientModel, BaseTestMixin):
     _name = "wizard.make.test.environment"
     _description = "Create Test Environment"
 
@@ -619,7 +620,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         expr = expr.replace(name, m)
                         self.T[m] = os0.str2bool(self.env_ref(name), False)
                 else:
-                        self.T[name] = self.is_to_apply(name)
+                    self.T[name] = self.is_to_apply(name)
             except AttributeError:
                 max_ctr = 0
         return res
@@ -785,11 +786,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     def get_tgtver(self):
         distro = self.distro if self.distro else self._set_distro()
-        if distro and not distro.startswith('odoo'):
-            tgtver = '%s%d' % (distro, release.version_info[0])
-        else:
-            tgtver = release.major_version
-        return tgtver
+        return self.get_distro_version(distro)
 
     def translate(self, model, src, ttype=False, fld_name=False):
         tgtver = self.get_tgtver()
@@ -1106,7 +1103,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             except BaseException as e:
                 self._cr.rollback()  # pylint: disable=invalid-commit
                 self.status_mesg += (
-                        '*** Record %s: error %s!!!\n' % (xref, e))
+                    '*** Record %s: error %s!!!\n' % (xref, e))
 
     @api.model
     def create_new(self, model, xid, vals, xref,
@@ -1130,7 +1127,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         except BaseException as e:
             self._cr.rollback()  # pylint: disable=invalid-commit
             self.status_mesg += (
-                    '*** Record %s: error %s!!!\n' % (xref, e))
+                '*** Record %s: error %s!!!\n' % (xref, e))
             xid = False
         return xid
 
