@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Copyright 2019-22 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
@@ -7,6 +6,4 @@
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
-from . import mixin
-from . import wizard_mk_test_env
-from . import wizard_mk_test_pyfile
+from . import test_mixin# -*- coding: utf-8 -*-

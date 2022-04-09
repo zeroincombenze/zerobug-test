@@ -7,6 +7,8 @@
         <field name="arch" type="xml">
             <form string="Create python source test file">
                 <group>
+                    <field name="module2test"/>
+                    <field name="lang"/>
                     <field name="oca_coding"/>
                     <field name="product_variant"/>
                     <field name="max_child_records"/>
