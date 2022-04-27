@@ -9,6 +9,7 @@
 #
 # from past.builtins import basestring
 
+from odoo import models
 from odoo.exceptions import UserError
 try:
     import odoo.release as release
@@ -21,9 +22,111 @@ except ImportError:
 from z0bug_odoo import z0bug_odoo_lib
 
 
-class BaseTestMixin():
+class BaseTestMixin(models.AbstractModel):
     _name = "base.test.mixin"
     _description = "Common function for test wizards"
+
+    # Default attributes for Odoo models
+    TABLE_DEF = {
+        'base': {
+            'create_date': {'readonly': True},
+            'create_uid': {'readonly': True},
+            'message_channel_ids': {'readonly': True},
+            'message_follower_ids': {'readonly': True},
+            'message_ids': {'readonly': True},
+            'message_is_follower': {'readonly': True},
+            'message_last_post': {'readonly': True},
+            'message_needaction': {'readonly': True},
+            'message_needaction_counter': {'readonly': True},
+            'message_unread': {'readonly': True},
+            'message_unread_counter': {'readonly': True},
+            'password': {'protect_update': 2},
+            'password_crypt': {'protect_update': 2},
+            'write_date': {'readonly': True},
+            'write_uid': {'readonly': True},
+        },
+        'account.account': {
+            'user_type_id': {'required': True},
+            'internal_type': {'readonly': False},
+        },
+        'account.invoice': {
+            'account_id': {'readonly': False},
+            'comment': {'readonly': False},
+            'date': {'readonly': False},
+            'date_due': {'readonly': False},
+            'date_invoice': {'readonly': False},
+            'fiscal_position_id': {'readonly': False},
+            'name': {'readonly': False},
+            'number': {'readonly': False, 'required': False},
+            'partner_id': {'readonly': False},
+            'partner_shipping_id': {'readonly': False},
+            'payment_term_id': {'readonly': False},
+            'registration_date': {'readonly': False},
+            'type': {'readonly': False},
+            'user_id': {'readonly': False},
+        },
+        'account.payment.term': {},
+        'ir.sequence': {'number_next_actual': {'protect_update': 4}},
+        'product.category': {},
+        'product.product': {
+            'company_id': {'readonly': True},
+        },
+        'product.template': {
+            'company_id': {'readonly': True},
+        },
+        'purchase.order': {
+            'name': {'required': False},
+        },
+        'res.company': {
+            'default_picking_type_for_package_preparation_id':
+                {'readonly': True},
+            'due_cost_service_id': {'readonly': True},
+            'internal_transit_location_id': {'readonly': True},
+            'paperformat_id': {'readonly': True},
+            'of_account_end_vat_statement_interest_account_id':
+                {'readonly': True},
+            'of_account_end_vat_statement_interest': {'readonly': True},
+            'parent_id': {'readonly': True},
+            'po_lead': {'readonly': True},
+            'project_time_mode_id': {'readonly': True},
+            'sp_account_id': {'readonly': True},
+        },
+        'res.country': {
+            'name': {'protect_update': 2},
+        },
+        'res.country.state': {'name': {'protect_update': 2}},
+        'res.currency': {
+            'rate_ids': {'protect_update': 2},
+            'rounding': {'protect_update': 2},
+        },
+        'res.partner': {
+            'company_id': {'readonly': True},
+            'notify_email': {'readonly': True},
+            'property_product_pricelist': {'readonly': True},
+            'property_stock_customer': {'readonly': True},
+            'property_stock_supplier': {'readonly': True},
+            'title': {'readonly': True},
+        },
+        'res.partner.bank': {
+            'bank_name': {'readonly': False},
+        },
+        'res.users': {
+            'action_id': {'readonly': True},
+            'category_id': {'readonly': True},
+            'company_id': {'readonly': True},
+            'login_date': {'readonly': True},
+            'new_password': {'readonly': True},
+            'opt_out': {'readonly': True},
+            'password': {'readonly': True},
+            'password_crypt': {'readonly': True},
+        },
+        'sale.order': {
+            'name': {'readonly': False, 'required': False},
+        },
+        'stock.picking.package.preparation': {
+            'ddt_number': {'required': False},
+        },
+    }
 
     def get_distro_version(self, distro):
         """Return distro + version identifier used for translation

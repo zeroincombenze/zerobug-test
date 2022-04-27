@@ -164,6 +164,10 @@ SKEYS = {
     'sale.order': ['partner_id', 'client_order_ref', 'date_order'],
     # 'sale.order.line': ['product_id', 'name'],
 }
+ALIAS_XREF = {
+        'z0bug.product_product_27': 'delivery.free_delivery_carrier_product_product',
+        'z0bug.product_template_27': 'delivery.free_delivery_carrier_product_template',
+}
 
 
 @api.model
@@ -210,9 +214,10 @@ def _selection_distro(self):
     return distros
 
 
-class WizardMakeTestEnvironment(models.TransientModel, BaseTestMixin):
+class WizardMakeTestEnvironment(models.TransientModel):
     _name = "wizard.make.test.environment"
     _description = "Create Test Environment"
+    _inherit = ['base.test.mixin']
 
     STRUCT = {}
     COA_MODULES = []
@@ -551,7 +556,8 @@ class WizardMakeTestEnvironment(models.TransientModel, BaseTestMixin):
 
     @api.model
     def add_xref(self, xref, model, res_id):
-        xrefs = xref.split('.')
+        # xrefs = xref.split('.')
+        xrefs = self.translate('', xref, ttype='xref').split('.')
         if len(xrefs) != 2 or ' ' in xref:
             raise UserError(
                 'Invalid xref %s' % xref)
@@ -796,6 +802,8 @@ class WizardMakeTestEnvironment(models.TransientModel, BaseTestMixin):
             if ttype == 'valuetnl':
                 return ''
             return src
+        if ttype == 'xref':
+            src = ALIAS_XREF.get(src, src)
         return transodoo.translate_from_to(
             self.get_tnldict(),
             model, src, srcver, tgtver,
@@ -1434,6 +1442,8 @@ class WizardMakeTestEnvironment(models.TransientModel, BaseTestMixin):
         if 'company_id' in self.STRUCT[model]:
             company_id = self.company_id.id
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(ref_model)
+        # xrefs = [self.translate('', x, ttype='xref')
+        #          for x in z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(ref_model)]
         if not xrefs:
             raise UserError(
                 'No test record found for model %s!' % model)

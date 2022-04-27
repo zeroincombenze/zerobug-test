@@ -411,8 +411,7 @@ class %(model_class)s(common.TransactionCase):
                     company=company)
                 res = self.model_make(
                     model, vals, item,
-                    company=company,
-                    by=by)
+                    company=company)
                 if model == 'product.template':
                     model2 = 'product.product'
                     vals = self.get_values(
@@ -422,8 +421,7 @@ class %(model_class)s(common.TransactionCase):
                     vals['product_tmpl_id'] = res.id
                     self.model_make(
                         model2, vals, item.replace('template', 'product'),
-                        company=company,
-                        by=by)
+                        company=company)
 
         self.save_as_demo = save_as_demo or False
         if locale:
@@ -490,9 +488,10 @@ def _selection_lang(self):
     return [(x, y) for x, y, _2, _3, _4 in self.env['res.lang'].get_available()]
 
 
-class WizardMkTestPyfile(models.TransientModel, BaseTestMixin):
+class WizardMkTestPyfile(models.TransientModel):
     _name = "wizard.mk.test.pyfile"
     _description = "Create python source test file"
+    _inherit = ['base.test.mixin']
 
     def _default_model2ignore(self):
         return [x.id
@@ -669,7 +668,7 @@ class WizardMkTestPyfile(models.TransientModel, BaseTestMixin):
         if model not in self.struct:
             self.struct[model] = self.env[model].fields_get()
         for field in vals.keys():
-            print('  >>> field=%s' % field)  # debug
+            # print('  >>> field=%s' % field)  # debug
             if (field == 'id' or
                     field not in self.struct[model] or
                     vals[field] is None or
@@ -681,7 +680,7 @@ class WizardMkTestPyfile(models.TransientModel, BaseTestMixin):
                     required = TABLE_DEF[relation]['required']
                 else:
                     required = top or False
-                print('    >>> relation,required=%s,%s' % (relation, required))  # debug
+                # print('    >>> relation,required=%s,%s' % (relation, required))  # debug
                 if not required:
                     model_ids = self.env['ir.model'].search([('model', '=', relation)])
                     if model_ids[0] in self.model2ignore_ids:
@@ -700,7 +699,7 @@ class WizardMkTestPyfile(models.TransientModel, BaseTestMixin):
                                              model_child)
 
     def push_child_xref(self, xref, model, model_child, top=None):
-        print('>>> push_child_xref(%s,%s,%s)' % (xref, model, model_child))  # debug
+        # print('>>> push_child_xref(%s,%s,%s)' % (xref, model, model_child))  # debug
         if model not in self.struct:
             self.struct[model] = self.env[model].fields_get()
         if model_child not in self.struct:
@@ -711,13 +710,13 @@ class WizardMkTestPyfile(models.TransientModel, BaseTestMixin):
         record_ctr = 0
         parent_id_name = ''
         for xref_child in xrefs:
-            print('  >>> xref_child=%s' % xref_child)  # debug
+            # print('  >>> xref_child=%s' % xref_child)  # debug
             if self.max_child_records and record_ctr >= self.max_child_records:
                 break
             self.model_of_xref[xref_child] = model_child
             vals = self.get_test_values(model_child, xref_child)
             for field in vals.keys():
-                print('    >>> field=%s' % field)  # debug
+                # print('    >>> field=%s' % field)  # debug
                 if (field == 'id' or
                         field not in self.struct[model_child] or
                         vals[field] is None or
@@ -728,7 +727,7 @@ class WizardMkTestPyfile(models.TransientModel, BaseTestMixin):
                         self.struct[model_child][field]['relation'] == model):
                     if vals[field] == xref:
                         self.top_child_xrefs[xref].append(xref_child)
-                        print('    >>> parent_id_name=%s' % field)  # debug
+                        # print('    >>> parent_id_name=%s' % field)  # debug
                         parent_id_name = field
                         record_ctr += 1
                     break
