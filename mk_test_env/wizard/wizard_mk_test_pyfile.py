@@ -410,8 +410,7 @@ class %(model_class)s(common.TransactionCase):
                     company=company)
                 res = self.model_make(
                     model, vals, item,
-                    company=company,
-                    by=by)
+                    company=company)
                 if model == 'product.template':
                     model2 = 'product.product'
                     vals = self.get_values(
@@ -421,8 +420,7 @@ class %(model_class)s(common.TransactionCase):
                     vals['product_tmpl_id'] = res.id
                     self.model_make(
                         model2, vals, item.replace('template', 'product'),
-                        company=company,
-                        by=by)
+                        company=company)
 
         self.save_as_demo = save_as_demo or False
         if locale:
@@ -489,9 +487,10 @@ def _selection_lang(self):
     return [(x, y) for x, y, _2, _3, _4 in self.env['res.lang'].get_available()]
 
 
-class WizardMkTestPyfile(models.TransientModel, BaseTestMixin):
+class WizardMkTestPyfile(models.TransientModel):
     _name = "wizard.mk.test.pyfile"
     _description = "Create python source test file"
+    _inherit = ['base.test.mixin']
 
     def _default_model2ignore(self):
         return [x.id
