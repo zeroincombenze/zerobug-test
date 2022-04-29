@@ -24,6 +24,7 @@ except ImportError:
         import odoo.release as release
     except ImportError:
         release = ''
+from .mixin import BaseTestMixin
 
 from z0bug_odoo import z0bug_odoo_lib
 from os0 import os0
@@ -76,7 +77,7 @@ MODULES_NEEDED = {
                     'l10n_it_account_balance_report',
                     'account_financial_report',
                     'accounting_pdf_reports',
-                    'l10n_it_mis_reports_pl_bs',
+                    # 'l10n_it_mis_reports_pl_bs',
                     'l10n_it_mastrini'],
     'load_coa': {
         '*': ['account',
@@ -162,6 +163,11 @@ SKEYS = {
     'sale.order': ['partner_id', 'client_order_ref', 'date_order'],
     # 'sale.order.line': ['product_id', 'name'],
 }
+ALIAS_XREF = {
+        'z0bug.product_product_27': 'delivery.free_delivery_carrier_product_product',
+        'z0bug.product_template_27': 'delivery.free_delivery_carrier_product_template',
+}
+T ={}
 
 
 @api.model
@@ -211,6 +217,7 @@ def _selection_distro(self):
 class WizardMakeTestEnvironment(models.TransientModel):
     _name = "wizard.make.test.environment"
     _description = "Create Test Environment"
+    _inherit = ['base.test.mixin']
 
     STRUCT = {}
     COA_MODULES = []
@@ -549,7 +556,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     @api.model
     def add_xref(self, xref, model, res_id):
-        xrefs = xref.split('.')
+        # xrefs = xref.split('.')
+        xrefs = self.translate('', xref, ttype='xref').split('.')
         if len(xrefs) != 2 or ' ' in xref:
             raise UserError(
                 'Invalid xref %s' % xref)
@@ -597,7 +605,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         else:
             res = False
             recalc = True
-            self.T = {
+            T = {
                 'v': release.version_info[0],
                 'G': self.distro if self.distro else self._set_distro(),
                 'C': self.coa,
@@ -606,7 +614,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         while recalc and max_ctr:
             max_ctr -= 1
             try:
-                res = eval(expr, globals(), self.T)
+                res = eval(expr, globals(), T)
                 recalc = False
             except NameError as e:
                 name = str(e).split("'")[1]
@@ -617,9 +625,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     if len(name.split('.')) == 2:
                         m = name.replace('.', '__')
                         expr = expr.replace(name, m)
-                        self.T[m] = os0.str2bool(self.env_ref(name), False)
+                        T[m] = os0.str2bool(self.env_ref(name), False)
                 else:
-                        self.T[name] = self.is_to_apply(name)
+                    T[name] = self.is_to_apply(name)
             except AttributeError:
                 max_ctr = 0
         return res
@@ -703,14 +711,14 @@ class WizardMakeTestEnvironment(models.TransientModel):
                         [module.name], [], no_clear_cache=True)
                     modules_found.append(module.name)
                     modules_2_test.append(module.name)
-                    # self.T[module.name] = True
+                    # T[module.name] = True
                     flag_module_installed = True
                     continue
                 to_install_modules += module
                 self.status_mesg += 'Module "%s" installed\n' % module.name
                 modules_found.append(module.name)
                 modules_2_test.append(module.name)
-                # self.T[module.name] = True
+                # T[module.name] = True
                 self.ctr_rec_new += 1
             elif module.state == 'uninstallable':
                 self.status_mesg += \
@@ -754,7 +762,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     [('name', 'in', modules_to_remove),
                      ('state', '=', 'installed')]):
                 to_remove_modules += module
-                # self.T[module.name] = False
+                # T[module.name] = False
                 self.status_mesg += 'Module "%s" uninstalled\n' % module.name
                 self.ctr_rec_upd += 1
                 flag_module_installed = True
@@ -785,11 +793,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     def get_tgtver(self):
         distro = self.distro if self.distro else self._set_distro()
-        if distro and not distro.startswith('odoo'):
-            tgtver = '%s%d' % (distro, release.version_info[0])
-        else:
-            tgtver = release.major_version
-        return tgtver
+        return self.get_distro_version(distro)
 
     def translate(self, model, src, ttype=False, fld_name=False):
         tgtver = self.get_tgtver()
@@ -798,6 +802,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
             if ttype == 'valuetnl':
                 return ''
             return src
+        if ttype == 'xref':
+            src = ALIAS_XREF.get(src, src)
         return transodoo.translate_from_to(
             self.get_tnldict(),
             model, src, srcver, tgtver,
@@ -1106,7 +1112,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             except BaseException as e:
                 self._cr.rollback()  # pylint: disable=invalid-commit
                 self.status_mesg += (
-                        '*** Record %s: error %s!!!\n' % (xref, e))
+                    '*** Record %s: error %s!!!\n' % (xref, e))
 
     @api.model
     def create_new(self, model, xid, vals, xref,
@@ -1130,7 +1136,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         except BaseException as e:
             self._cr.rollback()  # pylint: disable=invalid-commit
             self.status_mesg += (
-                    '*** Record %s: error %s!!!\n' % (xref, e))
+                '*** Record %s: error %s!!!\n' % (xref, e))
             xid = False
         return xid
 
@@ -1436,6 +1442,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if 'company_id' in self.STRUCT[model]:
             company_id = self.company_id.id
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(ref_model)
+        # xrefs = [self.translate('', x, ttype='xref')
+        #          for x in z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(ref_model)]
         if not xrefs:
             raise UserError(
                 'No test record found for model %s!' % model)
@@ -1612,9 +1620,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.diff_ver('1.0.1', 'clodoo', 'transodoo')
         self.diff_ver('1.0.3', 'os0', 'os0')
         self.diff_ver('1.0.7', 'python_plus', 'python_plus')
-        # self.T['v'] = release.version_info[0]
-        # self.T['G'] = self.distro if self.distro else self._set_distro()
-        # self.T['C'] = self.coa
+        # T['v'] = release.version_info[0]
+        # T['G'] = self.distro if self.distro else self._set_distro()
+        # T['C'] = self.coa
 
         # Block 0: TODO> Separate function
         self.ctr_rec_new = 0
