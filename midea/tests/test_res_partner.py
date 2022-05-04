@@ -14,15 +14,14 @@ _logger = logging.getLogger(__name__)
 
 
 class TestMidea(test_common.SingleTransactionCase):
-
     def setUp(self):
         super(TestMidea, self).setUp()
 
     def test_res_partner(self):
         res = z0bug_odoo_lib.Z0bugOdoo().get_test_values(
-            'res.partner', 'z0bug.res_partner_1')
-        _logger.info(
-            'Test %s SUCCESSFULLY ended.' % __file__)
-        self.assertEqual(res['name'], 'Prima Distribuzione S.p.A.')
-        self.assertEqual(res['zip'], '20022')
-        self.assertEqual(res['city'], 'Castano Primo')
+            "res.partner", "z0bug.res_partner_1"
+        )
+        _logger.info("Test %s SUCCESSFULLY ended." % __file__)
+        self.assertEqual(res["name"], "Prima Distribuzione S.p.A.")
+        self.assertEqual(res["zip"], "20022")
+        self.assertEqual(res["city"], "Castano Primo")

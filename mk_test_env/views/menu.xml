@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record id="action_mk_test_env" model="ir.actions.act_window">
@@ -15,19 +15,21 @@
         <field name="target">new</field>
     </record>
 
-    <menuitem id="menu_mk_test_env"
-              name="Create Test Environment"
-              action="action_mk_test_env"
-              parent="base.next_id_9"
-              groups="base.group_no_one"
-              sequence="90"
-              />
+    <menuitem
+        id="menu_mk_test_env"
+        name="Create Test Environment"
+        action="action_mk_test_env"
+        parent="base.next_id_9"
+        groups="base.group_no_one"
+        sequence="90"
+    />
 
-    <menuitem id="menu_mk_test_pyfile"
-              name="Create python source test file"
-              action="action_mk_test_pyfile"
-              parent="base.next_id_9"
-              groups="base.group_no_one"
-              sequence="91"
-              />
+    <menuitem
+        id="menu_mk_test_pyfile"
+        name="Create python source test file"
+        action="action_mk_test_pyfile"
+        parent="base.next_id_9"
+        groups="base.group_no_one"
+        sequence="91"
+    />
 </odoo>
