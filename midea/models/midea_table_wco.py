@@ -7,22 +7,19 @@
 #
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 #
-from odoo import models, fields
+from odoo import fields, models
 
 
 class MideaNoCompany(models.Model):
-    _name = 'midea.table_wco'
+    _name = "midea.table_wco"
 
-    name = fields.Char('name',
-                       required=True,
-                       translate=True)
-    active = fields.Boolean('Active',
-                            default=True)
-    state = fields.Selection([('draft', 'Draft'),
-                              ('confirmed', 'Confirmed')],
-                             'State',
-                             required=True,
-                             readonly=True,
-                             default='draft')
-    company_id = fields.Many2one('res.company',
-                                 string='Company')
+    name = fields.Char("name", required=True, translate=True)
+    active = fields.Boolean("Active", default=True)
+    state = fields.Selection(
+        [("draft", "Draft"), ("confirmed", "Confirmed")],
+        "State",
+        required=True,
+        readonly=True,
+        default="draft",
+    )
+    company_id = fields.Many2one("res.company", string="Company")
