@@ -7,33 +7,33 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
 {
-    'name': 'Manage Test Environment',
-    'summary': 'Create or update test environment',
-    'version': "14.0.1.0.0",
-    'category': 'Tools',
-    'author': 'SHS-AV s.r.l.',
-    'website': 'https://www.zeroincombenze.it/servizi-le-imprese/',
-    'license': 'LGPL-3',
-    'depends': [
-        'base',
+    "name": "Manage Test Environment",
+    "summary": "Create or update test environment",
+    "version": "14.0.1.0.0",
+    "category": "Tools",
+    "author": "SHS-AV s.r.l.",
+    "website": "https://github.com/OCA/l10n-italy",
+    "license": "LGPL-3",
+    "depends": [
+        "base",
     ],
-    'external_dependencies': {
-        'python': [
-            'zerobug',
-            'z0bug_odoo',
-            'os0',
-            'future',
-            'python_plus',
-            'past',     # TODO: pylint bug, it is to remove
+    "external_dependencies": {
+        "python": [
+            "zerobug",
+            "z0bug_odoo",
+            "os0",
+            "future",
+            "python_plus",
+            "past",  # TODO: pylint bug, it is to remove
         ],
     },
-    'data': [
-        'security/ir.model.access.csv',
-        'views/menu.xml',
-        'wizard/wizard_mk_test_env_view.xml',
-        'wizard/wizard_mk_test_pyfile_view.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/menu.xml",
+        "wizard/wizard_mk_test_env_view.xml",
+        "wizard/wizard_mk_test_pyfile_view.xml",
     ],
-    'installable': True,
-    'maintainer': 'Zeroincombenze (R)',
-    'development_status': 'Beta',
+    "installable": True,
+    "maintainer": "Zeroincombenze (R)",
+    "development_status": "Beta",
 }

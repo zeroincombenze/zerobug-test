@@ -6,16 +6,16 @@
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
-# from past.builtins import basestring
-# from builtins import int
-# import os
-from datetime import datetime
+from past.builtins import basestring
+import os
 # import time
 # import re
 # import pytz
 import itertools
+from datetime import datetime
 
-from odoo import fields, models
+from odoo import api, fields, models
+
 # from odoo.exceptions import UserError
 
 try:
@@ -25,10 +25,11 @@ except ImportError:
         import odoo.release as release
     except ImportError:
         release = ''
+# from .mixin import BaseTestMixin
 
 from z0bug_odoo import z0bug_odoo_lib
-# from os0 import os0
-# from clodoo import transodoo
+from os0 import os0
+from clodoo import transodoo
 import python_plus
 
 
@@ -72,57 +73,74 @@ _logger = logging.getLogger(__name__)
 
 """
 SYSTEM_MODEL_ROOT = [
-    'base.config.',
-    'base_import.',
-    'base.language.',
-    'base.module.',
-    'base.setup.',
-    'base.update.',
-    'ir.actions.',
-    'ir.exports.',
-    'ir.model.',
-    'ir.module.',
-    'ir.qweb.',
-    'report.',
-    'res.config.',
-    'web_editor.',
-    'web_tour.',
-    'workflow.',
+    "base.config.",
+    "base_import.",
+    "base.language.",
+    "base.module.",
+    "base.setup.",
+    "base.update.",
+    "ir.actions.",
+    "ir.exports.",
+    "ir.model.",
+    "ir.module.",
+    "ir.qweb.",
+    "report.",
+    "res.config.",
+    "web_editor.",
+    "web_tour.",
+    "workflow.",
 ]
 SYSTEM_MODELS = [
-    '_unknown',
-    'base',
-    'base.config.settings',
-    'base_import',
-    'change.password.wizard',
-    'ir.autovacuum',
-    'ir.config_parameter',
-    'ir.exports',
-    'ir.fields.converter',
-    'ir.filters',
-    'ir.http',
-    'ir.logging',
-    'ir.model',
-    'ir.needaction_mixin',
-    'ir.qweb',
-    'ir.rule',
-    'ir.translation',
-    'ir.ui.menu',
-    'ir.ui.view',
-    'ir.values',
-    'mail.alias',
-    'mail.followers',
-    'mail.message',
-    'mail.notification',
-    'report',
-    'res.config',
-    'res.font',
-    'res.groups',
-    'res.request.link',
-    'res.users.log',
-    'web_tour',
-    'workflow',
+    "_unknown",
+    "base",
+    "base.config.settings",
+    "base_import",
+    "change.password.wizard",
+    "ir.autovacuum",
+    "ir.config_parameter",
+    "ir.exports",
+    "ir.fields.converter",
+    "ir.filters",
+    "ir.http",
+    "ir.logging",
+    "ir.model",
+    "ir.needaction_mixin",
+    "ir.qweb",
+    "ir.rule",
+    "ir.translation",
+    "ir.ui.menu",
+    "ir.ui.view",
+    "ir.values",
+    "mail.alias",
+    "mail.followers",
+    "mail.message",
+    "mail.notification",
+    "report",
+    "res.config",
+    "res.font",
+    "res.groups",
+    "res.request.link",
+    "res.users.log",
+    "web_tour",
+    "workflow",
 ]
+TABLE_DEF = {
+    "account.account": {
+        "user_type_id": {"required": True},
+    },
+    "account.invoice": {
+        "number": {"required": False},
+    },
+    "purchase.order": {
+        "name": {"required": False},
+    },
+    "sale.order": {
+        "name": {"required": False},
+    },
+    "stock.picking.package.preparation": {
+        "ddt_number": {"required": False},
+    },
+}
 SOURCE_BODY = """
 TNL_RECORDS = {
     'product.product': {
@@ -134,7 +152,7 @@ TNL_RECORDS = {
 }
 
 
-class TestAccountMove(common.TransactionCase):
+class %(model_class)s(common.TransactionCase):
 
     # --------------------------------------- #
     # Common code: may be share among modules #
@@ -393,8 +411,7 @@ class TestAccountMove(common.TransactionCase):
                     company=company)
                 res = self.model_make(
                     model, vals, item,
-                    company=company,
-                    by=by)
+                    company=company)
                 if model == 'product.template':
                     model2 = 'product.product'
                     vals = self.get_values(
@@ -404,41 +421,40 @@ class TestAccountMove(common.TransactionCase):
                     vals['product_tmpl_id'] = res.id
                     self.model_make(
                         model2, vals, item.replace('template', 'product'),
-                        company=company,
-                        by=by)
+                        company=company)
 
         self.save_as_demo = save_as_demo or False
         if locale:
             self.set_locale(locale)
         if lang:
-            self.install_language('it_IT')
+            self.install_language(lang)
         if not self.env['ir.module.module'].search(
                 [('name', '=', 'stock'), ('state', '=', 'installed')]):
             TNL_RECORDS['product.product']['type'] = ['product', 'consu']
             TNL_RECORDS['product.template']['type'] = ['product', 'consu']
+        company = company or self.default_company()
         self.by = {}
         for model, model_data in TEST_SETUP.items():
             by = model_data.get('by')
             if by:
                 self.by[model] = by
-        company = company or self.default_company()
-        for model, model_data in TEST_SETUP.items():
-            by = model_data.get('by')
+        for model in TEST_SETUP_LIST:
+            model_data = TEST_SETUP[model]
             iter_data(model, model_data, company)
 
     # ------------------ #
     # Specific test code #
     # ------------------ #
     def setUp(self):
-        super().setUp()
-        self.setup_records(lang='it_IT')
+        super(%(super_args)s).setUp()
+        self.setup_records(%(opt_lang)s)
 
     def tearDown(self):
-        super().tearDown()
+        super(%(super_args)s).tearDown()
         if self.save_as_demo:
             self.env.cr.commit()               # pylint: disable=invalid-commit
 
-    def test_something(self):
+    def %(test_fct_name)s(self):
         # Here an example of code you should insert to test
         # Example is based on account.invoice
         model = '%(model)s'
@@ -465,96 +481,202 @@ class TestAccountMove(common.TransactionCase):
 """
 
 
+@api.model
+def _selection_lang(self):
+    if release.version_info[0] < 13:
+        return self.env["res.lang"].get_available()
+    return [(x, y) for x, y, _2, _3, _4 in self.env["res.lang"].get_available()]
+
+
 class WizardMkTestPyfile(models.TransientModel):
     _name = "wizard.mk.test.pyfile"
     _description = "Create python source test file"
+    _inherit = ["base.test.mixin"]
 
-    xref_ids = fields.Many2many(
-        'ir.model.data',
-        string='External references')
-    oca_coding = fields.Boolean('OCA coding', default=True)
-    product_variant = fields.Boolean('Add product variant', default=False)
-    max_child_records = fields.Integer('Max child records', default=0)
+    def _default_model2ignore(self):
+        return [
+            x.id
+            for x in self.env["ir.model"].search(
+                [
+                    (
+                        "model",
+                        "in",
+                        [
+                            "asset.category",
+                            "account.asset",
+                            "account.group",
+                            "fatturapa.payment_method",
+                            "fatturapa.payment_term",
+                            "italy.conai.partner.category",
+                            "italy.conai.product.category",
+                            "mail.activity",
+                            "product.category",
+                            "res.currency",
+                            "stock.location",
+                            "stock.location.route",
+                            "stock.warehouse",
+                            "report.intrastat.code",
+                        ],
+                    )
+                ]
+            )
+        ]
+
+    def _set_lang(self):
+        if self.env.user.lang and self.env.user.lang != "en_US":
+            lang = self.env.user.lang
+        else:
+            lang = os.environ.get("LANG", "en_US").split(".")[0]
+        return lang
+
+    module2test = fields.Many2one("ir.module.module", string="Module to test")
+    lang = fields.Selection(
+        _selection_lang, string="Language", default=lambda self: self._set_lang()
+    )
+    xref_ids = fields.Many2many("ir.model.data", string="External references")
+    oca_coding = fields.Boolean("OCA coding", default=True)
+    product_variant = fields.Boolean("Add product variant", default=False)
+    max_child_records = fields.Integer("Max child records", default=2)
+    # model4install_ids = fields.Many2many(
+    #     comodel_name='ir.model',
+    #     relation='ir_model_4_install_rel',
+    #     string='Models by installed modules',
+    #     default=_default_model2ignore)
     model2ignore_ids = fields.Many2many(
-        'ir.model',
-        string='Models to ignore')
-    source = fields.Text('Source code')
+        comodel_name="ir.model",
+        relation="ir_model_2_ignore_rel",
+        string="Models to ignore",
+        default=_default_model2ignore,
+    )
+    source = fields.Text("Source code")
+
+    # modules2install = fields.Many2many(
+    #     'ir.module.module',
+    #     string='Modules to install')
+    _tnldict = {}
+    _model2ignore = []
 
     OCA_TNL = {
-        'z0bug.coa_123380': 'external.1205',
-        'z0bug.coa_153010': 'external.1601',
-        'z0bug.coa_153050': 'external.1611',
-        'z0bug.coa_153110': 'external.1609',
-        'z0bug.coa_260010': 'external.2601',
-        'z0bug.coa_260060': 'external.2611',
-        'z0bug.coa_260110': 'external.2602',
-        'z0bug.coa_510000': 'external.3112',
-        'z0bug.coa_510100': 'external.3101',
-        'z0bug.coa_510200': 'external.3202',
-        'z0bug.coa_512000': 'external.3103',
-        'z0bug.coa_610100': 'external.4101',
-        'z0bug.coa_610110': 'external.4102',
-        'z0bug.coa_621200': 'external.4105',
-        'z0bug.coa_623460': 'external.4204',
-        'external.FAT|FATT|INV': 'external.INV',
-        'external.ACQ|FATTU|BILL': 'external.BILL',
-        'z0bug.tax_a15v': 'external.00art15v',
-        'z0bug.tax_a15a': 'external.00art15a',
-        'z0bug.tax_10v': 'external.10v',
-        'z0bug.tax_10a': 'external.10a',
-        'z0bug.tax_22v': 'external.22v',
-        'z0bug.tax_22a': 'external.22a',
-        'z0bug.tax_4v': 'external.4v',
-        'z0bug.tax_4a': 'external.4a',
-        'z0bug.tax_5v': 'external.5v',
-        'z0bug.tax_5a': 'external.5a',
-        'z0bug.partner_mycompany': 'base.main_partner',
+        "external.FAT|FATT|INV": "external.INV",
+        "external.ACQ|FATTU|BILL": "external.BILL",
+        "z0bug.tax_a15v": "external.00art15v",
+        "z0bug.tax_a15a": "external.00art15a",
+        "z0bug.tax_10v": "external.10v",
+        "z0bug.tax_10a": "external.10a",
+        "z0bug.tax_22v": "external.22v",
+        "z0bug.tax_22a": "external.22a",
+        "z0bug.tax_4v": "external.4v",
+        "z0bug.tax_4a": "external.4a",
+        "z0bug.tax_5v": "external.5v",
+        "z0bug.tax_5a": "external.5a",
+        "z0bug.partner_mycompany": "base.main_partner",
     }
     MODEL_BY = {
-        'account.tax': 'description',
-        'product.template': 'default_code',
-        'product.product': 'default_code',
+        "account.tax": "description",
+        "product.template": "default_code",
+        "product.product": "default_code",
     }
     HIDDEN_FIELDS = {
-        'account.account': ['group_id'],
-        'account.fiscal.position': ['sequence'],
-        'account.journal': ['sequence', 'group_inv_lines_mode'],
-        'account.tax': ['sequence'],
-        # 'account.invoice.line': ['invoice_id'],
-        'product.template': ['categ_id', 'route_ids'],
-        'product.product': ['categ_id', 'route_ids'],
+        "account.account": ["group_id"],
+        "account.fiscal.position": ["sequence"],
+        "account.journal": ["sequence", "group_inv_lines_mode"],
+        "account.tax": ["sequence"],
+        "product.template": ["categ_id", "intrastat_type", "route_ids"],
+        "product.product": ["categ_id", "intrastat_type", "route_ids"],
     }
 
+    @api.onchange("module2test")
+    def onchange_module2test(self):
+        _model4install = []
+        xref_ids = set()
+        if self.module2test:
+            modules = self.get_dependency_names(self.module2test)
+            for model in self.env["ir.model"].search([]):
+                modules4model = {x.strip() for x in model.modules.split(",")}
+                if modules4model & set(modules):
+                    if model not in _model4install:
+                        _model4install.append(model)
+                        if (
+                            xref_ids
+                            or self.module2test.name not in modules4model
+                            or model.model
+                            not in (
+                                "sale.order",
+                                "purchase.order",
+                                "account.invoice",
+                                "account.move",
+                            )
+                        ):
+                            continue
+                        xref_ids = set(
+                            self.env["ir.model.data"].search(
+                                [
+                                    ("module", "in", (self.module2test.name, "z0bug")),
+                                    ("model", "=", model.model),
+                                    ("name", "like", "1"),
+                                ]
+                            )
+                        )
+            self.xref_ids = [(6, 0, [x.id for x in xref_ids])]
+
     def model_to_manage(self, model, exclude=None):
-        return (model not in SYSTEM_MODEL_ROOT and
-                model not in SYSTEM_MODELS and
-                model not in (exclude or []))
+        return (
+            model not in SYSTEM_MODEL_ROOT
+            and model not in SYSTEM_MODELS
+            and model not in (exclude or [])
+        )
+
+    def get_tnldict(self):
+        if not self._tnldict:
+            transodoo.read_stored_dict(self._tnldict)
+        return self._tnldict
+
+    def get_tgtver(self):
+        return self.get_distro_version("odoo" if self.oca_coding else "librerp")
+
+    def translate(self, model, src, ttype=False, fld_name=False):
+        tgtver = self.get_tgtver()
+        srcver = "librerp12"
+        if srcver == tgtver:
+            if ttype == "valuetnl":
+                return ""
+            return src
+        return transodoo.translate_from_to(
+            self.get_tnldict(),
+            model,
+            src,
+            srcver,
+            tgtver,
+            ttype=ttype,
+            fld_name=fld_name,
+        )
 
     def get_xref_obj(self, xref):
-        ir_model = self.env['ir.model.data']
-        module, name = xref.split('.', 1)
-        xrefs = ir_model.search([('module', '=', module),
-                                 ('name', '=', name)])
+        ir_model = self.env["ir.model.data"]
+        module, name = xref.split(".", 1)
+        xrefs = ir_model.search([("module", "=", module), ("name", "=", name)])
         if not xrefs:
             return False
         return xrefs[0]
 
-    def get_test_values(self, model, xref):
-        try:
-            vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(model, xref)
-        except BaseException:
-            vals = None
-        return vals
+    def get_model_class(self, model):
+        items = model.split(".")
+        model_class = ""
+        for item in items:
+            model_class += item[0].upper() + item[1:]
+        return model_class
 
     def get_child_model(self, model):
-        model_line = '%s.line' % model
+        model_line = "%s.line" % model
         if model_line not in self.env:
-            model_line = False
+            model_line = "%s.rate" % model
+            if model_line not in self.env:
+                model_line = False
         return model_line
 
-    def push_xref(self, xref, model):
+    def push_xref(self, xref, model, top=None):
         self.model_of_xref[xref] = model
-        module, name = xref.split('.', 1)
+        module, name = xref.split(".", 1)
         if module not in self.modules_to_declare:
             return
         vals = self.get_test_values(model, xref)
@@ -567,19 +689,41 @@ class WizardMkTestPyfile(models.TransientModel):
         if model not in self.struct:
             self.struct[model] = self.env[model].fields_get()
         for field in vals.keys():
-            if (field == 'id' or
-                    field not in self.struct[model] or
-                    vals[field] is None):
+            if (
+                field == "id"
+                or field not in self.struct[model]
+                or vals[field] is None
+                or vals[field] in ("None", r"\N")
+            ):
                 continue
-            if self.struct[model][field].get('relation'):
-                if (self.struct[model][field][
-                    'relation'] not in self.model2ignore_ids and
-                        vals[field] not in self.dep_xrefs):
+            if self.struct[model][field].get("relation"):
+                relation = self.struct[model][field]["relation"]
+                if relation in TABLE_DEF and "required" in TABLE_DEF[relation]:
+                    required = TABLE_DEF[relation]["required"]
+                else:
+                    required = top or False
+                if not required:
+                    model_ids = self.env["ir.model"].search([("model", "=", relation)])
+                    if model_ids[0] in self.model2ignore_ids:
+                        self.model2ignore_ids = [(3, model_ids[0].id)]
+                    continue
+                if vals[field] not in self.dep_xrefs:
                     self.dep_xrefs.append(vals[field])
-                    self.push_xref(vals[field],
-                                   self.struct[model][field]['relation'])
+                    model_child = self.get_child_model(
+                        self.struct[model][field]["relation"]
+                    )
+                    if not model_child:
+                        self.push_xref(
+                            vals[field], self.struct[model][field]["relation"]
+                        )
+                    else:
+                        self.push_child_xref(
+                            vals[field],
+                            self.struct[model][field]["relation"],
+                            model_child,
+                        )
 
-    def push_child_xref(self, xref, model, model_child):
+    def push_child_xref(self, xref, model, model_child, top=None):
         if model not in self.struct:
             self.struct[model] = self.env[model].fields_get()
         if model_child not in self.struct:
@@ -588,46 +732,103 @@ class WizardMkTestPyfile(models.TransientModel):
             self.top_child_xrefs[xref] = []
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(model_child)
         record_ctr = 0
-        parent_id_name = ''
+        parent_id_name = ""
         for xref_child in xrefs:
             if self.max_child_records and record_ctr >= self.max_child_records:
                 break
             self.model_of_xref[xref_child] = model_child
             vals = self.get_test_values(model_child, xref_child)
             for field in vals.keys():
-                if (field == 'id' or
-                        field not in self.struct[model_child] or
-                        vals[field] is None):
+                if (
+                    field == "id"
+                    or field not in self.struct[model_child]
+                    or vals[field] is None
+                    or vals[field] in ("None", r"\N")
+                ):
                     continue
-                if (self.struct[model_child][field]['type'] == 'many2one' and
-                        self.struct[model_child][field].get('relation') and
-                        self.struct[model_child][field]['relation'] == model and
-                        vals[field] == xref):
-                    self.top_child_xrefs[xref].append(xref_child)
-                    parent_id_name = field
-                    record_ctr += 1
+                if (
+                    self.struct[model_child][field]["type"] == "many2one"
+                    and self.struct[model_child][field].get("relation")
+                    and self.struct[model_child][field]["relation"] == model
+                ):
+                    if vals[field] == xref:
+                        self.top_child_xrefs[xref].append(xref_child)
+                        parent_id_name = field
+                        record_ctr += 1
+                    break
         for xref_child in self.top_child_xrefs[xref]:
             self.push_xref(xref_child, model_child)
         return parent_id_name
 
+    def get_context_xref(self, xref, model, fld_name=None):
+        oca_xref = self.translate("", xref, ttype="xref")
+        if fld_name:
+            oca_xref = self.translate(model, oca_xref, ttype="value", fld_name=fld_name)
+        if oca_xref == xref:
+            if model == "account.account":
+                module, xid = xref.split(".", 1)
+                if module == "external":
+                    xid = self.translate(model, xid, ttype="value", fld_name="code")
+                    oca_xref = "external.%s" % xid
+                elif module == "z0bug" and xid.startswith("coa_"):
+                    xid = self.translate(model, xid[4:], ttype="value", fld_name="code")
+                    oca_xref = "external.%s" % xid
+            elif model == "account.tax":
+                module, xid = xref.split(".", 1)
+                if module == "external":
+                    xid = self.translate(model, xid, ttype="value", fld_name="code")
+                    oca_xref = "external.%s" % xid
+                elif module == "z0bug" and xid.startswith("tax_"):
+                    xid = self.translate(model, xid[4:], ttype="value", fld_name="code")
+                    oca_xref = "external.%s" % xid
+            elif model == "report.intrastat.code":
+                module, xid = xref.split(".", 1)
+                if module == "external":
+                    xid = self.translate(model, xid, ttype="value", fld_name="code")
+                    oca_xref = "external.%s" % xid
+                elif module == "z0bug" and xid.startswith("istat_"):
+                    xid = self.translate(model, xid[6:], ttype="value", fld_name="code")
+                    oca_xref = "external.%s" % xid
+        if self.oca_coding:
+            oca_xref = self.OCA_TNL.get(xref, oca_xref)
+        return oca_xref
+
     def write_source_model(self, model, xrefs, exclude_xref=None):
-        if not self.product_variant and model == 'product.product':
-            return '', False, ''
+        def cast_type(field, attrs, vals):
+            if attrs["type"] == "boolean":
+                vals[field] = os0.str2bool(vals[field], False)
+            elif attrs["type"] in ("float", "monetary") and isinstance(
+                vals[field], basestring
+            ):
+                vals[field] = eval(vals[field])
+            elif attrs["type"] in ("date", "datetime"):
+                vals[field] = python_plus.compute_date(vals[field])
+            elif (
+                attrs["type"] in ("many2one", "one2many", "many2many", "integer")
+                and isinstance(vals[field], basestring)
+                and (
+                    vals[field].isdigit()
+                    or vals[field].startswith("-")
+                    and vals[field][1:].isdigit()
+                )
+            ):
+                vals[field] = int(vals[field])
+            return vals
+
+        if not self.product_variant and model == "product.product":
+            return "", False, ""
         exclude_xref = exclude_xref or []
         xrefs = xrefs or self.sound_xrefs
         valid = False
-        title = "TEST_%s" % model.replace('.', '_').upper()
+        title = "TEST_%s" % model.replace(".", "_").upper()
         source = "%s = {\n" % title
         if model in self.MODEL_BY:
             source += "    'by': '%s',\n" % self.MODEL_BY[model]
-        toc = ''
+        toc = ""
         for xref in xrefs:
             if xref in exclude_xref or self.model_of_xref[xref] != model:
                 continue
-            if self.oca_coding:
-                oca_xref = self.OCA_TNL.get(xref, xref)
-            else:
-                oca_xref = xref
+            oca_xref = self.get_context_xref(xref, self.model_of_xref[xref])
             source += "    '%s': {\n" % oca_xref
             valid = True
             toc = "    '%s': %s,\n" % (model, title)
@@ -637,29 +838,49 @@ class WizardMkTestPyfile(models.TransientModel):
                     if field in vals:
                         del vals[field]
             if oca_xref != xref:
-                module, oca_name = oca_xref.split('.', 1)
-                if model == 'account.account':
-                    vals['code'] = oca_name
-                elif model == 'account.tax':
-                    vals['description'] = oca_name
-                elif model == 'account.journal':
-                    vals['code'] = oca_name
+                module, oca_name = oca_xref.split(".", 1)
+                if model == "account.account":
+                    vals["code"] = oca_name
+                elif model == "account.tax":
+                    vals["description"] = oca_name
+                elif model == "account.journal":
+                    vals["code"] = oca_name
             for field in vals.keys():
-                if (field == 'id' or
-                        field not in self.struct[model] or
-                        vals[field] is None):
+                if (
+                    field == "id"
+                    or field not in self.struct[model]
+                    or vals[field] is None
+                    or vals[field] in ("None", r"\N")
+                ):
                     continue
-                if self.struct[model][field]['type'] in ('date', 'datetime'):
-                    vals[field] = python_plus.compute_date(vals[field])
-                if self.oca_coding:
-                    vals[field] = self.OCA_TNL.get(vals[field], vals[field])
-                if self.struct[model][field]['type'] in ('integer',
-                                                         'float',
-                                                         'monetary'):
+                if field == "lang" and not self.lang:
+                    continue
+                if field == "currency_id":
+                    continue
+                vals = cast_type(field, self.struct[model][field], vals)
+                if self.struct[model][field]["type"] in (
+                    "many2one",
+                    "one2many",
+                    "many2many",
+                ) and isinstance(vals[field], basestring):
+                    if self.struct[model][field]["relation"] in self._model2ignore:
+                        continue
+                    vals[field] = self.get_context_xref(
+                        vals[field],
+                        self.struct[model][field]["relation"],
+                        fld_name=field,
+                    )
+                if self.struct[model][field]["type"] in (
+                    "integer",
+                    "float",
+                    "monetary",
+                ):
                     source += "        '%s': %s,\n" % (field, vals[field])
-                elif self.struct[model][field]['type'] == 'boolean':
+                elif self.struct[model][field]["type"] == "boolean":
                     source += "        '%s': %s,\n" % (
-                        field, 'True' if vals[field] else 'False')
+                        field,
+                        "True" if vals[field] else "False",
+                    )
                 else:
                     source += "        '%s': '%s',\n" % (field, vals[field])
             source += "    },\n"
@@ -667,7 +888,11 @@ class WizardMkTestPyfile(models.TransientModel):
         return source, valid, toc
 
     def make_test_pyfile(self):
-        self.modules_to_declare = ('z0bug', 'external', 'l10n_it')
+        self.diff_ver("1.0.14", "z0bug_odoo", "z0bug_odoo_lib")
+        self.diff_ver("1.0.4", "clodoo", "transodoo")
+        self.diff_ver("1.0.3", "os0", "os0")
+        self.diff_ver("1.0.10", "python_plus", "python_plus")
+        self.modules_to_declare = ("z0bug", "external", "l10n_it")
         self.model_of_xref = {}
         self.top_xrefs = []
         self.top_model_xrefs = {}
@@ -676,13 +901,13 @@ class WizardMkTestPyfile(models.TransientModel):
         self.sound_models = []
         self.struct = {}
         self.dep_xrefs = []
-        # models_to_ignore = [x.model for x in self.model2ignore_ids]
+        self._model2ignore = [x.model for x in self.model2ignore_ids]
 
         # Phase 1:
         # find & store all xrefs child or depending on required xrefs
-        parent_id_name = ''
+        parent_id_name = ""
         for xref_obj in self.xref_ids:
-            xref = '%s.%s' % (xref_obj.module, xref_obj.name)
+            xref = "%s.%s" % (xref_obj.module, xref_obj.name)
             if xref in self.top_xrefs:
                 continue
             self.top_xrefs.append(xref)
@@ -693,26 +918,39 @@ class WizardMkTestPyfile(models.TransientModel):
                 self.top_model_xrefs[model].append(xref)
             model_child = self.get_child_model(model)
             if model_child:
-                parent_id_name = self.push_child_xref(xref, model, model_child)
-            self.push_xref(xref, model)
+                parent_id_name = self.push_child_xref(
+                    xref, model, model_child, top=True
+                )
+            self.push_xref(xref, model, top=True)
 
         # Phase 2:
         # For every model depending on required model, write field data
-        self.source = SOURCE_HEADER % (
+        self.source = ""
+        if release.version_info[0] < 11:
+            self.source = "# -*- coding: utf-8 -*-\n"
+        self.source += SOURCE_HEADER % (
             datetime.today(),
-            self.env['ir.module.module'].search(
-                [('name', '=', 'mk_test_env')]).latest_version)
+            self.env["ir.module.module"]
+            .search([("name", "=", "mk_test_env")])
+            .latest_version,
+        )
         self.source += "# Record data for base models\n"
-        test_setup = 'TEST_SETUP = {\n'
+        test_setup_list = "TEST_SETUP_LIST = [\n"
+        test_setup = "TEST_SETUP = {\n"
         for model in sorted(self.sound_models):
             source, valid, toc = self.write_source_model(
-                model, self.sound_xrefs,
-                exclude_xref=self.top_xrefs + list(
-                    itertools.chain(*self.top_child_xrefs.values())))
+                model,
+                self.sound_xrefs,
+                exclude_xref=self.top_xrefs
+                + list(itertools.chain(*self.top_child_xrefs.values())),
+            )
             if valid:
                 self.source += source
+                test_setup_list += "    '%s',\n" % model
                 test_setup += toc
+        test_setup_list += "]\n"
         test_setup += "}\n"
+        self.source += test_setup_list
         self.source += test_setup
 
         # Phase 3:
@@ -723,8 +961,7 @@ class WizardMkTestPyfile(models.TransientModel):
             child_xrefs = []
             for xref in self.top_model_xrefs[model]:
                 child_xrefs += self.top_child_xrefs[xref]
-            source, valid, toc = self.write_source_model(
-                model_child, child_xrefs)
+            source, valid, toc = self.write_source_model(model_child, child_xrefs)
             if valid:
                 self.source += source
 
@@ -733,32 +970,42 @@ class WizardMkTestPyfile(models.TransientModel):
         self.source += "\n# Record data for models to test\n"
         for model in self.top_model_xrefs.keys():
             source, valid, toc = self.write_source_model(
-                model, self.top_model_xrefs[model])
+                model, self.top_model_xrefs[model]
+            )
             if valid:
                 self.source += source
 
+        model_class = self.get_model_class(model)
+        super_args = ("%s, self" % model_class) if release.version_info[0] < 11 else ""
+        opt_lang = ""
+        if self.lang and self.env.user.lang != "en_US":
+            opt_lang = "lang='%s'" % self.lang
         self.source += SOURCE_BODY % {
-            'model': model,
-            'model_child': self.get_child_model(model),
-            'title': ("TEST_%s" % model.replace('.', '_').upper()),
-            'title_child': ("TEST_%s" % self.get_child_model(
-                model).replace('.', '_').upper()),
-            'parent_id_name': parent_id_name,
+            "super_args": super_args,
+            "model": model,
+            "model_class": model_class,
+            "model_child": self.get_child_model(model),
+            "test_fct_name": "test_%s" % model.replace(".", "_"),
+            "opt_lang": opt_lang,
+            "title": ("TEST_%s" % model.replace(".", "_").upper()),
+            "title_child": (
+                "TEST_%s" % self.get_child_model(model).replace(".", "_").upper()
+            ),
+            "parent_id_name": parent_id_name,
         }
 
         return {
-            'name': "Data created",
-            'type': 'ir.actions.act_window',
-            'res_model': 'wizard.mk.test.pyfile',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_id': self.id,
-            'target': 'new',
-            'context': {'active_id': self.id},
-            'view_id': self.env.ref(
-                'mk_test_env.result_mk_test_pyfile_view').id,
-            'domain': [('id', '=', self.id)],
+            "name": "Data created",
+            "type": "ir.actions.act_window",
+            "res_model": "wizard.mk.test.pyfile",
+            "view_type": "form",
+            "view_mode": "form",
+            "res_id": self.id,
+            "target": "new",
+            "context": {"active_id": self.id},
+            "view_id": self.env.ref("mk_test_env.result_mk_test_pyfile_view").id,
+            "domain": [("id", "=", self.id)],
         }
 
     def close_window(self):
-        return {'type': 'ir.actions.act_window_close'}
+        return {"type": "ir.actions.act_window_close"}
