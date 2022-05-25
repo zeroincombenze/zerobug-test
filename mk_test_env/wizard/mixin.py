@@ -8,7 +8,8 @@
 #
 # from past.builtins import basestring
 from past.builtins import basestring
-from odoo import models
+
+from odoo import _, models
 from odoo.exceptions import UserError
 
 try:
@@ -185,7 +186,7 @@ class BaseTestMixin(models.AbstractModel):
 
     def get_fields_struct(self, model_name):
         if model_name not in self.env:
-            raise UserError("Model %s not found!" % model_name)
+            raise UserError(_("Model %s not found!") % model_name)
         return self.env[model_name].fields_get()
 
     # def map_values(self, model_name, vals):

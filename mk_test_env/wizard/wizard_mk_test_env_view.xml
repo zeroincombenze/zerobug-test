@@ -42,50 +42,40 @@
                     </page>
                     <page string="Module selection">
                         <group>
-                            <field name="distro" />
                             <group>
-                                <field name="einvoice" />
+                                <field name="distro" />
+                                <field name="module2test" />
+                                <field name="load_vat" />
+                                <field name="load_einvoice" />
+                                <field name="load_fiscal" />
+                                <field name="load_account_plus" />
+                                <field name="load_assets" />
+                                <field name="load_intrastat" />
+                                <field name="load_sale" />
+                                <field name="load_purchase" />
+                            </group>
+                            <group>
                                 <field name="load_sp" />
                                 <field name="load_rc" />
                                 <field name="load_wh" />
                                 <field name="load_li" />
-                                <field name="load_vat" />
-                                <field name="load_fiscal" />
-                            </group>
-                            <group>
                                 <field name="load_sct" />
                                 <field name="load_sdd" />
                                 <field name="load_riba" />
                                 <field name="load_financing" />
-                                <field name="load_assets" />
                                 <field name="load_conai" />
                             </group>
                         </group>
                     </page>
                     <page string="Data selection">
                         <group>
-                            <field
-                                name="load_coa"
-                                attrs="{'readonly': [('new_company', '!=', False)]}"
-                            />
-                            <field name="load_partner" />
-                            <field name="load_product" />
-                            <field
-                                name="load_sale_order"
-                                attrs="{'readonly': [('new_company', '!=', False)]}"
-                            />
-                            <field
-                                name="load_purchase_order"
-                                attrs="{'readonly': [('new_company', '!=', False)]}"
-                            />
-                            <field
-                                name="load_invoice"
-                                attrs="{'readonly': [('new_company', '!=', False)]}"
-                            />
-                            <field
-                                name="load_rec_assets"
-                                attrs="{'readonly': [('new_company', '!=', False)]}"
-                            />
+                            <field name="load_data_coa" />
+                            <field name="load_data_partner" />
+                            <field name="load_data_product" />
+                            <field name="load_data_sale_order" />
+                            <field name="load_data_purchase_order" />
+                            <field name="load_data_invoice" />
+                            <field name="load_data_assets" />
                         </group>
                     </page>
                 </notebook>
