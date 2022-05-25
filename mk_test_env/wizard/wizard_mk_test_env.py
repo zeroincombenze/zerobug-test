@@ -9,7 +9,6 @@
 import os
 import re
 import time
-from builtins import int
 from datetime import date, datetime
 
 import pytz
@@ -110,7 +109,10 @@ MODULES_NEEDED = {
     "load_partner": {
         "*": ["partner_bank"],
     },
-    "load_sale_order": {"*": ["sale", "l10n_it_ddt"]},
+    "load_sale_order": {
+        "*": ["sale", "l10n_it_ddt"],
+        "2": ["sale", "l10n_it_delivery_note"],
+    },
     "load_purchase_order": {
         "*": ["purchase"],
     },
@@ -251,6 +253,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def _selection_action(self, scope):
         res = [("add", "Add only new records"), ("all", "Add or rewrite all records")]
+        if scope == "sale":
+            res.append(("add2", "Add only new records (DN)"))
+            res.append(("all2", "Add or rewrite all records (DN)"))
         if scope not in ("partner", "product", "assets"):
             res.append(("dup", "Add/duplicate all records"))
             res.append(("add-draft", "Add only new records, leave them draft"))
@@ -694,14 +699,21 @@ class WizardMakeTestEnvironment(models.TransientModel):
         for item in groups:
             if item == "distro" and not self.load_vat:
                 continue
+            kk = item
+            if (hasattr(self, item) and
+                    isinstance(getattr(self, item), basestring) and
+                    getattr(self, item).endswith('2')):
+                kk = "2"
             if scope or item == "*" or getattr(self, item):
                 if isinstance(MODULES_NEEDED[item], (list, tuple)):
-                    modules_2_install += MODULES_NEEDED[item]
+                    modules_2_install += MODULES_NEEDED[kk]
                 elif isinstance(MODULES_NEEDED[item], dict):
-                    if getattr(self, item) and MODULES_NEEDED[item].get("*"):
+                    if getattr(self, item) and MODULES_NEEDED[item].get("2"):
+                        modules_2_install += MODULES_NEEDED[item]["2"]
+                    elif getattr(self, item) and MODULES_NEEDED[item].get("*"):
                         modules_2_install += MODULES_NEEDED[item]["*"]
                     if MODULES_NEEDED[item].get(getattr(self, item)):
-                        modules_2_install += MODULES_NEEDED[item][getattr(self, item)]
+                        modules_2_install += MODULES_NEEDED[kk][getattr(self, item)]
         if not scope:
             coa_module_list = [x[0] for x in self.COA_MODULES]
             if not any([x for x in modules_2_install if x in coa_module_list]):
@@ -1274,7 +1286,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         else:
             # multi_model = False
             xid = self.env_ref(xref, company_id=company_id, model=model)
-        if not xid or mode in ("all", "all-draft", "dup"):
+        if not xid or mode in ("all", "all2", "all-draft", "dup"):
             vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(ref_model, xref)
             if "_requirements" in vals:
                 if not self.eval_expr(vals["_requirements"]):
