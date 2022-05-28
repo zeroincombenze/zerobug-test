@@ -9,6 +9,7 @@
 #
 # from past.builtins import basestring
 from past.builtins import basestring
+
 from odoo import models
 from odoo.exceptions import UserError
 

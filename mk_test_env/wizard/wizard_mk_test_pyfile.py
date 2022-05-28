@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#  -*- coding: utf-8 -*-
 #
 # Copyright 2019-22 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
@@ -28,6 +27,7 @@ except ImportError:
         import odoo.release as release
     except ImportError:
         release = ""
+# from .mixin import BaseTestMixin
 
 import python_plus
 from clodoo import transodoo
@@ -676,7 +676,6 @@ class WizardMkTestPyfile(models.TransientModel):
         return model_line
 
     def push_xref(self, xref, model, top=None):
-        print(">>> push_xref(%s,%s)" % (xref, model))  # debug
         self.model_of_xref[xref] = model
         module, name = xref.split(".", 1)
         if module not in self.modules_to_declare:
@@ -691,7 +690,6 @@ class WizardMkTestPyfile(models.TransientModel):
         if model not in self.struct:
             self.struct[model] = self.env[model].fields_get()
         for field in vals.keys():
-            # print('  >>> field=%s' % field)  # debug
             if (
                 field == "id"
                 or field not in self.struct[model]
@@ -705,7 +703,6 @@ class WizardMkTestPyfile(models.TransientModel):
                     required = TABLE_DEF[relation]["required"]
                 else:
                     required = top or False
-                # print('    >>> relation,required=%s,%s' % (relation, required))  # debug
                 if not required:
                     model_ids = self.env["ir.model"].search([("model", "=", relation)])
                     if model_ids[0] in self.model2ignore_ids:
@@ -728,7 +725,6 @@ class WizardMkTestPyfile(models.TransientModel):
                         )
 
     def push_child_xref(self, xref, model, model_child, top=None):
-        # print('>>> push_child_xref(%s,%s,%s)' % (xref, model, model_child))  # debug
         if model not in self.struct:
             self.struct[model] = self.env[model].fields_get()
         if model_child not in self.struct:
@@ -739,13 +735,11 @@ class WizardMkTestPyfile(models.TransientModel):
         record_ctr = 0
         parent_id_name = ""
         for xref_child in xrefs:
-            # print('  >>> xref_child=%s' % xref_child)  # debug
             if self.max_child_records and record_ctr >= self.max_child_records:
                 break
             self.model_of_xref[xref_child] = model_child
             vals = self.get_test_values(model_child, xref_child)
             for field in vals.keys():
-                # print('    >>> field=%s' % field)  # debug
                 if (
                     field == "id"
                     or field not in self.struct[model_child]
@@ -760,7 +754,6 @@ class WizardMkTestPyfile(models.TransientModel):
                 ):
                     if vals[field] == xref:
                         self.top_child_xrefs[xref].append(xref_child)
-                        # print('    >>> parent_id_name=%s' % field)  # debug
                         parent_id_name = field
                         record_ctr += 1
                     break

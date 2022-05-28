@@ -25,7 +25,7 @@ Avaiable Addons / Moduli disponibili
 +-------------+------------+----------------------------------------------------------------------------------+
 | midea       | 10.0.0.1.4 | z0bug_odoo test suite                                                            |
 +-------------+------------+----------------------------------------------------------------------------------+
-| mk_test_env | 10.0.0.7.3 | Create or update test environment                                                |
+| mk_test_env | 10.0.0.7.4 | Create or update test environment                                                |
 +-------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -43,6 +43,12 @@ Prerequisites / Prerequisiti
 
 * python 2.7+ (best 2.7.5+)
 * postgresql 9.2+ (best 9.5)
+* future
+* os0
+* past
+* python_plus
+* z0bug_odoo
+* zerobug
 
 
 Installation / Installazione
@@ -141,6 +147,12 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 History / Cronologia
 --------------------
 
+mk_test_env: 10.0.0.7.4 (2022-05-27)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [REF] Module list from XLSX
+
+
 mk_test_env: 10.0.0.7.3 (2022-04-22)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -183,57 +195,6 @@ mk_test_env: 10.0.0.6.11 (2021-12-31)
 * [IMP] New CoA module name
 
 
-mk_test_env: 10.0.0.6.10 (2021-11-26)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: set bank account
-* [IMP] mk_test_env:new wallet bank configuration
-
-
-mk_test_env: 10.0.0.6.9 (2021-11-23)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: italy.profile.account
-* [IMP] mk_test_env: intrastat
-* [IMP] mk_test_env: account mode
-
-
-mk_test_env: 10.0.0.6.8 (2021-11-16)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: inventory data
-* [IMP] mk_test_env: multiple journals
-
-
-mk_test_env: 10.0.0.6.7 (2021-11-12)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: conditioned import
-* [IMP] mk_test_env: virtual xref for journal
-
-
-mk_test_env: 10.0.0.6.6 (2021-11-11)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [FIX] mk_test_env: sometime does not load pyament modes
-
-
-mk_test_env: 10.0.0.6.5 (2021-11-10)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: data for test MtO
-* [FIX] mk_test_env: minor fixes
-
-
-mk_test_env: 10.0.0.6.4 (2021-11-09)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: available for Odoo 10.0
-* [IMP] mk_test_env: clean-up removed
-* [IMP] mk_test_env: account wizard removed
-* [FIX] mk_test_env: add does not change existing records
-
-
 
 
 
@@ -267,11 +228,11 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2022-04-27
+Last Update / Ultimo aggiornamento: 2022-05-28
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
-    :alt:
+    :alt: 
 .. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=10.0
     :target: https://travis-ci.com/zeroincombenze/zerobug-test
     :alt: github.com
@@ -327,3 +288,5 @@ Last Update / Ultimo aggiornamento: 2022-04-27
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
    :target: https://t.me/Assitenza_clienti_powERP
+
+
