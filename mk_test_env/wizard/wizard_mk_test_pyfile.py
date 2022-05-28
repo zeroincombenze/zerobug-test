@@ -26,6 +26,7 @@ except ImportError:
         import odoo.release as release
     except ImportError:
         release = ""
+# from .mixin import BaseTestMixin
 
 import python_plus
 from clodoo import transodoo

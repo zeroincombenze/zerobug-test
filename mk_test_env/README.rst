@@ -1,6 +1,6 @@
 
 =========================================
-|icon| Manage Test Environment 12.0.0.7.2
+|icon| Manage Test Environment 12.0.0.7.4
 =========================================
 
 
@@ -48,17 +48,17 @@ Il comportamento di quesot modulo dipende pesantemente dai sequenti package PYPI
 Features / Caratteristiche
 --------------------------
 
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
-| Description / Descrizione                | 6.1        | 7.0        | 8.0        | 9.0        | 10.0    | 11.0       | 12.0    | 13.0       | 14.0       | 15.0       |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
-| Partner & Products / Soggetti e prodotti | |check|    | |check|    | |check|    | |check|    | |check| | |check|    | |check| | |no_check| | |no_check| | |no_check| |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
-| Sale orders / Ordini clienti             | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| | |no_check| | |no_check| | |no_check| |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
-| Purchase orders / Ordini fornitori       | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| | |no_check| | |no_check| | |no_check| |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
-| Invoices / Fatture                       | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| | |no_check| | |no_check| | |no_check| |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
++------------------------------------------+-----+-----+-----+-----+------+------+------+------+------+------+
+| Description / Descrizione                | 6.1 | 7.0 | 8.0 | 9.0 | 10.0 | 11.0 | 12.0 | 13.0 | 14.0 | 15.0 |
++------------------------------------------+-----+-----+-----+-----+------+------+------+------+------+------+
+| Partner & Products / Soggetti e prodotti | ✅   | ✅   | ✅   | ✅   | ✅    | ✅    | ✅    | ❌    | ❌    | ❌    |
++------------------------------------------+-----+-----+-----+-----+------+------+------+------+------+------+
+| Sale orders / Ordini clienti             | ❌   | ❌   | ❌   | ❌   | ✅    | ❌    | ✅    | ❌    | ❌    | ❌    |
++------------------------------------------+-----+-----+-----+-----+------+------+------+------+------+------+
+| Purchase orders / Ordini fornitori       | ❌   | ❌   | ❌   | ❌   | ✅    | ❌    | ✅    | ❌    | ❌    | ❌    |
++------------------------------------------+-----+-----+-----+-----+------+------+------+------+------+------+
+| Invoices / Fatture                       | ❌   | ❌   | ❌   | ❌   | ✅    | ❌    | ✅    | ❌    | ❌    | ❌    |
++------------------------------------------+-----+-----+-----+-----+------+------+------+------+------+------+
 
 
 |
@@ -179,6 +179,16 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
+12.0.0.7.4 (2022-05-27)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [REF] Module list from XLSX
+
+12.0.0.7.3 (2022-04-22)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [REF] New model mixin + tests
+
 12.0.0.7.2 (2022-02-15)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -190,7 +200,7 @@ ChangeLog History / Cronologia modifiche
 * [FIX] expression to evaluate _requirements
 * [FIX] multi-model with state
 
-10.0.0.7 (2022-01-07)
+12.0.0.7 (2022-01-07)
 ~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Recognizing l10n_it_fiscal or l10n_it_coa
@@ -246,20 +256,6 @@ ChangeLog History / Cronologia modifiche
 
 * [IMP] mk_test_env: data for test MtO
 * [FIX] mk_test_env: minor fixes
-
-12.0.0.6.4 (2021-11-09)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: available for Odoo 10.0
-* [IMP] mk_test_env: clean-up removed
-* [IMP] mk_test_env: account wizard removed
-* [FIX] mk_test_env: add does not change existing records
-
-12.0.0.6.3 (2021-10-13)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: default language and timezone from user
-* [IMP] mk_test_env: new configuration for wallet management  / Nuova configurazione per conti di portafoglio
 
 
 
@@ -319,7 +315,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2022-02-16
+Last Update / Ultimo aggiornamento: 2022-05-28
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
