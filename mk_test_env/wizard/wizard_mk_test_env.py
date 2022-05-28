@@ -155,9 +155,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def _selection_action(self, group):
         res = [("add", "Add only new records"), ("all", "Add or rewrite all records")]
-        if group == "sale":
-            res.append(("add2", "Add only new records (DN)"))
-            res.append(("all2", "Add or rewrite all records (DN)"))
         if group not in ("partner", "product", "assets"):
             res.append(("dup", "Add/duplicate all records"))
             res.append(("add-draft", "Add only new records, leave them draft"))
@@ -205,17 +202,18 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def _feature_2_install(self, item):
         flag = False
         if not self.module2test:
-            module_list, modules_to_remove = self.get_module_list(group=item)
-            for module in self.env["ir.module.module"].search(
-                [("name", "in", module_list)]
+            module_list, modules_to_remove, groups_state = self.get_module_list(
+                group=item)
+            flag = groups_state[item]
+            if flag and (
+                not self.env["ir.module.module"].search(
+                    [("name", "in", module_list),
+                     ("state", "=", "uninstalled")]) or
+                self.env["ir.module.module"].search(
+                    [("name", "in", module_list),
+                     ("state", "=", "uninstallable")])
             ):
-                if (
-                    module
-                    and module.state == "uninstalled"
-                    and module.state != "uninstallable"
-                ):
-                    flag = True
-                    break
+                flag = False
         return flag
 
     def _set_coa_2_use(self):
@@ -268,8 +266,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 except BaseException:
                     tz = "Europe/Rome"
         return tz
-
-    force_test_values = fields.Boolean("N/D", default=False)
 
     state = fields.Selection(
         [
@@ -336,6 +332,26 @@ class WizardMakeTestEnvironment(models.TransientModel):
         "Activate fiscal modules",
         default=lambda self: self._feature_2_install("load_fiscal"),
     )
+    load_sale = fields.Selection(
+        [
+            ('ddt', "With module DdT"),
+            ('dn', "With module Delivery Note"),
+        ],
+        string="Activate sale modules",
+        default=lambda self: self._feature_2_install("load_sale"),
+    )
+    load_purchase = fields.Boolean(
+        "Activate purchase module",
+        default=lambda self: self._feature_2_install("load_purchase"),
+    )
+    load_account_plus = fields.Boolean(
+        "Activate enhanced account",
+        default=lambda self: self._feature_2_install("load_account_plus")
+    )
+    load_intrastat = fields.Boolean(
+        "Activate Intrastat",
+        default=lambda self: self._feature_2_install("load_intrastat")
+    )
     load_conai = fields.Boolean(
         "Activate Conai", default=lambda self: self._feature_2_install("load_conai")
     )
@@ -367,16 +383,16 @@ class WizardMakeTestEnvironment(models.TransientModel):
     load_data_product = fields.Selection(
         lambda self: self._selection_action("product"), "Load Products"
     )
-    load_sale_order = fields.Selection(
+    load_data_sale_order = fields.Selection(
         lambda self: self._selection_action("sale"), "Load Sale Orders"
     )
-    load_purchase_order = fields.Selection(
+    load_data_purchase_order = fields.Selection(
         lambda self: self._selection_action("purchase"), "Load Purchase Orders"
     )
     load_data_invoice = fields.Selection(
         lambda self: self._selection_action("invoice"), "Load Invoices"
     )
-    load_rec_assets = fields.Selection(
+    load_data_assets = fields.Selection(
         lambda self: self._selection_action("assets"), "Load Assets"
     )
     ctr_rec_new = fields.Integer("New record inserted", readonly=True)
@@ -384,21 +400,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
     ctr_rec_del = fields.Integer("Record deleted", readonly=True)
     status_mesg = fields.Text("Installation status", readonly=True)
 
-    @api.onchange(
-        "load_sp", "load_rc", "load_wh", "load_li", "load_conai", "load_sct", "load_sdd"
-    )
-    def flag_load_change(self):
-        for item in (
-            "load_sp",
-            "load_rc",
-            "load_wh",
-            "load_li",
-            "load_conai",
-            "load_sct",
-            "load_sdd",
-        ):
-            if not getattr(self._origin, item) and getattr(self, item):
-                self.force_test_values = True
+    @api.onchange("load_sale")
+    def _onchange_sale(self):
+        if self.load_sale:
+            pass
 
     @api.onchange("coa")
     def _onchange_coa(self):
@@ -430,6 +435,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
             "load_riba",
             "load_financing",
             "load_assets",
+            "load_sale",
+            "load_purchase",
+            "load_account_plus",
+            "load_intrastat",
         ):
             setattr(self, item, self._feature_2_install(item))
 
@@ -629,6 +638,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         create_modules_table()
         modules_2_install = []
         modules_2_remove = []
+        groups_state = {}
         if group and not isinstance(group, str):
             modules_2_install = [group.name]
             for row in MODULES:
@@ -637,9 +647,30 @@ class WizardMakeTestEnvironment(models.TransientModel):
         else:
             groups = [group] if group else {x["group"] for x in MODULES}
             for item in groups:
+                if item not in groups_state:
+                    groups_state[item] = False
+                item_val = item
+                if hasattr(self, item):
+                    value = getattr(self, item)
+                    if value and not isinstance(value, bool):
+                        item_val = '%s*%s' % (item, getattr(self, item))
                 for row in MODULES:
-                    if row["group"] == "*" or row["group"] == item:
-                        if self.eval_expr(row["_requirements"]):
+                    if row["group"] == "*" and self.eval_expr(row["_requirements"]):
+                        if not group:
+                            modules_2_install += row["modules_to_install"]
+                            modules_2_remove += row["modules_to_uninstall"]
+                    elif (row["group"].startswith(item) and
+                          self.eval_expr(row["_requirements"])):
+                        if row["group"] == item_val:
+                            value = True if item == item_val else item_val.split(
+                                '*')[1]
+                            groups_state[item] = value
+                            modules_2_install += row["modules_to_install"]
+                            modules_2_remove += row["modules_to_uninstall"]
+                        elif (row["group"].startswith(item) and
+                              "*" in row["group"] and
+                              not groups_state[item]):
+                            groups_state[item] = row["group"].split('*')[1]
                             modules_2_install += row["modules_to_install"]
                             modules_2_remove += row["modules_to_uninstall"]
             if not group:
@@ -664,7 +695,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 else:
                     module_list = add_2_list(module_list, module)
         modules_2_install = module_list
-        return list(set(modules_2_install)), list(set(modules_2_remove))
+        return list(set(modules_2_install)), list(set(modules_2_remove)), groups_state
 
     @api.model
     def install_modules(
@@ -749,7 +780,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             ):
                 found_uninstalled = module
                 break
-        if found_uninstalled:
+        if found_uninstalled and not isinstance(found_uninstalled, bool):
             raise UserError("Module %s not installed!" % found_uninstalled.name)
 
         if (not to_install_modules and modules_to_remove) or (
@@ -773,7 +804,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         distro = self.distro if self.distro else self._set_distro()
         return self.get_distro_version(distro)
 
-    def translate(self, model, src, ttype=False, fld_name=False):
+    def translate(self, model, src, ttype=None, fld_name=False):
         tgtver = self.get_tgtver()
         srcver = "librerp12"
         if release.major_version == srcver:
@@ -1393,6 +1424,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 value = v
             res = cur_value or []
             name = self.translate("", key, ttype="xref")
+            gid = False
             if len(name.split(".")) == 2 and " " not in name:
                 gid = self.env_ref(name)
                 if isinstance(gid, bool):
@@ -1745,7 +1777,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.make_model("res.company", cantdup=True)
         self.set_user_preference()
         self._cr.commit()  # pylint: disable=invalid-commit
-        modules_to_install, modules_to_remove = self.get_module_list(
+        modules_to_install, modules_to_remove, groups_state = self.get_module_list(
             group=self.module2test)
         flag_module_installed = self.install_modules(
             modules_to_install, modules_to_remove
@@ -1797,15 +1829,16 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 model2="account.payment.term.line",
             )
             self.make_model("account.journal", mode=self.load_data_coa, cantdup=True)
-            self.enable_cancel_journal()
-            if not self._feature_2_install("load_wh"):
-                self.make_model(
-                    "withholding.tax",
-                    mode=self.load_data_coa,
-                    model2="withholding.tax.rate",
-                    cantdup=True,
-                )
             self.make_model("res.bank", mode=self.load_data_coa, cantdup=True)
+        if self.load_fiscal:
+            self.enable_cancel_journal()
+        if self.load_data_coa and not self._feature_2_install("load_wh"):
+            self.make_model(
+                "withholding.tax",
+                mode=self.load_data_coa,
+                model2="withholding.tax.rate",
+                cantdup=True,
+            )
         if self.load_data_partner:
             self.make_model("res.partner", mode=self.load_data_partner)
             self.make_model(
@@ -1821,6 +1854,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 cantdup=True,
                 model2="product.product",
             )
+        if self.load_data_partner and self.load_data_product:
             self.make_model(
                 "product.supplierinfo", mode=self.load_data_product, cantdup=True
             )
@@ -1848,32 +1882,32 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.make_model(
                     "dichiarazione.intento", mode=self.load_data_coa, cantdup=True
                 )
-        if self.load_rec_assets and not self._feature_2_install("load_assets"):
+        if self.load_data_assets and not self._feature_2_install("load_assets"):
             self.make_model(
                 "asset.category",
-                mode=self.load_rec_assets,
+                mode=self.load_data_assets,
                 cantdup=True,
                 model2="asset.category.depreciation.type",
             )
-            self.make_model("asset.asset", mode=self.load_rec_assets, cantdup=True)
+            self.make_model("asset.asset", mode=self.load_data_assets, cantdup=True)
         self.make_misc()
         self.state = "2"
 
         # Block 2: TODO> Separate function
-        if self.load_sale_order or self.load_purchase_order:
+        if self.load_data_sale_order or self.load_data_purchase_order:
             self.make_model(
                 "stock.inventory",
-                mode=self.load_sale_order,
+                mode=self.load_data_sale_order,
                 model2="stock.inventory.line",
             )
-        if self.load_sale_order:
+        if self.load_data_sale_order:
             self.make_model(
-                "sale.order", mode=self.load_sale_order, model2="sale.order.line"
+                "sale.order", mode=self.load_data_sale_order, model2="sale.order.line"
             )
-        if self.load_purchase_order:
+        if self.load_data_purchase_order:
             self.make_model(
                 "purchase.order",
-                mode=self.load_purchase_order,
+                mode=self.load_data_purchase_order,
                 model2="purchase.order.line",
             )
         if self.load_data_invoice:
