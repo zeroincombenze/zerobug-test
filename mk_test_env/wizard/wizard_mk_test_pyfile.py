@@ -6,13 +6,14 @@
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
-from past.builtins import basestring
-import os
 # import time
 # import re
 # import pytz
 import itertools
+import os
 from datetime import datetime
+
+from past.builtins import basestring
 
 from odoo import api, fields, models
 
@@ -24,14 +25,13 @@ except ImportError:
     try:
         import odoo.release as release
     except ImportError:
-        release = ''
+        release = ""
 # from .mixin import BaseTestMixin
 
-from z0bug_odoo import z0bug_odoo_lib
-from os0 import os0
-from clodoo import transodoo
 import python_plus
-
+from clodoo import transodoo
+from os0 import os0
+from z0bug_odoo import z0bug_odoo_lib
 
 SOURCE_HEADER = """\"\"\"
 Tests are based on test environment created by module mk_test_env in repository

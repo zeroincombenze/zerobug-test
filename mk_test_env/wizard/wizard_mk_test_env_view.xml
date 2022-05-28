@@ -42,17 +42,18 @@
                     </page>
                     <page string="Module selection">
                         <group>
-                            <field name="distro" />
                             <group>
-                                <field name="einvoice" />
+                                <field name="distro" />
+                                <field name="module2test" />
+                                <field name="load_vat" />
+                                <field name="load_einvoice" />
+                                <field name="load_fiscal" />
+                            </group>
+                            <group>
                                 <field name="load_sp" />
                                 <field name="load_rc" />
                                 <field name="load_wh" />
                                 <field name="load_li" />
-                                <field name="load_vat" />
-                                <field name="load_fiscal" />
-                            </group>
-                            <group>
                                 <field name="load_sct" />
                                 <field name="load_sdd" />
                                 <field name="load_riba" />
@@ -65,11 +66,11 @@
                     <page string="Data selection">
                         <group>
                             <field
-                                name="load_coa"
+                                name="load_data_coa"
                                 attrs="{'readonly': [('new_company', '!=', False)]}"
                             />
-                            <field name="load_partner" />
-                            <field name="load_product" />
+                            <field name="load_data_partner" />
+                            <field name="load_data_product" />
                             <field
                                 name="load_sale_order"
                                 attrs="{'readonly': [('new_company', '!=', False)]}"
@@ -79,7 +80,7 @@
                                 attrs="{'readonly': [('new_company', '!=', False)]}"
                             />
                             <field
-                                name="load_invoice"
+                                name="load_data_invoice"
                                 attrs="{'readonly': [('new_company', '!=', False)]}"
                             />
                             <field
