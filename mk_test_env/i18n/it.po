@@ -15,10 +15,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.0\n"
+"Generated-By: Babel 2.9.1\n"
 
 #. module: mk_test_env
 #: view:wizard.make.test.environment:0
+#: view:wizard.make.test.environment
+#: view:wizard.make.test.environment
 #: view:wizard.make.test.environment
 #: view:wizard.make.test.environment
 #: view:wizard.make.test.environment
@@ -30,11 +32,15 @@ msgstr "Annullare"
 #: field:wizard.make.test.environment,coa
 #: field:wizard.make.test.environment,coa
 #: field:wizard.make.test.environment,coa
+#: field:wizard.make.test.environment,coa
+#: field:wizard.make.test.environment,coa
 msgid "Chart of Account"
 msgstr "Piano dei conti"
 
 #. module: mk_test_env
 #: view:wizard.make.test.environment:0
+#: view:wizard.make.test.environment
+#: view:wizard.make.test.environment
 #: view:wizard.make.test.environment
 #: view:wizard.make.test.environment
 #: view:wizard.make.test.environment
@@ -46,11 +52,15 @@ msgstr "Chiudere"
 #: field:wizard.make.test.environment,company_id
 #: field:wizard.make.test.environment,company_id
 #: field:wizard.make.test.environment,company_id
+#: field:wizard.make.test.environment,company_id
+#: field:wizard.make.test.environment,company_id
 msgid "Company"
 msgstr "Azienda"
 
 #. module: mk_test_env
 #: view:wizard.make.test.environment:0
+#: view:wizard.make.test.environment
+#: view:wizard.make.test.environment
 #: view:wizard.make.test.environment
 #: view:wizard.make.test.environment
 #: view:wizard.make.test.environment
@@ -66,11 +76,15 @@ msgstr "Creare"
 #: code:_description view:wizard.make.test.environment
 #: code:_description view:wizard.make.test.environment
 #: code:_description view:wizard.make.test.environment
+#: code:_description view:wizard.make.test.environment
+#: code:_description view:wizard.make.test.environment
 msgid "Create Test Environment"
-msgstr "Crea ambiente di test"
+msgstr "Creare ambiente di test"
 
 #. module: mk_test_env
 #: field:wizard.make.test.environment,new_company:0
+#: field:wizard.make.test.environment,new_company
+#: field:wizard.make.test.environment,new_company
 #: field:wizard.make.test.environment,new_company
 #: field:wizard.make.test.environment,new_company
 #: field:wizard.make.test.environment,new_company
@@ -82,11 +96,15 @@ msgstr "Creare nuova azienda"
 #: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
+#: selection:wizard.make.test.environment,coa
+#: selection:wizard.make.test.environment,coa
 msgid "Default Odoo CoA"
 msgstr "PdC predefinito Odoo"
 
 #. module: mk_test_env
 #: selection:wizard.make.test.environment,coa:0
+#: selection:wizard.make.test.environment,coa
+#: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
@@ -98,11 +116,15 @@ msgstr "PdC sperimentale Axilor"
 #: field:wizard.make.test.environment,force_test_values
 #: field:wizard.make.test.environment,force_test_values
 #: field:wizard.make.test.environment,force_test_values
+#: field:wizard.make.test.environment,force_test_values
+#: field:wizard.make.test.environment,force_test_values
 msgid "Force reload test values"
 msgstr "Forzare caricamento valori di test"
 
 #. module: mk_test_env
 #: field:wizard.make.test.environment,status_mesg:0
+#: field:wizard.make.test.environment,status_mesg
+#: field:wizard.make.test.environment,status_mesg
 #: field:wizard.make.test.environment,status_mesg
 #: field:wizard.make.test.environment,status_mesg
 #: field:wizard.make.test.environment,status_mesg
@@ -114,11 +136,15 @@ msgstr "Stato installazione"
 #: field:wizard.make.test.environment,load_coa
 #: field:wizard.make.test.environment,load_coa
 #: field:wizard.make.test.environment,load_coa
+#: field:wizard.make.test.environment,load_coa
+#: field:wizard.make.test.environment,load_coa
 msgid "Load chart of account"
-msgstr "Caricare piano dei conti"
+msgstr "Caricare dati contabili"
 
 #. module: mk_test_env
 #: field:wizard.make.test.environment,load_invoice:0
+#: field:wizard.make.test.environment,load_invoice
+#: field:wizard.make.test.environment,load_invoice
 #: field:wizard.make.test.environment,load_invoice
 #: field:wizard.make.test.environment,load_invoice
 #: field:wizard.make.test.environment,load_invoice
@@ -130,11 +156,15 @@ msgstr "Caricare fatture"
 #: field:wizard.make.test.environment,load_partner
 #: field:wizard.make.test.environment,load_partner
 #: field:wizard.make.test.environment,load_partner
+#: field:wizard.make.test.environment,load_partner
+#: field:wizard.make.test.environment,load_partner
 msgid "Load partners"
-msgstr "Caricare soggetti"
+msgstr "Caricare clienti e fornitori"
 
 #. module: mk_test_env
 #: field:wizard.make.test.environment,load_product:0
+#: field:wizard.make.test.environment,load_product
+#: field:wizard.make.test.environment,load_product
 #: field:wizard.make.test.environment,load_product
 #: field:wizard.make.test.environment,load_product
 #: field:wizard.make.test.environment,load_product
@@ -146,27 +176,35 @@ msgstr "Caricare prodotti"
 #: field:wizard.make.test.environment,load_purchase_order
 #: field:wizard.make.test.environment,load_purchase_order
 #: field:wizard.make.test.environment,load_purchase_order
+#: field:wizard.make.test.environment,load_purchase_order
+#: field:wizard.make.test.environment,load_purchase_order
 msgid "Load purchase orders"
-msgstr "Caricare ordini fornitore"
+msgstr "Caricare ordini di acquisto"
 
 #. module: mk_test_env
 #: field:wizard.make.test.environment,load_image:0
 #: field:wizard.make.test.environment,load_image
 #: field:wizard.make.test.environment,load_image
 #: field:wizard.make.test.environment,load_image
+#: field:wizard.make.test.environment,load_image
+#: field:wizard.make.test.environment,load_image
 msgid "Load record images"
-msgstr "Carica immagini"
+msgstr "Caricare immagini"
 
 #. module: mk_test_env
 #: field:wizard.make.test.environment,load_sale_order:0
 #: field:wizard.make.test.environment,load_sale_order
 #: field:wizard.make.test.environment,load_sale_order
 #: field:wizard.make.test.environment,load_sale_order
+#: field:wizard.make.test.environment,load_sale_order
+#: field:wizard.make.test.environment,load_sale_order
 msgid "Load sale orders"
-msgstr "Caricare ordini cliente"
+msgstr "Caricare ordini di vendita"
 
 #. module: mk_test_env
 #: field:wizard.make.test.environment,ctr_rec_new:0
+#: field:wizard.make.test.environment,ctr_rec_new
+#: field:wizard.make.test.environment,ctr_rec_new
 #: field:wizard.make.test.environment,ctr_rec_new
 #: field:wizard.make.test.environment,ctr_rec_new
 #: field:wizard.make.test.environment,ctr_rec_new
@@ -178,11 +216,15 @@ msgstr "Nuovi record inseriti"
 #: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
+#: selection:wizard.make.test.environment,coa
+#: selection:wizard.make.test.environment,coa
 msgid "No chart of account"
 msgstr "No piano dei conti"
 
 #. module: mk_test_env
 #: field:wizard.make.test.environment,ctr_rec_del:0
+#: field:wizard.make.test.environment,ctr_rec_del
+#: field:wizard.make.test.environment,ctr_rec_del
 #: field:wizard.make.test.environment,ctr_rec_del
 #: field:wizard.make.test.environment,ctr_rec_del
 #: field:wizard.make.test.environment,ctr_rec_del
@@ -194,6 +236,8 @@ msgstr "Record eliminati"
 #: field:wizard.make.test.environment,ctr_rec_upd
 #: field:wizard.make.test.environment,ctr_rec_upd
 #: field:wizard.make.test.environment,ctr_rec_upd
+#: field:wizard.make.test.environment,ctr_rec_upd
+#: field:wizard.make.test.environment,ctr_rec_upd
 msgid "Record updated"
 msgstr "Record modificati"
 
@@ -202,11 +246,15 @@ msgstr "Record modificati"
 #: view:wizard.make.test.environment
 #: view:wizard.make.test.environment
 #: view:wizard.make.test.environment
+#: view:wizard.make.test.environment
+#: view:wizard.make.test.environment
 msgid "Result Test Environment"
 msgstr "Risultati ambiente test"
 
 #. module: mk_test_env
 #: help:wizard.make.test.environment,coa:0
+#: help:wizard.make.test.environment,coa
+#: help:wizard.make.test.environment,coa
 #: help:wizard.make.test.environment,coa
 #: help:wizard.make.test.environment,coa
 #: help:wizard.make.test.environment,coa
@@ -228,11 +276,15 @@ msgstr ""
 #: field:wizard.make.test.environment,set_seq
 #: field:wizard.make.test.environment,set_seq
 #: field:wizard.make.test.environment,set_seq
+#: field:wizard.make.test.environment,set_seq
+#: field:wizard.make.test.environment,set_seq
 msgid "Set line sequence"
 msgstr "Impostare numeri riga"
 
 #. module: mk_test_env
 #: selection:wizard.make.test.environment,coa:0
+#: selection:wizard.make.test.environment,coa
+#: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
@@ -244,11 +296,15 @@ msgstr "Test piano dei conti"
 #: field:wizard.make.test.environment,test_company_id
 #: field:wizard.make.test.environment,test_company_id
 #: field:wizard.make.test.environment,test_company_id
+#: field:wizard.make.test.environment,test_company_id
+#: field:wizard.make.test.environment,test_company_id
 msgid "Test Company"
 msgstr "Test Company"
 
 #. module: mk_test_env
 #: selection:wizard.make.test.environment,coa:0
+#: selection:wizard.make.test.environment,coa
+#: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
 #: selection:wizard.make.test.environment,coa
