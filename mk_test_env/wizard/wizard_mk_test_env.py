@@ -91,11 +91,20 @@ T = {}
 MODULES = []
 
 
+def is_action_to_reload(action):
+    if action and not isinstance(action, bool) and action.get('tag') == "reload":
+        return True
+    return False
+
+
 @api.model
 def _selection_lang(self):
-    if release.version_info[0] < 13:
+    if release.version_info[0] < 10:
+        return [(x.code, x.name) for x in self.env["res.lang"].search([])]
+    elif release.version_info[0] < 13:
         return self.env["res.lang"].get_available()
-    return [(x, y) for x, y, _2, _3, _4 in self.env["res.lang"].get_available()]
+    return [(code, name)
+            for code, _1, name, _3, _4 in self.env["res.lang"].get_available()]
 
 
 @api.model
@@ -699,9 +708,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
     @api.model
     def install_modules(
-        self, modules_to_install, modules_to_remove, no_clear_cache=None
+        self, modules_to_install, modules_to_remove
     ):
-        flag_module_installed = False
         modules_model = self.env["ir.module.module"]
         to_install_modules = modules_model
         modules_found = []
@@ -714,17 +722,22 @@ class WizardMakeTestEnvironment(models.TransientModel):
             elif module.state == "to install":
                 if module.name not in self.NOT_INSTALL:
                     self.NOT_INSTALL.append(module.name)
-                    self.install_modules([module.name], [], no_clear_cache=True)
+                    post_action = self.install_modules(
+                        [module.name], [])
+                    if is_action_to_reload(post_action):
+                        return post_action
                 modules_found.append(module.name)
                 modules_2_test.append(module.name)
                 continue
             elif module.state == "uninstalled":
                 if len(modules_to_install) != 1 and module.name in coa_module_list:
                     # CoA modules must be installed before others
-                    self.install_modules([module.name], [], no_clear_cache=True)
+                    post_action = self.install_modules(
+                        [module.name], [])
+                    if is_action_to_reload(post_action):
+                        return post_action
                     modules_found.append(module.name)
                     modules_2_test.append(module.name)
-                    flag_module_installed = True
                     continue
                 to_install_modules += module
                 self.status_mesg += 'Module "%s" installed\n' % module.name
@@ -756,20 +769,25 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 to_remove_modules += module
                 self.status_mesg += 'Module "%s" uninstalled\n' % module.name
                 self.ctr_rec_upd += 1
-                flag_module_installed = True
-            to_remove_modules.module_uninstall()
-            max_time_to_wait += len(to_remove_modules)
-            while max_time_to_wait > 0:
-                time.sleep(1)
-                max_time_to_wait -= 1
-                if not modules_model.search(
-                    [("name", "in", modules_to_remove), ("state", "=", "installed")]
-                ):
-                    break
+            post_action = to_remove_modules.module_uninstall()
+            if is_action_to_reload(post_action):
+                return post_action
+            # max_time_to_wait += len(to_remove_modules)
+            # while max_time_to_wait > 0:
+            #     time.sleep(1)
+            #     max_time_to_wait -= 1
+            #     if not modules_model.search(
+            #         [("name", "in", modules_to_remove), ("state", "=", "installed")]
+            #     ):
+            #         break
 
         if to_install_modules:
-            to_install_modules.button_immediate_install()
-            max_time_to_wait += len(to_install_modules)
+            post_action = to_install_modules.button_immediate_install()
+            if is_action_to_reload(post_action):
+                return post_action
+            self._cr.commit()
+        #     service.server.restart()
+        #     max_time_to_wait += len(to_install_modules)
         found_uninstalled = True
         while max_time_to_wait > 0 and found_uninstalled:
             time.sleep(1)
@@ -783,17 +801,17 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if found_uninstalled and not isinstance(found_uninstalled, bool):
             raise UserError("Module %s not installed!" % found_uninstalled.name)
 
-        if (not to_install_modules and modules_to_remove) or (
-            to_install_modules and not modules_to_remove
-        ):
-            time.sleep(2)
-        else:
-            time.sleep(1)
-        if not no_clear_cache and to_install_modules and modules_to_remove:
-            # We need to invalidate cache to load model of installed modules
-            if release.version_info[0] < 12:
-                self.env.invalidate_all()
-        return flag_module_installed
+        # if (not to_install_modules and modules_to_remove) or (
+        #     to_install_modules and not modules_to_remove
+        # ):
+        #     time.sleep(2)
+        # else:
+        #     time.sleep(1)
+        # if not no_clear_cache and (to_install_modules or modules_to_remove):
+        #     # We need to invalidate cache to load model of installed modules
+        #     if release.version_info[0] < 12:
+        #         self.env.invalidate_all()
+        return False
 
     def get_tnldict(self):
         if not self._tnldict:
@@ -807,7 +825,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def translate(self, model, src, ttype=None, fld_name=False):
         tgtver = self.get_tgtver()
         srcver = "librerp12"
-        if release.major_version == srcver:
+        if release.version_info[0] == srcver:
             if ttype == "valuetnl":
                 return ""
             return src
@@ -966,11 +984,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
         }
         if (
             model == "account.invoice"
-            and release.major_version >= 13
+            and release.version_info[0] >= 13
             and vals.get("price_unit", 0.0) < 0.0 <= vals.get("quantity", 0.0)
         ) or (
             model == "sale_order"
-            and release.major_version >= 13
+            and release.version_info[0] >= 13
             and vals.get("price_unit", 0.0) < 0.0 <= vals.get("product_uom_qty", 0.0)
         ):
             vals["price_unit"] = -vals.get("price_unit", 0.0)
@@ -1779,22 +1797,23 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self._cr.commit()  # pylint: disable=invalid-commit
         modules_to_install, modules_to_remove, groups_state = self.get_module_list(
             group=self.module2test)
-        flag_module_installed = self.install_modules(
+        post_action = self.install_modules(
             modules_to_install, modules_to_remove
         )
-        if flag_module_installed:
-            return {
-                "name": "Data created",
-                "type": "ir.actions.act_window",
-                "res_model": "wizard.make.test.environment",
-                "view_type": "form",
-                "view_mode": "form",
-                "res_id": self.id,
-                "target": "new",
-                "context": {"active_id": self.id},
-                "view_id": self.env.ref("mk_test_env.result_mk_test_env_view").id,
-                "domain": [("id", "=", self.id)],
-            }
+        if is_action_to_reload(post_action):
+            return post_action
+            # return {
+            #     "name": "Data created",
+            #     "type": "ir.actions.act_window",
+            #     "res_model": "wizard.make.test.environment",
+            #     "view_type": "form",
+            #     "view_mode": "form",
+            #     "res_id": self.id,
+            #     "target": "new",
+            #     "context": {"active_id": self.id},
+            #     "view_id": self.env.ref("mk_test_env.result_mk_test_env_view").id,
+            #     "domain": [("id", "=", self.id)],
+            # }
         self.state = "1"
         self.make_misc()
 
