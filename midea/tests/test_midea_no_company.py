@@ -33,7 +33,8 @@ class TestMidea(test_common.SingleTransactionCase):
         # Test the <create> function
         self.midea_no_company_id = self.create_id(model_name, vals)
         self.assertIsInstance(
-            self.midea_no_company_id, int),
+            self.midea_no_company_id,
+            int,
             "z0bug_odoo.create_id does not return an integer id",
         )
         self.assertTrue(

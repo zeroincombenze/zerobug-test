@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo (10.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-13 14:09+0000\n"
-"PO-Revision-Date: 2021-11-13 14:09+0000\n"
+"POT-Creation-Date: 2022-06-04 10:09+0000\n"
+"PO-Revision-Date: 2022-06-04 10:09+0000\n"
 "Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
 "Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
 "Language: it_IT\n"
@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
+"Generated-By: Babel 2.10.1\n"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_financing
@@ -31,6 +31,11 @@ msgstr "Attivazione cespiti"
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_conai
 msgid "Activate Conai"
 msgstr "Attivazione Conai"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_intrastat
+msgid "Activate Intrastat"
+msgstr "Attivazione Intrastat"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_li
@@ -73,9 +78,14 @@ msgid "Activate Withholding Tax"
 msgstr "Attivazione ritenute di acconto"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_einvoice
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_einvoice
 msgid "Activate e-Invoice"
 msgstr "Attivazione fattura elettronica"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_account_plus
+msgid "Activate enhanced account"
+msgstr "Attivazione contabilità evoluta"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_fiscal
@@ -83,7 +93,23 @@ msgid "Activate fiscal modules"
 msgstr "Attivazione moduli fiscali"
 
 #. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_purchase
+msgid "Activate purchase module"
+msgstr "Attivazione moduli di acquisto"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_sale
+msgid "Activate sale modules"
+msgstr "Attivazione moduli di vendita"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_product_variant
+msgid "Add product variant"
+msgstr "Aggiungere variante prodotto"
+
+#. module: mk_test_env
 #: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
+#: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_pyfile_view
 msgid "Cancel"
 msgstr "Annullare"
 
@@ -94,8 +120,14 @@ msgstr "Piano dei conti"
 
 #. module: mk_test_env
 #: model:ir.ui.view,arch_db:mk_test_env.result_mk_test_env_view
+#: model:ir.ui.view,arch_db:mk_test_env.result_mk_test_pyfile_view
 msgid "Close"
 msgstr "Chiudere"
+
+#. module: mk_test_env
+#: model:ir.model,name:mk_test_env.model_base_test_mixin
+msgid "Common function for test wizards"
+msgstr "Funzioni comuni per processi di test"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_company_id
@@ -104,6 +136,7 @@ msgstr "Azienda"
 
 #. module: mk_test_env
 #: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
+#: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_pyfile_view
 msgid "Create"
 msgstr "Creare"
 
@@ -121,12 +154,27 @@ msgid "Create new company"
 msgstr "Creare nuova azienda"
 
 #. module: mk_test_env
+#: model:ir.actions.act_window,name:mk_test_env.action_mk_test_pyfile
+#: model:ir.model,name:mk_test_env.model_wizard_mk_test_pyfile
+#: model:ir.ui.menu,name:mk_test_env.menu_mk_test_pyfile
+#: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_pyfile_view
+msgid "Create python source test file"
+msgstr "Creare file sorgente python per test"
+
+#. module: mk_test_env
+#: model:ir.ui.view,arch_db:mk_test_env.result_mk_test_pyfile_view
+msgid "Create python source test file result"
+msgstr "Creare risultato file sorgente per test"
+
+#. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_create_uid
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_create_uid
 msgid "Created by"
 msgstr "Creato da"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_create_date
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_create_date
 msgid "Created on"
 msgstr "Creato il"
 
@@ -136,12 +184,32 @@ msgid "Data selection"
 msgstr "Selezione dati"
 
 #. module: mk_test_env
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1619
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1665
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1619
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1665
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1619
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1665
+#, python-format
+msgid "Detected a NULL record in test data for model %s!"
+msgstr "Rilevato una registrazione con NULL dai dati di %s!"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_base_test_mixin_display_name
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_display_name
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_xref_ids
+msgid "External references"
+msgstr "Riferimenti esterni"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_base_test_mixin_id
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_id
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_id
 msgid "ID"
 msgstr "ID"
 
@@ -152,56 +220,61 @@ msgstr "Stato installazione"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_lang
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_lang
 msgid "Language"
 msgstr "Lingua"
 
 #. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_base_test_mixin___last_update
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment___last_update
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile___last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_write_uid
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_write_uid
 msgid "Last Updated by"
 msgstr "Ultimo aggiornamento di"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_write_date
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_write_date
 msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_rec_assets
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_data_assets
 msgid "Load Assets"
 msgstr "Caricare cespiti"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_coa
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_data_coa
 msgid "Load Chart of Account"
 msgstr "Caricare dati contabili"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_invoice
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_data_invoice
 msgid "Load Invoices"
 msgstr "Load Invoices"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_partner
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_data_partner
 msgid "Load Partners"
 msgstr "Caricare clienti e fornitori"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_product
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_data_product
 msgid "Load Products"
 msgstr "Caricare prodotti"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_purchase_order
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_data_purchase_order
 msgid "Load Purchase Orders"
 msgstr "Caricare ordini di acquisto"
 
 #. module: mk_test_env
-#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_sale_order
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_load_data_sale_order
 msgid "Load Sale Orders"
 msgstr "Caricare ordini di vendita"
 
@@ -229,12 +302,36 @@ msgstr "Caricare immagini"
 #: selection:wizard.make.test.environment,state
 #: selection:wizard.make.test.environment,state
 msgid "Load structured data"
-msgstr "Load structured data"
+msgstr "Caricare dati strutturati"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_max_child_records
+msgid "Max child records"
+msgstr "Massime registrazioni figlie"
+
+#. module: mk_test_env
+#: code:addons/mk_test_env/wizard/mixin.py:190
+#: code:addons/mk_test_env/wizard/mixin.py:190
+#: code:addons/mk_test_env/wizard/mixin.py:190
+#, python-format
+msgid "Model %s not found!"
+msgstr "Modello %s non trovato!"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_model2ignore_ids
+msgid "Models to ignore"
+msgstr "Modelli da ignorare"
 
 #. module: mk_test_env
 #: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
 msgid "Module selection"
-msgstr "Module selection"
+msgstr "Selezione modulo"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_module2test
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_module2test
+msgid "Module to test"
+msgstr "Modulo da testare"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_ctr_rec_new
@@ -242,9 +339,22 @@ msgid "New record inserted"
 msgstr "Nuovi record inseriti"
 
 #. module: mk_test_env
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1616
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1616
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1616
+#, python-format
+msgid "No test record found for model %s!"
+msgstr "Nessuna registrazione trovata per il modello %s!"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_oca_coding
+msgid "OCA coding"
+msgstr "Codifica OCA"
+
+#. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_distro
 msgid "Odoo Ditribution/Edition"
-msgstr "Odoo Ditribution/Edition"
+msgstr "Distribuzione/edizione Odoo"
 
 #. module: mk_test_env
 #: model:ir.ui.view,arch_db:mk_test_env.wizard_mk_test_env_view
@@ -266,7 +376,7 @@ msgstr "Record modificati"
 #: selection:wizard.make.test.environment,state
 #: selection:wizard.make.test.environment,state
 msgid "Result"
-msgstr "Result"
+msgstr "Risultato"
 
 #. module: mk_test_env
 #: model:ir.ui.view,arch_db:mk_test_env.result_mk_test_env_view
@@ -279,18 +389,23 @@ msgstr "Risultati ambiente test"
 msgid ""
 "Select Chart od Account to install\n"
 "\"Local IT Odoo\" (module l10n_it) is the minimal one\n"
-"\"Powerp/Zeroincombenze\" (module l10n_it_fiscal) is the full CoA\n"
+"\"Powerp/Zeroincombenze\" (module l10n_it_coa) is the full CoA\n"
 "\"No CoA\" means manual CoA\n"
 msgstr ""
 "Select Chart od Account to install\n"
 "\"Local IT Odoo\" (module l10n_it) is the minimal one\n"
-"\"Powerp/Zeroincombenze\" (module l10n_it_fiscal) is the full CoA\n"
+"\"Powerp/Zeroincombenze\" (module l10n_it_coa) is the full CoA\n"
 "\"No CoA\" means manual CoA\n"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_set_seq
 msgid "Set line sequence"
 msgstr "Impostare numeri riga"
+
+#. module: mk_test_env
+#: model:ir.model.fields,field_description:mk_test_env.field_wizard_mk_test_pyfile_source
+msgid "Source code"
+msgstr "Codice sorgente"
 
 #. module: mk_test_env
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_state
@@ -306,5 +421,19 @@ msgstr "Test Company"
 #: model:ir.model.fields,field_description:mk_test_env.field_wizard_make_test_environment_tz
 msgid "Timezone"
 msgstr "Fuso orario"
+
+#. module: mk_test_env
+#: selection:wizard.make.test.environment,load_sale:0
+#: selection:wizard.make.test.environment,load_sale
+#: selection:wizard.make.test.environment,load_sale
+msgid "With module DdT"
+msgstr "Con modulo DdT"
+
+#. module: mk_test_env
+#: selection:wizard.make.test.environment,load_sale:0
+#: selection:wizard.make.test.environment,load_sale
+#: selection:wizard.make.test.environment,load_sale
+msgid "With module Delivery Note"
+msgstr "Con modulo Delivery Note"
 
 

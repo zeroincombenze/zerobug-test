@@ -1,7 +1,6 @@
-# generated from manifests external_dependencies
 future
 os0
-past
 python_plus
 z0bug_odoo
 zerobug
+past                                              # not found in any manifests
