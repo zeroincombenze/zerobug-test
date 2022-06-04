@@ -14,7 +14,7 @@ from datetime import date, datetime
 import pytz
 from past.builtins import basestring
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models, service
 from odoo.exceptions import UserError
 
 try:
@@ -91,8 +91,23 @@ T = {}
 MODULES = []
 
 
+def create_modules_table():
+    if not MODULES:
+        xmodel = "modules"
+        for xref in z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(xmodel):
+            vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(xmodel, xref)
+            for item in ("modules_to_install", "modules_to_uninstall"):
+                vals[item] = (vals.get(item, "") or "").split(",")
+            vals["_requirements"] = vals.get("_requirements", "") or ""
+            MODULES.append(vals)
+
+
 def is_action_to_reload(action):
-    if action and not isinstance(action, bool) and action.get('tag') == "reload":
+    if (
+        action
+        and not isinstance(action, bool)
+        and action.get("tag") in ("reload", "home")
+    ):
         return True
     return False
 
@@ -103,8 +118,9 @@ def _selection_lang(self):
         return [(x.code, x.name) for x in self.env["res.lang"].search([])]
     elif release.version_info[0] < 13:
         return self.env["res.lang"].get_available()
-    return [(code, name)
-            for code, _1, name, _3, _4 in self.env["res.lang"].get_available()]
+    return [
+        (code, name) for code, _1, name, _3, _4 in self.env["res.lang"].get_available()
+    ]
 
 
 @api.model
@@ -212,15 +228,16 @@ class WizardMakeTestEnvironment(models.TransientModel):
         flag = False
         if not self.module2test:
             module_list, modules_to_remove, groups_state = self.get_module_list(
-                group=item)
+                group=item
+            )
             flag = groups_state[item]
             if flag and (
                 not self.env["ir.module.module"].search(
-                    [("name", "in", module_list),
-                     ("state", "=", "uninstalled")]) or
-                self.env["ir.module.module"].search(
-                    [("name", "in", module_list),
-                     ("state", "=", "uninstallable")])
+                    [("name", "in", module_list), ("state", "=", "uninstalled")]
+                )
+                or self.env["ir.module.module"].search(
+                    [("name", "in", module_list), ("state", "=", "uninstallable")]
+                )
             ):
                 flag = False
         return flag
@@ -315,8 +332,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
     module2test = fields.Many2one("ir.module.module", string="Module to test")
     set_seq = fields.Boolean("Set line sequence")
     load_einvoice = fields.Boolean(
-        "Activate e-Invoice", default=lambda self: self._feature_2_install(
-            "load_einvoice")
+        "Activate e-Invoice",
+        default=lambda self: self._feature_2_install("load_einvoice"),
     )
     load_sp = fields.Boolean(
         "Activate Split Payment",
@@ -343,8 +360,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
     )
     load_sale = fields.Selection(
         [
-            ('ddt', "With module DdT"),
-            ('dn', "With module Delivery Note"),
+            ("ddt", "With module DdT"),
+            ("dn", "With module Delivery Note"),
         ],
         string="Activate sale modules",
         default=lambda self: self._feature_2_install("load_sale"),
@@ -355,11 +372,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
     )
     load_account_plus = fields.Boolean(
         "Activate enhanced account",
-        default=lambda self: self._feature_2_install("load_account_plus")
+        default=lambda self: self._feature_2_install("load_account_plus"),
     )
     load_intrastat = fields.Boolean(
         "Activate Intrastat",
-        default=lambda self: self._feature_2_install("load_intrastat")
+        default=lambda self: self._feature_2_install("load_intrastat"),
     )
     load_conai = fields.Boolean(
         "Activate Conai", default=lambda self: self._feature_2_install("load_conai")
@@ -425,9 +442,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         elif self.distro == "librerp" and release.version_info[0] not in (6, 12, 14):
             self.distro = "zero"
 
-    @api.onchange(
-        "module2test"
-    )
+    @api.onchange("module2test")
     def _onchange_module2test(self):
         for item in (
             "load_einvoice",
@@ -600,6 +615,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             recalc = True
             T = {
                 "v": release.version_info[0],
+                "V": release.version_info[0],
                 "G": self.distro if self.distro else self._set_distro(),
                 "C": self.coa,
             }
@@ -625,18 +641,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 max_ctr = 0
         return res
 
-    @api.model
-    def get_module_list(self, group=None):
-        def create_modules_table():
-            if not MODULES:
-                xmodel = "modules"
-                for xref in z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(xmodel):
-                    vals = z0bug_odoo_lib.Z0bugOdoo().get_test_values(xmodel, xref)
-                    for item in ("modules_to_install", "modules_to_uninstall"):
-                        vals[item] = (vals.get(item, "") or "").split(",")
-                    vals["_requirements"] = vals.get("_requirements", "") or ""
-                    MODULES.append(vals)
-
+    def translate_module_names(self, modules_2_install, modules_2_remove):
         def add_2_list(tgt_list, item):
             if isinstance(item, (tuple, list)):
                 tgt_list += item
@@ -644,6 +649,41 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 tgt_list.append(item)
             return tgt_list
 
+        module_list = []
+        for module in modules_2_remove:
+            distro_module = self.translate("", module, ttype="module")
+            if (
+                isinstance(distro_module, (tuple, list)) and module not in distro_module
+            ) or distro_module != module:
+                module_list = add_2_list(module_list, module)
+        modules_2_remove = module_list
+
+        module_list = []
+        for module in modules_2_install:
+            distro_module = self.translate("ir.module.module", module, ttype="merge")
+            if distro_module and (
+                (
+                    isinstance(distro_module, (tuple, list))
+                    and module not in distro_module
+                )
+                or distro_module != module
+            ):
+                module_list = add_2_list(module_list, module)
+                module_list = add_2_list(module_list, distro_module)
+            distro_module = self.translate("", module, ttype="module")
+            if (
+                isinstance(distro_module, (tuple, list)) and module not in distro_module
+            ) or distro_module != module:
+                if distro_module:
+                    module_list = add_2_list(module_list, distro_module)
+                modules_2_remove.append(module)
+            else:
+                module_list = add_2_list(module_list, module)
+        modules_2_install = module_list
+        return modules_2_install, modules_2_remove
+
+    @api.model
+    def get_module_list(self, group=None):
         create_modules_table()
         modules_2_install = []
         modules_2_remove = []
@@ -662,54 +702,40 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 if hasattr(self, item):
                     value = getattr(self, item)
                     if value and not isinstance(value, bool):
-                        item_val = '%s*%s' % (item, getattr(self, item))
+                        item_val = "%s*%s" % (item, getattr(self, item))
                 for row in MODULES:
                     if row["group"] == "*" and self.eval_expr(row["_requirements"]):
                         if not group:
                             modules_2_install += row["modules_to_install"]
                             modules_2_remove += row["modules_to_uninstall"]
-                    elif (row["group"].startswith(item) and
-                          self.eval_expr(row["_requirements"])):
+                    elif row["group"].startswith(item) and self.eval_expr(
+                        row["_requirements"]
+                    ):
                         if row["group"] == item_val:
-                            value = True if item == item_val else item_val.split(
-                                '*')[1]
+                            value = True if item == item_val else item_val.split("*")[1]
                             groups_state[item] = value
                             modules_2_install += row["modules_to_install"]
                             modules_2_remove += row["modules_to_uninstall"]
-                        elif (row["group"].startswith(item) and
-                              "*" in row["group"] and
-                              not groups_state[item]):
-                            groups_state[item] = row["group"].split('*')[1]
+                        elif (
+                            row["group"].startswith(item)
+                            and "*" in row["group"]
+                            and not groups_state[item]
+                        ):
+                            groups_state[item] = row["group"].split("*")[1]
                             modules_2_install += row["modules_to_install"]
                             modules_2_remove += row["modules_to_uninstall"]
             if not group:
                 coa_module_list = [x[0] for x in self.COA_MODULES]
                 if not any([x for x in modules_2_install if x in coa_module_list]):
                     modules_2_install.append(self.get_value_by_coa("l10n_it"))
-        module_list = []
-        for module in modules_2_install:
-            distro_module = self.translate("ir.module.module", module, ttype="merge")
-            if distro_module and distro_module != module:
-                module_list = add_2_list(module_list, module)
-                module_list = add_2_list(module_list, distro_module)
-            else:
-                distro_module = self.translate("", module, ttype="module")
-                if (
-                    isinstance(distro_module, (tuple, list))
-                    and module not in distro_module
-                ) or distro_module != module:
-                    if distro_module:
-                        module_list = add_2_list(module_list, distro_module)
-                    modules_2_remove.append(module)
-                else:
-                    module_list = add_2_list(module_list, module)
-        modules_2_install = module_list
+
+        modules_2_install, modules_2_remove = self.translate_module_names(
+            modules_2_install, modules_2_remove
+        )
         return list(set(modules_2_install)), list(set(modules_2_remove)), groups_state
 
     @api.model
-    def install_modules(
-        self, modules_to_install, modules_to_remove
-    ):
+    def install_modules(self, modules_to_install, modules_to_remove):
         modules_model = self.env["ir.module.module"]
         to_install_modules = modules_model
         modules_found = []
@@ -722,8 +748,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             elif module.state == "to install":
                 if module.name not in self.NOT_INSTALL:
                     self.NOT_INSTALL.append(module.name)
-                    post_action = self.install_modules(
-                        [module.name], [])
+                    post_action = self.install_modules([module.name], [])
                     if is_action_to_reload(post_action):
                         return post_action
                 modules_found.append(module.name)
@@ -732,8 +757,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             elif module.state == "uninstalled":
                 if len(modules_to_install) != 1 and module.name in coa_module_list:
                     # CoA modules must be installed before others
-                    post_action = self.install_modules(
-                        [module.name], [])
+                    post_action = self.install_modules([module.name], [])
                     if is_action_to_reload(post_action):
                         return post_action
                     modules_found.append(module.name)
@@ -772,22 +796,12 @@ class WizardMakeTestEnvironment(models.TransientModel):
             post_action = to_remove_modules.module_uninstall()
             if is_action_to_reload(post_action):
                 return post_action
-            # max_time_to_wait += len(to_remove_modules)
-            # while max_time_to_wait > 0:
-            #     time.sleep(1)
-            #     max_time_to_wait -= 1
-            #     if not modules_model.search(
-            #         [("name", "in", modules_to_remove), ("state", "=", "installed")]
-            #     ):
-            #         break
 
         if to_install_modules:
             post_action = to_install_modules.button_immediate_install()
             if is_action_to_reload(post_action):
                 return post_action
-            self._cr.commit()
-        #     service.server.restart()
-        #     max_time_to_wait += len(to_install_modules)
+            self._cr.commit()  # pylint: disable=invalid-commit
         found_uninstalled = True
         while max_time_to_wait > 0 and found_uninstalled:
             time.sleep(1)
@@ -800,17 +814,14 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 break
         if found_uninstalled and not isinstance(found_uninstalled, bool):
             raise UserError("Module %s not installed!" % found_uninstalled.name)
-
-        # if (not to_install_modules and modules_to_remove) or (
-        #     to_install_modules and not modules_to_remove
-        # ):
-        #     time.sleep(2)
-        # else:
-        #     time.sleep(1)
-        # if not no_clear_cache and (to_install_modules or modules_to_remove):
-        #     # We need to invalidate cache to load model of installed modules
-        #     if release.version_info[0] < 12:
-        #         self.env.invalidate_all()
+        if modules_2_test:
+            # Strange case: no post_action
+            service.server.restart()
+            return {
+                "type": "ir.actions.client",
+                "tag": "home",
+                "params": {"wait": True},
+            }
         return False
 
     def get_tnldict(self):
@@ -1447,10 +1458,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 gid = self.env_ref(name)
                 if isinstance(gid, bool):
                     modules = self.env["ir.module.module"].search(
-                        [('name', '=', key.split('.')[0])])
+                        [("name", "=", key.split(".")[0])]
+                    )
                     if not modules or modules[0].state == "installed":
                         self.ctr_rec_upd += 1
-                        self.status_mesg += ('- Xref "%s": Unknown!\n' % key)
+                        self.status_mesg += '- Xref "%s": Unknown!\n' % key
                     return res
             if isinstance(value, bool):
                 if value and gid not in self.env.user.groups_id.ids:
@@ -1600,9 +1612,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
             company_id = self.company_id.id
         xrefs = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(ref_model)
         if not xrefs:
-            raise UserError("No test record found for model %s!" % model)
+            raise UserError(_("No test record found for model %s!") % model)
         if None in xrefs:
-            raise UserError("Detected a NULL record in test data for model %s!" % model)
+            raise UserError(
+                _("Detected a NULL record in test data for model %s!") % model
+            )
         hdr_list = [x for x in xrefs]
         deline_list = []
         parent_id = False
@@ -1647,7 +1661,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
         if None in xrefs:
             raise UserError(
-                "Detected a NULL record in test data for model %s!" % model2
+                _("Detected a NULL record in test data for model %s!") % model2
             )
 
         seq = 0
@@ -1770,10 +1784,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
             raise UserError(VERSION_ERROR % (module, min_version))
 
     def make_test_environment(self):
-        self.diff_ver("1.0.14", "z0bug_odoo", "z0bug_odoo_lib")
-        self.diff_ver("1.0.4", "clodoo", "transodoo")
+        self.diff_ver("1.0.15", "z0bug_odoo", "z0bug_odoo_lib")
+        self.diff_ver("1.0.5", "clodoo", "transodoo")
         self.diff_ver("1.0.3", "os0", "os0")
-        self.diff_ver("1.0.10", "python_plus", "python_plus")
+        self.diff_ver("1.0.11", "python_plus", "python_plus")
 
         # Block 0: TODO> Separate function
         self.ctr_rec_new = 0
@@ -1796,42 +1810,34 @@ class WizardMakeTestEnvironment(models.TransientModel):
         self.set_user_preference()
         self._cr.commit()  # pylint: disable=invalid-commit
         modules_to_install, modules_to_remove, groups_state = self.get_module_list(
-            group=self.module2test)
-        post_action = self.install_modules(
-            modules_to_install, modules_to_remove
+            group=self.module2test
         )
+        post_action = self.install_modules(modules_to_install, modules_to_remove)
         if is_action_to_reload(post_action):
             return post_action
-            # return {
-            #     "name": "Data created",
-            #     "type": "ir.actions.act_window",
-            #     "res_model": "wizard.make.test.environment",
-            #     "view_type": "form",
-            #     "view_mode": "form",
-            #     "res_id": self.id,
-            #     "target": "new",
-            #     "context": {"active_id": self.id},
-            #     "view_id": self.env.ref("mk_test_env.result_mk_test_env_view").id,
-            #     "domain": [("id", "=", self.id)],
-            # }
+
         self.state = "1"
         self.make_misc()
 
         # Block 1: TODO> Separate function
         if self.load_data_coa:
             if self.coa == "l10n_it_no_coa":
-                self.make_model("account.account",
-                                mode=self.load_data_coa, cantdup=True)
+                self.make_model(
+                    "account.account", mode=self.load_data_coa, cantdup=True
+                )
                 self.make_model("account.tax", mode=self.load_data_coa, cantdup=True)
-            self.make_model_limited("account.account",
-                                    mode=self.load_data_coa, cantdup=True)
-            self.make_model_limited("account.tax",
-                                    mode=self.load_data_coa, cantdup=True)
+            self.make_model_limited(
+                "account.account", mode=self.load_data_coa, cantdup=True
+            )
+            self.make_model_limited(
+                "account.tax", mode=self.load_data_coa, cantdup=True
+            )
             self.make_model("decimal.precision", mode=self.load_data_coa, cantdup=True)
             if release.version_info[0] == 10 and not self._feature_2_install("load_rc"):
                 self.make_model(
                     "account_rc_type",
-                    mode=self.load_data_coa, model2="account_rc_type.tax"
+                    mode=self.load_data_coa,
+                    model2="account_rc_type.tax",
                 )
             self.make_model(
                 "account.fiscal.position",
@@ -1861,7 +1867,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if self.load_data_partner:
             self.make_model("res.partner", mode=self.load_data_partner)
             self.make_model(
-                "res.partner.bank", mode=self.load_data_partner, cantdup=True)
+                "res.partner.bank", mode=self.load_data_partner, cantdup=True
+            )
             if not self._feature_2_install("load_sdd"):
                 self.make_model(
                     "account.banking.mandate", mode=self.load_data_partner, cantdup=True
@@ -1932,7 +1939,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if self.load_data_invoice:
             self.make_model(
                 "account.invoice",
-                mode=self.load_data_invoice, model2="account.invoice.line"
+                mode=self.load_data_invoice,
+                model2="account.invoice.line",
             )
             self.make_model(
                 "account.move", mode=self.load_data_invoice, model2="account.move.line"
