@@ -490,10 +490,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
         - Some xref prefixed by 'z0bug.' are virtual with key to search for rec
         """
 
-        def simulate_xref(xrefs, company_id, model, module=None, by=None, case=None):
+        def simulate_xref(xrefs, company_id, model, by=None, case=None):
             if model not in self.STRUCT:
                 return False
-            by = by or ("code" if "code" in self.STRUCT[model] else "name")
+            by = by or (
+                'code' if 'code' in self.STRUCT[model] else (
+                    'description' if 'description' in self.STRUCT[model] and
+                                     model == 'account.tax' else 'name'))
             if xrefs[0] == "external":
                 module = None
                 toks = xrefs[1].split("|")
@@ -526,14 +529,14 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     if retxref_id:
                         return recs[0].id
                     return recs[0].res_id
-            # xref like 'external.KEY'
             if case == "upper":
                 toks = [x.upper() for x in toks]
             elif case == "lower":
                 toks = [x.lower() for x in toks]
             toks = [self.translate(model, x, ttype="value", fld_name=by) for x in toks]
             if model == "account.account":
-                toks = [("%s00" % x)[:6] for x in toks]
+                code_digits = self.company_id.chart_template_id.code_digits
+                toks = [(x + '0' * code_digits)[:code_digits] for x in toks]
             domain = [(by, "in", toks)]
             if company_id and "company_id" in self.STRUCT[model]:
                 domain.append(("company_id", "=", company_id))
@@ -653,10 +656,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         module_list = []
         for module in modules_2_remove:
             distro_module = self.translate("", module, ttype="module")
-            if (
-                isinstance(distro_module, (tuple, list)) and module not in distro_module
-            ) or distro_module != module:
-                module_list = add_2_list(module_list, module)
+            module_list = add_2_list(module_list, distro_module)
         modules_2_remove = module_list
 
         module_list = []
@@ -730,10 +730,16 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 if not any([x for x in modules_2_install if x in coa_module_list]):
                     modules_2_install.append(self.get_value_by_coa("l10n_it"))
 
+        modules_2_install = list(set(modules_2_install))
+        modules_2_remove = list(set(modules_2_remove))
         modules_2_install, modules_2_remove = self.translate_module_names(
             modules_2_install, modules_2_remove
         )
-        return list(set(modules_2_install)), list(set(modules_2_remove)), groups_state
+        return (
+            list(set(modules_2_install)),
+            list(set(modules_2_remove) - set(modules_2_install)),
+            groups_state
+        )
 
     @api.model
     def install_modules(self, modules_to_install, modules_to_remove):
@@ -794,9 +800,17 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 to_remove_modules += module
                 self.status_mesg += 'Module "%s" uninstalled\n' % module.name
                 self.ctr_rec_upd += 1
-            post_action = to_remove_modules.module_uninstall()
-            if is_action_to_reload(post_action):
-                return post_action
+            if to_remove_modules:
+                post_action = to_remove_modules.module_uninstall()
+                if is_action_to_reload(post_action):
+                    return post_action
+                # Strange case: no post_action
+                service.server.restart()
+                return {
+                    "type": "ir.actions.client",
+                    "tag": "home",
+                    "params": {"wait": True},
+                }
 
         if to_install_modules:
             post_action = to_install_modules.button_immediate_install()
@@ -978,6 +992,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 )
             ):
                 vals[field] = int(vals[field])
+            elif attrs["type"] in ("char", "text") and isinstance(vals[field], int):
+                vals[field] = '%d' % vals[field]
             return vals
 
         self.setup_model_structure(model)
@@ -1014,6 +1030,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.setup_model_structure(self.STRUCT[model].get(name, {}).get("relation"))
         parent_name = ""
         multi_model = parent_id and parent_name
+        code_digits = self.company_id.chart_template_id.code_digits
         for field in vals.copy().keys():
             if (
                 (only_fields and field != "id" and field not in only_fields)
@@ -1059,6 +1076,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 and release.version_info[0] >= 14
             ):
                 del vals[field]
+            elif (
+                field == "code"
+                and model == "account.account"
+            ):
+                vals[field] = (vals[field] + '0' * code_digits)[:code_digits]
             elif attrs["type"] in ("many2one", "one2many", "many2many"):
                 if isinstance(vals[field], basestring):
                     if attrs["type"] == "many2one":
@@ -1688,24 +1710,92 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
         def make_model_limited_tax(self):
             model = "account.tax"
-            if not self._feature_2_install("load_rc"):
-                for name in ("kind_id", "rc_type", "rc_sale_tax_id"):
-                    name = self.translate(model, name, ttype="field")
-                    only_fields.append(name)
-            if not self._feature_2_install("load_sp"):
-                for name in ("payability",):
-                    name = self.translate(model, name, ttype="field")
-                    only_fields.append(name)
-            return only_fields, []
+            only_fields = []
+            taxes = []
+            if self.coa == "l10n_it":
+                taxes = [
+                    "z0bug.tax_a17a",
+                    "z0bug.tax_a17v",
+                    "z0bug.tax_a17c2a",
+                    "z0bug.tax_aa17c2v",
+                    "z0bug.tax_a17c2v",
+                    "z0bug.tax_a17c6a",
+                    "z0bug.tax_aa17c6v",
+                    "z0bug.tax_a17c6v",
+                    "z0bug.tax_a17c6ata",
+                    "z0bug.tax_aa17c6atv",
+                    "z0bug.tax_a17c6atv",
+                    "z0bug.tax_a17c6ba",
+                    "z0bug.tax_aa17c6bv",
+                    "z0bug.tax_a17c6bv",
+                    "z0bug.tax_a17c6ca",
+                    "z0bug.tax_aa17c6cv",
+                    "z0bug.tax_a17c6cv",
+                    "z0bug.tax_aa41a",
+                    "z0bug.tax_a41a",
+                    "z0bug.tax_a41v",
+                    "z0bug.tax_a7a",
+                    "z0bug.tax_a7v",
+                    "z0bug.tax_a7ta",
+                    "z0bug.tax_a7tv",
+                    "z0bug.tax_a8aa",
+                    "z0bug.tax_aa8av",
+                    "z0bug.tax_a8av",
+                    "z0bug.tax_a8c2a",
+                    "z0bug.tax_a8c2v",
+                    "z0bug.tax_a10a",
+                    "z0bug.tax_a10v",
+                    "z0bug.tax_a1a",
+                    "z0bug.tax_a1v",
+                    "z0bug.tax_l98a27a",
+                    "z0bug.tax_l98a27v",
+                    "z0bug.tax_l190a1a",
+                    "z0bug.tax_l190a1v",
+                ]
+            else:
+                if not self._feature_2_install("load_rc"):
+                    for name in ("description", "kind_id", "rc_type", "rc_sale_tax_id"):
+                        name = self.translate(model, name, ttype="field")
+                        only_fields.append(name)
+                if not self._feature_2_install("load_sp"):
+                    for name in ("payability",):
+                        name = self.translate(model, name, ttype="field")
+                        only_fields.append(name)
+                return only_fields, taxes
 
         def make_model_limited_account(self):
-            return [], [
-                "z0bug.coa_180003",
-                "z0bug.coa_180004",
-                "z0bug.coa_180005",
-                "z0bug.coa_180006",
-                "z0bug.coa_180007",
-            ]
+            if self.coa == "l10n_it":
+                accounts = [
+                    "l10n_it.180003",
+                    "l10n_it.180004",
+                    "l10n_it.180005",
+                    "l10n_it.180006",
+                    "l10n_it.180007",
+                    "l10n_it.1611",
+                    "l10n_it.1612",
+                    "l10n_it.1613",
+                    "l10n_it.2611",
+                    "l10n_it.2612",
+                    "l10n_it.2950",
+                ]
+            else:
+                accounts = [
+                    "z0bug.coa_180003",
+                    "z0bug.coa_180004",
+                    "z0bug.coa_180005",
+                    "z0bug.coa_180006",
+                    "z0bug.coa_180007",
+                    "z0bug.coa_152220",
+                    "z0bug.coa_153030",
+                    "z0bug.coa_153050",
+                    "z0bug.coa_153060",
+                    "z0bug.coa_260030",
+                    "z0bug.coa_260050",
+                    "z0bug.coa_260060",
+                ]
+            if release.version_info[0] == 10 or self.coa == "l10n_it":
+                accounts.append("z0bug.coa_490050")
+            return [], accounts
 
         only_fields = []
         only_xrefs = []
@@ -1834,11 +1924,12 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 "account.tax", mode=self.load_data_coa, cantdup=True
             )
             self.make_model("decimal.precision", mode=self.load_data_coa, cantdup=True)
-            if release.version_info[0] == 10 and not self._feature_2_install("load_rc"):
+            if ((release.version_info[0] == 10 or self.coa == "l10n_it") and
+                    not self._feature_2_install("load_rc")):
                 self.make_model(
-                    "account_rc_type",
+                    "account.rc.type",
                     mode=self.load_data_coa,
-                    model2="account_rc_type.tax",
+                    model2="account.rc.type.tax",
                 )
             self.make_model(
                 "account.fiscal.position",
