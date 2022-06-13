@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo (14.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-04 11:54+0000\n"
-"PO-Revision-Date: 2022-06-04 11:54+0000\n"
+"POT-Creation-Date: 2022-06-13 06:40+0000\n"
+"PO-Revision-Date: 2022-06-13 06:40+0000\n"
 "Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
 "Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
 "Language: it_IT\n"
@@ -187,10 +187,6 @@ msgstr "Selezione dati"
 #: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:0
 #: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:0
 #: code:addons/mk_test_env/wizard/wizard_mk_test_env.py
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py
 #, python-format
 msgid "Detected a NULL record in test data for model %s!"
 msgstr "Rilevato una registrazione con NULL dai dati di %s!"
@@ -307,10 +303,6 @@ msgstr "Massime registrazioni figlie"
 #. module: mk_test_env
 #: code:addons/mk_test_env/wizard/mixin.py:0
 #: code:addons/mk_test_env/wizard/mixin.py
-#: code:addons/mk_test_env/wizard/mixin.py
-#: code:addons/mk_test_env/wizard/mixin.py
-#: code:addons/mk_test_env/wizard/mixin.py
-#: code:addons/mk_test_env/wizard/mixin.py
 #, python-format
 msgid "Model %s not found!"
 msgstr "Modello %s non trovato!"
@@ -338,10 +330,6 @@ msgstr "Nuovi record inseriti"
 
 #. module: mk_test_env
 #: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:0
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py
 #: code:addons/mk_test_env/wizard/wizard_mk_test_env.py
 #, python-format
 msgid "No test record found for model %s!"
