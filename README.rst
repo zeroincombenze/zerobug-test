@@ -1,4 +1,7 @@
 
+==================================
+|Zeroincombenze| zerobug-test 12.0
+==================================
 |Build Status| |Codecov Status| |license gpl| |Try Me|
 
 
@@ -22,7 +25,7 @@ Avaiable Addons / Moduli disponibili
 +-------------+------------+----------------------------------------------------------------------------------+
 | midea       | 12.0.0.1.4 | z0bug_odoo test suite                                                            |
 +-------------+------------+----------------------------------------------------------------------------------+
-| mk_test_env | 12.0.0.7.3 | Create or update test environment                                                |
+| mk_test_env | 12.0.0.7.4 | Create or update test environment                                                |
 +-------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -40,6 +43,12 @@ Prerequisites / Prerequisiti
 
 * python 3.7+
 * postgresql 9.6+ (experimental 10.0+)
+* future
+* os0
+* past
+* python_plus
+* z0bug_odoo
+* zerobug
 
 
 Installation / Installazione
@@ -77,7 +86,7 @@ Installation / Installazione
     source $HOME/devel/activate_tools
     # *** End of tools installation or upgrade ***
     # Odoo repository installation; OCB repository must be installed
-    odoo_install_repository zerobug-test -b 12.0 -O oca -o $HOME/12.0
+    odoo_install_repository zerobug-test -b 12.0 -O zero -o $HOME/12.0
     vem create $HOME/12.0/venv_odoo -O 12.0 -a "*" -DI -o $HOME/12.0
 
 
@@ -111,6 +120,8 @@ Support / Supporto
 ------------------
 
 
+|Zeroincombenze| This project is mainly maintained by the `SHS-AV s.r.l. <https://www.zeroincombenze.it/>`__
+
 
 
 
@@ -119,7 +130,7 @@ Get involved / Ci mettiamo in gioco
 
 Bug reports are welcome! You can use the issue tracker to report bugs,
 and/or submit pull requests on `GitHub Issues
-<https://github.com/OCA/zerobug-test/issues>`_.
+<https://github.com/zeroincombenze/zerobug-test/issues>`_.
 
 In case of trouble, please check there if your issue has already been reported.
 
@@ -127,10 +138,26 @@ Proposals for enhancement
 -------------------------
 
 
+|en| If you have a proposal to change on oh these modules, you may want to send an email to <cc@shs-av.com> for initial feedback.
+An Enhancement Proposal may be submitted if your idea gains ground.
+
+|it| Se hai proposte per migliorare uno dei moduli, puoi inviare una mail a <cc@shs-av.com> per un iniziale contatto.
 
 
 History / Cronologia
 --------------------
+
+mk_test_env: 12.0.0.7.4 (2022-05-27)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [REF] Module list from XLSX
+
+
+mk_test_env: 12.0.0.7.3 (2022-04-22)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [REF] New model mixin + tests
+
 
 mk_test_env: 12.0.0.7.2 (2022-02-15)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -145,7 +172,7 @@ mk_test_env: 12.0.0.7.1 (2022-01-11)
 * [FIX] multi-model with state
 
 
-mk_test_env: 10.0.0.7 (2022-01-07)
+mk_test_env: 12.0.0.7 (2022-01-07)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Recognizing l10n_it_fiscal or l10n_it_coa
@@ -166,64 +193,6 @@ mk_test_env: 12.0.0.6.11 (2021-12-31)
 * [FIX] Many2one multiple values
 * [FIX] Multiple groups
 * [IMP] New CoA module name
-
-
-mk_test_env: 12.0.0.6.10 (2021-11-26)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: set bank account
-* [IMP] mk_test_env:new wallet bank configuration
-
-
-mk_test_env: 12.0.0.6.9 (2021-11-23)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: italy.profile.account
-* [IMP] mk_test_env: intrastat
-* [IMP] mk_test_env: account mode
-
-
-mk_test_env: 12.0.0.6.8 (2021-11-16)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: inventory data
-* [IMP] mk_test_env: multiple journals
-
-
-mk_test_env: 12.0.0.6.7 (2021-11-12)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: conditioned import
-* [IMP] mk_test_env: virtual xref for journal
-
-
-mk_test_env: 12.0.0.6.6 (2021-11-11)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [FIX] mk_test_env: sometime does not load pyament modes
-
-
-mk_test_env: 12.0.0.6.5 (2021-11-10)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: data for test MtO
-* [FIX] mk_test_env: minor fixes
-
-
-mk_test_env: 12.0.0.6.4 (2021-11-09)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: available for Odoo 10.0
-* [IMP] mk_test_env: clean-up removed
-* [IMP] mk_test_env: account wizard removed
-* [FIX] mk_test_env: add does not change existing records
-
-
-mk_test_env: 12.0.0.6.3 (2021-10-13)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: default language and timezone from user
-* [IMP] mk_test_env: new configuration for wallet management  / Nuova configurazione per conti di portafoglio
 
 
 
@@ -259,13 +228,13 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2022-03-23
+Last Update / Ultimo aggiornamento: 2022-06-03
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
-    :alt:
-.. |Build Status| image:: https://travis-ci.org/OCA/zerobug-test.svg?branch=12.0
-    :target: https://travis-ci.com/OCA/zerobug-test
+    :alt: 
+.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=12.0
+    :target: https://travis-ci.com/zeroincombenze/zerobug-test
     :alt: github.com
 .. |license gpl| image:: https://img.shields.io/badge/licence-LGPL--3-7379c3.svg
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
@@ -273,11 +242,11 @@ Last Update / Ultimo aggiornamento: 2022-03-23
 .. |license opl| image:: https://img.shields.io/badge/licence-OPL-7379c3.svg
     :target: https://www.odoo.com/documentation/user/14.0/legal/licenses/licenses.html
     :alt: License: OPL
-.. |Coverage Status| image:: https://coveralls.io/repos/github/OCA/zerobug-test/badge.svg?branch=12.0
-    :target: https://coveralls.io/github/OCA/zerobug-test?branch=12.0
+.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=12.0
+    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=12.0
     :alt: Coverage
-.. |Codecov Status| image:: https://codecov.io/gh/OCA/zerobug-test/branch/12.0/graph/badge.svg
-    :target: https://codecov.io/gh/OCA/zerobug-test/branch/12.0
+.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/12.0/graph/badge.svg
+    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/12.0
     :alt: Codecov
 .. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-12.svg
     :target: https://wiki.zeroincombenze.org/en/Odoo/12.0/dev
@@ -286,7 +255,7 @@ Last Update / Ultimo aggiornamento: 2022-03-23
     :target: https://wiki.zeroincombenze.org/it/Odoo/12.0/man
     :alt: Technical Documentation
 .. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-12.svg
-    :target: http://runbot.odoo.com/runbot
+    :target: https://erp12.zeroincombenze.it
     :alt: Try Me
 .. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/12.0/graph/badge.svg
     :target: https://codecov.io/gh/OCA/zerobug-test/branch/12.0
@@ -319,3 +288,5 @@ Last Update / Ultimo aggiornamento: 2022-03-23
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
    :target: https://t.me/Assitenza_clienti_powERP
+
+
