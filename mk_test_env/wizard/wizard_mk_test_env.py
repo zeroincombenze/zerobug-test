@@ -493,9 +493,14 @@ class WizardMakeTestEnvironment(models.TransientModel):
             if model not in self.STRUCT:
                 return False
             by = by or (
-                'code' if 'code' in self.STRUCT[model] else (
-                    'description' if 'description' in self.STRUCT[model] and
-                                     model == 'account.tax' else 'name'))
+                "code"
+                if "code" in self.STRUCT[model]
+                else (
+                    "description"
+                    if "description" in self.STRUCT[model] and model == "account.tax"
+                    else "name"
+                )
+            )
             if xrefs[0] == "external":
                 module = None
                 toks = xrefs[1].split("|")
@@ -534,8 +539,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 toks = [x.lower() for x in toks]
             toks = [self.translate(model, x, ttype="value", fld_name=by) for x in toks]
             if model == "account.account":
-                code_digits = self.company_id.chart_template_id.code_digits
-                toks = [(x + '0' * code_digits)[:code_digits] for x in toks]
+                if hasattr(self.company_id, "chart_template_id"):
+                    code_digits = self.company_id.chart_template_id.code_digits
+                else:
+                    code_digits = 6
+                toks = [(x + ("0" * code_digits))[:code_digits] for x in toks]
             domain = [(by, "in", toks)]
             if company_id and "company_id" in self.STRUCT[model]:
                 domain.append(("company_id", "=", company_id))
@@ -737,7 +745,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         return (
             list(set(modules_2_install)),
             list(set(modules_2_remove) - set(modules_2_install)),
-            groups_state
+            groups_state,
         )
 
     @api.model
@@ -992,7 +1000,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             ):
                 vals[field] = int(vals[field])
             elif attrs["type"] in ("char", "text") and isinstance(vals[field], int):
-                vals[field] = '%d' % vals[field]
+                vals[field] = "%d" % vals[field]
             return vals
 
         self.setup_model_structure(model)
@@ -1029,7 +1037,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
             self.setup_model_structure(self.STRUCT[model].get(name, {}).get("relation"))
         parent_name = ""
         multi_model = parent_id and parent_name
-        code_digits = self.company_id.chart_template_id.code_digits
+        if hasattr(self.company_id, "chart_template_id"):
+            code_digits = self.company_id.chart_template_id.code_digits
+        else:
+            code_digits = 6
         for field in vals.copy().keys():
             if (
                 (only_fields and field != "id" and field not in only_fields)
@@ -1075,11 +1086,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 and release.version_info[0] >= 14
             ):
                 del vals[field]
-            elif (
-                field == "code"
-                and model == "account.account"
-            ):
-                vals[field] = (vals[field] + '0' * code_digits)[:code_digits]
+            elif field == "code" and model == "account.account":
+                vals[field] = (vals[field] + ("0" * code_digits))[:code_digits]
             elif attrs["type"] in ("many2one", "one2many", "many2many"):
                 if isinstance(vals[field], basestring):
                     if attrs["type"] == "many2one":
@@ -1543,8 +1551,6 @@ class WizardMakeTestEnvironment(models.TransientModel):
         only_xrefs=[],
     ):  # pylint: disable=dangerous-default-value
         def store_1_rec(xref, seq, parent_id, deline_list):
-            if only_xrefs and xref not in only_xrefs:
-                return False, seq, deline_list
             if model2:
                 model2_model = self.env[model2]
             if model2 and xref not in hdr_list:
@@ -1656,6 +1662,11 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     parent_name = name
                     break
             xrefs2 = z0bug_odoo_lib.Z0bugOdoo().get_test_xrefs(ref_model2)
+
+        if only_xrefs:
+            xrefs = set(xrefs) & set(only_xrefs)
+            xrefs2 = set(xrefs2) & set(only_xrefs)
+
         if model == "account.account":
             xrefs_list = []
             for xref in sorted(xrefs):
@@ -1760,7 +1771,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     for name in ("payability",):
                         name = self.translate(model, name, ttype="field")
                         only_fields.append(name)
-                return only_fields, taxes
+            return only_fields, taxes
 
         def make_model_limited_account(self):
             if self.coa == "l10n_it":
@@ -1923,8 +1934,9 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 "account.tax", mode=self.load_data_coa, cantdup=True
             )
             self.make_model("decimal.precision", mode=self.load_data_coa, cantdup=True)
-            if ((release.version_info[0] == 10 or self.coa == "l10n_it") and
-                    not self._feature_2_install("load_rc")):
+            if (
+                release.version_info[0] == 10 or self.coa == "l10n_it"
+            ) and not self._feature_2_install("load_rc"):
                 self.make_model(
                     "account.rc.type",
                     mode=self.load_data_coa,
