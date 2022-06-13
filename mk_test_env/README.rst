@@ -1,12 +1,12 @@
 
 =========================================
-|icon| Manage Test Environment 12.0.0.7.2
+|icon| Manage Test Environment 14.0.1.0.4
 =========================================
 
 
 **Create or update test environment**
 
-.. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/12.0/mk_test_env/static/description/icon.png
+.. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/14.0/mk_test_env/static/description/icon.png
 
 |Maturity| |Build Status| |Codecov Status| |license gpl| |Try Me|
 
@@ -48,17 +48,17 @@ Il comportamento di quesot modulo dipende pesantemente dai sequenti package PYPI
 Features / Caratteristiche
 --------------------------
 
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
-| Description / Descrizione                | 6.1        | 7.0        | 8.0        | 9.0        | 10.0    | 11.0       | 12.0    | 13.0       | 14.0       | 15.0       |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
-| Partner & Products / Soggetti e prodotti | |check|    | |check|    | |check|    | |check|    | |check| | |check|    | |check| | |no_check| | |no_check| | |no_check| |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
-| Sale orders / Ordini clienti             | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| | |no_check| | |no_check| | |no_check| |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
-| Purchase orders / Ordini fornitori       | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| | |no_check| | |no_check| | |no_check| |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
-| Invoices / Fatture                       | |no_check| | |no_check| | |no_check| | |no_check| | |check| | |no_check| | |check| | |no_check| | |no_check| | |no_check| |
-+------------------------------------------+------------+------------+------------+------------+---------+------------+---------+------------+------------+------------+
++------------------------------------------+-----+-----+-----+-----+------+------+------+------+------+------+------+
+| Description / Descrizione                | 6.1 | 7.0 | 8.0 | 9.0 | 10.0 | 11.0 | 12.0 | 13.0 | 14.0 | 15.0 | 16.0 |
++------------------------------------------+-----+-----+-----+-----+------+------+------+------+------+------+------+
+| Partner & Products / Soggetti e prodotti | ❌   | ❌   | ❌   | ❌  | ✅    | ❌    | ✅   | ❌    | ✅    | ❌   | ❌    |
++------------------------------------------+-----+-----+-----+-----+------+------+------+------+------+------+------+
+| Sale orders / Ordini clienti             | ❌   | ❌   | ❌   | ❌  | ✅    | ❌    | ✅   | ❌    | ✅    | ❌   | ❌    |
++------------------------------------------+-----+-----+-----+-----+------+------+------+------+------+------+------+
+| Purchase orders / Ordini fornitori       | ❌   | ❌   | ❌   | ❌  | ✅    | ❌    | ✅   | ❌    | ✅    | ❌   | ❌    |
++------------------------------------------+-----+-----+-----+-----+------+------+------+------+------+------+------+
+| Invoices / Fatture                       | ❌   | ❌   | ❌   | ❌  | ✅    | ❌    | ✅   | ❌    | ✅    | ❌   | ❌    |
++------------------------------------------+-----+-----+-----+-----+------+------+------+------+------+------+------+
 
 
 |
@@ -89,7 +89,7 @@ Installation / Installazione
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
-| $HOME/12.0                                                                 |
+| $HOME/14.0                                                                 |
 +----------------------------------------------------------------------------+
 
 ::
@@ -107,8 +107,8 @@ Installation / Installazione
     source $HOME/devel/activate_tools
     # *** End of tools installation or upgrade ***
     # Odoo repository installation; OCB repository must be installed
-    odoo_install_repository zerobug-test -b 12.0 -O zero -o $HOME/12.0
-    vem create $HOME/12.0/venv_odoo -O 12.0 -a "*" -DI -o $HOME/12.0
+    odoo_install_repository zerobug-test -b 14.0 -O zero -o $HOME/14.0
+    vem create $HOME/14.0/venv_odoo -O 14.0 -a "*" -DI -o $HOME/14.0
 
 From UI: go to:
 
@@ -138,8 +138,8 @@ Upgrade / Aggiornamento
     source $HOME/devel/activate_tools
     # *** End of tools installation or upgrade ***
     # Odoo repository upgrade
-    odoo_install_repository zerobug-test -b 12.0 -o $HOME/12.0 -U
-    vem amend $HOME/12.0/venv_odoo -o $HOME/12.0
+    odoo_install_repository zerobug-test -b 14.0 -o $HOME/14.0 -U
+    vem amend $HOME/14.0/venv_odoo -o $HOME/14.0
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
@@ -179,12 +179,22 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
-12.0.0.7.2 (2022-02-15)
+14.0.0.7.4 (2022-05-27)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [REF] Module list from XLSX
+
+14.0.0.7.3 (2022-04-22)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [REF] New model mixin + tests
+
+14.0.0.7.2 (2022-02-15)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] New action to generate source test python file
 
-12.0.0.7.1 (2022-01-11)
+14.0.0.7.1 (2022-01-11)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] expression to evaluate _requirements
@@ -202,7 +212,7 @@ ChangeLog History / Cronologia modifiche
 * [FIX] Do not do load data after module installation
 * [IMP] State management for flat table too
 
-12.0.0.6.11 (2021-12-31)
+14.0.0.6.11 (2021-12-31)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Sometime does not load values (mainly tax codes)
@@ -211,55 +221,41 @@ ChangeLog History / Cronologia modifiche
 * [FIX] Multiple groups
 * [IMP] New CoA module name
 
-12.0.0.6.10 (2021-11-26)
+14.0.0.6.10 (2021-11-26)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: set bank account
 * [IMP] mk_test_env:new wallet bank configuration
 
-12.0.0.6.9 (2021-11-23)
+14.0.0.6.9 (2021-11-23)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: italy.profile.account
 * [IMP] mk_test_env: intrastat
 * [IMP] mk_test_env: account mode
 
-12.0.0.6.8 (2021-11-16)
+14.0.0.6.8 (2021-11-16)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: inventory data
 * [IMP] mk_test_env: multiple journals
 
-12.0.0.6.7 (2021-11-12)
+14.0.0.6.7 (2021-11-12)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: conditioned import
 * [IMP] mk_test_env: virtual xref for journal
 
-12.0.0.6.6 (2021-11-11)
+14.0.0.6.6 (2021-11-11)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] mk_test_env: sometime does not load pyament modes
 
-12.0.0.6.5 (2021-11-10)
+14.0.0.6.5 (2021-11-10)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] mk_test_env: data for test MtO
 * [FIX] mk_test_env: minor fixes
-
-12.0.0.6.4 (2021-11-09)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: available for Odoo 10.0
-* [IMP] mk_test_env: clean-up removed
-* [IMP] mk_test_env: account wizard removed
-* [FIX] mk_test_env: add does not change existing records
-
-12.0.0.6.3 (2021-10-13)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: default language and timezone from user
-* [IMP] mk_test_env: new configuration for wallet management  / Nuova configurazione per conti di portafoglio
 
 
 
@@ -319,12 +315,12 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2022-02-16
+Last Update / Ultimo aggiornamento: 2022-06-07
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: 
-.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=12.0
+.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=14.0
     :target: https://travis-ci.com/zeroincombenze/zerobug-test
     :alt: github.com
 .. |license gpl| image:: https://img.shields.io/badge/licence-LGPL--3-7379c3.svg
@@ -333,23 +329,23 @@ Last Update / Ultimo aggiornamento: 2022-02-16
 .. |license opl| image:: https://img.shields.io/badge/licence-OPL-7379c3.svg
     :target: https://www.odoo.com/documentation/user/14.0/legal/licenses/licenses.html
     :alt: License: OPL
-.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=12.0
-    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=12.0
+.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=14.0
+    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=14.0
     :alt: Coverage
-.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/12.0/graph/badge.svg
-    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/12.0
+.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/14.0/graph/badge.svg
+    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/14.0
     :alt: Codecov
-.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-12.svg
-    :target: https://wiki.zeroincombenze.org/en/Odoo/12.0/dev
+.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-14.svg
+    :target: https://wiki.zeroincombenze.org/en/Odoo/14.0/dev
     :alt: Technical Documentation
-.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-12.svg
-    :target: https://wiki.zeroincombenze.org/it/Odoo/12.0/man
+.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-14.svg
+    :target: https://wiki.zeroincombenze.org/it/Odoo/14.0/man
     :alt: Technical Documentation
-.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-12.svg
-    :target: https://erp12.zeroincombenze.it
+.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-14.svg
+    :target: https://erp14.zeroincombenze.it
     :alt: Try Me
-.. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/12.0/graph/badge.svg
-    :target: https://codecov.io/gh/OCA/zerobug-test/branch/12.0
+.. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/14.0/graph/badge.svg
+    :target: https://codecov.io/gh/OCA/zerobug-test/branch/14.0
     :alt: Codecov
 .. |Odoo Italia Associazione| image:: https://www.odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20126x56.png
    :target: https://odoo-italia.org
