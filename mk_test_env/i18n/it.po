@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo (12.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-04 11:41+0000\n"
-"PO-Revision-Date: 2022-06-04 11:41+0000\n"
+"POT-Creation-Date: 2022-06-13 06:40+0000\n"
+"PO-Revision-Date: 2022-06-13 06:40+0000\n"
 "Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
 "Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
 "Language: it_IT\n"
@@ -184,10 +184,12 @@ msgid "Data selection"
 msgstr "Selezione dati"
 
 #. module: mk_test_env
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1618
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1664
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1618
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1664
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1646
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1697
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1646
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1697
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1646
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1697
 #, python-format
 msgid "Detected a NULL record in test data for model %s!"
 msgstr "Rilevato una registrazione con NULL dai dati di %s!"
@@ -279,11 +281,13 @@ msgstr "Caricare ordini di vendita"
 #. module: mk_test_env
 #: selection:wizard.make.test.environment,state:0
 #: selection:wizard.make.test.environment,state
+#: selection:wizard.make.test.environment,state
 msgid "Load general data"
 msgstr "Caricare dati generali"
 
 #. module: mk_test_env
 #: selection:wizard.make.test.environment,state:0
+#: selection:wizard.make.test.environment,state
 #: selection:wizard.make.test.environment,state
 msgid "Load modules"
 msgstr "Caricare app"
@@ -296,6 +300,7 @@ msgstr "Caricare immagini"
 #. module: mk_test_env
 #: selection:wizard.make.test.environment,state:0
 #: selection:wizard.make.test.environment,state
+#: selection:wizard.make.test.environment,state
 msgid "Load structured data"
 msgstr "Caricare dati strutturati"
 
@@ -305,6 +310,7 @@ msgid "Max child records"
 msgstr "Massime registrazioni figlie"
 
 #. module: mk_test_env
+#: code:addons/mk_test_env/wizard/mixin.py:189
 #: code:addons/mk_test_env/wizard/mixin.py:189
 #: code:addons/mk_test_env/wizard/mixin.py:189
 #, python-format
@@ -333,8 +339,9 @@ msgid "New record inserted"
 msgstr "Nuovi record inseriti"
 
 #. module: mk_test_env
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1615
-#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1615
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1643
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1643
+#: code:addons/mk_test_env/wizard/wizard_mk_test_env.py:1643
 #, python-format
 msgid "No test record found for model %s!"
 msgstr "Nessuna registrazione trovata per il modello %s!"
@@ -366,6 +373,7 @@ msgstr "Record modificati"
 
 #. module: mk_test_env
 #: selection:wizard.make.test.environment,state:0
+#: selection:wizard.make.test.environment,state
 #: selection:wizard.make.test.environment,state
 msgid "Result"
 msgstr "Risultato"
@@ -417,11 +425,13 @@ msgstr "Fuso orario"
 #. module: mk_test_env
 #: selection:wizard.make.test.environment,load_sale:0
 #: selection:wizard.make.test.environment,load_sale
+#: selection:wizard.make.test.environment,load_sale
 msgid "With module DdT"
 msgstr "Con modulo DdT"
 
 #. module: mk_test_env
 #: selection:wizard.make.test.environment,load_sale:0
+#: selection:wizard.make.test.environment,load_sale
 #: selection:wizard.make.test.environment,load_sale
 msgid "With module Delivery Note"
 msgstr "Con modulo Delivery Note"
