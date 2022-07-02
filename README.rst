@@ -25,7 +25,7 @@ Avaiable Addons / Moduli disponibili
 +-------------+------------+----------------------------------------------------------------------------------+
 | midea       | 10.0.0.1.4 | z0bug_odoo test suite                                                            |
 +-------------+------------+----------------------------------------------------------------------------------+
-| mk_test_env | 10.0.0.7.4 | Create or update test environment                                                |
+| mk_test_env | 10.0.0.7.5 | Create or update test environment                                                |
 +-------------+------------+----------------------------------------------------------------------------------+
 
 
@@ -147,6 +147,12 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 History / Cronologia
 --------------------
 
+mk_test_env: 10.0.0.7.5 (2022-06-30)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] wizard_mk_test_pyfile.py reactivated
+
+
 mk_test_env: 10.0.0.7.4 (2022-05-27)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -185,16 +191,6 @@ mk_test_env: 10.0.0.7 (2022-01-07)
 * [IMP] State management for flat table too
 
 
-mk_test_env: 10.0.0.6.11 (2021-12-31)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [FIX] Sometime does not load values (mainly tax codes)
-* [FIX] Limited records
-* [FIX] Many2one multiple values
-* [FIX] Multiple groups
-* [IMP] New CoA module name
-
-
 
 
 
@@ -228,11 +224,11 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2022-05-28
+Last Update / Ultimo aggiornamento: 2022-07-02
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
-    :alt:
+    :alt: 
 .. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=10.0
     :target: https://travis-ci.com/zeroincombenze/zerobug-test
     :alt: github.com
@@ -288,3 +284,5 @@ Last Update / Ultimo aggiornamento: 2022-05-28
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
    :target: https://t.me/Assitenza_clienti_powERP
+
+

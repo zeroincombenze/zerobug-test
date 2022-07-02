@@ -1,6 +1,6 @@
 
 =========================================
-|icon| Manage Test Environment 10.0.0.7.4
+|icon| Manage Test Environment 10.0.0.7.5
 =========================================
 
 
@@ -183,6 +183,11 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
+10.0.0.7.5 (2022-06-30)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] wizard_mk_test_pyfile.py reactivated
+
 10.0.0.7.4 (2022-05-27)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -255,12 +260,6 @@ ChangeLog History / Cronologia modifiche
 
 * [FIX] mk_test_env: sometime does not load pyament modes
 
-10.0.0.6.5 (2021-11-10)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] mk_test_env: data for test MtO
-* [FIX] mk_test_env: minor fixes
-
 
 
 |
@@ -319,7 +318,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2022-06-07
+Last Update / Ultimo aggiornamento: 2022-07-02
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
