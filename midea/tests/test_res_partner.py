@@ -1,5 +1,5 @@
 #
-# Copyright 2018-20 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2018-20 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -22,6 +22,6 @@ class TestMidea(test_common.SingleTransactionCase):
             "res.partner", "z0bug.res_partner_1"
         )
         _logger.info("Test %s SUCCESSFULLY ended." % __file__)
-        self.assertEqual(res["name"], "Prima Distribuzione S.p.A.")
+        self.assertEqual(res["name"], "Prima Alpha S.p.A.")
         self.assertEqual(res["zip"], "20022")
         self.assertEqual(res["city"], "Castano Primo")

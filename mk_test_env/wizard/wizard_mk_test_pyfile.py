@@ -16,8 +16,7 @@ from datetime import datetime
 from past.builtins import basestring
 
 from odoo import api, fields, models
-
-# from odoo.exceptions import UserError
+from odoo.exceptions import UserError
 
 try:
     import odoo.release as release
@@ -32,33 +31,34 @@ from clodoo import transodoo
 from os0 import os0
 from z0bug_odoo import z0bug_odoo_lib
 
+VERSION_ERROR = "Invalid package version! Use: pip install '%s>=%s' -U"
 SOURCE_HEADER = """\"\"\"
 Tests are based on test environment created by module mk_test_env in repository
 https://github.com/zeroincombenze/zerobug-test
 
 Each model is declared by a dictionary which name should be "TEST_model",
-where model is the upercase model name with dot replaced by '_'
+where model is the uppercase model name with dot replaced by "_".
 i.e.: res_partner -> TEST_RES_PARTNER
 
 Every record is declared in the model dictionary by a key which is the external
 reference used to retrieve the record.
-i.e.:
+i.e. the following record is named 'z0bug.partner1':
 TEST_RES_PARTNER = {
-    'z0bug.partner1': {
-        'name': 'Alpha',
-        'street': '1, First Avenue',
+    "z0bug.partner1": {
+        "name": "Alpha",
+        "street": "1, First Avenue",
         ...
     }
 }
 
 The magic dictionary TEST_SETUP contains data to load at test setup.
 TEST_SETUP = {
-    'res.partner': TEST_RES_PARTNER,
+    "res.partner": TEST_RES_PARTNER,
     ...
 }
 
 In setup() function, the following code
-    self.setup_records(lang='it_IT')
+    self.setup_records(lang="it_IT")
 creates all record declared by above data; lang is an optional parameter.
 
 Final notes:
@@ -142,11 +142,11 @@ TABLE_DEF = {
 }
 SOURCE_BODY = """
 TNL_RECORDS = {
-    'product.product': {
-        # 'type': ['product', 'consu'],
+    "product.product": {
+        # "type": ["product", "consu"],
     },
-    'product.template': {
-        # 'type': ['product', 'consu'],
+    "product.template": {
+        # "type": ["product", "consu"],
     },
 }
 
@@ -163,7 +163,7 @@ class %(model_class)s(common.TransactionCase):
         This function simulates self.env.ref() searching for model record.
         Ordinary xref is formatted as "MODULE.NAME"; when MODULE = "external"
         this function is called.
-        Record is searched by <by> parameter, default is 'code' or 'name';
+        Record is searched by <by> parameter, default is "code" or "name";
         id NAME is formatted as "FIELD=VALUE", FIELD value is assigned to <by>
         If company is supplied, it is added in search domain;
 
@@ -181,46 +181,46 @@ class %(model_class)s(common.TransactionCase):
         \"\"\"
         if model not in self.env:
             if raise_if_not_found:
-                raise ValueError('Model %%s not found in the system' %% model)
+                raise ValueError("Model %%s not found in the system" %% model)
             return False
         _fields = self.env[model].fields_get()
         if not by:
             if model in self.by:
                 by = self.by[model]
             else:
-                by = 'code' if 'code' in _fields else 'name'
-        module, name = xref.split('.', 1)
-        if '=' in name:
-            by, name = name.split('=', 1)
-        if case == 'upper':
+                by = "code" if "code" in _fields else "name"
+        module, name = xref.split(".", 1)
+        if "=" in name:
+            by, name = name.split("=", 1)
+        if case == "upper":
             name = name.upper()
-        elif case == 'lower':
+        elif case == "lower":
             name = name.lower()
-        domain = [(by, '=', name)]
-        if (model not in ('product.product',
-                          'product.template',
-                          'res.partner',
-                          'res.users') and
-                company and 'company_id' in _fields):
-            domain.append(('company_id', '=', company.id))
+        domain = [(by, "=", name)]
+        if (model not in ("product.product",
+                          "product.template",
+                          "res.partner",
+                          "res.users") and
+                company and "company_id" in _fields):
+            domain.append(("company_id", "=", company.id))
         objs = self.env[model].search(domain)
         if len(objs) == 1:
             return objs[0]
         if raise_if_not_found:
-            raise ValueError('External ID not found in the system: %%s' %% xref)
+            raise ValueError("External ID not found in the system: %%s" %% xref)
         return False
 
     def env_ref(self, xref, raise_if_not_found=None,
                 model=None, by=None, company=None, case=None):
         \"\"\"Get External Reference
         This function is like self.env.ref(); if xref does not exist and
-        xref prefix is 'external.', engage simulate_xref
+        xref prefix is "external.", engage simulate_xref
 
         Args:
             xref (str): external reference, format is "module.name"
             raise_if_not_found (bool): raise exception if xref not found
             model (str): external ref. model; required for "external." prefix
-            by (str): field to search for object record (def 'code' or 'name')
+            by (str): field to search for object record (def "code" or "name")
             company (obj): default company
 
         Returns:
@@ -230,8 +230,8 @@ class %(model_class)s(common.TransactionCase):
             return xref
         obj = self.env.ref(xref, raise_if_not_found=raise_if_not_found)
         if not obj:
-            module, name = xref.split('.', 1)
-            if module == 'external':
+            module, name = xref.split(".", 1)
+            if module == "external":
                 return self.simulate_xref(xref,
                                           model=model,
                                           by=by,
@@ -242,18 +242,18 @@ class %(model_class)s(common.TransactionCase):
     def add_xref(self, xref, model, xid):
         \"\"\"Add external reference that will be used in next tests.
         If xref exist, result ID will be upgraded\"\"\"
-        module, name = xref.split('.', 1)
-        if module == 'external':
+        module, name = xref.split(".", 1)
+        if module == "external":
             return False
-        ir_model = self.env['ir.model.data']
+        ir_model = self.env["ir.model.data"]
         vals = {
-            'module': module,
-            'name': name,
-            'model': model,
-            'res_id': xid,
+            "module": module,
+            "name": name,
+            "model": model,
+            "res_id": xid,
         }
-        xrefs = ir_model.search([('module', '=', module),
-                                 ('name', '=', name)])
+        xrefs = ir_model.search([("module", "=", module),
+                                 ("name", "=", name)])
         if not xrefs:
             return ir_model.create(vals)
         xrefs[0].write(vals)
@@ -275,24 +275,24 @@ class %(model_class)s(common.TransactionCase):
         for item in values.keys():
             if item not in _fields:
                 continue
-            if item == 'company_id' and not values[item]:
+            if item == "company_id" and not values[item]:
                 vals[item] = company.id
-            elif _fields[item]['type'] == 'many2one':
+            elif _fields[item]["type"] == "many2one":
                 res = self.env_ref(
                     values[item],
-                    model=_fields[item]['relation'],
+                    model=_fields[item]["relation"],
                     by=by,
                     company=company,
                     case=case,
                 )
                 if res:
                     vals[item] = res.id
-            elif (_fields[item]['type'] == 'many2many' and
-                  '.' in values[item] and
-                  ' ' not in values[item]):
+            elif (_fields[item]["type"] == "many2many" and
+                  "." in values[item] and
+                  " " not in values[item]):
                 res = self.env_ref(
                     values[item],
-                    model=_fields[item]['relation'],
+                    model=_fields[item]["relation"],
                     by=by,
                     company=company,
                     case=case,
@@ -305,12 +305,12 @@ class %(model_class)s(common.TransactionCase):
 
     def model_create(self, model, values, xref=None):
         \"\"\"Create a test record and set external ID to next tests\"\"\"
-        if model.startswith('account.move'):
+        if model.startswith("account.move"):
             res = self.env[model].with_context(
                 check_move_validity=False).create(values)
         else:
             res = self.env[model].create(values)
-        if xref and ' ' not in xref:
+        if xref and " " not in xref:
             self.add_xref(xref, model, res.id)
         return res
 
@@ -335,7 +335,7 @@ class %(model_class)s(common.TransactionCase):
                                 by=by,
                                 raise_if_not_found=False)
         if res:
-            if model.startswith('account.move'):
+            if model.startswith("account.move"):
                 res.with_context(check_move_validity=False).write(values)
             else:
                 res.write(values)
@@ -346,41 +346,41 @@ class %(model_class)s(common.TransactionCase):
         return self.env.user.company_id
 
     def set_locale(self, locale_name, raise_if_not_found=True):
-        modules_model = self.env['ir.module.module']
-        modules = modules_model.search([('name', '=', locale_name)])
-        if modules and modules[0].state != 'uninstalled':
+        modules_model = self.env["ir.module.module"]
+        modules = modules_model.search([("name", "=", locale_name)])
+        if modules and modules[0].state != "uninstalled":
             modules = []
         if modules:
             modules.button_immediate_install()
-            self.env['account.chart.template'].try_loading_for_current_company(
+            self.env["account.chart.template"].try_loading_for_current_company(
                 locale_name
             )
         else:
             if raise_if_not_found:
                 raise ValueError(
-                    'Module %%s not found in the system' %% locale_name)
+                    "Module %%s not found in the system" %% locale_name)
 
     def install_language(self, iso, overwrite=None, force_translation=None):
-        iso = iso or 'en_US'
+        iso = iso or "en_US"
         overwrite = overwrite or False
         load = False
-        lang_model = self.env['res.lang']
-        languages = lang_model.search([('code', '=', iso)])
+        lang_model = self.env["res.lang"]
+        languages = lang_model.search([("code", "=", iso)])
         if not languages:
-            languages = lang_model.search([('code', '=', iso),
-                                           ('active', '=', False)])
+            languages = lang_model.search([("code", "=", iso),
+                                           ("active", "=", False)])
             if languages:
-                languages.write({'active': True})
+                languages.write({"active": True})
                 load = True
         if not languages or load:
             vals = {
-                'lang': iso,
-                'overwrite': overwrite,
+                "lang": iso,
+                "overwrite": overwrite,
             }
-            self.env['base.language.install'].create(vals).lang_install()
+            self.env["base.language.install"].create(vals).lang_install()
         if force_translation:
-            vals = {'lang': iso}
-            self.env['base.update.translations'].create(vals).act_update()
+            vals = {"lang": iso}
+            self.env["base.update.translations"].create(vals).act_update()
 
     def setup_records(
         self, lang=None, locale=None, company=None, save_as_demo=None
@@ -411,15 +411,15 @@ class %(model_class)s(common.TransactionCase):
                 res = self.model_make(
                     model, vals, item,
                     company=company)
-                if model == 'product.template':
-                    model2 = 'product.product'
+                if model == "product.template":
+                    model2 = "product.product"
                     vals = self.get_values(
                         model2,
                         model_data[item],
                         company=company)
-                    vals['product_tmpl_id'] = res.id
+                    vals["product_tmpl_id"] = res.id
                     self.model_make(
-                        model2, vals, item.replace('template', 'product'),
+                        model2, vals, item.replace("template", "product"),
                         company=company)
 
         self.save_as_demo = save_as_demo or False
@@ -427,14 +427,14 @@ class %(model_class)s(common.TransactionCase):
             self.set_locale(locale)
         if lang:
             self.install_language(lang)
-        if not self.env['ir.module.module'].search(
-                [('name', '=', 'stock'), ('state', '=', 'installed')]):
-            TNL_RECORDS['product.product']['type'] = ['product', 'consu']
-            TNL_RECORDS['product.template']['type'] = ['product', 'consu']
+        if not self.env["ir.module.module"].search(
+                [("name", "=", "stock"), ("state", "=", "installed")]):
+            TNL_RECORDS["product.product"]["type"] = ["product", "consu"]
+            TNL_RECORDS["product.template"]["type"] = ["product", "consu"]
         company = company or self.default_company()
         self.by = {}
         for model, model_data in TEST_SETUP.items():
-            by = model_data.get('by')
+            by = model_data.get("by")
             if by:
                 self.by[model] = by
         for model in TEST_SETUP_LIST:
@@ -456,8 +456,8 @@ class %(model_class)s(common.TransactionCase):
     def %(test_fct_name)s(self):
         # Here an example of code you should insert to test
         # Example is based on account.invoice
-        model = '%(model)s'
-        model_child = '%(model_child)s'
+        model = "%(model)s"
+        model_child = "%(model_child)s"
         for xref in %(title)s:
             _logger.info(
                 "🎺 Testing %%s[%%s]" %% (model, xref)
@@ -468,15 +468,15 @@ class %(model_class)s(common.TransactionCase):
             res = self.model_make(model, vals, xref)
 
             for xref_child in %(title_child)s.values():
-                if xref_child['%(parent_id_name)s'] == xref:
+                if xref_child["%(parent_id_name)s"] == xref:
                     vals = self.get_values(model_child, xref_child)
-                    vals['%(parent_id_name)s'] = res.id
+                    vals["%(parent_id_name)s"] = res.id
                     self.model_make(model_child, vals, False)
             # res.compute_taxes()
 
             self.assertEqual(
-                'left', 'right'',
-                msg='Left value is different from right value')
+                "left", "right",
+                msg="Left value is different from right value")
 """
 
 
@@ -526,6 +526,8 @@ class WizardMkTestPyfile(models.TransientModel):
             lang = self.env.user.lang
         else:
             lang = os.environ.get("LANG", "en_US").split(".")[0]
+            if not self.env["res.lang"].search([("code", "=", lang)]):
+                lang = "en_US"
         return lang
 
     module2test = fields.Many2one("ir.module.module", string="Module to test")
@@ -537,9 +539,9 @@ class WizardMkTestPyfile(models.TransientModel):
     product_variant = fields.Boolean("Add product variant", default=False)
     max_child_records = fields.Integer("Max child records", default=2)
     # model4install_ids = fields.Many2many(
-    #     comodel_name='ir.model',
-    #     relation='ir_model_4_install_rel',
-    #     string='Models by installed modules',
+    #     comodel_name="ir.model",
+    #     relation="ir_model_4_install_rel",
+    #     string="Models by installed modules",
     #     default=_default_model2ignore)
     model2ignore_ids = fields.Many2many(
         comodel_name="ir.model",
@@ -550,8 +552,8 @@ class WizardMkTestPyfile(models.TransientModel):
     source = fields.Text("Source code")
 
     # modules2install = fields.Many2many(
-    #     'ir.module.module',
-    #     string='Modules to install')
+    #     "ir.module.module",
+    #     string="Modules to install")
     _tnldict = {}
     _model2ignore = []
 
@@ -822,15 +824,15 @@ class WizardMkTestPyfile(models.TransientModel):
         title = "TEST_%s" % model.replace(".", "_").upper()
         source = "%s = {\n" % title
         if model in self.MODEL_BY:
-            source += "    'by': '%s',\n" % self.MODEL_BY[model]
+            source += "    \"by\": \"%s\",\n" % self.MODEL_BY[model]
         toc = ""
         for xref in xrefs:
             if xref in exclude_xref or self.model_of_xref[xref] != model:
                 continue
             oca_xref = self.get_context_xref(xref, self.model_of_xref[xref])
-            source += "    '%s': {\n" % oca_xref
+            source += "    \"%s\": {\n" % oca_xref
             valid = True
-            toc = "    '%s': %s,\n" % (model, title)
+            toc = "    \"%s\": %s,\n" % (model, title)
             vals = self.get_test_values(model, xref)
             if model in self.HIDDEN_FIELDS:
                 for field in self.HIDDEN_FIELDS[model]:
@@ -874,23 +876,38 @@ class WizardMkTestPyfile(models.TransientModel):
                     "float",
                     "monetary",
                 ):
-                    source += "        '%s': %s,\n" % (field, vals[field])
+                    source += "        \"%s\": %s,\n" % (field, vals[field])
                 elif self.struct[model][field]["type"] == "boolean":
-                    source += "        '%s': %s,\n" % (
+                    source += "        \"%s\": %s,\n" % (
                         field,
                         "True" if vals[field] else "False",
                     )
                 else:
-                    source += "        '%s': '%s',\n" % (field, vals[field])
+                    source += "        \"%s\": \"%s\",\n" % (field, vals[field])
             source += "    },\n"
         source += "}\n"
         return source, valid, toc
 
+    def diff_ver(self, min_version, module, comp):
+        text_module_ver = "0"
+        for ver_name in ("__version__", "version"):
+            if hasattr(globals()[comp], ver_name):
+                text_module_ver = ".".join(
+                    [
+                        "%03d" % int(x)
+                        for x in getattr(globals()[comp], ver_name).split(".")
+                    ]
+                )
+                break
+        text_min_ver = ".".join(["%03d" % int(x) for x in min_version.split(".")])
+        if text_module_ver < text_min_ver:
+            raise UserError(VERSION_ERROR % (module, min_version))
+
     def make_test_pyfile(self):
-        self.diff_ver("1.0.14", "z0bug_odoo", "z0bug_odoo_lib")
-        self.diff_ver("1.0.4", "clodoo", "transodoo")
+        self.diff_ver("1.0.15", "z0bug_odoo", "z0bug_odoo_lib")
+        self.diff_ver("1.0.5", "clodoo", "transodoo")
         self.diff_ver("1.0.3", "os0", "os0")
-        self.diff_ver("1.0.10", "python_plus", "python_plus")
+        self.diff_ver("1.0.11", "python_plus", "python_plus")
         self.modules_to_declare = ("z0bug", "external", "l10n_it")
         self.model_of_xref = {}
         self.top_xrefs = []
@@ -945,7 +962,7 @@ class WizardMkTestPyfile(models.TransientModel):
             )
             if valid:
                 self.source += source
-                test_setup_list += "    '%s',\n" % model
+                test_setup_list += "    \"%s\",\n" % model
                 test_setup += toc
         test_setup_list += "]\n"
         test_setup += "}\n"
@@ -957,9 +974,12 @@ class WizardMkTestPyfile(models.TransientModel):
         self.source += "\n# Record data for child models\n"
         for model in sorted(self.top_model_xrefs.keys()):
             model_child = self.get_child_model(model)
+            if not model_child:
+                continue
             child_xrefs = []
             for xref in self.top_model_xrefs[model]:
-                child_xrefs += self.top_child_xrefs[xref]
+                if xref in self.top_child_xrefs:
+                    child_xrefs += self.top_child_xrefs[xref]
             source, valid, toc = self.write_source_model(model_child, child_xrefs)
             if valid:
                 self.source += source
@@ -978,7 +998,8 @@ class WizardMkTestPyfile(models.TransientModel):
         super_args = ("%s, self" % model_class) if release.version_info[0] < 11 else ""
         opt_lang = ""
         if self.lang and self.env.user.lang != "en_US":
-            opt_lang = "lang='%s'" % self.lang
+            opt_lang = "lang=\"%s\"" % self.lang
+        model_child = self.get_child_model(model)
         self.source += SOURCE_BODY % {
             "super_args": super_args,
             "model": model,
@@ -988,7 +1009,7 @@ class WizardMkTestPyfile(models.TransientModel):
             "opt_lang": opt_lang,
             "title": ("TEST_%s" % model.replace(".", "_").upper()),
             "title_child": (
-                "TEST_%s" % self.get_child_model(model).replace(".", "_").upper()
+                "TEST_%s" % self.get_child_model(model).replace(".", "_").upper() if model_child else ""
             ),
             "parent_id_name": parent_id_name,
         }
