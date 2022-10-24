@@ -528,6 +528,8 @@ class WizardMkTestPyfile(models.TransientModel):
             lang = self.env.user.lang
         else:
             lang = os.environ.get("LANG", "en_US").split(".")[0]
+            if not self.env["res.lang"].search([("code", "=", lang)]):
+                lang = "en_US"
         return lang
 
     module2test = fields.Many2one("ir.module.module", string="Module to test")
