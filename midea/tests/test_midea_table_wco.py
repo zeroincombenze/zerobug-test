@@ -7,15 +7,17 @@
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
+import os
 import logging
 
 from past.builtins import long
-from z0bug_odoo import test_common
+# from z0bug_odoo import test_common
+from .envtest import SingleTransactionCase
 
 _logger = logging.getLogger(__name__)
 
 
-class TestMidea(test_common.SingleTransactionCase):
+class TestMidea(SingleTransactionCase):
 
     MIDEA_TABLE_WCO_NAME = "Mario Rossi"
     MIDEA_TABLE_WCO_STATE = "draft"
@@ -25,7 +27,14 @@ class TestMidea(test_common.SingleTransactionCase):
         super(TestMidea, self).setUp()
         self.company_id = self.set_test_company()
 
+    def tearDown(self):
+        super(TestMidea, self).tearDown()
+        if os.environ.get("ODOO_COMMIT_TEST", ""):
+            self.env.cr.commit()  # pylint: disable=invalid-commit
+            _logger.info("✨ Test data committed")
+
     def test_midea_table_wco(self):
+        _logger.info("🎺 Testing test_midea_table_wco()")
         # Check for valid company
         company = self.browse_rec("res.company", self.company_id)
         self.assertEqual(company.name, "Test Company")

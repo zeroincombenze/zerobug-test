@@ -29,11 +29,11 @@
             </field>
         </record>
 
-        <record id="midea.action_test_noc" model="ir.actions.act_window">
+        <record id="midea.action_test" model="ir.actions.act_window">
             <field name="name">My idea test record</field>
             <field name="res_model">midea.no_company</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="midea.no_company_tree" />
+            <field name="view_id" ref="midea.no_company" />
         </record>
 
 </odoo>

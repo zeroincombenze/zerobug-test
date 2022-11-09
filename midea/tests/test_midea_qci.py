@@ -7,15 +7,17 @@
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
+import os
 import logging
 
 from past.builtins import long
-from z0bug_odoo import test_common
+# from z0bug_odoo import test_common
+from .envtest import SingleTransactionCase
 
 _logger = logging.getLogger(__name__)
 
 
-class TestMideaQci(test_common.SingleTransactionCase):
+class TestMideaQci(SingleTransactionCase):
 
     MIDEA_QCI_CODE = "Test-01"
     MIDEA_QCI_NAME = "Test this module"
@@ -25,7 +27,14 @@ class TestMideaQci(test_common.SingleTransactionCase):
     def setUp(self):
         super(TestMideaQci, self).setUp()
 
+    def tearDown(self):
+        super(TestMideaQci, self).tearDown()
+        if os.environ.get("ODOO_COMMIT_TEST", ""):
+            self.env.cr.commit()  # pylint: disable=invalid-commit
+            _logger.info("✨ Test data committed")
+
     def test_midea_no_company(self):
+        _logger.info("🎺 Testing test_midea_no_company()")
         model_name = "midea.qci"
         vals = {
             "code": self.MIDEA_QCI_CODE,
