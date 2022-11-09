@@ -1887,10 +1887,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
             raise UserError(VERSION_ERROR % (module, min_version))
 
     def make_test_environment(self):
-        self.diff_ver("1.0.15", "z0bug_odoo", "z0bug_odoo_lib")
-        self.diff_ver("1.0.5", "clodoo", "transodoo")
-        self.diff_ver("1.0.3", "os0", "os0")
-        self.diff_ver("1.0.11", "python_plus", "python_plus")
+        self.diff_ver("2.0.0", "z0bug_odoo", "z0bug_odoo_lib")
+        self.diff_ver("2.0.0", "clodoo", "transodoo")
+        self.diff_ver("2.0.0", "os0", "os0")
+        self.diff_ver("2.0.0", "python_plus", "python_plus")
 
         # Block 0: TODO> Separate function
         self.ctr_rec_new = 0

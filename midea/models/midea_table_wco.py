@@ -1,6 +1,4 @@
-# Copyright 2016-19 SHS-AV s.r.l. <https://www.zeroincombenze.it>
-#
-# Copyright 2018-22 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
+# Copyright 2016-22 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
