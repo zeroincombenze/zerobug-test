@@ -1,20 +1,23 @@
 #
-# Copyright 2018-20 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2018-22 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
+import os
 import logging
 
 from past.builtins import long
-from z0bug_odoo import test_common
+
+# from z0bug_odoo import test_common
+from .envtest import SingleTransactionCase
 
 _logger = logging.getLogger(__name__)
 
 
-class TestMideaQci(test_common.SingleTransactionCase):
+class TestMideaQci(SingleTransactionCase):
 
     MIDEA_QCI_CODE = "Test-01"
     MIDEA_QCI_NAME = "Test this module"
@@ -22,9 +25,16 @@ class TestMideaQci(test_common.SingleTransactionCase):
     MIDEA_QCI_ALTER_NAME = "Test module itself"
 
     def setUp(self):
-        super(TestMideaQci, self).setUp()
+        super().setUp()
+
+    def tearDown(self):
+        super().tearDown()
+        if os.environ.get("ODOO_COMMIT_TEST", ""):
+            self.env.cr.commit()  # pylint: disable=invalid-commit
+            _logger.info("✨ Test data committed")
 
     def test_midea_no_company(self):
+        _logger.info("🎺 Testing test_midea_no_company()")
         model_name = "midea.qci"
         vals = {
             "code": self.MIDEA_QCI_CODE,

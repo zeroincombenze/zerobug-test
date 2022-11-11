@@ -279,6 +279,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
             lang = self.env.user.lang
         else:
             lang = os.environ.get("LANG", "en_US").split(".")[0]
+            if not self.env["res.lang"].search([("code", "=", lang)]):
+                lang = "en_US"
         return lang
 
     def _set_tz(self):
@@ -583,7 +585,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     def add_xref(self, xref, model, res_id):
         xrefs = self.translate("", xref, ttype="xref").split(".")
         if len(xrefs) != 2 or " " in xref:
-            raise UserError("Invalid xref %s" % xref)
+            raise UserError(_("Invalid xref %s" % xref))
         vals = {"module": xrefs[0], "name": xrefs[1], "model": model, "res_id": res_id}
         model_model = self.env["ir.model.data"]
         xid = self.env_ref(xref, retxref_id=True)
@@ -835,7 +837,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 found_uninstalled = module
                 break
         if found_uninstalled and not isinstance(found_uninstalled, bool):
-            raise UserError("Module %s not installed!" % found_uninstalled.name)
+            raise UserError(_("Module %s not installed!" % found_uninstalled.name))
         if modules_2_test:
             # Strange case: no post_action
             service.server.restart()
@@ -883,7 +885,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         if model in self.env:
             self.STRUCT[model] = self.env[model].fields_get()
         else:
-            raise UserError("Model %s not found!" % model)
+            raise UserError(_("Model %s not found!" % model))
 
     def bind_record(
         self,
@@ -1104,7 +1106,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                                     model=attrs["relation"],
                                 )
                             except ValueError:
-                                raise UserError("Invalid xref %s" % item)
+                                raise UserError(_("Invalid xref %s" % item))
                             if xid:
                                 res.append(xid)
                         elif isinstance(item, basestring) and item.isdigit():
@@ -1396,7 +1398,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 except BaseException as e:
                     if not ignore_error:
                         raise UserError(
-                            "Action %s.%s FAILED (%s)!" % (model, action, e)
+                            _("Action %s.%s FAILED (%s)!" % (model, action, e))
                         )
 
         self._cr.commit()  # pylint: disable=invalid-commit
@@ -1885,10 +1887,10 @@ class WizardMakeTestEnvironment(models.TransientModel):
             raise UserError(VERSION_ERROR % (module, min_version))
 
     def make_test_environment(self):
-        self.diff_ver("1.0.15", "z0bug_odoo", "z0bug_odoo_lib")
-        self.diff_ver("1.0.5", "clodoo", "transodoo")
-        self.diff_ver("1.0.3", "os0", "os0")
-        self.diff_ver("1.0.11", "python_plus", "python_plus")
+        self.diff_ver("2.0.0", "z0bug_odoo", "z0bug_odoo_lib")
+        self.diff_ver("2.0.0", "clodoo", "transodoo")
+        self.diff_ver("2.0.0", "os0", "os0")
+        self.diff_ver("2.0.0", "python_plus", "python_plus")
 
         # Block 0: TODO> Separate function
         self.ctr_rec_new = 0

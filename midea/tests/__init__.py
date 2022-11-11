@@ -1,5 +1,5 @@
 #
-# Copyright 2018-20 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2018-22 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -9,3 +9,5 @@
 from . import test_midea_qci
 from . import test_midea_table_wco
 from . import test_res_partner
+from . import test_wizard
+from . import envtest
