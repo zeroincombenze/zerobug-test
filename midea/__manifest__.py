@@ -9,7 +9,7 @@
 {
     "name": "midea",
     "summary": "z0bug_odoo test suite",
-    "version": "12.0.0.1.4",
+    "version": "12.0.0.1.5",
     "category": "Generic Modules/Accounting",
     "author": "SHS-AV s.r.l.",
     "website": "https://github.com/OCA/l10n-italy",

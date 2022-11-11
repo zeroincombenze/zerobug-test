@@ -10,6 +10,7 @@ import os
 import logging
 
 from past.builtins import long
+
 # from z0bug_odoo import test_common
 from .envtest import SingleTransactionCase
 

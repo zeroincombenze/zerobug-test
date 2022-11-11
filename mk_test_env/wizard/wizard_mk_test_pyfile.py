@@ -1009,7 +1009,8 @@ class WizardMkTestPyfile(models.TransientModel):
             "opt_lang": opt_lang,
             "title": ("TEST_%s" % model.replace(".", "_").upper()),
             "title_child": (
-                "TEST_%s" % self.get_child_model(model).replace(".", "_").upper() if model_child else ""
+                "TEST_%s" % self.get_child_model(model).replace(".", "_").upper()
+                if model_child else ""
             ),
             "parent_id_name": parent_id_name,
         }
