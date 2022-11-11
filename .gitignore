@@ -1,4 +1,4 @@
-# [antoniov: 2022-05-20]
+# [antoniov: 2022-11-08]
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -43,6 +43,9 @@ nosetests.xml
 coverage.xml
 cover/
 
+# Node + Javascripts packages
+*.json
+
 # Translations
 *.mo
 
@@ -65,7 +68,6 @@ cover/
 # Komodo
 *.komodoproject
 .komodotools
-
 
 # Mr Developer
 .mr.developer.cfg
@@ -101,3 +103,5 @@ tmp.*
 stdout.log
 *.oca
 *.z0i
+#
+# odoo repositories

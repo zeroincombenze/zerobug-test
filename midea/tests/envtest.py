@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+from past.builtins import basestring, long
 
 from odoo.tools.safe_eval import safe_eval
+
 # from odoo.tests.common import SingleTransactionCase
 from z0bug_odoo.test_common import SingleTransactionCase
 
 
 class EnvTest(SingleTransactionCase):
-    """Test Environment v1.0.0
+    """Test Environment v1.0.1
     Make available a test environment in order to test Odoo modules in easy way.
 
     Currently wizard enviroment functions ara available
@@ -14,11 +17,11 @@ class EnvTest(SingleTransactionCase):
 
     def is_action(self, act_windows):
         return isinstance(act_windows, dict) and act_windows.get("type") in (
-            "ir.actions.act_window", "ir.actions.client")
+            "ir.actions.act_window",
+            "ir.actions.client",
+        )
 
-    def wizard_start(
-        self, act_windows, default=None, ctx=None, windows_break=None
-    ):
+    def wizard_launch(self, act_windows, default=None, ctx=None, windows_break=None):
         """Start a wizard from a windows action.
 
         This function simulates the wizard starting web interface. It creates the wizard
@@ -39,17 +42,26 @@ class EnvTest(SingleTransactionCase):
             Odoo windows action to pass to wizard execution
             If windows break return wizard image too
         """
-        res_model = act_windows["res_model"]
-        vals = default or {}
-        wizard = self.env[res_model].create(vals)
-        act_windows["res_id"] = wizard.id
-        if isinstance(act_windows.get("context"), str):
-            act_windows["context"] = safe_eval(act_windows["context"])
+        if isinstance(act_windows.get("context"), basestring):
+            act_windows["context"] = safe_eval(
+                act_windows["context"],
+                self.env["ir.actions.actions"]._get_eval_context()
+            )
         if ctx:
             if isinstance(act_windows.get("context"), dict):
                 act_windows["context"].update(ctx)
             else:
                 act_windows["context"] = ctx
+            if ctx.get('res_id'):
+                act_windows['res_id'] = ctx.pop('res_id')
+        res_model = act_windows["res_model"]
+        vals = default or {}
+        res_id = act_windows.get("res_id")
+        if res_id:
+            wizard = self.env[res_model].browse(res_id)
+        else:
+            wizard = self.env[res_model].create(vals)
+            act_windows["res_id"] = wizard.id
         if windows_break:
             return act_windows, wizard
         if act_windows.get("view_id"):
@@ -57,7 +69,7 @@ class EnvTest(SingleTransactionCase):
             self.env["ir.ui.view"].browse(act_windows["view_id"][0])
         return act_windows
 
-    def wizard_start_by_act_name(
+    def wizard_launch_by_act_name(
         self, module, action_name, default=None, ctx=None, windows_break=None
     ):
         """Start a wizard from an action name.
@@ -89,8 +101,9 @@ class EnvTest(SingleTransactionCase):
         """
         act_model = "ir.actions.act_window"
         act_windows = self.env[act_model].for_xml_id(module, action_name)
-        return self.wizard_start(
-            act_windows, default=default, ctx=ctx, windows_break=windows_break)
+        return self.wizard_launch(
+            act_windows, default=default, ctx=ctx, windows_break=windows_break
+        )
 
     def wizard_edit(self, wizard, field, value, onchange=None):
         """Simulate view editing on a field.
@@ -128,7 +141,6 @@ class EnvTest(SingleTransactionCase):
                 cur_vals[field] = getattr(wizard, field)
         if onchange:
             getattr(wizard, onchange)()
-
 
     def wizard_execution(
         self,
@@ -178,15 +190,11 @@ class EnvTest(SingleTransactionCase):
         res_model = act_windows["res_model"]
         ctx = (
             safe_eval(act_windows.get("context"))
-            if isinstance(act_windows.get("context"), str)
+            if isinstance(act_windows.get("context"), basestring)
             else act_windows.get("context", {})
         )
-        if isinstance(act_windows.get("res_id"), int):
+        if isinstance(act_windows.get("res_id"), (int, long)):
             wizard = self.env[res_model].with_context(ctx).browse(act_windows["res_id"])
-        # elif isinstance(ctx.get("active_id"), int):
-        #     wizard = self.env[res_model].with_context(ctx).browse(ctx["active_id"])
-        # elif ctx.get("active_id"):
-        #     wizard = ctx["active_id"]
         else:
             raise (TypeError, "Invalid object/model")
         # Get all onchange method names and run them with None values
@@ -201,13 +209,12 @@ class EnvTest(SingleTransactionCase):
         # Now simulate user update action
         web_changes = web_changes or []
         for args in web_changes:
-            self.wizard_edit(wizard,
-                             args[0],
-                             args[1],
-                             args[2] if len(args) > 2 else None)
+            self.wizard_edit(
+                wizard, args[0], args[1], args[2] if len(args) > 2 else None
+            )
         # Now simulate user confirmation
-        button_name = button_name or "process"
-        if hasattr(wizard, button_name):
+        # button_name = button_name or "process"
+        if button_name and hasattr(wizard, button_name):
             result = getattr(wizard, button_name)()
             if isinstance(result, dict) and result.get("type") != "":
                 result.setdefault("type", "ir.actions.act_window_close")
@@ -220,7 +227,8 @@ class EnvTest(SingleTransactionCase):
                     and result.get("context", {}).get("active_id")
                 ):
                     result = self.env[result["context"]["active_model"]].browse(
-                        result["context"]["active_id"])
+                        result["context"]["active_id"]
+                    )
             if windows_break:
                 return result, wizard
             return result
@@ -228,7 +236,7 @@ class EnvTest(SingleTransactionCase):
             return False, wizard
         return False
 
-    def web_wizard(
+    def wizard(
         self,
         module=None,
         action_name=None,
@@ -258,11 +266,11 @@ class EnvTest(SingleTransactionCase):
           TypeError: if invalid parameters issued
         """
         if module and action_name:
-            act_windows = self.wizard_start_by_act_name(
-                module, action_name, default=default, ctx=ctx)
+            act_windows = self.wizard_launch_by_act_name(
+                module, action_name, default=default, ctx=ctx
+            )
         elif act_windows:
-            act_windows = self.wizard_start(
-                act_windows, default=default, ctx=ctx)
+            act_windows = self.wizard_launch(act_windows, default=default, ctx=ctx)
         else:
             raise (TypeError, "Invalid action!")
         return self.wizard_execution(
