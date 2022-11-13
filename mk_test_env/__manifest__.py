@@ -9,7 +9,7 @@
 {
     "name": "Manage Test Environment",
     "summary": "Create or update test environment",
-    "version": "12.0.0.7.5",
+    "version": "12.0.0.7.6",
     "category": "Tools",
     "author": "SHS-AV s.r.l.",
     "website": "https://github.com/OCA/l10n-italy",

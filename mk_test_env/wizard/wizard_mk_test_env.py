@@ -6,29 +6,39 @@
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
+from past.builtins import basestring
 import os
 import re
 import time
 from datetime import date, datetime
-
+from distutils.version import StrictVersion
+import logging
 import pytz
-from past.builtins import basestring
-
-from odoo import _, api, fields, models, service
-from odoo.exceptions import UserError
-
+import python_plus
+from clodoo import transodoo
+from os0 import os0
+from z0bug_odoo import z0bug_odoo_lib
+try:
+    from odoo_score.odoo_score import __version__ as odoo_score_version
+except ImportError:
+    odoo_score_version = "0.0.1"
+_logger = logging.getLogger(__name__)
+if StrictVersion(odoo_score_version) >= StrictVersion("3.0.0"):
+    from odoo_score import models
+    from odoo import fields, _, api, service
+    from odoo.exceptions import UserError
+else:
+    from odoo import fields, models
+    from odoo import _, api, service
+    from odoo.exceptions import UserError
+    _logger.info("Not found valid odoo_score package: use odoo standard functions!")
 try:
     import odoo.release as release
 except ImportError:
     try:
         import openerp.release as release
     except ImportError:
-        release = ""
-
-import python_plus
-from clodoo import transodoo
-from os0 import os0
-from z0bug_odoo import z0bug_odoo_lib
+        release = "0.0.0"
 
 VERSION_ERROR = 'Invalid package version! Use: pip install "%s>=%s" -U'
 COMMIT_FCT = {

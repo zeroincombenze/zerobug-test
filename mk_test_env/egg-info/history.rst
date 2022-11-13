@@ -1,4 +1,9 @@
-12.0.0.7.5 (2022-10-24)
+12.0.0.7.6 (2022-11-11)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [REF] Using odoo_score instead of odoo
+
+12.0.0.7.5 (2022-06-30)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] wizard_mk_test_pyfile.py reactivated
