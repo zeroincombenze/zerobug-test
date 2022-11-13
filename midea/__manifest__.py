@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2016-18 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
+# Copyright 2016-22 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -10,7 +10,7 @@
 {
     "name": "midea",
     "summary": "z0bug_odoo test suite",
-    "version": "10.0.0.1.5",
+    "version": "10.0.0.1.6",
     "category": "Generic Modules/Accounting",
     "author": "SHS-AV s.r.l.",
     "website": "https://github.com/OCA/l10n-italy",

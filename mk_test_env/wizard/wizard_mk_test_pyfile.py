@@ -33,7 +33,7 @@ from clodoo import transodoo
 from os0 import os0
 from z0bug_odoo import z0bug_odoo_lib
 
-VERSION_ERROR = "Invalid package version! Use: pip install '%s>=%s' -U"
+VERSION_ERROR = u"Invalid package version! Use: pip install '%s>=%s' -U"
 SOURCE_HEADER = u"""\"\"\"
 Tests are based on test environment created by module mk_test_env in repository
 https://github.com/zeroincombenze/zerobug-test
