@@ -7,4 +7,6 @@
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
+from . import testenv
 from . import test_mixin
+from . import test_testenv
