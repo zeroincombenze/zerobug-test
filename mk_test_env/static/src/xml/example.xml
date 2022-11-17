@@ -1,0 +1,12 @@
+<templates>
+    <t t-name="ImportView.example_button">
+        <button type="button" class="btn btn-secondary o_button_import">
+            Example
+        </button>
+    </t>
+    <t t-extend="ListView.buttons">
+        <t t-jquery="button.o_list_button_add" t-operation="after">
+           <t t-call="ImportView.example_button"/>
+        </t>
+    </t>
+</templates>

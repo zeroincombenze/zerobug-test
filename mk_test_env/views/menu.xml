@@ -15,6 +15,13 @@
         <field name="target">new</field>
     </record>
 
+    <record id="action_get_test_data" model="ir.actions.act_window">
+        <field name="name">Get python source test dta</field>
+        <field name="res_model">wizard.get.test.data</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
     <menuitem
         id="menu_mk_test_env"
         name="Create Test Environment"
@@ -31,5 +38,14 @@
         parent="base.next_id_9"
         groups="base.group_no_one"
         sequence="91"
+    />
+
+    <menuitem
+        id="menu_get_test_date"
+        name="Get python source test data"
+        action="action_get_test_data"
+        parent="base.next_id_9"
+        groups="base.group_no_one"
+        sequence="92"
     />
 </odoo>
