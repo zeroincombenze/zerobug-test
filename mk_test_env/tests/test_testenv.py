@@ -77,7 +77,7 @@ class MyTest(SingleTransactionCase):
 
     def setUp(self):
         super(MyTest, self).setUp()
-        # self.setup_env(what)  # Create test environment
+        self.iso_code = "it_IT"
 
     def tearDown(self):
         super(MyTest, self).tearDown()
@@ -233,12 +233,12 @@ class MyTest(SingleTransactionCase):
         self.declare_all_data(data, merge="zerobug")
         self.assertEqual(
             self.get_resource_data("res.partner.bank",
-                                   "z0bug.bank_company_1")["acc_number"],
+                                   "z0bug.bank_company_1")["acc_number"].replace(" ", ""),
             "IT15A0123412345100000123456"
         )
         self.setup_env()
         self.assertEqual(
-            self.resource_bind("z0bug.bank_company_1").acc_number,
+            self.resource_bind("z0bug.bank_company_1").acc_number.replace(" ", ""),
             "IT15A0123412345100000123456"
         )
 
@@ -294,6 +294,31 @@ class MyTest(SingleTransactionCase):
                                     xref, resource="res.currency.rate").id
                             })
 
+    def _test_wizard(self):
+        # We engage language translation wizard with "it_IT" language
+        # see "<ODOO_PATH>/addons/base/module/wizard/base_language_install*"
+        _logger.info("🎺 Testing wizard.lang_install()")
+        act_windows = self.wizard(
+            module="base",
+            action_name="action_view_base_language_install",
+            default={
+                "lang": self.iso_code,
+                "overwrite": False,
+            },
+            button_name="lang_install",
+        )
+        self.assertTrue(
+            self.is_action(act_windows),
+            "No action returned by language install"
+        )
+        # Now we test the close message
+        self.wizard(
+            act_windows=act_windows
+        )
+        self.assertTrue(
+            self.env["res.lang"].search([("code", "=", self.iso_code)]),
+            "No language %s loaded!" % self.iso_code
+        )
 
     def test_mytest(self):
         self._test_00()
@@ -302,3 +327,4 @@ class MyTest(SingleTransactionCase):
         self._test_03()
         self._test_04()
         self._test_05()
+        self._test_wizard()
