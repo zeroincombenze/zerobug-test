@@ -7,7 +7,7 @@
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
-from past.builtins import basestring, long
+from past.builtins import basestring
 import os
 import re
 import time
