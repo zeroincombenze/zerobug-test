@@ -16,6 +16,7 @@
     "license": "LGPL-3",
     "depends": [
         "base",
+        "product",      # to test TestEnv
     ],
     "external_dependencies": {
         "python": [
