@@ -96,6 +96,7 @@
     <record id="result_mk_test_env_view" model="ir.ui.view">
         <field name="name">Test Environment Creation result</field>
         <field name="model">wizard.make.test.environment</field>
+        <field name="priority" eval="64"/>
         <field name="arch" type="xml">
             <form string="Result Test Environment">
                 <group>

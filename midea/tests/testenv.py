@@ -200,10 +200,8 @@ class MainTest(SingleTransactionCase):
         if not isinstance(childs_resource, (list, tuple)):
             childs_resource = [childs_resource]                      # pragma: no cover
         if resource not in self.childs_resource:
-            for field in sorted(self.struct[resource].keys()):
-                if (not field.startswith("valid_")
-                        and self.struct[resource][field].get("relation",
-                                                             "/") in childs_resource):
+            for field in self.struct[resource].keys():
+                if self.struct[resource][field].get("relation", "/") in childs_resource:
                     self.childs_name[resource] = field
                     self.childs_resource[resource] = self.struct[resource][field][
                         "relation"
@@ -435,14 +433,14 @@ class MainTest(SingleTransactionCase):
                 xref_child = xref.replace("template_", "product_")
             if xref_child == xref:
                 xref_child = xref.replace("template", "product")
-            if xref_child == xref:                                   # pragma: no cover
-                self._logger.info(                                   # pragma: no cover
-                    (                                                # pragma: no cover
-                        "⚠ wrong xref pattern '%s':"                 # pragma: no cover
+            if xref_child == xref:
+                self._logger.info(
+                    (
+                        "⚠ wrong xref pattern '%s':"
                         " please use something like 'z0bug.product_template_1"
-                    ) % xref                                         # pragma: no cover
-                )                                                    # pragma: no cover
-                xref_child = False                                   # pragma: no cover
+                    ) % xref
+                )
+                xref_child = False
             else:
                 self._logger.info(
                     "xref ('product.template') '%s' -> ('product.product') '%s'"

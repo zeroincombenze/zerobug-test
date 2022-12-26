@@ -24,6 +24,26 @@ TEST_ACCOUNT_PAYMENT_TERM_LINE = {
     "z0bug.payment_4_9": {},
     "z0bug.payment_5_9": {},
 }
+TEST_PRODUCT_TEMPLATE = {
+    "z0bug.product_template_1": {
+        "default_code": "AA",
+        "name": "Prodotto Alpha",
+        "lst_price": 0.84,
+        "standard_price": 0.42,
+        "categ_id": "product.product_category_1",
+        "type": "consu",
+        # "taxes_id": "z0bug.tax_22v",
+        # "supplier_taxes_id": "z0bug.tax_22a",
+        # "property_account_income_id": "z0bug.coa_510000",
+        # "property_account_expense_id": "z0bug.coa_610100",
+        "uom_id": "product.product_uom_unit",
+        "uom_po_id": "product.product_uom_unit",
+        "weight": 0.1,
+        # "route_ids": "purchase_stock.route_warehouse0_buy",
+        # "intrastat_type": "good",
+        # "intrastat_code_id": "external.84401020",
+    },
+}
 TEST_RES_PARTNER = {
     "z0bug.res_partner_1": {
         "name": "Prima Alpha S.p.A.",
@@ -70,6 +90,7 @@ TEST_SETUP_LIST = [
     # "account.payment.term.line",
     "res.partner",
     "res.partner.bank",
+    "product.template",
 ]
 
 
@@ -77,6 +98,7 @@ class MyTest(SingleTransactionCase):
 
     def setUp(self):
         super(MyTest, self).setUp()
+        self.debug_level = 3
         self.iso_code = "it_IT"
 
     def tearDown(self):
@@ -233,12 +255,12 @@ class MyTest(SingleTransactionCase):
         self.declare_all_data(data, merge="zerobug")
         self.assertEqual(
             self.get_resource_data("res.partner.bank",
-                                   "z0bug.bank_company_1")["acc_number"],
+                                   "z0bug.bank_company_1")["acc_number"].replace(" ", ""),
             "IT15A0123412345100000123456"
         )
         self.setup_env()
         self.assertEqual(
-            self.resource_bind("z0bug.bank_company_1").acc_number,
+            self.resource_bind("z0bug.bank_company_1").acc_number.replace(" ", ""),
             "IT15A0123412345100000123456"
         )
 

@@ -9,12 +9,13 @@
 #
 import logging
 
-from z0bug_odoo import test_common, z0bug_odoo_lib
+from z0bug_odoo import z0bug_odoo_lib
+from .testenv import MainTest as SingleTransactionCase
 
 _logger = logging.getLogger(__name__)
 
 
-class TestMidea(test_common.SingleTransactionCase):
+class TestMidea(SingleTransactionCase):
     def setUp(self):
         super(TestMidea, self).setUp()
 

@@ -10,3 +10,4 @@
 from . import mixin
 from . import wizard_mk_test_env
 from . import wizard_mk_test_pyfile
+from . import wizard_get_test_data

@@ -10,12 +10,12 @@
 import os
 import logging
 
-from .envtest import EnvTest
+from .testenv import MainTest as SingleTransactionCase
 
 _logger = logging.getLogger(__name__)
 
 
-class TestMideaWizard(EnvTest):
+class TestMideaWizard(SingleTransactionCase):
     def setUp(self):
         super(TestMideaWizard, self).setUp()
         self.iso_code = "it_IT"

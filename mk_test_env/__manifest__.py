@@ -17,6 +17,7 @@
     "license": "LGPL-3",
     "depends": [
         "base",
+        "product",      # to test TestEnv
     ],
     "external_dependencies": {
         "python": [
@@ -33,7 +34,9 @@
         "views/menu.xml",
         "wizard/wizard_mk_test_env_view.xml",
         "wizard/wizard_mk_test_pyfile_view.xml",
+        "wizard/wizard_get_test_data_view.xml",
     ],
+    ## "qweb": ["static/src/xml/example.xml"],
     "installable": True,
     "maintainer": "Zeroincombenze (R)",
     "development_status": "Beta",
