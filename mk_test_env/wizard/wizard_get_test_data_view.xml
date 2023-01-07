@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id="wizard_mk_test_pyfile_view" model="ir.ui.view">
-        <field name="name">Create python source test file</field>
-        <field name="model">wizard.mk.test.pyfile</field>
+    <record id="wizard_get_test_data_view" model="ir.ui.view">
+        <field name="name">Get test data</field>
+        <field name="model">wizard.get.test.data</field>
         <field name="arch" type="xml">
-            <form string="Create python source test file">
+            <form string="Get python source test data">
                 <group>
-                    <field name="module2test" />
-                    <field name="lang" />
-                    <field name="oca_coding" />
-                    <field name="product_variant" />
-                    <field name="max_child_records" />
-                    <field name="xref_ids" />
-                    <field name="model2ignore_ids" />
+                    <field name="model2export" />
                 </group>
                 <footer>
                     <button
@@ -28,12 +22,12 @@
         </field>
     </record>
 
-    <record id="result_mk_test_pyfile_view" model="ir.ui.view">
-        <field name="name">Create python source test file result</field>
-        <field name="model">wizard.mk.test.pyfile</field>
+    <record id="result_get_test_data_view" model="ir.ui.view">
+        <field name="name">Get python source test data result</field>
+        <field name="model">wizard.get.test.data</field>
         <field name="priority" eval="64"/>
         <field name="arch" type="xml">
-            <form string="Create python source test file result">
+            <form string="Get python source test file result">
                 <group>
                     <field name="source" />
                 </group>
