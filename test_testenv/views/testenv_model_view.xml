@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="test_testenv.testenv_all_fields_tree">
+        <field name="name">Model with all field types (tree)</field>
+        <field name="model">testenv.all.fields</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="16" />
+        <field name="arch" type="xml">
+            <tree string="All fields types tree">
+                <field name="name" />
+                <field name="company_id" />
+                <field name="state" />
+                <field name="rank" />
+                <field name="date" />
+                <field name="amount" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="test_testenv.testenv_all_fields_form">
+        <field name="name">Model with all field types (form)</field>
+        <field name="model">testenv.all.fields</field>
+        <field name="type">form</field>
+        <field name="priority" eval="16" />
+        <field name="arch" type="xml">
+            <form string="All fields types form">
+                <group>
+                    <field name="name" />
+                    <field name="company_id" />
+                    <field name="active" />
+                    <field name="state" />
+                    <field name="attachment" />
+                    <field name="rank" />
+                    <field name="amount" />
+                    <field name="measure" />
+                </group>
+                <group>
+                    <field name="date" />
+                    <field name="created_dt" />
+                    <field name="updated_dt" />
+                </group>
+                <group>
+                    <field name="description" />
+                </group>
+                <group>
+                    <field name="webpage" />
+                </group>
+                <group>
+                    <field name="partner_ids" widget="many2many_tags" />
+                </group>
+                <group>
+                    <field name="product_ids" widget="many2many_tags" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="test_testenv.testenv_all_fields_action" model="ir.actions.act_window">
+        <field name="name">All fields types record</field>
+        <field name="res_model">testenv.all.fields</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="test_testenv.testenv_all_fields_tree" />
+    </record>
+
+    <menuitem
+        id="menu_testenv_all_fields"
+        name="All fields types record"
+        action="test_testenv.testenv_all_fields_action"
+        parent="base.menu_administration"
+        sequence="950"
+    />
+</odoo>
