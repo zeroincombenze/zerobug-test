@@ -1,1 +1,1 @@
-less -R /home/odoo/10.0/zerobug-test/test_testenv/tests/logs/test_testenv_20230116.txt
+less -R $(readlink -f $(dirname $0))/test_testenv_20230119.txt

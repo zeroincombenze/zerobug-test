@@ -167,7 +167,8 @@ TEST_RES_PARTNER = {
         "customer": True,
         "supplier": True,
         "is_company": True,
-        "image": "z0bug.res_partner_1.png"
+        "image": "z0bug.res_partner_1.png",
+        "not_exit_field": False,
     },
     "z0bug.res_partner_2": {
         "name": "Latte Beta Due s.n.c.",
@@ -179,7 +180,7 @@ TEST_RES_PARTNER = {
         "customer": True,
         "supplier": False,
         "is_company": True,
-        "image": "z0bug.res_partner_2"
+        "image": "z0bug.res_partner_2",
     },
 }
 TEST_RES_PARTNER_BANK = {
@@ -210,7 +211,7 @@ class MyTest(SingleTransactionCase):
 
     def setUp(self):
         super(MyTest, self).setUp()
-        self.debug_level = 3
+        self.debug_level = 2
         self.iso_code = "it_IT"
         self.date_rate_0 = self.compute_date("####-12-30")
 
