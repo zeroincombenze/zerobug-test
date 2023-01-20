@@ -168,7 +168,6 @@ TEST_RES_PARTNER = {
         "supplier": True,
         "is_company": True,
         "image": "z0bug.res_partner_1.png",
-        "not_exit_field": False,
     },
     "z0bug.res_partner_2": {
         "name": "Latte Beta Due s.n.c.",
@@ -236,6 +235,8 @@ class MyTest(SingleTransactionCase):
                 "z0bug.res_partner_1": {
                     "name": "Prima Alpha S.p.A.",
                     "color": 1,
+                    "not_exist_field": "INVALID",
+                    "street": None,
                 },
             }
         )
@@ -259,10 +260,20 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_1")["name"],
             "Prima Alpha S.p.A.",
-            "TestEnv FAILED: unexpected value name!"
+            "TestEnv FAILED: unexpected value for 'name'!"
         )
         self.assertFalse(
             "zip" in self.get_resource_data("res.partner", "z0bug.res_partner_1"),
+            "TestEnv FAILED: unexpected field value for 'zip'!"
+        )
+        self.assertFalse(
+            "not_exist_field" in self.get_resource_data(
+                "res.partner", "z0bug.res_partner_1"),
+            "TestEnv FAILED: unexpected field 'not_exist_field'!"
+        )
+        self.assertFalse(
+            "street" in self.get_resource_data("res.partner", "z0bug.res_partner_1"),
+            "TestEnv FAILED: unexpected field value for 'street'!"
         )
 
     def _test_02(self):
@@ -789,6 +800,48 @@ class MyTest(SingleTransactionCase):
         )
         self.assertEqual(record.description, False)
 
+    def _test_validate_record(self):
+        _logger.info("🎺 Testing validate_record()")
+        self.resource_write("res.partner", xref="z0bug.res_partner_1")
+        self.resource_write("res.partner", xref="z0bug.res_partner_2")
+        template = [
+            {
+                "name": TEST_RES_PARTNER["z0bug.res_partner_1"]["name"],
+                "street": TEST_RES_PARTNER["z0bug.res_partner_1"]["street"],
+
+            },
+            {
+                "name": TEST_RES_PARTNER["z0bug.res_partner_2"]["name"],
+            },
+        ]
+        records = self.env["res.partner"]
+        records |= self.resource_bind("z0bug.res_partner_1")
+        records |= self.resource_bind("z0bug.res_partner_2")
+        self.validate_records(template, records)
+
+        self.resource_write("account.payment.term", xref="z0bug.payment_term_1")
+        template = [
+            {
+                "name": TEST_ACCOUNT_PAYMENT_TERM["z0bug.payment_term_1"]["name"],
+                "line_ids": [
+                    {
+                        "days": TEST_ACCOUNT_PAYMENT_TERM_LINE[
+                            "z0bug.payment_term_1_1"]["days"],
+                        "value": TEST_ACCOUNT_PAYMENT_TERM_LINE[
+                            "z0bug.payment_term_1_1"]["value"],
+                        "value_amount": TEST_ACCOUNT_PAYMENT_TERM_LINE[
+                            "z0bug.payment_term_1_1"]["value_amount"],
+                    },
+                    {
+                        "days": 60,
+                        "value": TEST_ACCOUNT_PAYMENT_TERM_LINE[
+                            "z0bug.payment_term_1_2"]["value"],
+                    },                ],
+            },
+        ]
+        records = [self.resource_bind("z0bug.payment_term_1")]
+        self.validate_records(template, records)
+
     def test_mytest(self):
         self._test_00()
         self._test_01()
@@ -805,3 +858,4 @@ class MyTest(SingleTransactionCase):
         invoice = self._test_invoice()
         move = self._test_wizard_invoice(invoice)
         self._test_move(move)
+        self._test_validate_record()
