@@ -1,6 +1,6 @@
 
 =========================
-|icon| testenv 10.0.2.0.4
+|icon| testenv 10.0.2.0.6
 =========================
 
 
@@ -151,6 +151,18 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
+10.0.2.0.6 (2023-01-23)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Test on get_records_from_act_windows()
+* [IMP] Coverage 94% (763/48
+
+10.0.2.0.5 (2023-01-19)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Test on validate_records()
+* [IMP] Coverage 93%
+
 10.0.2.0.4 (2023-01-13)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -220,7 +232,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2023-01-15
+Last Update / Ultimo aggiornamento: 2023-01-23
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Mature-green.png
     :target: https://odoo-community.org/page/development-status
