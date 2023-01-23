@@ -137,7 +137,7 @@ vatnumber==1.2
 viivakoodi==0.8.0
 vobject==0.9.3
 Werkzeug==0.11.11
-wheel==0.34.2
+wheel==0.38.1
 whichcraft==0.6.1
 wrapt==1.14.1
 xlrd==1.0.0
