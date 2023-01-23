@@ -842,6 +842,33 @@ class MyTest(SingleTransactionCase):
         records = [self.resource_bind("z0bug.payment_term_1")]
         self.validate_records(template, records)
 
+    def _test_wizard_from_menu(self):
+        act_windows = self.wizard(
+            module=".",
+            action_name="wizard_example_menu_view",
+            web_changes=[("numrecords", 3)],
+            button_name="do_example"
+        )
+        self.assertTrue(self.is_action(act_windows))
+        records = self.get_records_from_act_windows(act_windows)
+        self.assertEqual(
+            len(records),
+            3,
+            "Wizard did not return 3 records!"
+        )
+        template = [
+            {
+                "rank": 1
+            },
+            {
+                "rank": 2
+            },
+            {
+                "rank": 3
+            },
+        ]
+        self.validate_records(template, records)
+
     def test_mytest(self):
         self._test_00()
         self._test_01()
@@ -859,3 +886,4 @@ class MyTest(SingleTransactionCase):
         move = self._test_wizard_invoice(invoice)
         self._test_move(move)
         self._test_validate_record()
+        self._test_wizard_from_menu()

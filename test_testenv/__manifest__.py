@@ -10,7 +10,7 @@
 {
     "name": "testenv",
     "summary": "z0bug_odoo test suite",
-    "version": "12.0.2.0.5",
+    "version": "12.0.2.0.6",
     "category": "Generic Modules/Accounting",
     "author": "SHS-AV s.r.l.",
     "website": "https://github.com/OCA/l10n-italy",
@@ -27,6 +27,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/testenv_model_view.xml",
+        "wizard/wizard_example_menu.xml",
     ],
     "installable": True,
     "maintainer": "Antonio Maria Vigliotti",

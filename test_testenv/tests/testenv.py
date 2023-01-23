@@ -977,6 +977,8 @@ class MainTest(SingleTransactionCase):
             act_windows["context"] = _ctx
             if isinstance(records, (int, long)) != act_windows["multi"]:
                 self._logger.info("⚠ act_windows['multi'] does not match # of records!")
+        elif "context" not in act_windows:
+            act_windows["context"] = {}
 
     def _create_object(self, resource, default={}, ctx={}):
         if ctx:
@@ -1003,20 +1005,17 @@ class MainTest(SingleTransactionCase):
                 resource_model,
                 default=self.cast_types(resource_model, default or {}, fmt="cmd"),
                 ctx=ctx)
-        elif isinstance(record, (list, tuple)):
-            if len(record) == 1 and not self._is_transient(orig):
-                orig = self._create_object(
-                    resource_model,
-                    default=self._convert_to_write(record[0], new=True),
-                    ctx=ctx)
-        else:
-            if ctx:
-                record = record.with_context(ctx)
+        elif is_iterable(record):
             if not self._is_transient(orig):
-                orig = self._create_object(
-                    resource_model,
-                    default=self._convert_to_write(record, new=True),
-                    ctx=ctx)
+                if not isinstance(record, (list, tuple)):
+                    _ctx = self.env["ir.actions.actions"]._get_eval_context()
+                    _ctx.update(self._ctx_active_ids(record, ctx))
+                    record = record.with_context(_ctx)
+                if len(record) == 1:
+                    orig = self._create_object(
+                        resource_model,
+                        default=self._convert_to_write(record[0], new=True),
+                        ctx=ctx)
         self._load_field_struct(resource_model)
         for args in web_changes:
             self._wiz_edit(
@@ -1059,7 +1058,8 @@ class MainTest(SingleTransactionCase):
 
     def _get_src_model_from_act_windows(self, act_windows):
         model_name = act_windows.get(
-            "src_model", self._get_model_from_act_windows(act_windows))
+            "src_model", act_windows.get(
+                "binding_model_id", self._get_model_from_act_windows(act_windows)))
         if not model_name or self._is_transient(model_name):
             model_name = None
             value = "%s,%d" % (act_windows["type"], act_windows["id"])
@@ -1262,7 +1262,7 @@ class MainTest(SingleTransactionCase):
                     for method in wizard._onchange_methods[field]:
                         method(wizard)
                 cur_vals[field] = getattr(wizard, field)
-        if onchange:
+        if onchange:                                                 # pragma: no cover
             getattr(wizard, onchange)()
 
     def _wiz_execution(
@@ -1272,42 +1272,7 @@ class MainTest(SingleTransactionCase):
         web_changes=[],
         button_ctx={},
     ):
-        """Simulate wizard execution issued by an action.
-
-        Wizard is created by <wizard_start> with default values.
-        First, execute onchange methods without values.
-        Simulate user actions by web_changes that is a list of tuple (field, value);
-            * fields are updated sequentially from web_changes parameters
-            * a field can be updated more times
-            * any updated engages the onchange funcion if defined for field
-        Finally, the <button_name> function is executed.
-        It returns the wizard result or False.
-
-        Python example:
-            act_window = self.wizard_execution(
-                act_window,
-                button_name="do_something",
-                web_changes=[
-                    ("field_a_ids", [(6, 0, [value_a.id])], "onchange_field_a"),
-                    ("field_b_id", self.b.id, "onchange_field_b"),
-                    ("field_c", "C"),
-                ],
-            )
-
-        Args:
-            act_windows (dict): Odoo windows action returned by <wizard_start>
-            records (obj): objects supplied for action server
-            button_name (str): function name to execute at the end of then wizard
-            web_changes (list): list of tuples (field, value); see above <wizard_edit>
-            button_ctx (dict): context to pass to button_name function
-
-        Returns:
-            Odoo wizard result; may be a windows action to engage another wizard
-            If windows break return wizard image too
-
-        Raises:
-          TypeError: if invalid wizard image
-        """
+        """Simulate wizard execution issued by an action."""
         self.log_lvl_3("🐞wizard running(%s, %s)"
                        % (act_windows.get("name"), self.dict_2_print(act_windows)))
         # if act_windows["type"] == "ir.actions.server":
@@ -1337,21 +1302,7 @@ class MainTest(SingleTransactionCase):
 
         wizard = act_windows.pop("_wizard_")
         if button_name:
-            result = self._exec_action(wizard, button_name, web_changes=web_changes)
-            if isinstance(result, dict) and result.get("type") != "":
-                result.setdefault("type", "ir.actions.act_window_close")
-                if isinstance(button_ctx, dict):
-                    result.setdefault("context", button_ctx)
-                if (
-                    self.is_action(result)
-                    and result["type"] == "ir.actions.client"
-                    and result.get("context", {}).get("active_model")
-                    and result.get("context", {}).get("active_id")
-                ):
-                    result = self.env[result["context"]["active_model"]].browse(
-                        result["context"]["active_id"]
-                    )
-            return result
+            return self._exec_action(wizard, button_name, web_changes=web_changes)
         return False
 
     #############################################
@@ -1848,9 +1799,9 @@ class MainTest(SingleTransactionCase):
         """
         self._logger.info(
             "🎺 Starting test v2.0.4 (debug_level=%s)" % (self.debug_level))
-        if locale:
+        if locale:                                                   # pragma: no cover
             self.set_locale(locale)
-        if lang:
+        if lang:                                                     # pragma: no cover
             self.install_language(lang)
         self._convert_test_data(group=group)
         for resource in self.get_resource_list(group=group):
@@ -1951,7 +1902,7 @@ class MainTest(SingleTransactionCase):
         Returns:
             binary obj downloaded from field
         """
-        if field not in record:
+        if field not in record:                                      # pragma: no cover
             raise ValueError(
                 "Field %s not found in %s" % (field, record._name))
         return base64.b64decode(getattr(record, field))
@@ -2112,6 +2063,30 @@ class MainTest(SingleTransactionCase):
             button_ctx=button_ctx,
         )
 
+    def get_records_from_act_windows(self, act_windows):
+        """Get records from a windows message.
+
+        Args:
+            act_windows (dict): Odoo windows action returned by a wizard
+
+        Returns:
+            records or False
+
+        Raises:
+            ValueError: if invalid parameters issued
+        """
+        if self.is_action(act_windows):
+            if act_windows["type"] == "ir.actions.act_window":
+                res_model = self._get_model_from_act_windows(act_windows)
+                if self._is_transient(res_model):                    # pragma: no cover
+                    self.raise_error("Invalid transiente model %s for <%s>!" % (
+                        res_model, act_windows.get("name", "")))
+                if "res_id" in act_windows:
+                    return self.env[res_model].browse(act_windows["res_id"])
+                elif "domain" in act_windows:
+                    return self.env[res_model].search(act_windows["domain"])
+        return False                                                 # pragma: no cover
+
     ###############################
     #                             #
     #     DATA VALIDATION API     #
@@ -2139,17 +2114,17 @@ class MainTest(SingleTransactionCase):
         return tmpl
 
     def validate_records(self, template, records):
-        if not isinstance(template, (list, tuple)):
+        if not isinstance(template, (list, tuple)):                  # pragma: no cover
             self.raise_error("Function validate_records() 1° param must be list!")
-        if not is_iterable(records):
+        if not is_iterable(records):                                 # pragma: no cover
             self.raise_error("Function validate_records() 1° param must be iterable!")
         resource = self._get_model_from_records(records)
         childs_name = self.childs_name.get(resource)
         for rec in records:
-            if not is_iterable(rec):
+            if not is_iterable(rec):                                 # pragma: no cover
                 self.raise_error("Function validate_records() w/o iterable")
             for tmpl in template:
-                if not isinstance(tmpl, dict):
+                if not isinstance(tmpl, dict):                       # pragma: no cover
                     self.raise_error("Function validate_records() w/o iterable")
                 tmpl = self._validate_1_record(tmpl, rec, resource, childs_name)
                 if (
@@ -2173,9 +2148,20 @@ class MainTest(SingleTransactionCase):
                 ):
                     del tmpl["_CHECK"][rec]
 
+        for rec in records:
+            found = False
+            for tmpl in template:
+                if "_CHECK" in tmpl and rec in tmpl["_CHECK"]:
+                    found = True
+                    break
+            if not found:                                            # pragma: no cover
+                for tmpl in template:
+                    if "_CHECK" not in tmpl:
+                        tmpl["_CHECK"][rec] = {}
+                        break
         matches = []
         for tmpl in template:
-            if not tmpl["_CHECK"]:
+            if "_CHECK" not in tmpl:                                 # pragma: no cover
                 self.raise_error("validate_record(%s) does not match any record!"
                                  % self.dict_2_print(tmpl))
             for rec in tmpl["_CHECK"]:

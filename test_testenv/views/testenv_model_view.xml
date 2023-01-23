@@ -67,7 +67,8 @@
         id="menu_testenv_all_fields"
         name="All fields types record"
         action="test_testenv.testenv_all_fields_action"
-        parent="base.menu_administration"
+        parent="base.menu_custom"
+        groups="base.group_no_one"
         sequence="950"
     />
 </odoo>
