@@ -52,7 +52,7 @@ Jinja2==2.10.1
 jsonlib==1.6.1
 lazy-object-proxy==1.6.0
 lxml==4.9.1
-Mako==1.0.4
+Mako==1.2.2
 MarkupSafe==0.23
 mccabe==0.6.1
 mock==2.0.0
