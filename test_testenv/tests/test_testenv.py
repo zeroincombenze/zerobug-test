@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+from future.utils import PY2
 import os
+from datetime import date, datetime
 import logging
+import base64
+from odoo.modules.module import get_module_resource
 from .testenv import MainTest as SingleTransactionCase
 
 import python_plus
@@ -163,7 +167,7 @@ TEST_RES_PARTNER = {
         "customer": True,
         "supplier": True,
         "is_company": True,
-        "image": "z0bug.res_partner_1.png"
+        "image": "z0bug.res_partner_1.png",
     },
     "z0bug.res_partner_2": {
         "name": "Latte Beta Due s.n.c.",
@@ -175,7 +179,7 @@ TEST_RES_PARTNER = {
         "customer": True,
         "supplier": False,
         "is_company": True,
-        "image": "z0bug.res_partner_2"
+        "image": "z0bug.res_partner_2",
     },
 }
 TEST_RES_PARTNER_BANK = {
@@ -231,6 +235,8 @@ class MyTest(SingleTransactionCase):
                 "z0bug.res_partner_1": {
                     "name": "Prima Alpha S.p.A.",
                     "color": 1,
+                    "not_exist_field": "INVALID",
+                    "street": None,
                 },
             }
         )
@@ -254,10 +260,20 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_1")["name"],
             "Prima Alpha S.p.A.",
-            "TestEnv FAILED: unexpected value name!"
+            "TestEnv FAILED: unexpected value for 'name'!"
         )
         self.assertFalse(
             "zip" in self.get_resource_data("res.partner", "z0bug.res_partner_1"),
+            "TestEnv FAILED: unexpected field value for 'zip'!"
+        )
+        self.assertFalse(
+            "not_exist_field" in self.get_resource_data(
+                "res.partner", "z0bug.res_partner_1"),
+            "TestEnv FAILED: unexpected field 'not_exist_field'!"
+        )
+        self.assertFalse(
+            "street" in self.get_resource_data("res.partner", "z0bug.res_partner_1"),
+            "TestEnv FAILED: unexpected field value for 'street'!"
         )
 
     def _test_02(self):
@@ -502,8 +518,7 @@ class MyTest(SingleTransactionCase):
             )
         else:
             self.assertEqual(
-                record[field],
-                python_plus._u(target_value),
+                record[field], python_plus._u(target_value),
                 "TestEnv FAILED: invalid field '%s'!" % field
             )
         product = self.resource_write(record, xref)
@@ -686,7 +701,7 @@ class MyTest(SingleTransactionCase):
             actions="account.action_account_invoice_payment",
         )
         self.assertTrue(self.is_action(act_windows))
-        act_windows = self.wizard(
+        self.wizard(
             act_windows=act_windows,
             default={
                 "journal_id": "external.BNK1",
@@ -710,6 +725,150 @@ class MyTest(SingleTransactionCase):
         )
         self.assertEqual(move.state, "posted")
 
+    def _test_testenv_all_fields(self):
+        binary_fn = get_module_resource(self.module, "tests", "data", "example.xml")
+        with open(binary_fn, "rb") as fd:
+            source_xml = fd.read()
+        saved_ts = datetime.now()
+        html = """<div>Example <b>Test</b></div>"""
+
+        record = self.resource_edit(
+            resource="testenv.all.fields",
+            web_changes=[
+                ("name", "Name"),
+                ("active", False),
+                ("active", True),
+                ("state", "confirmed"),
+                ("state", "draft"),
+                ("description", "Almost long long description"),
+                ("rank", 13),
+                ("rank", "17"),
+                ("amount", "12.3"),
+                ("amount", 23.4),
+                ("measure", "34.5"),
+                ("measure", 45.6),
+                ("date", "####-##-01"),
+                ("date", date(2022, 6, 22)),
+                ("date", "2022-06-26"),
+                ("created_dt", "####-##-02"),
+                ("created_dt", "####-##-02 10:11:12"),
+                ("updated_dt", saved_ts),
+                ("attachment", "example.xml"),
+                ("webpage", html),
+                ("partner_ids", "z0bug.res_partner_1"),
+                ("partner_ids", ["z0bug.res_partner_1", "z0bug.res_partner_2"]),
+                ("product_ids", ["z0bug.product_product_1",
+                                 "z0bug.product_product_18",
+                                 "z0bug.product_product_23"]),
+            ],
+        )
+        self.assertEqual(record.name, "Name")
+        self.assertTrue(record.active)
+        self.assertEqual(record.state, "draft")
+        self.assertEqual(record.description, "Almost long long description")
+        self.assertEqual(record.rank, 17)
+        self.assertEqual(record.amount, 23.4)
+        self.assertEqual(record.measure, 45.6)
+        self.assertEqual(record.date,
+                         "2022-06-26" if PY2 else date(2022, 6, 26))
+        res = self.compute_date("####-##-02 10:11:12")
+        self.assertEqual(record.created_dt,
+                         res if PY2 else datetime.strptime(res, "%Y-%m-%d %H:%M:%S"))
+        self.assertEqual(record.updated_dt,
+                         datetime.strftime(saved_ts, "%Y-%m-%d %H:%M:%S")
+                         if PY2 else saved_ts)
+        self.assertEqual(record.attachment, base64.b64encode(source_xml))
+        self.assertEqual(self.field_download(record, "attachment"), source_xml)
+        self.assertEqual(
+            record.webpage,
+            "<p>" + html.replace("<div>", "").replace("</div>", "") + "</p>")
+        res = self.env["res.partner"]
+        res |= self.resource_bind("z0bug.res_partner_1")
+        res |= self.resource_bind("z0bug.res_partner_2")
+        self.assertEqual(record.partner_ids, res)
+        res = self.env["product.product"]
+        res |= self.resource_bind("z0bug.product_product_1")
+        res |= self.resource_bind("z0bug.product_product_18")
+        res |= self.resource_bind("z0bug.product_product_23")
+        self.assertEqual(record.product_ids, res)
+
+        record = self.resource_edit(
+            resource=record,
+            web_changes=[
+                ("description", False),
+            ],
+        )
+        self.assertEqual(record.description, False)
+
+    def _test_validate_record(self):
+        _logger.info("🎺 Testing validate_record()")
+        self.resource_write("res.partner", xref="z0bug.res_partner_1")
+        self.resource_write("res.partner", xref="z0bug.res_partner_2")
+        template = [
+            {
+                "name": TEST_RES_PARTNER["z0bug.res_partner_1"]["name"],
+                "street": TEST_RES_PARTNER["z0bug.res_partner_1"]["street"],
+
+            },
+            {
+                "name": TEST_RES_PARTNER["z0bug.res_partner_2"]["name"],
+            },
+        ]
+        records = self.env["res.partner"]
+        records |= self.resource_bind("z0bug.res_partner_1")
+        records |= self.resource_bind("z0bug.res_partner_2")
+        self.validate_records(template, records)
+
+        self.resource_write("account.payment.term", xref="z0bug.payment_term_1")
+        template = [
+            {
+                "name": TEST_ACCOUNT_PAYMENT_TERM["z0bug.payment_term_1"]["name"],
+                "line_ids": [
+                    {
+                        "days": TEST_ACCOUNT_PAYMENT_TERM_LINE[
+                            "z0bug.payment_term_1_1"]["days"],
+                        "value": TEST_ACCOUNT_PAYMENT_TERM_LINE[
+                            "z0bug.payment_term_1_1"]["value"],
+                        "value_amount": TEST_ACCOUNT_PAYMENT_TERM_LINE[
+                            "z0bug.payment_term_1_1"]["value_amount"],
+                    },
+                    {
+                        "days": 60,
+                        "value": TEST_ACCOUNT_PAYMENT_TERM_LINE[
+                            "z0bug.payment_term_1_2"]["value"],
+                    },                ],
+            },
+        ]
+        records = [self.resource_bind("z0bug.payment_term_1")]
+        self.validate_records(template, records)
+
+    def _test_wizard_from_menu(self):
+        act_windows = self.wizard(
+            module=".",
+            action_name="wizard_example_menu_view",
+            web_changes=[("numrecords", 3)],
+            button_name="do_example"
+        )
+        self.assertTrue(self.is_action(act_windows))
+        records = self.get_records_from_act_windows(act_windows)
+        self.assertEqual(
+            len(records),
+            3,
+            "Wizard did not return 3 records!"
+        )
+        template = [
+            {
+                "rank": 1
+            },
+            {
+                "rank": 2
+            },
+            {
+                "rank": 3
+            },
+        ]
+        self.validate_records(template, records)
+
     def test_mytest(self):
         self._test_00()
         self._test_01()
@@ -718,6 +877,7 @@ class MyTest(SingleTransactionCase):
         self._test_04()
         self._test_setup()
         self._test_currency_2many()
+        self._test_testenv_all_fields()
         self._test_product()
         self._test_wizard()
         #
@@ -725,3 +885,5 @@ class MyTest(SingleTransactionCase):
         invoice = self._test_invoice()
         move = self._test_wizard_invoice(invoice)
         self._test_move(move)
+        self._test_validate_record()
+        self._test_wizard_from_menu()

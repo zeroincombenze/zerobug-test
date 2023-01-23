@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Test Environment v2.0.3
+"""Test Environment v2.0.4.1
 
 Copy this file in tests directory of your module.
 Please copy the documentation testenv.rst file too in your module.
 The __init__.py must import testenv.
 Your python test file should have to contain some following example lines:
+
+::
 
     import os
     import logging
@@ -44,10 +46,47 @@ Your python test file should have to contain some following example lines:
         def test_mywizard(self):
             self.wizard(...)                # Test requires wizard simulator
 
+External reference
+~~~~~~~~~~~~~~~~~~
+
+Every record is tagged by an external reference.
+The external reference may be:
+
+* Ordinary Odoo external reference (a), format "module.name"
+* Test reference, format "z0bug.name" (b)
+* Key value, format "external.key" (c)
+* 2 keys reference, for header/detail relationship (d)
+* Magic reference for 'product.template' / 'product.product' (e)
+
+Ordinary Odoo external reference (a) is a record of 'ir.model.data';
+you can see them from Odoo GUI interface.
+
+Test reference (b) are visible just in the test environment.
+They are identified by "z0bug." prefix module name.
+
+External key reference (c) is identified by "external." prefix followed by
+the key value used to retrieve the record.
+The field "code" or "name" are used to search record;
+for account.tax the "description" field is used.
+Please set self.debug_level = 2 (or more) to log these field keys.
+
+The 2 keys reference (d) needs to address child record inside header record
+at 2 level model (header/detail) relationship.
+The key MUST BE the same key of the parent record,
+plus "_", plus line identifier (usually 'sequence' field).
+i.e. "z0bug.move_1_3" means: line with sequence 3 of 'account.move.line'
+which is child of record "z0bug.move_1" of 'account.move'.
+Please set self.debug_level = 2 (or more) to log these relationships.
+
+For 'product.template' (product) you must use '_template' text in reference (e).
+TestEnv inherit 'product.product' (variant) external reference.
+
 For furthermore information, please:
+
 * Read file testenv.rst in this directory (if supplied)
 * Visit https://zeroincombenze-tools.readthedocs.io
 * Visit https://github.com/zeroincombenze/tools
+* Visit https://github.com/zeroincombenze/zerobug-test
 """
 from __future__ import unicode_literals
 
@@ -56,9 +95,7 @@ import os
 from future.utils import PY2, PY3
 from past.builtins import basestring, long
 
-# import sys
-# from time import sleep
-from datetime import datetime
+# from datetime import datetime
 import json
 import logging
 import base64
@@ -101,7 +138,9 @@ LOG_ACCESS_COLUMNS = ["create_uid", "create_date", "write_uid", "write_date"]
 MAGIC_COLUMNS = ["id"] + LOG_ACCESS_COLUMNS
 SUPERMAGIC_COLUMNS = MAGIC_COLUMNS + BITTER_COLUMNS
 BLACKLIST_COLUMNS = SUPERMAGIC_COLUMNS + ["parent_left", "parent_right", "state"]
-RESOURCE_WO_COMPANY = ("res.users",)
+RESOURCE_WO_COMPANY = (
+    "res.users", "res.partner", "product.template", "product.product"
+)
 # Please, do not change fields order
 KEY_CANDIDATE = (
     "acc_number",
@@ -216,6 +255,10 @@ class MainTest(SingleTransactionCase):
         if (self.debug_level >= 1 and not strict) or self.debug_level == 1:
             self._logger.info(mesg)
 
+    def raise_error(self, mesg):                                     # pragma: no cover
+        self._logger.info("🛑 " + mesg)
+        raise ValueError(mesg)
+
     # ----------------------------
     # --  Conveyance functions  --
     # ----------------------------
@@ -246,14 +289,26 @@ class MainTest(SingleTransactionCase):
                 del self.setup_data[group][resource][xref]
 
     def _add_conveyance(self, resource, field, convey):
-        self._logger.info(
-            "⚠ %s[%s]: '%s' -> '%s'" % (resource, field, convey[0], convey[1])
-        )
+        if isinstance(convey, basestring):
+            self._logger.info(
+                "⚠ %s.%s(%s)" % (resource, convey, field)
+            )
+        else:
+            self._logger.info(
+                "⚠ %s[%s]: '%s' -> '%s'" % (resource, field, convey[0], convey[1])
+            )
+        if (
+            field == "all"
+            and (not isinstance(convey, basestring)
+                 or convey != ("_cvt_%s" % resource.replace(".", "_"))
+                 or not hasattr(self, convey))
+        ):                                                           # pragma: no cover
+            self.raise_error("Invalid name %s or function not found!" % convey)
         if resource not in self.convey_record:
             self.convey_record[resource] = {}
         self.convey_record[resource][field] = convey
 
-    def _add_conveyed_xref(self, xref, conveyed_xref, resource=None, group=None):
+    def add_alias_xref(self, xref, conveyed_xref, resource=None, group=None):
         self._logger.info(
             "⚠ xref '%s' -> '%s'" % (xref, conveyed_xref)
         )
@@ -265,6 +320,14 @@ class MainTest(SingleTransactionCase):
 
     def _get_conveyed_value(self, resource, field, value, fmt=None):
         if (
+            resource in self.convey_record
+            and field == "all"
+            and field in self.convey_record[resource]
+            and isinstance(value, dict)
+            and hasattr(self, self.convey_record[resource][field])
+        ):
+            value = getattr(self, self.convey_record[resource][field])(value)
+        elif (
             resource in self.convey_record
             and field in self.convey_record[resource]
             and value == self.convey_record[resource][field][0]
@@ -290,17 +353,21 @@ class MainTest(SingleTransactionCase):
             [("name", "=", "account_payment_term_extension"),
              ("state", "=", "installed")]
         ):
-            resource = "account.payment.term.line"
-            for xref in self.get_resource_data_list(resource, group=group):
-                values = self.get_resource_data(resource, xref, group=group)
-                if values.get("months"):
-                    values["days"] = values["months"] * 30 - 2
-                    values["months"] = ""
-                self.store_resource_data(resource, xref, values, group=group)
+            self._add_conveyance(
+                "account.payment.term.line", "all", "_cvt_account_payment_term_line")
 
-    # ---------------------------
-    # --  Hierarchy functions  --
-    # ---------------------------
+    def _cvt_account_payment_term_line(self, values):
+        if values.get("months"):
+            values["days"] = values["months"] * 30
+            values["months"] = ""
+            if values.get("option") in ("fix_day_following_month",
+                                        "after_invoice_month"):      # pragma: no cover
+                values["days"] -= 2
+        return values
+
+    # ------------------------------
+    # --  Hierarchical functions  --
+    # ------------------------------
 
     def _search4parent(self, resource, parent_resource=None):
         if resource == "product.product":
@@ -382,6 +449,11 @@ class MainTest(SingleTransactionCase):
                 and " " not in xref
                 and len(xref.split(".")) == 2)
 
+    def _is_transient(self, resource):
+        if isinstance(resource, basestring):
+            return self.env[resource]._transient                     # pragma: no cover
+        return resource._transient
+
     def _add_xref(self, xref, xid, resource):
         """Add external reference ID that will be used in next tests.
         If xref exist, result ID will be upgraded"""
@@ -398,8 +470,8 @@ class MainTest(SingleTransactionCase):
         xrefs = ir_model.search([("module", "=", module), ("name", "=", name)])
         if not xrefs:
             return ir_model.create(values)
-        xrefs[0].write(values)
-        return xrefs[0]
+        xrefs[0].write(values)                                       # pragma: no cover
+        return xrefs[0]                                              # pragma: no cover
 
     def _get_xref_id(self, resource, xref, fmt=None):
         res = xref
@@ -449,7 +521,7 @@ class MainTest(SingleTransactionCase):
         """Load Odoo field definition"""
         if resource not in self.struct:
             if resource not in self.env:
-                raise ValueError(                                    # pragma: no cover
+                self.raise_error(
                     "Model %s not found in the system" % resource)   # pragma: no cover
             self.struct[resource] = self.env[resource].fields_get()
             self._search4parent(resource)
@@ -483,7 +555,7 @@ class MainTest(SingleTransactionCase):
 
     def _cast_field(self, resource, field, value, fmt=None, group=None):
         ftype = self.struct[resource][field]["type"]
-        if ftype != "binary":
+        if ftype not in ("text", "binary", "html"):
             value = self._get_conveyed_value(resource, field, value, fmt=fmt)
         if value is None or value in ("None", r"\N") or field == "id":
             value = None
@@ -547,32 +619,32 @@ class MainTest(SingleTransactionCase):
                 value = True
         return value
 
-    def _upgrade_field_boolean(self, record, field, value):
-        return self._cast_field_boolean(record, field, value)
+    # def _upgrade_field_boolean(self, record, field, value):
+    #     return self._cast_field_boolean(record, field, value)
 
     # --------------------------------
     # --  Type <integer> functions  --
     # --------------------------------
 
     def _cast_field_integer(self, resource, field, value, fmt=None, group=None):
-        if isinstance(value, basestring):
+        if value and isinstance(value, basestring):
             value = int(value)
         return value
 
-    def _upgrade_field_integer(self, record, field, value):
-        return self._cast_field_integer(record, field, value)
+    # def _upgrade_field_integer(self, record, field, value):
+    #     return self._cast_field_integer(record, field, value)
 
     # ------------------------------
     # --  Type <float> functions  --
     # ------------------------------
 
     def _cast_field_float(self, resource, field, value, fmt=None, group=None):
-        if isinstance(value, basestring):
+        if value and isinstance(value, basestring):
             value = eval(value)
         return value
 
-    def _upgrade_field_float(self, record, field, value):
-        return self._cast_field_float(record, field, value)
+    # def _upgrade_field_float(self, record, field, value):
+    #     return self._cast_field_float(record, field, value)
 
     # ---------------------------------
     # --  Type <monetary> functions  --
@@ -581,8 +653,8 @@ class MainTest(SingleTransactionCase):
     def _cast_field_monetary(self, resource, field, value, fmt=None, group=None):
         return self._cast_field_float(resource, field, value, fmt=fmt, group=group)
 
-    def _upgrade_field_monetary(self, record, field, value):
-        return self._cast_field_monetary(record, field, value)
+    # def _upgrade_field_monetary(self, record, field, value):
+    #     return self._cast_field_monetary(record, field, value)
 
     # ---------------------------------
     # --  Type <datetime> functions  --
@@ -591,10 +663,10 @@ class MainTest(SingleTransactionCase):
     def _cast_field_datetime(self, resource, field, value, fmt=None, group=None):
         return self._cast_field_date(resource, field, value, fmt=fmt, group=group)
 
-    def _upgrade_field_datetime(self, record, field, value):
-        if isinstance(value, basestring):
-            return datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
-        return value
+    # def _upgrade_field_datetime(self, record, field, value):
+    #     if isinstance(value, basestring):
+    #         return datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
+    #     return value
 
     def _convert_datetime_to_write(self, record, field, value):
         return str(value)
@@ -610,10 +682,10 @@ class MainTest(SingleTransactionCase):
             value = self.compute_date(value)
         return value
 
-    def _upgrade_field_date(self, record, field, value):
-        if isinstance(value, basestring):
-            return datetime.strptime(value, "%Y-%m-%d")
-        return value
+    # def _upgrade_field_date(self, record, field, value):
+    #     if isinstance(value, basestring):
+    #         return datetime.strptime(value, "%Y-%m-%d")
+    #     return value
 
     def _convert_date_to_write(self, record, field, value):
         return str(value)
@@ -630,12 +702,12 @@ class MainTest(SingleTransactionCase):
                 return binary_file
         bin_types = bin_types or ["png", "jpg", "xml"]
         if not is_iterable(bin_types):
-            bin_types = [bin_types]
+            bin_types = [bin_types]                                  # pragma: no cover
         for btype in bin_types:
             binary_file = os.path.join(binary_root, "%s.%s" % (xref, btype))
             if os.path.isfile(binary_file):
                 return binary_file
-        return False
+        return False                                                 # pragma: no cover
 
     def _get_binary_contents(self, value):
         if (
@@ -649,7 +721,7 @@ class MainTest(SingleTransactionCase):
             with open(bin_file, 'rb') as fd:
                 bin_contents = python_plus._b(fd.read())
             return base64.b64encode(bin_contents)
-        return False
+        return False                                                 # pragma: no cover
 
     def _cast_field_binary(self, resource, field, value, fmt=None, group=None):
         bin_contents = self._get_binary_contents(value)
@@ -674,8 +746,8 @@ class MainTest(SingleTransactionCase):
             value = None
         return value
 
-    def _upgrade_field_many2one(self, record, field, value):
-        return self._cast_field_many2one(record, field, value)
+    # def _upgrade_field_many2one(self, record, field, value):
+    #     return self._cast_field_many2one(record, field, value)
 
     def _convert_many2one_to_write(self, record, field, value):
         return value.id
@@ -792,11 +864,11 @@ class MainTest(SingleTransactionCase):
     def _cast_field_many2many(self, resource, field, value, fmt=None, group=None):
         return self._cast_field_one2many(resource, field, value, fmt=fmt, group=group)
 
-    def _upgrade_field_one2many(self, record, field, value):
-        return self._cast_2many(record, value)
+    # def _upgrade_field_one2many(self, record, field, value):
+    #     return self._cast_2many(record, value)
 
-    def _upgrade_field_many2many(self, record, field, value):
-        return self._cast_2many(record, value)
+    # def _upgrade_field_many2many(self, record, field, value):
+    #     return self._cast_2many(record, value)
 
     def _convert_one2many_to_write(self, record, field, value):
         if value:
@@ -813,13 +885,14 @@ class MainTest(SingleTransactionCase):
     def cast_types(self, resource, values, fmt=None, group=None):
         if values:
             self._load_field_struct(resource)
+            values = self._get_conveyed_value(resource, "all", values, fmt=fmt)
             for field in [x for x in list(values.keys())]:
                 if field not in self.struct[resource]:
-                    if fmt:
-                        del values[field]
-                        self.log_lvl_2(
-                            "🐞field %s does not exist in %s" % (field, resource)
-                        )
+                    # if fmt:
+                    del values[field]
+                    self.log_lvl_2(
+                        "🐞field %s does not exist in %s" % (field, resource)
+                    )
                     continue
 
                 value = self._cast_field(
@@ -837,29 +910,29 @@ class MainTest(SingleTransactionCase):
 
         return values
 
-    def _convert_to_write(self, record, new=None):
+    def _convert_to_write(self, record, new=None, orig=None):
         values = {}
         for field in list(record._fields.keys()):
             if (
                 field in BLACKLIST_COLUMNS
                 or record._fields[field].readonly
-                or record._fields[field].type == "binary"
+                # or record._fields[field].type == "binary"
             ):
                 continue
             value = self._convert_field_to_write(record, field)
-            if value is None:
+            if value is None:                                        # pragma: no cover
                 continue
             elif value is False:
-                if new:
+                if new or (orig and value == self._convert_field_to_write(orig, field)):
                     continue
                 values[field] = value
-            else:
+            elif not orig or value != self._convert_field_to_write(orig, field):
                 values[field] = value
         return values
 
     def _upgrade_record(self, record, values, default={}):
         for field in list(values.keys()):
-            if field in SUPERMAGIC_COLUMNS:
+            if field in SUPERMAGIC_COLUMNS:                          # pragma: no cover
                 continue
             method = "_upgrade_field_%s" % record._fields[field].type
             method = method if hasattr(self, method) else "_upgrade_field_base"
@@ -874,7 +947,7 @@ class MainTest(SingleTransactionCase):
         for field in BITTER_COLUMNS:
             if field in values:
                 del values[field]
-        if timed:
+        if timed:                                                    # pragma: no cover
             for field in LOG_ACCESS_COLUMNS:
                 if field in values:
                     del values[field]
@@ -904,6 +977,8 @@ class MainTest(SingleTransactionCase):
             act_windows["context"] = _ctx
             if isinstance(records, (int, long)) != act_windows["multi"]:
                 self._logger.info("⚠ act_windows['multi'] does not match # of records!")
+        elif "context" not in act_windows:
+            act_windows["context"] = {}
 
     def _create_object(self, resource, default={}, ctx={}):
         if ctx:
@@ -919,9 +994,28 @@ class MainTest(SingleTransactionCase):
                 method(record)
         return record
 
-    def _exec_action(self, record, action, web_changes=[]):
-        resource_model = record[0]._name if isinstance(
-            record, (list, tuple)) else record._name
+    def _exec_action(self, record, action, default={}, web_changes=[], ctx={}):
+        resource_model = self._get_model_from_records(record)
+        orig = self.env[resource_model]
+        if self._is_transient(orig) and action in ("save", "create", "discard"):
+            self.raise_error("Invalid action %s for %s!" % (         # pragma: no cover
+                action, resource_model))
+        if isinstance(record, basestring):
+            record = self._create_object(
+                resource_model,
+                default=self.cast_types(resource_model, default or {}, fmt="cmd"),
+                ctx=ctx)
+        elif is_iterable(record):
+            if not self._is_transient(orig):
+                if not isinstance(record, (list, tuple)):
+                    _ctx = self.env["ir.actions.actions"]._get_eval_context()
+                    _ctx.update(self._ctx_active_ids(record, ctx))
+                    record = record.with_context(_ctx)
+                if len(record) == 1:
+                    orig = self._create_object(
+                        resource_model,
+                        default=self._convert_to_write(record[0], new=True),
+                        ctx=ctx)
         self._load_field_struct(resource_model)
         for args in web_changes:
             self._wiz_edit(
@@ -930,10 +1024,13 @@ class MainTest(SingleTransactionCase):
                 args[0], args[1], args[2] if len(args) > 2 else None,
             )
         if action == "save":
-            return record.write({})
+            vals = self._convert_to_write(record, orig=orig)
+            record.write(vals)
+            return record
         elif action == "create":
-            return record.create(
-                self._convert_to_write(record, new=True))            # pragma: no cover
+            vals = self._convert_to_write(record, new=True)
+            record.unlink()
+            return self.env[resource_model].create(vals)
         elif action == "discard":
             return False                                             # pragma: no cover
         elif action and hasattr(record, action):
@@ -950,12 +1047,37 @@ class MainTest(SingleTransactionCase):
             self.log_lvl_2("🐞  act_windows(%s)" % action)
             self._finalize_ctx_act_windows(record, act_windows)
         else:                                                        # pragma: no cover
-            raise (ValueError, "Invalid button/action %s for %s!" % (
+            self.raise_error("Invalid action %s for %s!" % (  # pragma: no cover
                 action, resource_model))
         return act_windows
 
     def _get_model_from_act_windows(self, act_windows):
-        return act_windows.get("res_model", act_windows.get("model"))
+        return act_windows.get(
+            "model_name", act_windows.get(
+                "res_model", act_windows.get("model")))
+
+    def _get_src_model_from_act_windows(self, act_windows):
+        model_name = act_windows.get(
+            "src_model", act_windows.get(
+                "binding_model_id", self._get_model_from_act_windows(act_windows)))
+        if not model_name or self._is_transient(model_name):
+            model_name = None
+            value = "%s,%d" % (act_windows["type"], act_windows["id"])
+            records = self.env["ir.values"].search([("value", "=", value)])
+            if len(records) == 1:
+                model_name = records[0].model
+        return model_name
+
+    def _get_model_from_records(self, records):
+        if not records:
+            resource_model = None
+        elif isinstance(records, basestring):
+            resource_model = records
+        elif isinstance(records, (list, tuple)):
+            resource_model = records[0]._name
+        else:
+            resource_model = records._name
+        return resource_model
 
     def _wiz_launch(
         self, act_windows, records=None, default=None, ctx={}
@@ -980,15 +1102,22 @@ class MainTest(SingleTransactionCase):
         """
         self.log_lvl_2("🐞wizard starting(%s)" % act_windows.get("name"), strict=True)
         self.log_lvl_3(
-            "🐞wizard starting(%s,%s,def=%s,ctx=%s)" % (
+            "🐞wizard starting(%s,%s,\nrec=%s,\ndef=%s,\nctx=%s)" % (
                 act_windows.get("name"),
                 self.dict_2_print(act_windows),
+                self.dict_2_print(records),
                 self.dict_2_print(default),
                 self.dict_2_print(ctx)),
             strict=True
         )
         if not isinstance(act_windows, dict):                        # pragma: no cover
-            raise (ValueError, "Invalid act_windows")
+            self.raise_error("Invalid act_windows")
+        if (                                                         # pragma: no cover
+            records
+            and isinstance(records, (list, tuple))
+            and any([isinstance(x, (list, tuple)) for x in records])
+        ):
+            self.raise_error("Invalid records type issued!")
         self._finalize_ctx_act_windows(records, act_windows, ctx)
         if ctx and ctx.get("res_id"):
             act_windows["res_id"] = ctx.pop("res_id")
@@ -997,10 +1126,24 @@ class MainTest(SingleTransactionCase):
             # Warning: action windows may not contain any model declaration
             # Please, do not remove test, because if model is declared in action windows
             # must match with record model type
-            if records._name != act_windows.get(                     # pragma: no cover
-                "model_name", act_windows.get(
-                    "src_model", act_windows.get("res_model", records._name))):
-                raise (ValueError, "Records model different from declared model")
+            rec_model = self._get_model_from_records(records)
+            act_model = self._get_model_from_act_windows(act_windows)
+            src_model = self._get_src_model_from_act_windows(act_windows)
+            if rec_model != src_model:                               # pragma: no cover
+                self.raise_error(
+                    "Records model %s differs from declared model %s in %s" % (
+                        rec_model, src_model, act_model
+                    )
+                )
+            if (
+                act_model != src_model
+                and self._is_transient(act_model)
+                and not act_windows.get("src_model")
+            ):
+                self.log_lvl_1(
+                    "💡 You should specify the src_model %s for the action %s" % (
+                        src_model, act_windows.get("name")))
+                act_windows["src_model"] = src_model
             if "active_ids" not in act_windows["context"]:
                 act_windows["context"].update(
                     self._ctx_active_ids(records, ctx=act_windows["context"]))
@@ -1008,7 +1151,7 @@ class MainTest(SingleTransactionCase):
                 records = [records]
         if act_windows["type"] == "ir.actions.server":               # pragma: no cover
             if not records:
-                raise (ValueError, "No records supplied")
+                self.raise_error("No any records supplied")
         else:
             res_model = self._get_model_from_act_windows(act_windows)
             vals = self.cast_types(res_model, default or {}, fmt="cmd")
@@ -1119,7 +1262,7 @@ class MainTest(SingleTransactionCase):
                     for method in wizard._onchange_methods[field]:
                         method(wizard)
                 cur_vals[field] = getattr(wizard, field)
-        if onchange:
+        if onchange:                                                 # pragma: no cover
             getattr(wizard, onchange)()
 
     def _wiz_execution(
@@ -1129,42 +1272,7 @@ class MainTest(SingleTransactionCase):
         web_changes=[],
         button_ctx={},
     ):
-        """Simulate wizard execution issued by an action.
-
-        Wizard is created by <wizard_start> with default values.
-        First, execute onchange methods without values.
-        Simulate user actions by web_changes that is a list of tuple (field, value);
-            * fields are updated sequentially from web_changes parameters
-            * a field can be updated more times
-            * any updated engages the onchange funcion if defined for field
-        Finally, the <button_name> function is executed.
-        It returns the wizard result or False.
-
-        Python example:
-            act_window = self.wizard_execution(
-                act_window,
-                button_name="do_something",
-                web_changes=[
-                    ("field_a_ids", [(6, 0, [value_a.id])], "onchange_field_a"),
-                    ("field_b_id", self.b.id, "onchange_field_b"),
-                    ("field_c", "C"),
-                ],
-            )
-
-        Args:
-            act_windows (dict): Odoo windows action returned by <wizard_start>
-            records (obj): objects supplied for action server
-            button_name (str): function name to execute at the end of then wizard
-            web_changes (list): list of tuples (field, value); see above <wizard_edit>
-            button_ctx (dict): context to pass to button_name function
-
-        Returns:
-            Odoo wizard result; may be a windows action to engage another wizard
-            If windows break return wizard image too
-
-        Raises:
-          TypeError: if invalid wizard image
-        """
+        """Simulate wizard execution issued by an action."""
         self.log_lvl_3("🐞wizard running(%s, %s)"
                        % (act_windows.get("name"), self.dict_2_print(act_windows)))
         # if act_windows["type"] == "ir.actions.server":
@@ -1194,21 +1302,7 @@ class MainTest(SingleTransactionCase):
 
         wizard = act_windows.pop("_wizard_")
         if button_name:
-            result = self._exec_action(wizard, button_name, web_changes=web_changes)
-            if isinstance(result, dict) and result.get("type") != "":
-                result.setdefault("type", "ir.actions.act_window_close")
-                if isinstance(button_ctx, dict):
-                    result.setdefault("context", button_ctx)
-                if (
-                    self.is_action(result)
-                    and result["type"] == "ir.actions.client"
-                    and result.get("context", {}).get("active_model")
-                    and result.get("context", {}).get("active_id")
-                ):
-                    result = self.env[result["context"]["active_model"]].browse(
-                        result["context"]["active_id"]
-                    )
-            return result
+            return self._exec_action(wizard, button_name, web_changes=web_changes)
         return False
 
     #############################################
@@ -1218,6 +1312,20 @@ class MainTest(SingleTransactionCase):
     #############################################
 
     def store_resource_data(self, resource, xref, values, group=None, name=None):
+        """Store a record data definition for furthermore use.
+        Data stored is used by setup_env() function and/or by:
+
+        * resource_create() without values
+        * resource_write() without values
+        * resource_make() without values
+
+        Args:
+            resource (str): Odoo model name
+            xref (str): external reference
+            values (dict): record data
+            group (str): used to manager group data; default is "base"
+            name (str): label of dataset; default is resource name
+        """
         group = self.u(group) or "base"
         name = self.u(name) or self.u(resource)
         xref = self._get_conveyed_value(resource, None, xref)
@@ -1237,7 +1345,7 @@ class MainTest(SingleTransactionCase):
         return self.env.user.company_id
 
     def compute_date(self, date, refdate=None):
-        """Compute data
+        """Compute date
 
         Args:
             date (date or string or integer): formula
@@ -1245,24 +1353,30 @@ class MainTest(SingleTransactionCase):
 
         Returns:
             ISO format string with result date
-
         """
         return python_plus.compute_date(self.u(date), refdate=self.u(refdate))
 
     def resource_bind(self, xref, raise_if_not_found=True, resource=None):
-        """Simulate External Reference
-        This function simulates self.env.ref() searching for resource record.
-        Ordinary xref is formatted as "MODULE.NAME"; when MODULE == "external"
-        this function is engaged.
+        """Bind record by xref or searching it or browsing it.
+        This function returns a record using issued parameters. It works in follow ways:
+
+        * With valid xref it work exactly like self.env.ref()
+        * If xref is an integer it works exactly like self.browse()
+        * I xref is invalid, xref is used to search record
+            * xref is searched in stored data
+            * xref ("MODULE.NAME"): if MODULE == "external", NAME is the record key
 
         Args:
             xref (str): external reference
             raise_if_not_found (bool): raise exception if xref not found or
                                        if more records found
-            resource (str): Odoo model name
+            resource (str): Odoo model name, i.e. "res.partner"
 
         Returns:
             obj: the Odoo model record
+
+        Raises:
+            ValueError: if invalid parameters issued
         """
         self.log_lvl_3(
             "🐞%s.resource_bind(%s)" % (resource, xref)
@@ -1270,9 +1384,7 @@ class MainTest(SingleTransactionCase):
         # Search for Odoo standard external reference
         if isinstance(xref, (int, long)):
             if not resource:                                         # pragma: no cover
-                raise ValueError(
-                    "No model issued for binding"
-                )
+                self.raise_error("No model issued for binding")
                 return False
             record = self.env[resource].browse(xref)
         else:
@@ -1283,22 +1395,16 @@ class MainTest(SingleTransactionCase):
         # Simulate external reference
         if not resource:
             if raise_if_not_found:                                   # pragma: no cover
-                raise ValueError(
-                    "No model issued for binding"
-                )
+                self.raise_error("No model issued for binding")
             return False
         if resource not in self.env:                                 # pragma: no cover
             if raise_if_not_found:
-                raise ValueError(
-                    "Model %s not found in the system" % resource
-                )
+                self.raise_error("Model %s not found in the system" % resource)
             return False
         self._load_field_struct(resource)
         if resource not in self.skeys:                               # pragma: no cover
             if raise_if_not_found:
-                raise ValueError(
-                    "Model %s without search key" % resource
-                )
+                self.raise_error("Model %s without search key" % resource)
             self._logger.info("⚠ Model %s without search key" % resource)
             return False
 
@@ -1340,11 +1446,25 @@ class MainTest(SingleTransactionCase):
             # return record[0]
             return self.env[resource].browse(record[0].id)
         if raise_if_not_found:
-            raise ValueError("External ID %s not found" % xref)      # pragma: no cover
+            self.raise_error("External ID %s not found" % xref)      # pragma: no cover
         return False
 
     def resource_create(self, resource, values=None, xref=None, group=None):
-        """Create a test record and set external ID to next tests"""
+        """Create a test record and set external ID to next tests.
+        This function works as standard Odoo create() with follow improvements:
+
+        * It can create external reference too
+        * It can use stored data if no values supplied
+
+        Args:
+            resource (str): Odoo model name, i.e. "res.partner"
+            values (dict): record data (default stored data)
+            xref (str): external reference to create
+            group (str): used to manager group data; default is "base"
+
+        Returns:
+            obj: the Odoo model record, if created
+        """
         self._load_field_struct(resource)
         xref = self._get_conveyed_value(resource, None, xref)
         values = self.unicodes(values)
@@ -1352,9 +1472,7 @@ class MainTest(SingleTransactionCase):
             values = self.get_resource_data(resource, xref, group=group)
             values = self._add_child_records(resource, xref, values, group=group)
         if not values:                                       # pragma: no cover
-            raise ValueError(
-                "No value supplied for %s create" % resource
-            )
+            self.raise_error("No values supplied for %s create" % resource)
         self.log_lvl_3(
             "🐞%s.resource_create(%s,xref=%s)"
             % (resource, self.dict_2_print(values), xref)
@@ -1386,7 +1504,27 @@ class MainTest(SingleTransactionCase):
     def resource_write(
         self, resource, xref=None, values=None, raise_if_not_found=True, group=None
     ):
-        """Update a test record with external"""
+        """Update a test record.
+        This function works as standard Odoo write() with follow improvements:
+
+        * If resource is a record, xref is ignored (it should be None)
+        * It resource is a string, xref must be a valid xref or an integer
+        * If values is not supplied, record is restored to stored data values
+
+        Args:
+            resource (str|obj): Odoo model name or record to update
+            xref (str): external reference to update: required id resource is string
+            values (dict): record data (default stored data)
+            raise_if_not_found (bool): raise exception if xref not found or
+                           if more records found
+            group (str): used to manager group data; default is "base"
+
+        Returns:
+            obj: the Odoo model record
+
+        Raises:
+            ValueError: if invalid parameters issued
+        """
         if isinstance(resource, basestring):
             record = self.resource_bind(
                 xref, resource=resource, raise_if_not_found=raise_if_not_found
@@ -1414,7 +1552,9 @@ class MainTest(SingleTransactionCase):
         return record
 
     def resource_make(self, resource, xref, values=None, group=None):
-        """Create or write a test record and set external ID to next tests"""
+        """Create or write a test record.
+        This function is a hook to resource_write() or resource_create().
+        """
         self.log_lvl_3(
             "🐞%s.resource_make(%s,xref=%s)"
             % (resource, self.dict_2_print(values), xref)
@@ -1436,13 +1576,14 @@ class MainTest(SingleTransactionCase):
             name (str): label of dataset; default is resource name
             group (str): used to manager group data; default is "base"
             merge (str): merge data with public data (currently just "zerobug")
+
         Raises:
             TypeError: if invalid parameters issued
         """
         if not isinstance(data, dict):                               # pragma: no cover
-            raise ValueError("Dictionary expected")
+            self.raise_error("Dictionary expected")
         if merge and merge != "zerobug":                             # pragma: no cover
-            raise ValueError("Invalid merge value: use 'zerobug'")
+            self.raise_error("Invalid merge value: please use 'zerobug'")
         data = self.unicodes(data)
         for xref in list(sorted(data.keys())):
             if merge == "zerobug":
@@ -1480,18 +1621,19 @@ class MainTest(SingleTransactionCase):
                                dot are replaced by "_"; (see declare_resource_data)
             group (str): used to manager group data; default is "base"
             merge (str): merge data with public data (currently just "zerobug")
+
         Raises:
             TypeError: if invalid parameters issued
         """
         if not isinstance(message, dict):                            # pragma: no cover
-            raise ValueError("Dictionary expected")
+            self.raise_error("Dictionary expected")
         if "TEST_SETUP_LIST" not in message:                         # pragma: no cover
-            raise ValueError("Key TEST_SETUP_LIST not found")
+            self.raise_error("Key TEST_SETUP_LIST not found")
         group = group or "base"
         for resource in message["TEST_SETUP_LIST"]:
             item = "TEST_%s" % resource.upper().replace(".", "_")
             if item not in message:                                  # pragma: no cover
-                raise ValueError("Key %s not found" % item)
+                self.raise_error("Key %s not found" % item)
         for resource in message["TEST_SETUP_LIST"]:
             self.log_lvl_1("🐞declare_all_data(%s,group=%s)" % (resource, group))
             item = "TEST_%s" % resource.upper().replace(".", "_")
@@ -1508,7 +1650,7 @@ class MainTest(SingleTransactionCase):
             group (str): if supplied select specific group data; default is "base"
 
         Returns:
-            dictionary with data
+            dictionary with data or empty dictionary
         """
         group = group or "base"
         xref = self._get_conveyed_value(resource, None, xref)
@@ -1558,7 +1700,7 @@ class MainTest(SingleTransactionCase):
             )
         else:
             if raise_if_not_found:
-                raise ValueError("Module %s not found in the system" % locale_name)
+                self.raise_error("Module %s not found in the system" % locale_name)
 
     def install_language(self, iso, overwrite=None, force_translation=None):
         iso = iso or "en_US"
@@ -1584,6 +1726,26 @@ class MainTest(SingleTransactionCase):
     def setup_company(
         self, company, xref=None, partner_xref=None, values={}, group=None
     ):
+        """Setup company values for current user.
+        This function assigns company to current user and / or can create xref aliases
+        and /or can update company values.
+        This function is useful in multi companies tests where different company values
+        will be used in different tests. May be used in more simple test where company
+        data will be updated in different tests.
+        You can assign partner_xref to company base by group; then all tests executed
+        after setup_env(), use the assigned partner data for company of the group.
+        You can also create more companies and assign one of them to test by group.
+
+        Args:
+            company (obj): company to update; if not supplied a new company is created
+            xref (str): external reference or alias for main company
+            partner_xref (str): external reference or alias for main company partner
+            values (dict): company data to update immediately
+            group (str): if supplied select specific group data; default is "base"
+
+        Returns:
+            default company for user
+        """
         add_alias = True
         if not company:                                              # pragma: no cover
             company = self.env["res.company"].create(values)
@@ -1594,13 +1756,13 @@ class MainTest(SingleTransactionCase):
             if not add_alias:
                 self.add_xref(xref, "res.company", company.id)       # pragma: no cover
             elif not self.env.ref(xref, raise_if_not_found=False):
-                self._add_conveyed_xref(
+                self.add_alias_xref(
                     xref, "base.main_company", resource="res.company", group=group)
         if partner_xref:
             if not add_alias:                                        # pragma: no cover
                 self.add_xref(partner_xref, "res.partner", company.partner_id.id)
             elif not self.env.ref(partner_xref, raise_if_not_found=False):
-                self._add_conveyed_xref(
+                self.add_alias_xref(
                     partner_xref, "base.main_partner",
                     resource="res.partner", group=group)
         if self.env.user.company_id != company:
@@ -1613,20 +1775,33 @@ class MainTest(SingleTransactionCase):
         locale=None,
         group=None,
     ):
-        """Create all record from declared data. See above doc
+        """Create all record from declared data.
+        This function starts the test workflow creating the test environment.
+        Test data must be declared before engage this function with declare_all_data()
+        function (see above).
+        setup_env may be called more times with different group value.
+        If it is called with the same group, it recreates the test environment with
+        declared values; however this feature might do not work for some reason: i.e.
+        if test creates a paid invoice, the setup_env() cannot unlink invoice.
+        If you want to recreate the same test environment, assure the conditions for
+        unlink of all created and tested records.
+        If you create more test environment with different group you can use all data,
+        even record created by different group.
+        In this way you can test a complex process the evolved scenario.
 
         Args:
             lang (str): install & load specific language
             locale (str): install locale module with CoA; i.e l10n_it
+            group (str): if supplied select specific group data; default is "base"
 
         Returns:
             None
         """
         self._logger.info(
-            "🎺 Starting test v2.0.3 (debug_level=%s)" % (self.debug_level))
-        if locale:
+            "🎺 Starting test v2.0.4 (debug_level=%s)" % (self.debug_level))
+        if locale:                                                   # pragma: no cover
             self.set_locale(locale)
-        if lang:
+        if lang:                                                     # pragma: no cover
             self.install_language(lang)
         self._convert_test_data(group=group)
         for resource in self.get_resource_list(group=group):
@@ -1645,14 +1820,56 @@ class MainTest(SingleTransactionCase):
     def resource_edit(
         self, resource, default={}, web_changes=[], actions=[], ctx={}
     ):
-        """Simulate web editing
+        """Server-side web form editing.
+        Ordinary Odoo test use the primitive create() and write() functions to manage
+        test data. These methods create an update records, but they do not properly
+        reflect the behaviour of user editing form with GUI interface.
+
+        This function simulates the client-side form editing in the server-side.
+        It works in the follow way:
+
+        * It can simulate the form create record
+        * It can simulate the form update record
+        * It can simulate the user data input
+        * It calls the onchange functions automatically
+        * It may be used to call button on the form
+
+        User action simulation:
+
+        The parameter <web_changes> is a list of user actions to execute sequentially.
+        Every element of the list is another list with 2 or 3 values:
+
+        * Field name to assign value
+        * Value to assign
+        * Optional function to execute (i.e. specific onchange)
+
+        If field is associate to an onchange function the relative onchange functions
+        are execute after value assignment. If onchange set another field with another
+        onchange the relative another onchange are executed until all onchange are
+        exhausted. This behavior is the same of the form editing.
+
+        Warning: because function are always executed at the server side the behavior
+        may be slightly different from actual form editing. Please take note of
+        following limitations:
+
+        * update form cannot simulate discard button
+        * some required data in create must be supplied by default parameter
+        * form inconsistency cannot be detected by this function
+        * nested function must be managed by test code (i.e. wizard from form)
+
+        See test_testenv module for test examples
+        https://github.com/zeroincombenze/zerobug-test/tree/12.0/test_testenv
+
         Args:
             resource (str or obj): if field is a string simulate create web behavior of
                                    Odoo model issued in resource;
                                    if field is an obj simulate write web behavior on the
                                    issued record
             default (dict): default value to assign
-            web_changes (list): list of tuples (field, value); see <wizard_edit>
+            web_changes (list): list of tuples (field, value); see <wiz_edit>
+
+        Returns:
+            windows action to execute or obj record
         """
         actions = actions or (
             ["create"] if isinstance(resource, basestring) else ["save"])
@@ -1666,28 +1883,29 @@ class MainTest(SingleTransactionCase):
                 actions,
                 self.dict_2_print(ctx))
         )
-        if isinstance(resource, basestring):
-            resource_model = resource
-            vals = self.cast_types(resource_model, default or {}, fmt="cmd")
-            record = self.env[resource_model].with_context(ctx).create(
-                self._purge_values(
-                    self._convert_to_write(
-                        self._create_object(resource_model,
-                                            default=vals,
-                                            ctx=ctx),
-                        new=True)))
-        elif is_iterable(resource):
-            record = resource
-        else:
-            if ctx:
-                record = resource.with_context(ctx)
-            else:
-                record = resource
         for action in actions:
-            result = self._exec_action(record, action, web_changes=web_changes)
-            # Web changes execute, clear them
+            result = self._exec_action(
+                resource, action, default=default, web_changes=web_changes, ctx=ctx)
+            # Web changes executed, clear them, same for default
             web_changes = []
+            default = {}
+            resource = result
         return result
+
+    def field_download(self, record, field):
+        """Execute the data download from a binary field.
+
+        Args:
+            record (obj): record object
+            field (str): field name to download
+
+        Returns:
+            binary obj downloaded from field
+        """
+        if field not in record:                                      # pragma: no cover
+            raise ValueError(
+                "Field %s not found in %s" % (field, record._name))
+        return base64.b64decode(getattr(record, field))
 
     def resource_download(
         self,
@@ -1702,6 +1920,40 @@ class MainTest(SingleTransactionCase):
         button_ctx={},
         field=None,
     ):
+        """Execute the data download.
+        Engage the specific download wizard and return the downloaded data.
+        Both parameters <module> and <action_name> must be issued in order to
+        call <wiz_by_action_name>; they are alternative to act_windows.
+
+        User action simulation:
+
+        The parameter <web_changes> is a list of user actions to execute sequentially.
+        Every element of the list is another list with 2 or 3 values:
+
+        * Field name to assign value
+        * Value to assign
+        * Optional function to execute (i.e. specific onchange)
+
+        If field is associate to an onchange function the relative onchange functions
+        are execute after value assignment. If onchange set another field with another
+        onchange the relative another onchange are executed until all onchange are
+        exhausted. This behavior is the same of the form editing.
+
+        Args:
+            module (str): module name for wizard to test; if "." use current module name
+            action_name (str): action name
+            act_windows (dict): Odoo windows action (do not issue module & action_name)
+            records (obj): objects required by the download wizard
+            default (dict): default value to assign
+            ctx (dict): context to pass to wizard during execution
+            button_name (str): function name to execute at the end of then wizard
+            web_changes (list): list of tuples (field, value); see above
+            button_ctx (dict): context to pass to button_name function
+            field (str): field name to download
+
+        Returns:
+            binary obj downloaded from field
+        """
         act_windows = self.wizard(
             module=module,
             action_name=action_name,
@@ -1715,9 +1967,8 @@ class MainTest(SingleTransactionCase):
         )
         res_model = self._get_model_from_act_windows(act_windows)
         if field not in self.env[res_model]:
-            raise ValueError(
-                "Filed %s not found in %s" % (field, res_model))
-        return base64.decodestring(
+            self.raise_error("Field %s not found in %s" % (field, res_model))
+        return base64.b64decode(
             getattr(self.env[res_model].browse(act_windows["res_id"]),
                     field))
 
@@ -1739,22 +1990,61 @@ class MainTest(SingleTransactionCase):
         web_changes=[],
         button_ctx={},
     ):
-        """Execute full wizard in 1 step.
+        """Execute a full wizard.
 
-        Call <wizard_launch> or <wizard_launch_by_action_name>, then <wizard_execution>.
-        All parameters are passed to specific functions.
+        Engage the specific wizard, simulate user actions and return the wizard result,
+        usually a windows action.
+
+        It is useful to test:
+            * view names
+            * wizard structure
+            * wizard code
+
         Both parameters <module> and <action_name> must be issued in order to
-        call <wizard_by_action_name>.
+        call <wiz_by_action_name>; they are alternative to act_windows.
+
+        *** Example of use ***
+
+        XML view file:
+            <record id="action_example" model="ir.actions.act_window">
+                <field name="name">Example</field>
+                <field name="res_model">wizard.example</field>
+                [...]
+            </record>
+
+        Python code:
+            act_windows = self.wizard(module="module_example",
+                action_name="action_example", ...)
+            if self.is_action(act_windows):
+                act_windows = self.wizard(act_windows=act_windows, ...)
+
+        User action simulation:
+        The parameter <web_changes> is a list of user actions to execute sequentially.
+        Every element of the list is another list with 2 or 3 values:
+        * Field name to assign value
+        * Value to assign
+        * Optional function to execute (i.e. specific onchange)
+        If field is associate to an onchange function the relative onchange functions
+        are execute after value assignment. If onchange set another field with another
+        onchange the relative another onchange are executed until all onchange are
+        exhausted. This behavior is the same of the form editing.
 
         Args:
-            see above <wizard_launch>, <wizard_launch_by_action_name> and
-            <wizard_execution>
+            module (str): module name for wizard to test; if "." use current module name
+            action_name (str): action name
+            act_windows (dict): Odoo windows action (do not issue module & action_name)
+            records (obj): objects required by the download wizard
+            default (dict): default value to assign
+            ctx (dict): context to pass to wizard during execution
+            button_name (str): function name to execute at the end of then wizard
+            web_changes (list): list of tuples (field, value); see above
+            button_ctx (dict): context to pass to button_name function
 
         Returns:
-            Odoo wizard result; may be a windows action to engage another wizard
+            result of the wizard
 
         Raises:
-          ValueError: if invalid parameters issued
+            ValueError: if invalid parameters issued
         """
         if module and action_name:
             act_windows = self._wiz_launch_by_act_name(
@@ -1765,10 +2055,122 @@ class MainTest(SingleTransactionCase):
                 act_windows, records=records, default=default, ctx=ctx
             )
         else:                                                        # pragma: no cover
-            raise (ValueError, "Invalid action!")
+            self.raise_error("Invalid action!")
         return self._wiz_execution(
             act_windows,
             button_name=button_name,
             web_changes=web_changes,
             button_ctx=button_ctx,
         )
+
+    def get_records_from_act_windows(self, act_windows):
+        """Get records from a windows message.
+
+        Args:
+            act_windows (dict): Odoo windows action returned by a wizard
+
+        Returns:
+            records or False
+
+        Raises:
+            ValueError: if invalid parameters issued
+        """
+        if self.is_action(act_windows):
+            if act_windows["type"] == "ir.actions.act_window":
+                res_model = self._get_model_from_act_windows(act_windows)
+                if self._is_transient(res_model):                    # pragma: no cover
+                    self.raise_error("Invalid transiente model %s for <%s>!" % (
+                        res_model, act_windows.get("name", "")))
+                if "res_id" in act_windows:
+                    return self.env[res_model].browse(act_windows["res_id"])
+                elif "domain" in act_windows:
+                    return self.env[res_model].search(act_windows["domain"])
+        return False                                                 # pragma: no cover
+
+    ###############################
+    #                             #
+    #     DATA VALIDATION API     #
+    #                             #
+    ###############################
+
+    def _validate_1_record(self, tmpl, rec, resource, childs_name):
+        tmpl["_CHECK"] = tmpl.get("_CHECK", {})
+        tmpl["_CHECK"][rec] = tmpl["_CHECK"].get(rec, {})
+        tmpl["_CHECK"][rec]["_COUNT"] = len(
+            [x for x in tmpl.keys() if x != childs_name and not x.startswith("_")]
+        )
+        tmpl["_CHECK"][rec]["_MATCH"] = 0
+        for field in tmpl.keys():
+            if field == childs_name or field.startswith("_"):
+                continue
+            if (
+                self._cast_field(resource, field, tmpl[field])
+                ==
+                self._convert_field_to_write(rec, field)
+            ):
+                tmpl["_CHECK"][rec]["_MATCH"] += 1
+            else:
+                break
+        return tmpl
+
+    def validate_records(self, template, records):
+        if not isinstance(template, (list, tuple)):                  # pragma: no cover
+            self.raise_error("Function validate_records() 1° param must be list!")
+        if not is_iterable(records):                                 # pragma: no cover
+            self.raise_error("Function validate_records() 1° param must be iterable!")
+        resource = self._get_model_from_records(records)
+        childs_name = self.childs_name.get(resource)
+        for rec in records:
+            if not is_iterable(rec):                                 # pragma: no cover
+                self.raise_error("Function validate_records() w/o iterable")
+            for tmpl in template:
+                if not isinstance(tmpl, dict):                       # pragma: no cover
+                    self.raise_error("Function validate_records() w/o iterable")
+                tmpl = self._validate_1_record(tmpl, rec, resource, childs_name)
+                if (
+                    childs_name
+                    and tmpl["_CHECK"][rec]["_MATCH"] == tmpl["_CHECK"][rec]["_COUNT"]
+                ):
+                    matches = self.validate_records(tmpl[childs_name], rec[childs_name])
+                    if matches:
+                        tmpl["_CHECK"][rec]["_MATCH"] += 1
+                        tmpl["_CHECK"][rec]["_COUNT"] += 1
+                if tmpl["_CHECK"][rec]["_MATCH"] == tmpl["_CHECK"][rec]["_COUNT"]:
+                    break
+
+        for rec in records:
+            for tmpl in template:
+                if (
+                    tmpl["_CHECK"].get(rec, {}).get("_MATCH", 0)
+                    !=
+                    tmpl["_CHECK"].get(rec, {}).get("_COUNT", 1)
+                    and rec in tmpl["_CHECK"]
+                ):
+                    del tmpl["_CHECK"][rec]
+
+        for rec in records:
+            found = False
+            for tmpl in template:
+                if "_CHECK" in tmpl and rec in tmpl["_CHECK"]:
+                    found = True
+                    break
+            if not found:                                            # pragma: no cover
+                for tmpl in template:
+                    if "_CHECK" not in tmpl:
+                        tmpl["_CHECK"][rec] = {}
+                        break
+        matches = []
+        for tmpl in template:
+            if "_CHECK" not in tmpl:                                 # pragma: no cover
+                self.raise_error("validate_record(%s) does not match any record!"
+                                 % self.dict_2_print(tmpl))
+            for rec in tmpl["_CHECK"]:
+                matches.append((tmpl, rec))
+                for field in tmpl.keys():
+                    if field == childs_name or field.startswith("_"):
+                        continue
+                    self.assertEqual(
+                        tmpl[field],
+                        rec[field]
+                    )
+        return matches

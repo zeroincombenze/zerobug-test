@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="wizard_example_menu_view" model="ir.ui.view">
+        <field name="name">Wizard Example from menu</field>
+        <field name="model">wizard.example.menu</field>
+        <field name="arch" type="xml">
+            <form string="Parameters Example">
+                <group>
+                    <field name="numrecords" />
+                </group>
+                <footer>
+                    <button
+                        name="do_example"
+                        string="Create"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="result_wizard_example_menu_view" model="ir.ui.view">
+        <field name="name">Wizard Example from menu</field>
+        <field name="model">wizard.example.menu</field>
+        <field name="priority" eval="64"/>
+        <field name="arch" type="xml">
+            <form string="Wizard example from menu result">
+                <group>
+                    <field name="numrecords" />
+                </group>
+                <footer>
+                    <button special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_generate_random_example_records"
+            model="ir.actions.act_window">
+        <field name="name">Generate random example records</field>
+        <field name="res_model">wizard.example.menu</field>
+        <!-- <field name="src_model">testenv.all.fields</field> -->
+        <field name="view_id" ref="wizard_example_menu_view" />
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        name="Generate random example records"
+        parent="base.menu_custom"
+        groups="base.group_no_one"
+        sequence="950"
+        id="menu_generate_random_example_records"
+        action="action_generate_random_example_records"
+/>
+</odoo>
