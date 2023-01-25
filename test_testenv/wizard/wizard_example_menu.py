@@ -55,15 +55,15 @@ class WizardExamplMenu(models.TransientModel):
         fnames = ("Alpha", "Beta","Gamma", "Delta", "Epsilon", "Zeta", "Omicron")
         lnames = ("Red", "Orange", "Brown", "Green", "Turquoise", "Black", "White")
         rec_ids = []
-        for rec in range(self.numrecords):
+        for nr, rec in enumerate(range(self.numrecords)):
             vals = {
                 "name": "%s %s" % (fnames[randint(0, 6)], lnames[randint(0, 6)]),
                 "active": True,
                 "state": "draft",
-                "rank": randint(1, 99),
+                "rank": nr + 1,
                 "amount": random() * 1000,
                 "measure": random() * 90,
-                "updated_dt": datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
+                "updated_dt": datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S"),
             }
             record = self.env["testenv.all.fields"].create(vals)
             rec_ids.append(record.id)

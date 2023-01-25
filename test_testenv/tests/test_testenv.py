@@ -13,19 +13,26 @@ _logger = logging.getLogger(__name__)
 
 
 TEST_ACCOUNT_ACCOUNT = {
-    "external.2601": {
-        "code": "2601",
+    "z0bug.coa_tax_recv": {
+        "code": "111200",
         "reconcile": False,
         "user_type_id": "account.data_account_type_current_liabilities",
         "name": "IVA n/debito",
     },
-    "external.3112": {
-        "code": "3112",
-        "name": "Ricavi da merci e servizi",
+    "z0bug.coa_sale": {
+        "code": "200000",
+        "name": "Merci c/vendita",
+        "user_type_id": "account.data_account_type_revenue",
+        "reconcile": False,
+    },
+    "z0bug.coa_sale2": {
+        "code": "200010",
+        "name": "Ricavi da servizi",
         "user_type_id": "account.data_account_type_revenue",
         "reconcile": False,
     },
 }
+
 TEST_ACCOUNT_JOURNAL = {
     "external.INV": {
         "code": "INV",
@@ -40,73 +47,129 @@ TEST_ACCOUNT_JOURNAL = {
         "name": "Banca",
     },
 }
+
 TEST_ACCOUNT_INVOICE = {
-    "z0bug.invoice_Z0_2": {
-        "origin": "SO123",
-        "reference": "SO123",
+
+    "z0bug.invoice_Z0_1": {
+        "date_invoice": "####-<#-99",
+        "journal_id": "external.INV",
+        "origin": "P1/2021/0001",
+        "partner_id": "z0bug.res_partner_1",
+        "reference": "P1/2021/0001",
         "type": "out_invoice",
         "payment_term_id": "z0bug.payment_term_1",
-        "journal_id": "external.INV",
+    },
+    "z0bug.invoice_Z0_2": {
         "date_invoice": "####-<#-99",
+        "journal_id": "external.INV",
+        "origin": "SO123",
         "partner_id": "z0bug.res_partner_2",
+        "reference": "SO123",
+        "type": "out_invoice",
+        "payment_term_id": "z0bug.payment_term_2",
     },
 }
+
 TEST_ACCOUNT_INVOICE_LINE = {
-    "z0bug.invoice_Z0_2_1": {
-        "sequence": 1,
-        "product_id": "z0bug.product_product_1",
-        "invoice_id": "z0bug.invoice_Z0_2",
-        "price_unit": 0.42,
-        "account_id": "external.3112",
-        "name": "Prodotto Alpha",
+    "z0bug.invoice_Z0_1_1": {
+        "invoice_id": "z0bug.invoice_Z0_1",
+        "account_id": "z0bug.coa_sale",
         "invoice_line_tax_ids": "external.22v",
+        "name": "Prodotto Alpha",
+        "price_unit": 0.84,
+        "product_id": "z0bug.product_product_1",
         "quantity": 100,
+        "sequence": 1,
+    },
+    "z0bug.invoice_Z0_1_2": {
+        "invoice_id": "z0bug.invoice_Z0_1",
+        "account_id": "z0bug.coa_sale2",
+        "invoice_line_tax_ids": "external.22v",
+        "name": "Special Worldwide service",
+        "price_unit": 1.88,
+        "product_id": "z0bug.product_product_23",
+        "quantity": 1,
+        "sequence": 2,
+    },
+    "z0bug.invoice_Z0_1_03": {
+        "invoice_id": "z0bug.invoice_Z0_1",
+        "account_id": "z0bug.coa_sale",
+        "invoice_line_tax_ids": "external.22v",
+        "name": "Reference line",
+        "price_unit": 0.0,
+        "product_id": False,
+        "quantity": 1,
+        "sequence": 3,
+    },
+    "z0bug.invoice_Z0_2_1": {
+        "invoice_id": "z0bug.invoice_Z0_2",
+        "account_id": "z0bug.coa_sale",
+        "invoice_line_tax_ids": "external.22v",
+        "name": "Prodotto Alpha",
+        "price_unit": 0.84,
+        "product_id": "z0bug.product_product_1",
+        "quantity": 100,
+        "sequence": 1,
     },
     "z0bug.invoice_Z0_2_2": {
-        "sequence": 2,
-        "product_id": "z0bug.product_product_18",
         "invoice_id": "z0bug.invoice_Z0_2",
-        "price_unit": 1.69,
-        "account_id": "external.3112",
-        "name": "Prodotto Rho",
+        "account_id": "z0bug.coa_sale",
         "invoice_line_tax_ids": "external.22v",
+        "name": "Prodotto Rho",
+        "price_unit": 1.69,
+        "product_id": "z0bug.product_product_18",
         "quantity": 10,
+        "sequence": 2,
     },
 }
+
 TEST_ACCOUNT_PAYMENT_TERM = {
     "z0bug.payment_term_1": {
-        "name": "RiBA 30/60 GG/FM",
+        "name": "RiBA 30 GG",
+    },
+    "z0bug.payment_term_2": {
+        "name": "RiBA 30/60 GG",
     },
 }
+
 TEST_ACCOUNT_PAYMENT_TERM_LINE = {
     "z0bug.payment_term_1_1": {
         "payment_id": "z0bug.payment_term_1",
         "sequence": 1,
         "days": 30,
+        "value": "balance",
+    },
+    "z0bug.payment_term_2_1": {
+        "payment_id": "z0bug.payment_term_2",
+        "sequence": 1,
+        "days": 30,
         "value": "percent",
         "value_amount": 50,
     },
-    "z0bug.payment_term_1_2": {
-        "payment_id": "z0bug.payment_term_1",
+    "z0bug.payment_term_2_2": {
+        "payment_id": "z0bug.payment_term_2",
         "sequence": 2,
         "months": 2,
         # "days": 60,
         "value": "balance",
     },
 }
+
 TEST_ACCOUNT_TAX = {
     "external.22v": {
-        "amount_type": "percent",
-        "account_id": "external.2601",
+        "description": "22v",
         "name": "IVA 22% su vendite",
-        "refund_account_id": "external.2601",
+        "amount_type": "percent",
+        "account_id": "z0bug.coa_tax_recv",
+        "refund_account_id": "z0bug.coa_tax_recv",
         "amount": 22,
         "type_tax_use": "sale",
         "price_include": False,
-        "description": "22v",
     },
 }
+
 TEST_PRODUCT_TEMPLATE = {
+    # Consumable product
     "z0bug.product_template_1": {
         "default_code": "AA",
         "name": "Prodotto Alpha",
@@ -118,7 +181,9 @@ TEST_PRODUCT_TEMPLATE = {
         "uom_po_id": "product.product_uom_unit",
         "weight": 0.1,
         "image": False,
+        "property_account_income_id": "z0bug.coa_sale",
     },
+    # Product on stock
     "z0bug.product_template_18": {
         "default_code": "RR",
         "name": "Prodotto Rho",
@@ -129,7 +194,9 @@ TEST_PRODUCT_TEMPLATE = {
         "uom_po_id": "product.product_uom_unit",
         "weight": 0.06,
         "image": False,
+        "property_account_income_id": "z0bug.coa_sale",
     },
+    # Service
     'z0bug.product_template_23': {
         'default_code': 'WW',
         'name': 'Special Worldwide service',
@@ -138,14 +205,15 @@ TEST_PRODUCT_TEMPLATE = {
         'type': 'service',
         'uom_id': 'product.product_uom_unit',
         'uom_po_id': 'product.product_uom_unit',
-        "image": "z0bug.product_template_26.png"
+        "image": "z0bug.product_template_26.png",
+        "property_account_income_id": "z0bug.coa_sale2",
     },
 }
 TEST_RES_PARTNER = {
     "z0bug.partner_mycompany": {
         "name": "Test Company",
         "street": "Via dei Matti, 0",
-        "country_id": "base.it",
+        # "country_id": "base.it",
         "zip": "20080",
         "city": "Ozzero",
         "state_id": "base.state_it_mi",
@@ -154,7 +222,7 @@ TEST_RES_PARTNER = {
         "is_company": True,
         "email": "info@testcompany.org",
         "phone": "+39 025551234",
-        "vat": "IT05111810015",
+        # "vat": "IT05111810015",
         "website": "https://www.testcompany.org",
     },
     "z0bug.res_partner_1": {
@@ -174,8 +242,8 @@ TEST_RES_PARTNER = {
         "street": "Via Dueville, 2",
         "country_id": "base.it",
         "zip": "10060",
-        "city": "S. Secondo Pinerolo",
-        "state_id": "base.state_it_to",
+        "city": "S. Secondo Parmense",
+        "state_id": "base.state_it_pr",
         "customer": True,
         "supplier": False,
         "is_company": True,
@@ -282,20 +350,49 @@ class MyTest(SingleTransactionCase):
         self.declare_resource_data(
             "res.partner",
             {
+                "z0bug.res_partner_2": TEST_RES_PARTNER["z0bug.res_partner_2"]
+            },
+        )
+        self.assertEqual(
+            self.get_resource_data("res.partner", "z0bug.res_partner_2")["city"],
+            "S. Secondo Parmense",
+            "TestEnv FAILED: unexpected value for 'city'!"
+        )
+        _logger.info("Please, ignore field <...> does not exist in <...>")
+        self.declare_resource_data(
+            "res.partner",
+            {
                 "z0bug.res_partner_1": {
                     "name": "PRIMA ALPHA",
                     "customer": "0",
                     "supplier": "False",
                     "color": "2",
                 },
+                "z0bug.res_partner_2": {},
             },
             merge="zerobug"
         )
+        _logger.info("Now, all warning & messages are valid!")
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_1")["name"],
             "PRIMA ALPHA"
         )
         # Data from public PYPI package
+        self.assertEqual(
+            self.get_resource_data("res.partner", "z0bug.res_partner_2")["city"],
+            "S. Secondo Pinerolo",
+            "TestEnv FAILED: value for 'city' not updated by PYPI!"
+        )
+        # Lang of partner is 'it_IT' but it does not exist
+        self.assertEqual(
+            self.get_resource_data("res.partner", "z0bug.res_partner_2")["lang"],
+            "it_IT"
+        )
+        self.resource_make("res.partner", "z0bug.res_partner_2")
+        self.assertEqual(
+            self.resource_bind("z0bug.res_partner_2")["lang"],
+            "en_US"
+        )
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_1")["zip"],
             "20022"
@@ -388,16 +485,20 @@ class MyTest(SingleTransactionCase):
             item = "TEST_%s" % resource.upper().replace(".", "_")
             data[item] = globals()[item]
         # Add alias to company
-        self.declare_all_data(data, merge="zerobug")
+        self.declare_all_data(data)
         self.setup_company(self.default_company(),
                            xref="z0bug.mycompany",
                            partner_xref="z0bug.partner_mycompany",
-                           values={"name": "Test Company", "vat": "IT05111810015"})
-        self.assertEqual(
-            self.get_resource_data(
-                "res.partner",
-                "z0bug.partner_mycompany")["vat"],
-            "IT05111810015"
+                           bnk1_xref="z0bug.coa_bnk1",
+                           values={
+                               "name": "Test Company",
+                               "vat": "IT05111810015",
+                               "country_id": "base.it",
+                           })
+        # In TEST_RES_PARTNER vat is not declared
+        self.assertFalse(
+            self.get_resource_data("res.partner",
+                                   "z0bug.partner_mycompany").get("vat", ""),
         )
         self.assertEqual(
             self.get_resource_data(
@@ -410,11 +511,22 @@ class MyTest(SingleTransactionCase):
             self.resource_bind("z0bug.bank_company_1").acc_number.replace(" ", ""),
             "IT15A0123412345100000123456"
         )
+        self.assertEqual(
+            self.default_company().country_id,
+            self.env.ref("base.it")
+        )
+        self.assertEqual(
+            self.resource_bind("z0bug.res_partner_2")["city"],
+            "S. Secondo Parmense",
+            "TestEnv FAILED: unexpected value for 'city'!"
+        )
+
         # Test alias
         self.assertEqual(
             self.resource_bind("z0bug.partner_mycompany")["vat"],
             "IT05111810015"
         )
+        # Vat number must be loaded by setup_company()
         self.assertEqual(
             self.resource_bind("base.main_company")["vat"],
             "IT05111810015"
@@ -429,7 +541,29 @@ class MyTest(SingleTransactionCase):
         self.setup_env(group="payment_term")
         self.assertEqual(
             self.resource_bind("z0bug.payment_term_1")["name"],
-            "RiBA 30/60 GG/FM"
+            "RiBA 30 GG"
+        )
+
+    def _test_many2one(self):
+        partner = self.resource_bind("z0bug.res_partner_2")
+        self.resource_write("res.partner", "z0bug.res_partner_2",
+                            values={"country_id": self.env.ref("base.it").id})
+        self.assertEqual(
+            partner.country_id,
+            self.env.ref("base.it")
+        )
+        self.resource_write("res.partner", "z0bug.res_partner_2",
+                            values={"country_id": self.env.ref("base.it")})
+        self.assertEqual(
+            partner.country_id,
+            self.env.ref("base.it")
+        )
+        self.resource_write(
+            "res.partner", "z0bug.res_partner_2",
+            values={"country_id": "external.%s" % self.env.ref("base.it").id})
+        self.assertEqual(
+            partner.country_id,
+            self.env.ref("base.it")
         )
 
     def _test_currency_2many(self):
@@ -649,6 +783,9 @@ class MyTest(SingleTransactionCase):
         self.declare_all_data(data, group="invoice")
         self.setup_env(group="invoice")
 
+        # Test reading record without resource declaration by <external> xref
+        bnk_journal = self.resource_bind("external.BNK1")
+
         invoice = self.resource_bind("z0bug.invoice_Z0_2")
         self.resource_edit(
             resource=invoice,
@@ -681,21 +818,25 @@ class MyTest(SingleTransactionCase):
         )
         return invoice
 
-    def _test_wizard_invoice(self, invoice):
-        act_windows = self.resource_edit(
-            resource=[invoice],
-            actions="account.action_account_invoice_confirm"
-        )
-        self.assertTrue(self.is_action(act_windows))
+    def _test_wizard_invoice(self):
+        invoices = self.env["account.invoice"]
+        invoices |= self.resource_bind("z0bug.invoice_Z0_1")
+        invoices |= self.resource_bind("z0bug.invoice_Z0_2")
+
         self.wizard(
-            act_windows=act_windows,
+            module="account",
+            action_name="action_account_invoice_confirm",
+            records=invoices,
             button_name="invoice_confirm"
         )
-        self.assertEqual(
-            invoice.state,
-            "open",
-            "action_invoice_open() FAILED: no state changed!"
-        )
+        for invoice in invoices:
+            self.assertEqual(
+                invoice.state,
+                "open",
+                "action_invoice_open() FAILED: no state changed!"
+            )
+
+        invoice = self.resource_bind("z0bug.invoice_Z0_1")
         act_windows = self.resource_edit(
             resource=invoice,
             actions="account.action_account_invoice_payment",
@@ -726,7 +867,7 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(move.state, "posted")
 
     def _test_testenv_all_fields(self):
-        binary_fn = get_module_resource(self.module, "tests", "data", "example.xml")
+        binary_fn = get_module_resource(self.module.name, "tests", "data", "example.xml")
         with open(binary_fn, "rb") as fd:
             source_xml = fd.read()
         saved_ts = datetime.now()
@@ -804,6 +945,11 @@ class MyTest(SingleTransactionCase):
         _logger.info("🎺 Testing validate_record()")
         self.resource_write("res.partner", xref="z0bug.res_partner_1")
         self.resource_write("res.partner", xref="z0bug.res_partner_2")
+        records = self.env["res.partner"]
+        records |= self.resource_bind("z0bug.res_partner_1")
+        records |= self.resource_bind("z0bug.res_partner_2")
+
+        # Test with good information
         template = [
             {
                 "name": TEST_RES_PARTNER["z0bug.res_partner_1"]["name"],
@@ -812,34 +958,43 @@ class MyTest(SingleTransactionCase):
             },
             {
                 "name": TEST_RES_PARTNER["z0bug.res_partner_2"]["name"],
+                "country_id": "base.it",
             },
         ]
-        records = self.env["res.partner"]
-        records |= self.resource_bind("z0bug.res_partner_1")
-        records |= self.resource_bind("z0bug.res_partner_2")
         self.validate_records(template, records)
 
-        self.resource_write("account.payment.term", xref="z0bug.payment_term_1")
+        # Test with weak information
         template = [
             {
-                "name": TEST_ACCOUNT_PAYMENT_TERM["z0bug.payment_term_1"]["name"],
+                "customer": True
+            },
+            {
+                "customer": True            },
+        ]
+        self.validate_records(template, records)
+
+        # Test with header/detail record
+        self.resource_write("account.payment.term", xref="z0bug.payment_term_2")
+        template = [
+            {
+                "name": TEST_ACCOUNT_PAYMENT_TERM["z0bug.payment_term_2"]["name"],
                 "line_ids": [
                     {
                         "days": TEST_ACCOUNT_PAYMENT_TERM_LINE[
-                            "z0bug.payment_term_1_1"]["days"],
+                            "z0bug.payment_term_2_1"]["days"],
                         "value": TEST_ACCOUNT_PAYMENT_TERM_LINE[
-                            "z0bug.payment_term_1_1"]["value"],
+                            "z0bug.payment_term_2_1"]["value"],
                         "value_amount": TEST_ACCOUNT_PAYMENT_TERM_LINE[
-                            "z0bug.payment_term_1_1"]["value_amount"],
+                            "z0bug.payment_term_2_1"]["value_amount"],
                     },
                     {
                         "days": 60,
                         "value": TEST_ACCOUNT_PAYMENT_TERM_LINE[
-                            "z0bug.payment_term_1_2"]["value"],
+                            "z0bug.payment_term_2_2"]["value"],
                     },                ],
             },
         ]
-        records = [self.resource_bind("z0bug.payment_term_1")]
+        records = [self.resource_bind("z0bug.payment_term_2")]
         self.validate_records(template, records)
 
     def _test_wizard_from_menu(self):
@@ -876,14 +1031,15 @@ class MyTest(SingleTransactionCase):
         self._test_03()
         self._test_04()
         self._test_setup()
+        self._test_many2one()
         self._test_currency_2many()
         self._test_testenv_all_fields()
         self._test_product()
         self._test_wizard()
         #
         self._test_partner()
-        invoice = self._test_invoice()
-        move = self._test_wizard_invoice(invoice)
+        self._test_invoice()
+        move = self._test_wizard_invoice()
         self._test_move(move)
         self._test_validate_record()
         self._test_wizard_from_menu()
