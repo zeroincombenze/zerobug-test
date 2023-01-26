@@ -11,7 +11,7 @@
 * [IMP] account.account code uses symbolic name, not numeric account code
 * [IMP] Regression test on wizard with multiple records
 * [IMP] Regression test more sophisticated on validate_records()
-* [IMP] Coverage 96% (789/34)
+* [IMP] Coverage 96% (863/36)
 
 12.0.2.0.4 (2023-01-13)
 ~~~~~~~~~~~~~~~~~~~~~~~

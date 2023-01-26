@@ -7,7 +7,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
 # from past.builtins import basestring
-from datetime import datetime
+from datetime import datetime, timedelta
 from random import random, randint
 
 from odoo import fields, models, api, _
@@ -48,26 +48,54 @@ class WizardExamplMenu(models.TransientModel):
                 "res_id": self.id,
                 "target": "new",
                 "context": {"active_id": self.id},
-                "view_id": self.env.ref("test_testenv.result_wizard_example_menu_view").id,
+                "view_id":
+                    self.env.ref("test_testenv.result_wizard_example_menu_view").id,
                 "domain": [("id", "=", self.id)],
             }
 
-        fnames = ("Alpha", "Beta","Gamma", "Delta", "Epsilon", "Zeta", "Omicron")
+        fnames = ("Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Omicron")
         lnames = ("Red", "Orange", "Brown", "Green", "Turquoise", "Black", "White")
+        descr = ("I was born in Caserta", "", "We live in Turin")
+        dates = (
+            (datetime.today() - timedelta(days=1)).date(),
+            (datetime.today() - timedelta(days=5)).date(),
+            (datetime.today() - timedelta(days=14)).date(),
+        )
+        refdate = (datetime.now() - timedelta(days=27))
+        partners = [x.id for x in self.env["res.partner"].search(
+            ["|",
+             ("name", "like", "Prima Alpha"),
+             ("name", "like", "Latte Beta")
+             ]
+        )]
+
         rec_ids = []
-        for nr, rec in enumerate(range(self.numrecords)):
+        for nr in range(self.numrecords):
             vals = {
                 "name": "%s %s" % (fnames[randint(0, 6)], lnames[randint(0, 6)]),
+                "description": descr[nr],
                 "active": True,
                 "state": "draft",
                 "rank": nr + 1,
-                "amount": random() * 1000,
-                "measure": random() * 90,
+                "amount": random() * 1000 if nr else 1234.5,
+                "measure": random() * 90 if nr != 1 else 98.7,
+                "created_dt": datetime(
+                    refdate.year,
+                    refdate.month,
+                    nr + 1,
+                    nr + 10,
+                    nr * 10,
+                    59 - (nr * 7),
+                    0
+                ),
                 "updated_dt": datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S"),
+                "date": dates[nr],
             }
+            if nr == 2:
+                vals["partner_ids"] = [(6, 0, partners)]
             record = self.env["testenv.all.fields"].create(vals)
             rec_ids.append(record.id)
-        # Case 2: show resul records
+        # Case 2: show result records
         return {
             "name": _("Example Records"),
             "view_type": "form",
