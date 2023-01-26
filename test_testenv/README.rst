@@ -1,6 +1,6 @@
 
 =========================
-|icon| testenv 12.0.2.0.6
+|icon| testenv 12.0.2.0.5
 =========================
 
 
@@ -147,22 +147,26 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
-12.0.2.0.6 (2023-01-23)
+12.0.2.0.5 (2023-01-25)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* [IMP] Test on get_records_from_act_windows()
-* [IMP] Coverage 94% (763/48)
-
-12.0.2.0.5 (2023-01-19)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] Test on validate_records()
-* [IMP] Coverage 93%
+* [NEW] Regression test on get_records_from_act_windows()
+* [NEW] Regression test on exchange data with PYPI
+* [NEW] Regression test about new setup_company() improvements
+* [NEW] Regression test: issuing object to many2one parameter
+* [NEW] Regression test: issuing xref without declared resource
+* [NEW] Test on get_records_from_act_windows()
+* [IMP] Account data coding follows Odoo demo data schema
+* [IMP] account.account code uses symbolic name, not numeric account code
+* [IMP] Regression test on wizard with multiple records
+* [IMP] Regression test more sophisticated on validate_records()
+* [IMP] Coverage 96% (789/34)
 
 12.0.2.0.4 (2023-01-13)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Version is the same of z0bug_odoo package
+* [IMP] Test on validate_records()
 * [IMP] Coverage 95%
 
 12.0.0.1.0 (2022-11-11)
@@ -228,7 +232,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2023-01-23
+Last Update / Ultimo aggiornamento: 2023-01-26
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Mature-green.png
     :target: https://odoo-community.org/page/development-status
