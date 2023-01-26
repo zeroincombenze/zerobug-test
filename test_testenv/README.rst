@@ -164,7 +164,7 @@ ChangeLog History / Cronologia modifiche
 * [IMP] account.account code uses symbolic name, not numeric account code
 * [IMP] Regression test on wizard with multiple records
 * [IMP] Regression test more sophisticated on validate_records()
-* [IMP] Coverage 96% (789/34)
+* [IMP] Coverage 96% (863/36)
 
 10.0.2.0.4 (2023-01-13)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -199,12 +199,17 @@ Authors / Autori
 ----------------
 
 * `SHS-AV s.r.l. <https://www.zeroincombenze.it/>`__
+Authors
+-------
 
 
 Contributors / Collaboratori
 ----------------------------
 
 * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
+Contributors
+------------
+
 
 
 Maintainer / Manutenzione
@@ -236,7 +241,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2023-01-26
+Last Update / Ultimo aggiornamento: 2023-02-01
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Mature-green.png
     :target: https://odoo-community.org/page/development-status
