@@ -49,7 +49,6 @@ TEST_ACCOUNT_JOURNAL = {
 }
 
 TEST_ACCOUNT_INVOICE = {
-
     "z0bug.invoice_Z0_1": {
         "date_invoice": "####-<#-99",
         "journal_id": "external.INV",
@@ -197,14 +196,14 @@ TEST_PRODUCT_TEMPLATE = {
         "property_account_income_id": "z0bug.coa_sale",
     },
     # Service
-    'z0bug.product_template_23': {
-        'default_code': 'WW',
-        'name': 'Special Worldwide service',
-        'lst_price': 1.88,
-        'standard_price': 0,
-        'type': 'service',
-        'uom_id': 'product.product_uom_unit',
-        'uom_po_id': 'product.product_uom_unit',
+    "z0bug.product_template_23": {
+        "default_code": "WW",
+        "name": "Special Worldwide service",
+        "lst_price": 1.88,
+        "standard_price": 0,
+        "type": "service",
+        "uom_id": "product.product_uom_unit",
+        "uom_po_id": "product.product_uom_unit",
         "image": "z0bug.product_template_26.png",
         "property_account_income_id": "z0bug.coa_sale2",
     },
@@ -306,7 +305,7 @@ class MyTest(SingleTransactionCase):
                     "not_exist_field": "INVALID",
                     "street": None,
                 },
-            }
+            },
         )
         self.assertEqual(
             self.get_resource_list(),
@@ -335,9 +334,9 @@ class MyTest(SingleTransactionCase):
             "TestEnv FAILED: unexpected field value for 'zip'!"
         )
         self.assertFalse(
-            "not_exist_field" in self.get_resource_data(
-                "res.partner", "z0bug.res_partner_1"),
-            "TestEnv FAILED: unexpected field 'not_exist_field'!"
+            "not_exist_field"
+            in self.get_resource_data("res.partner", "z0bug.res_partner_1"),
+            "TestEnv FAILED: unexpected field 'not_exist_field'!",
         )
         self.assertFalse(
             "street" in self.get_resource_data("res.partner", "z0bug.res_partner_1"),
@@ -349,9 +348,7 @@ class MyTest(SingleTransactionCase):
         # Warning! Pay attention to this test: it requires z0bug_odoo>=2.0.3<3.0.0
         self.declare_resource_data(
             "res.partner",
-            {
-                "z0bug.res_partner_2": TEST_RES_PARTNER["z0bug.res_partner_2"]
-            },
+            {"z0bug.res_partner_2": TEST_RES_PARTNER["z0bug.res_partner_2"]},
         )
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_2")["city"],
@@ -370,36 +367,32 @@ class MyTest(SingleTransactionCase):
                 },
                 "z0bug.res_partner_2": {},
             },
-            merge="zerobug"
+            merge="zerobug",
         )
         _logger.info("Now, all warning & messages are valid!")
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_1")["name"],
-            "PRIMA ALPHA"
+            "PRIMA ALPHA",
         )
         # Data from public PYPI package
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_2")["city"],
             "S. Secondo Pinerolo",
-            "TestEnv FAILED: value for 'city' not updated by PYPI!"
+            "TestEnv FAILED: value for 'city' not updated by PYPI!",
         )
         # Lang of partner is 'it_IT' but it does not exist
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_2")["lang"],
-            "it_IT"
+            "it_IT",
         )
         self.resource_make("res.partner", "z0bug.res_partner_2")
+        self.assertEqual(self.resource_bind("z0bug.res_partner_2")["lang"], "en_US")
         self.assertEqual(
-            self.resource_bind("z0bug.res_partner_2")["lang"],
-            "en_US"
-        )
-        self.assertEqual(
-            self.get_resource_data("res.partner", "z0bug.res_partner_1")["zip"],
-            "20022"
+            self.get_resource_data("res.partner", "z0bug.res_partner_1")["zip"], "20022"
         )
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_1")["city"],
-            "Castano Primo"
+            "Castano Primo",
         )
         self.assertFalse(
             self.get_resource_data("res.partner", "z0bug.res_partner_1")["customer"],
@@ -420,14 +413,11 @@ class MyTest(SingleTransactionCase):
                     "currency_id": "base.EUR",
                     "name": rate_date,
                     "rate": 0.9,
-                    "company_id": ""
+                    "company_id": "",
                 },
-            }
+            },
         )
-        self.assertEqual(
-            self.get_resource_data("res.currency.rate", xref)["rate"],
-            0.9
-        )
+        self.assertEqual(self.get_resource_data("res.currency.rate", xref)["rate"], 0.9)
         self.date_rate_1 = self.compute_date("+1", refdate=rate_date)
         xref = "base.EUR_%s" % self.date_rate_1
         self.declare_resource_data(
@@ -437,13 +427,12 @@ class MyTest(SingleTransactionCase):
                     "currency_id": "base.EUR",
                     "name": ["+1", self.date_rate_0],
                     "rate": "0.95",
-                    "company_id": ""
+                    "company_id": "",
                 },
-            }
+            },
         )
         self.assertEqual(
-            self.get_resource_data("res.currency.rate", xref)["rate"],
-            0.95
+            self.get_resource_data("res.currency.rate", xref)["rate"], 0.95
         )
 
     def _test_04(self):
@@ -454,25 +443,21 @@ class MyTest(SingleTransactionCase):
         self.assertTrue(self.resource_bind("base.EUR").active)
         model = "res.currency.rate"
         xref = "base.EUR_%s" % self.date_rate_0
-        self.assertEqual(
-            self.resource_bind(xref, resource=model).rate,
-            0.9
-        )
+        self.assertEqual(self.resource_bind(xref, resource=model).rate, 0.9)
         xref = "base.EUR_%s" % self.date_rate_1
-        self.assertEqual(
-            self.resource_bind(xref, resource=model).rate,
-            0.95
-        )
+        self.assertEqual(self.resource_bind(xref, resource=model).rate, 0.95)
         self.date_rate_2 = self.compute_date("+1", refdate=self.date_rate_1)
         xref = "external.EUR_%s" % self.date_rate_2
-        self.resource_make(model,
-                           xref,
-                           {
-                               "currency_id": "base.EUR",
-                               "name": self.date_rate_2,
-                               "rate": "0.88",
-                               "company_id": ""
-                           })
+        self.resource_make(
+            model,
+            xref,
+            {
+                "currency_id": "base.EUR",
+                "name": self.date_rate_2,
+                "rate": "0.88",
+                "company_id": "",
+            },
+        )
         record = self.resource_bind(xref, resource=model)
         self.assertTrue(record)
         self.assertEqual(record.rate, 0.88)
@@ -486,50 +471,48 @@ class MyTest(SingleTransactionCase):
             data[item] = globals()[item]
         # Add alias to company
         self.declare_all_data(data)
-        self.setup_company(self.default_company(),
-                           xref="z0bug.mycompany",
-                           partner_xref="z0bug.partner_mycompany",
-                           bnk1_xref="z0bug.coa_bnk1",
-                           values={
-                               "name": "Test Company",
-                               "vat": "IT05111810015",
-                               "country_id": "base.it",
-                           })
+        self.setup_company(
+            self.default_company(),
+            xref="z0bug.mycompany",
+            partner_xref="z0bug.partner_mycompany",
+            bnk1_xref="z0bug.coa_bnk1",
+            values={
+                "name": "Test Company",
+                "vat": "IT05111810015",
+                "country_id": "base.it",
+            },
+        )
         # In TEST_RES_PARTNER vat is not declared
         self.assertFalse(
-            self.get_resource_data("res.partner",
-                                   "z0bug.partner_mycompany").get("vat", ""),
+            self.get_resource_data("res.partner", "z0bug.partner_mycompany").get(
+                "vat", ""
+            ),
         )
         self.assertEqual(
-            self.get_resource_data(
-                "res.partner.bank",
-                "z0bug.bank_company_1")["acc_number"].replace(" ", ""),
-            "IT15A0123412345100000123456"
+            self.get_resource_data("res.partner.bank", "z0bug.bank_company_1")[
+                "acc_number"
+            ].replace(" ", ""),
+            "IT15A0123412345100000123456",
         )
         self.setup_env()
         self.assertEqual(
             self.resource_bind("z0bug.bank_company_1").acc_number.replace(" ", ""),
-            "IT15A0123412345100000123456"
+            "IT15A0123412345100000123456",
         )
-        self.assertEqual(
-            self.default_company().country_id,
-            self.env.ref("base.it")
-        )
+        self.assertEqual(self.default_company().country_id, self.env.ref("base.it"))
         self.assertEqual(
             self.resource_bind("z0bug.res_partner_2")["city"],
             "S. Secondo Parmense",
-            "TestEnv FAILED: unexpected value for 'city'!"
+            "TestEnv FAILED: unexpected value for 'city'!",
         )
 
         # Test alias
         self.assertEqual(
-            self.resource_bind("z0bug.partner_mycompany")["vat"],
-            "IT05111810015"
+            self.resource_bind("z0bug.partner_mycompany")["vat"], "IT05111810015"
         )
         # Vat number must be loaded by setup_company()
         self.assertEqual(
-            self.resource_bind("base.main_company")["vat"],
-            "IT05111810015"
+            self.resource_bind("base.main_company")["vat"], "IT05111810015"
         )
 
         data = {
@@ -540,31 +523,29 @@ class MyTest(SingleTransactionCase):
         self.declare_all_data(data, group="payment_term")
         self.setup_env(group="payment_term")
         self.assertEqual(
-            self.resource_bind("z0bug.payment_term_1")["name"],
-            "RiBA 30 GG"
+            self.resource_bind("z0bug.payment_term_1")["name"], "RiBA 30 GG"
         )
 
     def _test_many2one(self):
         partner = self.resource_bind("z0bug.res_partner_2")
-        self.resource_write("res.partner", "z0bug.res_partner_2",
-                            values={"country_id": self.env.ref("base.it").id})
-        self.assertEqual(
-            partner.country_id,
-            self.env.ref("base.it")
-        )
-        self.resource_write("res.partner", "z0bug.res_partner_2",
-                            values={"country_id": self.env.ref("base.it")})
-        self.assertEqual(
-            partner.country_id,
-            self.env.ref("base.it")
-        )
         self.resource_write(
-            "res.partner", "z0bug.res_partner_2",
-            values={"country_id": "external.%s" % self.env.ref("base.it").id})
-        self.assertEqual(
-            partner.country_id,
-            self.env.ref("base.it")
+            "res.partner",
+            "z0bug.res_partner_2",
+            values={"country_id": self.env.ref("base.it").id},
         )
+        self.assertEqual(partner.country_id, self.env.ref("base.it"))
+        self.resource_write(
+            "res.partner",
+            "z0bug.res_partner_2",
+            values={"country_id": self.env.ref("base.it")},
+        )
+        self.assertEqual(partner.country_id, self.env.ref("base.it"))
+        self.resource_write(
+            "res.partner",
+            "z0bug.res_partner_2",
+            values={"country_id": "external.%s" % self.env.ref("base.it").id},
+        )
+        self.assertEqual(partner.country_id, self.env.ref("base.it"))
 
     def _test_currency_2many(self):
         # ===[test *many values]===
@@ -575,69 +556,82 @@ class MyTest(SingleTransactionCase):
         xref1 = "base.EUR_%s" % self.date_rate_1
         # *xmany as Odoo convention (1)
         self.resource_write(
-            model, "base.EUR",
+            model,
+            "base.EUR",
             {
-                "rate_ids":
-                    [(6, 0, [
-                        self.resource_bind(xref, resource="res.currency.rate").id,
-                        self.resource_bind(xref1, resource="res.currency.rate").id,
-                    ])]
-            })
+                "rate_ids": [
+                    (
+                        6,
+                        0,
+                        [
+                            self.resource_bind(xref, resource="res.currency.rate").id,
+                            self.resource_bind(xref1, resource="res.currency.rate").id,
+                        ],
+                    )
+                ]
+            },
+        )
+        # self.resource_write(
+        #     model, "base.EUR",
+        #     {
+        #         "rate_ids":
+        #             [(6, 0, [
+        #                 "res.currency.rate", "res.currency.rate"
+        #             ])]
+        #     })
         # *xmany as Odoo convention (2)
         self.resource_write(
-            model, "base.EUR",
+            model,
+            "base.EUR",
             {
-                "rate_ids":
-                    [
-                        (0, 0, {"name": "2022-01-01", "rate": 0.77}),
-                    ]
-            })
+                "rate_ids": [
+                    (0, 0, {"name": "2022-01-01", "rate": 0.77}),
+                ]
+            },
+        )
         # *xmany as Odoo convention (3)
         self.resource_write(
-            model, "base.EUR",
+            model,
+            "base.EUR",
             {
-                "rate_ids":
-                    [
-                        (1,
-                         self.resource_bind(xref, resource="res.currency.rate").id,
-                         self.get_resource_data("res.currency.rate", xref)),
-                        (1,
-                         self.resource_bind(xref1, resource="res.currency.rate").id,
-                         self.get_resource_data("res.currency.rate", xref1)),
-                    ]
-            })
+                "rate_ids": [
+                    (
+                        1,
+                        self.resource_bind(xref, resource="res.currency.rate").id,
+                        self.get_resource_data("res.currency.rate", xref),
+                    ),
+                    (
+                        1,
+                        self.resource_bind(xref1, resource="res.currency.rate").id,
+                        self.get_resource_data("res.currency.rate", xref1),
+                    ),
+                ]
+            },
+        )
         # *xmany as simple list
         self.resource_write(
-            model, "base.EUR",
+            model,
+            "base.EUR",
             {
-                "rate_ids":
-                    [
-                        self.resource_bind(xref, resource="res.currency.rate").id,
-                        self.resource_bind(xref1, resource="res.currency.rate").id,
-                    ]
-            })
+                "rate_ids": [
+                    self.resource_bind(xref, resource="res.currency.rate").id,
+                    self.resource_bind(xref1, resource="res.currency.rate").id,
+                ]
+            },
+        )
         # *xmany as simple list of text
-        self.resource_write(model, "base.EUR",
-                            {
-                                "rate_ids": [xref, xref1]
-                            })
+        self.resource_write(model, "base.EUR", {"rate_ids": [xref, xref1]})
         # *2many as list in text value
-        self.resource_write(model, "base.EUR",
-                            {
-                                "rate_ids": "%s,%s" % (xref, xref1)
-                            })
+        self.resource_write(model, "base.EUR", {"rate_ids": "%s,%s" % (xref, xref1)})
 
         # *2many as text value
-        self.resource_write(model, "base.EUR",
-                            {
-                                "rate_ids": xref
-                            })
+        self.resource_write(model, "base.EUR", {"rate_ids": xref})
         # *xmany as integer
-        self.resource_write(model, "base.EUR",
-                            {
-                                "rate_ids": self.resource_bind(
-                                    xref, resource="res.currency.rate").id
-                            })
+        self.resource_write(
+            model,
+            "base.EUR",
+            {"rate_ids": self.resource_bind(xref, resource="res.currency.rate").id},
+        )
         # without *xmany field: rate_ids will be loaded internally
         self.resource_write(model, "base.EUR", {})
 
@@ -648,27 +642,30 @@ class MyTest(SingleTransactionCase):
             self.assertEqual(
                 record[field].id,
                 int(target_value),
-                "TestEnv FAILED: invalid field '%s'!" % field
+                "TestEnv FAILED: invalid field '%s'!" % field,
             )
         else:
             self.assertEqual(
-                record[field], python_plus._u(target_value),
-                "TestEnv FAILED: invalid field '%s'!" % field
+                record[field],
+                python_plus._u(target_value),
+                "TestEnv FAILED: invalid field '%s'!" % field,
             )
         product = self.resource_write(record, xref)
         if ttype == "many2one":
             self.assertEqual(
                 product[field].id,
-                self.get_resource_data(
-                    product._name, xref=xref).get(field, product[field].id),
-                "TestEnv FAILED: invalid field '%s'!" % field
+                self.get_resource_data(product._name, xref=xref).get(
+                    field, product[field].id
+                ),
+                "TestEnv FAILED: invalid field '%s'!" % field,
             )
         else:
             self.assertEqual(
                 product[field],
-                self.get_resource_data(
-                    product._name, xref=xref).get(field, product[field]),
-                "TestEnv FAILED: invalid field '%s'!" % field
+                self.get_resource_data(product._name, xref=xref).get(
+                    field, product[field]
+                ),
+                "TestEnv FAILED: invalid field '%s'!" % field,
             )
 
     def _test_product(self):
@@ -678,12 +675,12 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(
             self.resource_bind("z0bug.product_product_18").type,
             "consu",
-            "TestEnv FAILED: invalid product type!"
+            "TestEnv FAILED: invalid product type!",
         )
         self.assertEqual(
             self.resource_bind("z0bug.product_product_23").type,
             "service",
-            "TestEnv FAILED: invalid product type!"
+            "TestEnv FAILED: invalid product type!",
         )
 
         # *** Now we test different field type values ***
@@ -708,7 +705,8 @@ class MyTest(SingleTransactionCase):
 
         # Type <text>
         self._simple_field_test(
-            product, xref, "description", "Product Rho (greek letter ρ)")
+            product, xref, "description", "Product Rho (greek letter ρ)"
+        )
 
         # Type <many2one>
         target = self.env.ref("product.product_category_all").id
@@ -730,16 +728,13 @@ class MyTest(SingleTransactionCase):
             button_name="lang_install",
         )
         self.assertTrue(
-            self.is_action(act_windows),
-            "No action returned by language install"
+            self.is_action(act_windows), "No action returned by language install"
         )
         # Now we test the close message
-        self.wizard(
-            act_windows=act_windows
-        )
+        self.wizard(act_windows=act_windows)
         self.assertTrue(
             self.env["res.lang"].search([("code", "=", self.iso_code)]),
-            "No language %s loaded!" % self.iso_code
+            "No language %s loaded!" % self.iso_code,
         )
 
     def _test_partner(self):
@@ -762,7 +757,7 @@ class MyTest(SingleTransactionCase):
         )
         self.assertTrue(
             partner.image,
-            "partner.onchange_email() FAILED: no gravatar image downloaded!"
+            "partner.onchange_email() FAILED: no gravatar image downloaded!",
         )
 
     def _test_invoice(self):
@@ -784,27 +779,17 @@ class MyTest(SingleTransactionCase):
         self.setup_env(group="invoice")
 
         # Test reading record without resource declaration by <external> xref
-        bnk_journal = self.resource_bind("external.BNK1")
+        self.resource_bind("external.BNK1")
 
         invoice = self.resource_bind("z0bug.invoice_Z0_2")
-        self.resource_edit(
-            resource=invoice,
-            actions="action_invoice_open"
-        )
+        self.resource_edit(resource=invoice, actions="action_invoice_open")
         self.assertEqual(
-            invoice.state,
-            "open",
-            "action_invoice_open() FAILED: no state changed!"
+            invoice.state, "open", "action_invoice_open() FAILED: no state changed!"
         )
 
-        self.resource_edit(
-            resource=invoice,
-            actions="action_invoice_cancel"
-        )
+        self.resource_edit(resource=invoice, actions="action_invoice_cancel")
         self.assertEqual(
-            invoice.state,
-            "cancel",
-            "action_invoice_cancel() FAILED: no state changed!"
+            invoice.state, "cancel", "action_invoice_cancel() FAILED: no state changed!"
         )
 
         self.resource_edit(
@@ -812,9 +797,7 @@ class MyTest(SingleTransactionCase):
             actions="action_invoice_draft",
         )
         self.assertEqual(
-            invoice.state,
-            "draft",
-            "action_invoice_draft() FAILED: no state changed!"
+            invoice.state, "draft", "action_invoice_draft() FAILED: no state changed!"
         )
         return invoice
 
@@ -827,13 +810,11 @@ class MyTest(SingleTransactionCase):
             module="account",
             action_name="action_account_invoice_confirm",
             records=invoices,
-            button_name="invoice_confirm"
+            button_name="invoice_confirm",
         )
         for invoice in invoices:
             self.assertEqual(
-                invoice.state,
-                "open",
-                "action_invoice_open() FAILED: no state changed!"
+                invoice.state, "open", "action_invoice_open() FAILED: no state changed!"
             )
 
         invoice = self.resource_bind("z0bug.invoice_Z0_1")
@@ -852,22 +833,18 @@ class MyTest(SingleTransactionCase):
         return invoice.move_id
 
     def _test_move(self, move):
-        self.resource_edit(
-            resource=move,
-            actions="button_cancel"
-        )
+        self.resource_edit(resource=move, actions="button_cancel")
         self.assertEqual(move.state, "draft")
         saved_ref = move.ref
         self.resource_write(move, values={"ref": "payment"})
         self.resource_write("account.move", move.id, values={"ref": saved_ref})
-        self.resource_edit(
-            resource=move,
-            actions="post"
-        )
+        self.resource_edit(resource=move, actions="post")
         self.assertEqual(move.state, "posted")
 
     def _test_testenv_all_fields(self):
-        binary_fn = get_module_resource(self.module.name, "tests", "data", "example.xml")
+        binary_fn = get_module_resource(
+            self.module.name, "tests", "data", "example.xml"
+        )
         with open(binary_fn, "rb") as fd:
             source_xml = fd.read()
         saved_ts = datetime.now()
@@ -891,16 +868,23 @@ class MyTest(SingleTransactionCase):
                 ("date", "####-##-01"),
                 ("date", date(2022, 6, 22)),
                 ("date", "2022-06-26"),
+                ("created_dt", date(2022, 6, 22)),
                 ("created_dt", "####-##-02"),
                 ("created_dt", "####-##-02 10:11:12"),
+                ("updated_dt", [-1, saved_ts]),
                 ("updated_dt", saved_ts),
                 ("attachment", "example.xml"),
                 ("webpage", html),
                 ("partner_ids", "z0bug.res_partner_1"),
                 ("partner_ids", ["z0bug.res_partner_1", "z0bug.res_partner_2"]),
-                ("product_ids", ["z0bug.product_product_1",
-                                 "z0bug.product_product_18",
-                                 "z0bug.product_product_23"]),
+                (
+                    "product_ids",
+                    [
+                        "z0bug.product_product_1",
+                        "z0bug.product_product_18",
+                        "z0bug.product_product_23",
+                    ],
+                ),
             ],
         )
         self.assertEqual(record.name, "Name")
@@ -910,19 +894,23 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(record.rank, 17)
         self.assertEqual(record.amount, 23.4)
         self.assertEqual(record.measure, 45.6)
-        self.assertEqual(record.date,
-                         "2022-06-26" if PY2 else date(2022, 6, 26))
+        self.assertEqual(record.date, "2022-06-26" if PY2 else date(2022, 6, 26))
         res = self.compute_date("####-##-02 10:11:12")
-        self.assertEqual(record.created_dt,
-                         res if PY2 else datetime.strptime(res, "%Y-%m-%d %H:%M:%S"))
-        self.assertEqual(record.updated_dt,
-                         datetime.strftime(saved_ts, "%Y-%m-%d %H:%M:%S")
-                         if PY2 else saved_ts)
+        self.assertEqual(
+            record.created_dt,
+            res if PY2 else datetime.strptime(res, "%Y-%m-%d %H:%M:%S"),
+        )
+        res = datetime.strftime(saved_ts, "%Y-%m-%d %H:%M:%S")
+        self.assertEqual(
+            record.updated_dt,
+            res if PY2 else datetime.strptime(res, "%Y-%m-%d %H:%M:%S"),
+        )
         self.assertEqual(record.attachment, base64.b64encode(source_xml))
         self.assertEqual(self.field_download(record, "attachment"), source_xml)
         self.assertEqual(
             record.webpage,
-            "<p>" + html.replace("<div>", "").replace("</div>", "") + "</p>")
+            "<p>" + html.replace("<div>", "").replace("</div>", "") + "</p>",
+        )
         res = self.env["res.partner"]
         res |= self.resource_bind("z0bug.res_partner_1")
         res |= self.resource_bind("z0bug.res_partner_2")
@@ -937,9 +925,29 @@ class MyTest(SingleTransactionCase):
             resource=record,
             web_changes=[
                 ("description", False),
+                ("date", datetime(2022, 6, 22, 23, 22, 21)),
             ],
         )
         self.assertEqual(record.description, False)
+        self.assertEqual(record.date, "2022-06-22" if PY2 else date(2022, 6, 22))
+
+        # Following test seem unuseful but they cover some source lines
+        self.resource_write(
+            record,
+            values={
+                "date": date(2022, 6, 22),
+                "updated_dt": saved_ts,
+            },
+        )
+        self.validate_records(
+            [
+                {
+                    "date": date(2022, 6, 22),
+                    "updated_dt": saved_ts,
+                }
+            ],
+            [record],
+        )
 
     def _test_validate_record(self):
         _logger.info("🎺 Testing validate_record()")
@@ -954,7 +962,6 @@ class MyTest(SingleTransactionCase):
             {
                 "name": TEST_RES_PARTNER["z0bug.res_partner_1"]["name"],
                 "street": TEST_RES_PARTNER["z0bug.res_partner_1"]["street"],
-
             },
             {
                 "name": TEST_RES_PARTNER["z0bug.res_partner_2"]["name"],
@@ -965,11 +972,8 @@ class MyTest(SingleTransactionCase):
 
         # Test with weak information
         template = [
-            {
-                "customer": True
-            },
-            {
-                "customer": True            },
+            {"customer": True},
+            {"customer": True},
         ]
         self.validate_records(template, records)
 
@@ -981,45 +985,123 @@ class MyTest(SingleTransactionCase):
                 "line_ids": [
                     {
                         "days": TEST_ACCOUNT_PAYMENT_TERM_LINE[
-                            "z0bug.payment_term_2_1"]["days"],
+                            "z0bug.payment_term_2_1"
+                        ]["days"],
                         "value": TEST_ACCOUNT_PAYMENT_TERM_LINE[
-                            "z0bug.payment_term_2_1"]["value"],
+                            "z0bug.payment_term_2_1"
+                        ]["value"],
                         "value_amount": TEST_ACCOUNT_PAYMENT_TERM_LINE[
-                            "z0bug.payment_term_2_1"]["value_amount"],
+                            "z0bug.payment_term_2_1"
+                        ]["value_amount"],
                     },
                     {
                         "days": 60,
                         "value": TEST_ACCOUNT_PAYMENT_TERM_LINE[
-                            "z0bug.payment_term_2_2"]["value"],
-                    },                ],
+                            "z0bug.payment_term_2_2"
+                        ]["value"],
+                    },
+                ],
             },
         ]
         records = [self.resource_bind("z0bug.payment_term_2")]
         self.validate_records(template, records)
 
+    def _test_validate_move_record(self):
+        template = []
+
+        vals = {
+            "date": datetime.today().date(),
+            "journal_id": "external.BNK1",
+            "ref": "For test validate_records()",
+            "line_ids": [],
+        }
+        line_vals = {
+            "account_id": "z0bug.coa_sale2",
+            "debit": 0.50,
+            "credit": 0.0,
+            "name": "Bank fee",
+        }
+        vals["line_ids"].append(line_vals)
+        line_vals = {
+            "account_id": "z0bug.coa_bnk1",
+            "debit": 0.00,
+            "credit": 0.50,
+            "name": "Bank fee",
+        }
+        vals["line_ids"].append(line_vals)
+        template.append(vals)
+        self.resource_make("account.move", xref="z0bug.move1", values=vals)
+
+        vals = {
+            "date": datetime.today().date(),
+            "journal_id": "external.BNK1",
+            "ref": "For test validate_records()",
+            "line_ids": [],
+        }
+        line_vals = {
+            "account_id": "z0bug.coa_tax_recv",
+            "debit": 2.50,
+            "credit": 0.0,
+            "name": "VAT payment",
+        }
+        vals["line_ids"].append([0, 0, line_vals])
+        line_vals = {
+            "account_id": "z0bug.coa_bnk1",
+            "debit": 0.00,
+            "credit": 2.50,
+            "name": "VAT payment",
+        }
+        vals["line_ids"].append([0, 0, line_vals])
+        template.append(vals)
+        self.resource_make("account.move", xref="z0bug.move2", values=vals)
+
+        records = self.env["accpount.move"].search(
+            [("ref", "=", "For test validate_records()")]
+        )
+        self.validate_records(template=template, records=records)
+
     def _test_wizard_from_menu(self):
-        act_windows = self.wizard(
-            module=".",
-            action_name="wizard_example_menu_view",
-            web_changes=[("numrecords", 3)],
-            button_name="do_example"
-        )
-        self.assertTrue(self.is_action(act_windows))
-        records = self.get_records_from_act_windows(act_windows)
-        self.assertEqual(
-            len(records),
-            3,
-            "Wizard did not return 3 records!"
-        )
+        for numrec in (1, 3):
+            act_windows = self.wizard(
+                module=".",
+                action_name="wizard_example_menu_view",
+                web_changes=[("numrecords", numrec)],
+                button_name="do_example",
+            )
+            self.assertTrue(self.is_action(act_windows))
+            records = self.get_records_from_act_windows(act_windows)
+            self.assertEqual(len(records), numrec, "Wizard did not return 3 records!")
+            if numrec == 1:
+                records.unlink()
         template = [
             {
-                "rank": 1
+                "rank": 1,
+                "active": True,
+                "currency_id": self.env.user.company_id.currency_id.id,
+                "description": "I was born in Caserta",
+                "amount": 1234.5,
+                "date": "####-##-<1",
+                "created_dt": "####-<1-01 10:00:59",
             },
             {
-                "rank": 2
+                "rank": 2,
+                "active": 1,
+                "description": "",
+                "measure": 98.7,
+                "date": "####-##-<5",
+                "created_dt": "####-<1-02 11:10:52",
             },
             {
-                "rank": 3
+                "rank": 3,
+                "state": "draft",
+                "currency_id": self.env.user.company_id.currency_id,
+                "description": "We live in Turin",
+                "date": "####-##-<14",
+                "created_dt": "####-<1-03 12:20:45",
+                "partner_ids": (
+                    self.resource_bind("z0bug.res_partner_1"),
+                    self.resource_bind("z0bug.res_partner_2"),
+                ),
             },
         ]
         self.validate_records(template, records)
@@ -1043,3 +1125,4 @@ class MyTest(SingleTransactionCase):
         self._test_move(move)
         self._test_validate_record()
         self._test_wizard_from_menu()
+        # self._test_validate_move_record()
