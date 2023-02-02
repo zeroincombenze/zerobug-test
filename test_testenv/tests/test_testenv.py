@@ -418,6 +418,7 @@ class MyTest(SingleTransactionCase):
             },
         )
         self.assertEqual(self.get_resource_data("res.currency.rate", xref)["rate"], 0.9)
+
         self.date_rate_1 = self.compute_date("+1", refdate=rate_date)
         xref = "base.EUR_%s" % self.date_rate_1
         self.declare_resource_data(
@@ -441,26 +442,29 @@ class MyTest(SingleTransactionCase):
         # The resource_write activates the child record of res.currency.rate
         self.resource_write(model, "base.EUR", {"active": True})
         self.assertTrue(self.resource_bind("base.EUR").active)
+
+        # Test binding with declared resource
         model = "res.currency.rate"
         xref = "base.EUR_%s" % self.date_rate_0
         self.assertEqual(self.resource_bind(xref, resource=model).rate, 0.9)
+
+        # Test binding without declared resource
         xref = "base.EUR_%s" % self.date_rate_1
-        self.assertEqual(self.resource_bind(xref, resource=model).rate, 0.95)
+        self.assertEqual(self.resource_bind(xref).rate, 0.95)
+
+        # Now create a record out of test environment (w/o xref)
+        # then we test binding w/o declared resource
         self.date_rate_2 = self.compute_date("+1", refdate=self.date_rate_1)
-        xref = "external.EUR_%s" % self.date_rate_2
-        self.resource_make(
-            model,
-            xref,
+        xref = "base.EUR_%s" % self.date_rate_2
+        self.env[model].create(
             {
-                "currency_id": "base.EUR",
+                "currency_id": self.env.ref("base.EUR").id,
                 "name": self.date_rate_2,
                 "rate": "0.88",
-                "company_id": "",
-            },
+                "company_id": self.default_company().id,
+            }
         )
-        record = self.resource_bind(xref, resource=model)
-        self.assertTrue(record)
-        self.assertEqual(record.rate, 0.88)
+        self.assertEqual(self.resource_bind(xref).rate, 0.88)
 
     def _test_setup(self):
         # ===[test declare_all_data() + setup_env() functions]===
@@ -564,21 +568,20 @@ class MyTest(SingleTransactionCase):
                         6,
                         0,
                         [
-                            self.resource_bind(xref, resource="res.currency.rate").id,
-                            self.resource_bind(xref1, resource="res.currency.rate").id,
+                            self.resource_bind(xref).id,
+                            self.resource_bind(xref1).id,
                         ],
                     )
                 ]
             },
         )
-        # self.resource_write(
-        #     model, "base.EUR",
-        #     {
-        #         "rate_ids":
-        #             [(6, 0, [
-        #                 "res.currency.rate", "res.currency.rate"
-        #             ])]
-        #     })
+
+        self.resource_write(
+            model, "base.EUR",
+            {
+                "rate_ids": [(6, 0, [xref, xref1])]
+            })
+
         # *xmany as Odoo convention (2)
         self.resource_write(
             model,
@@ -589,6 +592,7 @@ class MyTest(SingleTransactionCase):
                 ]
             },
         )
+
         # *xmany as Odoo convention (3)
         self.resource_write(
             model,
@@ -597,28 +601,30 @@ class MyTest(SingleTransactionCase):
                 "rate_ids": [
                     (
                         1,
-                        self.resource_bind(xref, resource="res.currency.rate").id,
+                        self.resource_bind(xref).id,
                         self.get_resource_data("res.currency.rate", xref),
                     ),
                     (
                         1,
-                        self.resource_bind(xref1, resource="res.currency.rate").id,
+                        self.resource_bind(xref1).id,
                         self.get_resource_data("res.currency.rate", xref1),
                     ),
                 ]
             },
         )
+
         # *xmany as simple list
         self.resource_write(
             model,
             "base.EUR",
             {
                 "rate_ids": [
-                    self.resource_bind(xref, resource="res.currency.rate").id,
-                    self.resource_bind(xref1, resource="res.currency.rate").id,
+                    self.resource_bind(xref).id,
+                    self.resource_bind(xref1).id,
                 ]
             },
         )
+
         # *xmany as simple list of text
         self.resource_write(model, "base.EUR", {"rate_ids": [xref, xref1]})
         # *2many as list in text value
@@ -630,7 +636,7 @@ class MyTest(SingleTransactionCase):
         self.resource_write(
             model,
             "base.EUR",
-            {"rate_ids": self.resource_bind(xref, resource="res.currency.rate").id},
+            {"rate_ids": self.resource_bind(xref).id},
         )
         # without *xmany field: rate_ids will be loaded internally
         self.resource_write(model, "base.EUR", {})
