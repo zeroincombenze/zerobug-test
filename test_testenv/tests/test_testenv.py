@@ -288,6 +288,7 @@ TEST_SALE_ORDER = {
         "partner_id": "z0bug.res_partner_2",
         "ddt_type_id": "l10n_it_ddt.ddt_type_ddt",
         "carrier_id": "delivery.delivery_carrier",
+        "company_id": False,
     },
 }
 
@@ -608,6 +609,7 @@ class MyTest(SingleTransactionCase):
         model = "res.currency"
         xref = "base.EUR_%s" % self.date_rate_0
         xref1 = "base.EUR_%s" % self.date_rate_1
+
         # *xmany as Odoo convention (1)
         self.resource_write(
             model,
@@ -688,8 +690,12 @@ class MyTest(SingleTransactionCase):
             "base.EUR",
             {"rate_ids": self.resource_bind(xref).id},
         )
-        # without *xmany field: rate_ids will be loaded internally
+
+        # without *2many field: rate_ids will be loaded internally
         self.resource_write(model, "base.EUR", {})
+        # bind w/o resource
+        record = self.resource_bind(xref1)
+        self.assertEqual(record._name, "res.currency.rate")
 
     def _simple_field_test(self, record, xref, field, target_value):
         record = self.resource_write(record, xref, values={field: target_value})
@@ -833,6 +839,15 @@ class MyTest(SingleTransactionCase):
             len(order.order_line),
             2
         )
+
+        line = self.resource_bind(xref="z0bug.sale_order_Z0_2_2")
+        self.resource_write(
+            "sale.order",
+            xref="z0bug.sale_order_Z0_2",
+            values={"order_line": [2, line.id]}
+        )
+        # TODO> Check for test failing
+        # self.assertFalse(self.resource_bind(xref="z0bug.sale_order_Z0_2_2"))
 
     def _test_invoice(self):
         data = {
