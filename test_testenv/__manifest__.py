@@ -10,7 +10,7 @@
 {
     "name": "testenv",
     "summary": "z0bug_odoo test suite",
-    "version": "10.0.2.0.5",
+    "version": "10.0.2.0.6",
     "category": "Generic Modules/Accounting",
     "author": "SHS-AV s.r.l.",
     "website": "https://github.com/OCA/l10n-italy",

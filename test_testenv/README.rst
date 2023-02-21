@@ -1,6 +1,6 @@
 
 =========================
-|icon| testenv 10.0.2.0.5
+|icon| testenv 10.0.2.0.6
 =========================
 
 
@@ -151,6 +151,14 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
+10.0.2.0.6 (2023-02-20)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [NEW] Regression test on sale order
+* [IMP] Regression test with reduced parameters to test new improvements
+* [IMP] Regression test using text and/or dict on *2many fields
+* [IMP] TestEnv coverage 96% (987/43)
+
 10.0.2.0.5 (2023-01-25)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -241,7 +249,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2023-02-01
+Last Update / Ultimo aggiornamento: 2023-02-21
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Mature-green.png
     :target: https://odoo-community.org/page/development-status
