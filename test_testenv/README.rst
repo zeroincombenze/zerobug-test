@@ -1,6 +1,6 @@
 
 =========================
-|icon| testenv 12.0.2.0.5
+|icon| testenv 12.0.2.0.6
 =========================
 
 
@@ -147,6 +147,14 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
+12.0.2.0.6 (2023-02-20)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [NEW] Regression test on sale order
+* [IMP] Regression test with reduced parameters to test new improvements
+* [IMP] Regression test using text and/or dict on *2many fields
+* [IMP] TestEnv coverage 96% (987/43)
+
 12.0.2.0.5 (2023-01-25)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -160,7 +168,7 @@ ChangeLog History / Cronologia modifiche
 * [IMP] account.account code uses symbolic name, not numeric account code
 * [IMP] Regression test on wizard with multiple records
 * [IMP] Regression test more sophisticated on validate_records()
-* [IMP] Coverage 96% (863/36)
+* [IMP] TestEnv coverage 96% (863/36)
 
 12.0.2.0.4 (2023-01-13)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -237,7 +245,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2023-02-01
+Last Update / Ultimo aggiornamento: 2023-02-21
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Mature-green.png
     :target: https://odoo-community.org/page/development-status

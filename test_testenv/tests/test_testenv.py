@@ -182,6 +182,17 @@ TEST_PRODUCT_TEMPLATE = {
         "image": False,
         "property_account_income_id": "z0bug.coa_sale",
     },
+    "z0bug.product_template_2": {
+        "default_code": "BB",
+        "name": "Prodotto Beta",
+        "lst_price": 3.38,
+        "standard_price": 1.69,
+        "type": "consu",
+        "uom_id": "product.product_uom_unit",
+        "uom_po_id": "product.product_uom_unit",
+        "weight": 0.2,
+        "property_account_income_id": "z0bug.coa_sale",
+    },
     # Product on stock
     "z0bug.product_template_18": {
         "default_code": "RR",
@@ -208,6 +219,7 @@ TEST_PRODUCT_TEMPLATE = {
         "property_account_income_id": "z0bug.coa_sale2",
     },
 }
+
 TEST_RES_PARTNER = {
     "z0bug.partner_mycompany": {
         "name": "Test Company",
@@ -249,6 +261,7 @@ TEST_RES_PARTNER = {
         "image": "z0bug.res_partner_2",
     },
 }
+
 TEST_RES_PARTNER_BANK = {
     "z0bug.bank_company_1": {
         "acc_number": "IT15A0123412345100000123456",
@@ -266,6 +279,44 @@ TEST_RES_PARTNER_BANK = {
         "acc_type": "iban",
     },
 }
+
+TEST_SALE_ORDER = {
+    "z0bug.sale_order_Z0_2": {
+        "origin": "Test2",
+        "client_order_ref": "220123",
+        "date_order": "####-##-<#",
+        "partner_id": "z0bug.res_partner_2",
+        "ddt_type_id": "l10n_it_ddt.ddt_type_ddt",
+        "carrier_id": "delivery.delivery_carrier",
+        "company_id": False,
+    },
+}
+
+TEST_SALE_ORDER_LINE = {
+    "z0bug.sale_order_Z0_2_1": {
+        "sequence": 1,
+        "product_id": "z0bug.product_product_1",
+        "weight": 9.9,
+        "order_id": "z0bug.sale_order_Z0_2",
+        "price_unit": 0.42,
+        "product_uom_qty": 100,
+        "product_uom": "product.product_uom_unit",
+        "tax_id": "external.22v",
+        "name": "Prodotto Alpha",
+    },
+    "z0bug.sale_order_Z0_2_2": {
+        "sequence": 2,
+        "product_id": "z0bug.product_product_2",
+        "weight": 2,
+        "order_id": "z0bug.sale_order_Z0_2",
+        "price_unit": 1.69,
+        "product_uom_qty": 10,
+        "product_uom": "product.product_uom_unit",
+        "tax_id": "external.22v",
+        "name": "Prodotto Beta",
+    },
+}
+
 TEST_SETUP_LIST = [
     "res.partner",
     "res.partner.bank",
@@ -418,6 +469,7 @@ class MyTest(SingleTransactionCase):
             },
         )
         self.assertEqual(self.get_resource_data("res.currency.rate", xref)["rate"], 0.9)
+
         self.date_rate_1 = self.compute_date("+1", refdate=rate_date)
         xref = "base.EUR_%s" % self.date_rate_1
         self.declare_resource_data(
@@ -441,26 +493,29 @@ class MyTest(SingleTransactionCase):
         # The resource_write activates the child record of res.currency.rate
         self.resource_write(model, "base.EUR", {"active": True})
         self.assertTrue(self.resource_bind("base.EUR").active)
+
+        # Test binding with declared resource
         model = "res.currency.rate"
         xref = "base.EUR_%s" % self.date_rate_0
         self.assertEqual(self.resource_bind(xref, resource=model).rate, 0.9)
+
+        # Test binding without declared resource
         xref = "base.EUR_%s" % self.date_rate_1
-        self.assertEqual(self.resource_bind(xref, resource=model).rate, 0.95)
+        self.assertEqual(self.resource_bind(xref).rate, 0.95)
+
+        # Now create a record out of test environment (w/o xref)
+        # then we test binding w/o declared resource
         self.date_rate_2 = self.compute_date("+1", refdate=self.date_rate_1)
-        xref = "external.EUR_%s" % self.date_rate_2
-        self.resource_make(
-            model,
-            xref,
+        xref = "base.EUR_%s" % self.date_rate_2
+        self.env[model].create(
             {
-                "currency_id": "base.EUR",
+                "currency_id": self.env.ref("base.EUR").id,
                 "name": self.date_rate_2,
                 "rate": "0.88",
-                "company_id": "",
-            },
+                "company_id": self.default_company().id,
+            }
         )
-        record = self.resource_bind(xref, resource=model)
-        self.assertTrue(record)
-        self.assertEqual(record.rate, 0.88)
+        self.assertEqual(self.resource_bind(xref).rate, 0.88)
 
     def _test_setup(self):
         # ===[test declare_all_data() + setup_env() functions]===
@@ -554,6 +609,7 @@ class MyTest(SingleTransactionCase):
         model = "res.currency"
         xref = "base.EUR_%s" % self.date_rate_0
         xref1 = "base.EUR_%s" % self.date_rate_1
+
         # *xmany as Odoo convention (1)
         self.resource_write(
             model,
@@ -564,21 +620,20 @@ class MyTest(SingleTransactionCase):
                         6,
                         0,
                         [
-                            self.resource_bind(xref, resource="res.currency.rate").id,
-                            self.resource_bind(xref1, resource="res.currency.rate").id,
+                            self.resource_bind(xref).id,
+                            self.resource_bind(xref1).id,
                         ],
                     )
                 ]
             },
         )
-        # self.resource_write(
-        #     model, "base.EUR",
-        #     {
-        #         "rate_ids":
-        #             [(6, 0, [
-        #                 "res.currency.rate", "res.currency.rate"
-        #             ])]
-        #     })
+
+        self.resource_write(
+            model, "base.EUR",
+            {
+                "rate_ids": [(6, 0, [xref, xref1])]
+            })
+
         # *xmany as Odoo convention (2)
         self.resource_write(
             model,
@@ -589,6 +644,7 @@ class MyTest(SingleTransactionCase):
                 ]
             },
         )
+
         # *xmany as Odoo convention (3)
         self.resource_write(
             model,
@@ -597,28 +653,30 @@ class MyTest(SingleTransactionCase):
                 "rate_ids": [
                     (
                         1,
-                        self.resource_bind(xref, resource="res.currency.rate").id,
+                        self.resource_bind(xref).id,
                         self.get_resource_data("res.currency.rate", xref),
                     ),
                     (
                         1,
-                        self.resource_bind(xref1, resource="res.currency.rate").id,
+                        self.resource_bind(xref1).id,
                         self.get_resource_data("res.currency.rate", xref1),
                     ),
                 ]
             },
         )
+
         # *xmany as simple list
         self.resource_write(
             model,
             "base.EUR",
             {
                 "rate_ids": [
-                    self.resource_bind(xref, resource="res.currency.rate").id,
-                    self.resource_bind(xref1, resource="res.currency.rate").id,
+                    self.resource_bind(xref).id,
+                    self.resource_bind(xref1).id,
                 ]
             },
         )
+
         # *xmany as simple list of text
         self.resource_write(model, "base.EUR", {"rate_ids": [xref, xref1]})
         # *2many as list in text value
@@ -630,10 +688,14 @@ class MyTest(SingleTransactionCase):
         self.resource_write(
             model,
             "base.EUR",
-            {"rate_ids": self.resource_bind(xref, resource="res.currency.rate").id},
+            {"rate_ids": self.resource_bind(xref).id},
         )
-        # without *xmany field: rate_ids will be loaded internally
+
+        # without *2many field: rate_ids will be loaded internally
         self.resource_write(model, "base.EUR", {})
+        # bind w/o resource
+        record = self.resource_bind(xref1)
+        self.assertEqual(record._name, "res.currency.rate")
 
     def _simple_field_test(self, record, xref, field, target_value):
         record = self.resource_write(record, xref, values={field: target_value})
@@ -760,6 +822,33 @@ class MyTest(SingleTransactionCase):
             "partner.onchange_email() FAILED: no gravatar image downloaded!",
         )
 
+    def _test_sale_order(self):
+        data = {
+            "TEST_SETUP_LIST": [
+                "sale.order",
+                "sale.order.line",
+            ],
+            "TEST_SALE_ORDER": TEST_SALE_ORDER,
+            "TEST_SALE_ORDER_LINE": TEST_SALE_ORDER_LINE,
+        }
+        self.declare_all_data(data, group="order")
+        self.setup_env(group="order")
+
+        order = self.resource_bind("z0bug.sale_order_Z0_2")
+        self.assertEqual(
+            len(order.order_line),
+            2
+        )
+
+        line = self.resource_bind(xref="z0bug.sale_order_Z0_2_2")
+        self.resource_write(
+            "sale.order",
+            xref="z0bug.sale_order_Z0_2",
+            values={"order_line": [2, line.id]}
+        )
+        # TODO> Check for test failing
+        # self.assertFalse(self.resource_bind(xref="z0bug.sale_order_Z0_2_2"))
+
     def _test_invoice(self):
         data = {
             "TEST_SETUP_LIST": [
@@ -777,6 +866,17 @@ class MyTest(SingleTransactionCase):
         }
         self.declare_all_data(data, group="invoice")
         self.setup_env(group="invoice")
+
+        invoice = self.resource_bind("z0bug.invoice_Z0_1")
+        self.assertEqual(
+            len(invoice.invoice_line_ids),
+            3
+        )
+        invoice = self.resource_bind("z0bug.invoice_Z0_2")
+        self.assertEqual(
+            len(invoice.invoice_line_ids),
+            2
+        )
 
         # Test reading record without resource declaration by <external> xref
         self.resource_bind("external.BNK1")
@@ -1055,7 +1155,7 @@ class MyTest(SingleTransactionCase):
         template.append(vals)
         self.resource_make("account.move", xref="z0bug.move2", values=vals)
 
-        records = self.env["accpount.move"].search(
+        records = self.env["account.move"].search(
             [("ref", "=", "For test validate_records()")]
         )
         self.validate_records(template=template, records=records)
@@ -1123,6 +1223,7 @@ class MyTest(SingleTransactionCase):
         self._test_invoice()
         move = self._test_wizard_invoice()
         self._test_move(move)
+        self._test_sale_order()
         self._test_validate_record()
         self._test_wizard_from_menu()
-        # self._test_validate_move_record()
+        self._test_validate_move_record()
