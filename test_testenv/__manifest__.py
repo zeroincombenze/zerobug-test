@@ -22,7 +22,7 @@
         ],
     },
     "depends": [
-        "base", "account", "account_cancel", "product",
+        "base", "account", "account_cancel", "product", "sale",
     ],
     "data": [
         "security/ir.model.access.csv",

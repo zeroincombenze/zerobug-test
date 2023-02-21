@@ -182,6 +182,17 @@ TEST_PRODUCT_TEMPLATE = {
         "image": False,
         "property_account_income_id": "z0bug.coa_sale",
     },
+    "z0bug.product_template_2": {
+        "default_code": "BB",
+        "name": "Prodotto Beta",
+        "lst_price": 3.38,
+        "standard_price": 1.69,
+        "type": "consu",
+        "uom_id": "product.product_uom_unit",
+        "uom_po_id": "product.product_uom_unit",
+        "weight": 0.2,
+        "property_account_income_id": "z0bug.coa_sale",
+    },
     # Product on stock
     "z0bug.product_template_18": {
         "default_code": "RR",
@@ -208,6 +219,7 @@ TEST_PRODUCT_TEMPLATE = {
         "property_account_income_id": "z0bug.coa_sale2",
     },
 }
+
 TEST_RES_PARTNER = {
     "z0bug.partner_mycompany": {
         "name": "Test Company",
@@ -249,6 +261,7 @@ TEST_RES_PARTNER = {
         "image": "z0bug.res_partner_2",
     },
 }
+
 TEST_RES_PARTNER_BANK = {
     "z0bug.bank_company_1": {
         "acc_number": "IT15A0123412345100000123456",
@@ -266,6 +279,43 @@ TEST_RES_PARTNER_BANK = {
         "acc_type": "iban",
     },
 }
+
+TEST_SALE_ORDER = {
+    "z0bug.sale_order_Z0_2": {
+        "origin": "Test2",
+        "client_order_ref": "220123",
+        "date_order": "####-##-<#",
+        "partner_id": "z0bug.res_partner_2",
+        "ddt_type_id": "l10n_it_ddt.ddt_type_ddt",
+        "carrier_id": "delivery.delivery_carrier",
+    },
+}
+
+TEST_SALE_ORDER_LINE = {
+    "z0bug.sale_order_Z0_2_1": {
+        "sequence": 1,
+        "product_id": "z0bug.product_product_1",
+        "weight": 9.9,
+        "order_id": "z0bug.sale_order_Z0_2",
+        "price_unit": 0.42,
+        "product_uom_qty": 100,
+        "product_uom": "product.product_uom_unit",
+        "tax_id": "external.22v",
+        "name": "Prodotto Alpha",
+    },
+    "z0bug.sale_order_Z0_2_2": {
+        "sequence": 2,
+        "product_id": "z0bug.product_product_2",
+        "weight": 2,
+        "order_id": "z0bug.sale_order_Z0_2",
+        "price_unit": 1.69,
+        "product_uom_qty": 10,
+        "product_uom": "product.product_uom_unit",
+        "tax_id": "external.22v",
+        "name": "Prodotto Beta",
+    },
+}
+
 TEST_SETUP_LIST = [
     "res.partner",
     "res.partner.bank",
@@ -766,6 +816,24 @@ class MyTest(SingleTransactionCase):
             "partner.onchange_email() FAILED: no gravatar image downloaded!",
         )
 
+    def _test_sale_order(self):
+        data = {
+            "TEST_SETUP_LIST": [
+                "sale.order",
+                "sale.order.line",
+            ],
+            "TEST_SALE_ORDER": TEST_SALE_ORDER,
+            "TEST_SALE_ORDER_LINE": TEST_SALE_ORDER_LINE,
+        }
+        self.declare_all_data(data, group="order")
+        self.setup_env(group="order")
+
+        order = self.resource_bind("z0bug.sale_order_Z0_2")
+        self.assertEqual(
+            len(order.order_line),
+            2
+        )
+
     def _test_invoice(self):
         data = {
             "TEST_SETUP_LIST": [
@@ -783,6 +851,17 @@ class MyTest(SingleTransactionCase):
         }
         self.declare_all_data(data, group="invoice")
         self.setup_env(group="invoice")
+
+        invoice = self.resource_bind("z0bug.invoice_Z0_1")
+        self.assertEqual(
+            len(invoice.invoice_line_ids),
+            3
+        )
+        invoice = self.resource_bind("z0bug.invoice_Z0_2")
+        self.assertEqual(
+            len(invoice.invoice_line_ids),
+            2
+        )
 
         # Test reading record without resource declaration by <external> xref
         self.resource_bind("external.BNK1")
@@ -1061,7 +1140,7 @@ class MyTest(SingleTransactionCase):
         template.append(vals)
         self.resource_make("account.move", xref="z0bug.move2", values=vals)
 
-        records = self.env["accpount.move"].search(
+        records = self.env["account.move"].search(
             [("ref", "=", "For test validate_records()")]
         )
         self.validate_records(template=template, records=records)
@@ -1129,6 +1208,7 @@ class MyTest(SingleTransactionCase):
         self._test_invoice()
         move = self._test_wizard_invoice()
         self._test_move(move)
+        self._test_sale_order()
         self._test_validate_record()
         self._test_wizard_from_menu()
-        # self._test_validate_move_record()
+        self._test_validate_move_record()
