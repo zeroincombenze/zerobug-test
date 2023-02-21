@@ -1,0 +1,1241 @@
+2023-02-21 02:02:35,285 26817 INFO ? odoo: Odoo version 12.0 
+2023-02-21 02:02:35,285 26817 INFO ? odoo: Using configuration file at /home/odoo/12.0/zerobug-test/test_testenv/tests/logs/zero12.zerobug-test.test_testenv.conf 
+2023-02-21 02:02:35,285 26817 INFO ? odoo: addons paths: ['/home/odoo/.local/share/Odoo12/addons/12.0', '/home/odoo/12.0/odoo/addons', '/home/odoo/12.0/addons', '/home/odoo/.local/share/Odoo12/addons', '/home/odoo/12.0/account-analytic', '/home/odoo/12.0/account-budgeting', '/home/odoo/12.0/account-closing', '/home/odoo/12.0/account-consolidation', '/home/odoo/12.0/account-financial-reporting', '/home/odoo/12.0/account-financial-tools', '/home/odoo/12.0/account-fiscal-rule', '/home/odoo/12.0/account-invoice-reporting', '/home/odoo/12.0/account-invoicing', '/home/odoo/12.0/account-payment', '/home/odoo/12.0/account-reconcile', '/home/odoo/12.0/accounting', '/home/odoo/12.0/apps-store', '/home/odoo/12.0/bank-payment', '/home/odoo/12.0/bank-statement-import', '/home/odoo/12.0/brand', '/home/odoo/12.0/business-requirement', '/home/odoo/12.0/calendar', '/home/odoo/12.0/commission', '/home/odoo/12.0/community-data-files', '/home/odoo/12.0/connector', '/home/odoo/12.0/contract', '/home/odoo/12.0/credit-control', '/home/odoo/12.0/crm', '/home/odoo/12.0/currency', '/home/odoo/12.0/custom-addons', '/home/odoo/12.0/data-protection', '/home/odoo/12.0/ddmrp', '/home/odoo/12.0/delivery-carrier', '/home/odoo/12.0/dms', '/home/odoo/12.0/double-trouble', '/home/odoo/12.0/e-commerce', '/home/odoo/12.0/edi', '/home/odoo/12.0/geospatial', '/home/odoo/12.0/helpdesk', '/home/odoo/12.0/hr', '/home/odoo/12.0/intrastat-extrastat', '/home/odoo/12.0/iot', '/home/odoo/12.0/knowledge', '/home/odoo/12.0/l10n-italy', '/home/odoo/12.0/l10n-italy-supplemental', '/home/odoo/12.0/maintenance', '/home/odoo/12.0/management-system', '/home/odoo/12.0/manufacture', '/home/odoo/12.0/manufacture-reporting', '/home/odoo/12.0/margin-analysis', '/home/odoo/12.0/mgmtsystem', '/home/odoo/12.0/mis-builder', '/home/odoo/12.0/mis-builder-contrib', '/home/odoo/12.0/multi-company', '/home/odoo/12.0/partner-contact', '/home/odoo/12.0/pos', '/home/odoo/12.0/product-attribute', '/home/odoo/12.0/product-kitting', '/home/odoo/12.0/product-pack', '/home/odoo/12.0/product-variant', '/home/odoo/12.0/profiles', '/home/odoo/12.0/project', '/home/odoo/12.0/project-agile', '/home/odoo/12.0/project-reporting', '/home/odoo/12.0/purchase-reporting', '/home/odoo/12.0/purchase-workflow', '/home/odoo/12.0/queue', '/home/odoo/12.0/report-print-send', '/home/odoo/12.0/reporting-engine', '/home/odoo/12.0/rma', '/home/odoo/12.0/sale-financial', '/home/odoo/12.0/sale-reporting', '/home/odoo/12.0/sale-workflow/sale-workflow', '/home/odoo/12.0/search-engine', '/home/odoo/12.0/server-auth', '/home/odoo/12.0/server-backend', '/home/odoo/12.0/server-brand', '/home/odoo/12.0/server-env', '/home/odoo/12.0/server-tools', '/home/odoo/12.0/server-ux', '/home/odoo/12.0/social', '/home/odoo/12.0/stock-logistics-barcode', '/home/odoo/12.0/stock-logistics-reporting', '/home/odoo/12.0/stock-logistics-tracking', '/home/odoo/12.0/stock-logistics-transport', '/home/odoo/12.0/stock-logistics-warehouse', '/home/odoo/12.0/stock-logistics-workflow', '/home/odoo/12.0/storage', '/home/odoo/12.0/timesheet', '/home/odoo/12.0/uncovered', '/home/odoo/12.0/web', '/home/odoo/12.0/webhook', '/home/odoo/12.0/webkit-tools', '/home/odoo/12.0/website', '/home/odoo/12.0/website-cms', '/home/odoo/12.0/wms', '/home/odoo/12.0/zerobug-test', '/home/odoo/12.0/venv_odoo/lib/python3.7/site-packages/odoo/addons'] 
+2023-02-21 02:02:35,285 26817 INFO ? odoo: database: odoo12@localhost:default 
+2023-02-21 02:02:35,327 26817 INFO ? odoo.addons.server_environment.serv_config: not using server_environment_files for configuration, no directory found 
+2023-02-21 02:02:35,327 26817 INFO ? odoo.addons.server_environment.serv_config: `running_env` not found. Using default = `test`. 
+2023-02-21 02:02:35,327 26817 INFO ? odoo.addons.server_environment.serv_config: We strongly recommend against using the rc file but instead use an explicit config file or env variable. 
+2023-02-21 02:02:35,430 26817 INFO ? odoo.addons.base.models.ir_actions_report: Will use the Wkhtmltopdf binary at /home/odoo/12.0/venv_odoo/bin/wkhtmltopdf 
+2023-02-21 02:02:35,574 26817 INFO ? odoo.service.server: HTTP service (werkzeug) running on nb200z0.:33946 
+2023-02-21 02:02:35,594 26817 INFO test_test_testenv_12 odoo.modules.loading: loading 1 modules... 
+2023-02-21 02:02:35,608 26817 INFO test_test_testenv_12 odoo.modules.loading: 1 modules loaded in 0.01s, 0 queries 
+2023-02-21 02:02:35,727 26817 INFO test_test_testenv_12 odoo.modules.loading: updating modules list 
+2023-02-21 02:02:35,731 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_module: ALLOW access to module.update_list on [] to user __system__ #1 via n/a 
+2023-02-21 02:02:48,448 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_module: ALLOW access to module.button_install on ['test_testenv'] to user __system__ #1 via n/a 
+2023-02-21 02:02:48,813 26817 INFO test_test_testenv_12 odoo.modules.loading: loading 33 modules... 
+2023-02-21 02:02:49,138 26817 INFO test_test_testenv_12 odoo.modules.loading: 33 modules loaded in 0.32s, 0 queries 
+2023-02-21 02:02:49,147 26817 INFO test_test_testenv_12 odoo.modules.loading: loading 34 modules... 
+2023-02-21 02:02:49,635 26817 WARNING test_test_testenv_12 odoo.models: The model testenv.all.fields has no _description 
+2023-02-21 02:02:49,859 26817 INFO test_test_testenv_12 odoo.modules.registry: module test_testenv: creating or updating database tables 
+2023-02-21 02:02:50,086 26817 WARNING test_test_testenv_12 odoo.addons.base.models.ir_model: Two fields (measure, amount) of testenv.all.fields() have the same label: Amount. 
+2023-02-21 02:02:50,268 26817 INFO test_test_testenv_12 odoo.modules.loading: loading test_testenv/security/ir.model.access.csv 
+2023-02-21 02:02:50,323 26817 INFO test_test_testenv_12 odoo.modules.loading: loading test_testenv/views/testenv_model_view.xml 
+2023-02-21 02:02:50,436 26817 INFO test_test_testenv_12 odoo.modules.loading: loading test_testenv/wizard/wizard_example_menu.xml 
+2023-02-21 02:02:50,532 26817 INFO test_test_testenv_12 odoo.modules.loading: Module test_testenv: loading demo 
+2023-02-21 02:02:51,005 26817 INFO test_test_testenv_12 odoo.modules.module: odoo.addons.test_testenv.tests.test_testenv running tests. 
+2023-02-21 02:02:51,007 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: test_mytest (odoo.addons.test_testenv.tests.test_testenv.MyTest) 
+2023-02-21 02:02:51,017 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[res.partner] = ['name'] 
+2023-02-21 02:02:51,017 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field not_exist_field does not exist in res.partner 
+2023-02-21 02:02:51,017 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.store_resource_data(z0bug.res_partner_1,name=res.partner,group=base) 
+2023-02-21 02:02:51,028 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.store_resource_data(z0bug.res_partner_2,name=res.partner,group=base) 
+2023-02-21 02:02:51,028 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: Please, ignore field <...> does not exist in <...> 
+2023-02-21 02:02:51,095 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field electronic_invoice_subjected does not exist in res.partner 
+2023-02-21 02:02:51,095 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field codice_destinatario does not exist in res.partner 
+2023-02-21 02:02:51,095 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.store_resource_data(z0bug.res_partner_1,name=res.partner,group=base) 
+2023-02-21 02:02:51,148 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field electronic_invoice_subjected does not exist in res.partner 
+2023-02-21 02:02:51,148 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field codice_destinatario does not exist in res.partner 
+2023-02-21 02:02:51,148 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field goods_description_id does not exist in res.partner 
+2023-02-21 02:02:51,148 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field carriage_condition_id does not exist in res.partner 
+2023-02-21 02:02:51,148 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field transportation_method_id does not exist in res.partner 
+2023-02-21 02:02:51,148 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.store_resource_data(z0bug.res_partner_2,name=res.partner,group=base) 
+2023-02-21 02:02:51,148 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: Now, all warning & messages are valid! 
+2023-02-21 02:02:51,277 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(438)/_test_02()
+['        self.resource_make("res.partner", "z0bug.res_partner_2")\n'] 
+2023-02-21 02:02:51,279 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(438)/_test_02()
+['        self.resource_make("res.partner", "z0bug.res_partner_2")\n'] 
+2023-02-21 02:02:51,280 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(438)/_test_02()
+['        self.resource_make("res.partner", "z0bug.res_partner_2")\n'] 
+2023-02-21 02:02:51,285 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(438)/_test_02()
+['        self.resource_make("res.partner", "z0bug.res_partner_2")\n'] 
+2023-02-21 02:02:51,287 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(438)/_test_02()
+['        self.resource_make("res.partner", "z0bug.res_partner_2")\n'] 
+2023-02-21 02:02:51,289 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[account.fiscal.position] = ['name'] 
+2023-02-21 02:02:51,294 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.fiscalpos_it not found 
+2023-02-21 02:02:51,295 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(438)/_test_02()
+['        self.resource_make("res.partner", "z0bug.res_partner_2")\n'] 
+2023-02-21 02:02:51,297 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_resource[account.payment.term] = account.payment.term.line 
+2023-02-21 02:02:51,297 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_name[account.payment.term] = line_ids 
+2023-02-21 02:02:51,307 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_resource[account.payment.term.line] = account.payment.term 
+2023-02-21 02:02:51,307 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_name[account.payment.term.line] = payment_id 
+2023-02-21 02:02:51,307 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[account.payment.term.line] = ['sequence'] 
+2023-02-21 02:02:51,307 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[account.payment.term] = ['name'] 
+2023-02-21 02:02:51,311 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.payment_2 not found 
+2023-02-21 02:02:51,312 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid value it_IT 
+2023-02-21 02:02:51,425 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[mail.followers] = ['partner_id'] 
+2023-02-21 02:02:51,425 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.store_resource_data(z0bug.res_partner_2,name=res.partner,group=base) 
+2023-02-21 02:02:51,426 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(439)/_test_02()
+['        self.assertEqual(self.resource_bind("z0bug.res_partner_2")["lang"], "en_US")\n'] 
+2023-02-21 02:02:51,429 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_resource[res.currency.rate] = res.currency 
+2023-02-21 02:02:51,429 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_name[res.currency.rate] = currency_id 
+2023-02-21 02:02:51,429 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_resource[res.currency] = res.currency.rate 
+2023-02-21 02:02:51,429 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_name[res.currency] = rate_ids 
+2023-02-21 02:02:51,429 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[res.currency] = ['name'] 
+2023-02-21 02:02:51,430 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[res.currency.rate] = ['name'] 
+2023-02-21 02:02:51,435 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.currency.rate.store_resource_data(base.EUR_2023-12-30,name=res.currency.rate,group=base) 
+2023-02-21 02:02:51,436 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.currency.rate.store_resource_data(base.EUR_2023-12-31,name=res.currency.rate,group=base) 
+2023-02-21 02:02:51,437 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(493)/_test_04()
+['        self.resource_write(model, "base.EUR", {"active": True})\n'] 
+2023-02-21 02:02:51,438 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(493)/_test_04()
+['        self.resource_write(model, "base.EUR", {"active": True})\n'] 
+2023-02-21 02:02:51,440 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(493)/_test_04()
+['        self.resource_write(model, "base.EUR", {"active": True})\n'] 
+2023-02-21 02:02:51,442 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(493)/_test_04()
+['        self.resource_write(model, "base.EUR", {"active": True})\n'] 
+2023-02-21 02:02:51,446 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(493)/_test_04()
+['        self.resource_write(model, "base.EUR", {"active": True})\n'] 
+2023-02-21 02:02:51,448 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(493)/_test_04()
+['        self.resource_write(model, "base.EUR", {"active": True})\n'] 
+2023-02-21 02:02:51,460 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(494)/_test_04()
+['        self.assertTrue(self.resource_bind("base.EUR").active)\n'] 
+2023-02-21 02:02:51,463 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(499)/_test_04()
+['        self.assertEqual(self.resource_bind(xref, resource=model).rate, 0.9)\n'] 
+2023-02-21 02:02:51,466 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(499)/_test_04()
+['        self.assertEqual(self.resource_bind(xref, resource=model).rate, 0.9)\n'] 
+2023-02-21 02:02:51,471 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(503)/_test_04()
+['        self.assertEqual(self.resource_bind(xref).rate, 0.95)\n'] 
+2023-02-21 02:02:51,474 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(503)/_test_04()
+['        self.assertEqual(self.resource_bind(xref).rate, 0.95)\n'] 
+2023-02-21 02:02:51,481 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(517)/_test_04()
+['        self.assertEqual(self.resource_bind(xref).rate, 0.88)\n'] 
+2023-02-21 02:02:51,484 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(517)/_test_04()
+['        self.assertEqual(self.resource_bind(xref).rate, 0.88)\n'] 
+2023-02-21 02:02:51,489 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(527)/_test_setup()
+['        self.declare_all_data(data)\n'] 
+2023-02-21 02:02:51,490 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(res.partner,group=base) 
+2023-02-21 02:02:51,490 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.store_resource_data(z0bug.partner_mycompany,name=res.partner,group=base) 
+2023-02-21 02:02:51,494 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.store_resource_data(z0bug.res_partner_1,name=res.partner,group=base) 
+2023-02-21 02:02:51,494 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.store_resource_data(z0bug.res_partner_2,name=res.partner,group=base) 
+2023-02-21 02:02:51,494 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(res.partner.bank,group=base) 
+2023-02-21 02:02:51,496 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_resource[res.partner.bank] = res.partner 
+2023-02-21 02:02:51,496 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_name[res.partner.bank] = partner_id 
+2023-02-21 02:02:51,496 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[res.partner.bank] = ['acc_number'] 
+2023-02-21 02:02:51,499 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.bank.store_resource_data(z0bug.bank_company_1,name=res.partner.bank,group=base) 
+2023-02-21 02:02:51,501 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.bank.store_resource_data(z0bug.bank_partner_1,name=res.partner.bank,group=base) 
+2023-02-21 02:02:51,502 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.bank.store_resource_data(z0bug.bank_partner_2,name=res.partner.bank,group=base) 
+2023-02-21 02:02:51,502 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(product.template,group=base) 
+2023-02-21 02:02:51,510 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_resource[product.template] = product.product 
+2023-02-21 02:02:51,510 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_name[product.template] = valid_archived_variant_ids 
+2023-02-21 02:02:51,510 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_resource[product.template] = product.product 
+2023-02-21 02:02:51,511 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_name[product.template] = product_variant_ids 
+2023-02-21 02:02:51,511 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_resource[product.template] = product.product 
+2023-02-21 02:02:51,511 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_name[product.template] = product_variant_id 
+2023-02-21 02:02:51,514 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_resource[product.product] = product.template 
+2023-02-21 02:02:51,514 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_name[product.product] = product_tmpl_id 
+2023-02-21 02:02:51,515 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[product.product] = ['default_code'] 
+2023-02-21 02:02:51,515 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[product.template] = ['default_code'] 
+2023-02-21 02:02:51,523 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 product.template.store_resource_data(z0bug.product_template_1,name=product.template,group=base) 
+2023-02-21 02:02:51,528 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 product.template.store_resource_data(z0bug.product_template_18,name=product.template,group=base) 
+2023-02-21 02:02:51,530 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 product.template.store_resource_data(z0bug.product_template_2,name=product.template,group=base) 
+2023-02-21 02:02:51,535 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 product.template.store_resource_data(z0bug.product_template_23,name=product.template,group=base) 
+2023-02-21 02:02:51,537 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(536)/_test_setup()
+['                "country_id": "base.it",\n'] 
+2023-02-21 02:02:51,544 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[res.company] = ['partner_id'] 
+2023-02-21 02:02:51,546 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(536)/_test_setup()
+['                "country_id": "base.it",\n'] 
+2023-02-21 02:02:51,671 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ xref 'z0bug.mycompany' -> 'base.main_company' 
+2023-02-21 02:02:51,672 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ xref 'z0bug.partner_mycompany' -> 'base.main_partner' 
+2023-02-21 02:02:51,679 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺🎺 Starting test v2.0.5.2 (debug_level=2) 
+2023-02-21 02:02:51,687 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Testing module: test_testenv (12.0.2.0.5) 
+2023-02-21 02:02:51,688 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,689 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.product[type]: 'product' -> 'consu' 
+2023-02-21 02:02:51,689 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.template[type]: 'product' -> 'consu' 
+2023-02-21 02:02:51,690 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ account.payment.term.line._cvt_account_payment_term_line(all) 
+2023-02-21 02:02:51,691 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,692 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,694 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,697 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,787 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.store_resource_data(z0bug.res_partner_1,name=res.partner,group=base) 
+2023-02-21 02:02:51,788 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,789 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,790 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,865 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,866 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,868 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,910 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,911 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,912 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,914 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,919 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,920 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,922 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,925 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,929 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,929 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,930 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,934 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,945 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.bank.store_resource_data(z0bug.bank_company_1,name=res.partner.bank,group=base) 
+2023-02-21 02:02:51,946 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,947 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,948 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,950 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,952 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,961 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.bank.store_resource_data(z0bug.bank_partner_1,name=res.partner.bank,group=base) 
+2023-02-21 02:02:51,962 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,963 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,964 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,966 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,973 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.bank.store_resource_data(z0bug.bank_partner_2,name=res.partner.bank,group=base) 
+2023-02-21 02:02:51,974 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,975 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,977 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,981 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,982 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,984 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[uom.uom] = ['name'] 
+2023-02-21 02:02:51,986 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-02-21 02:02:51,988 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,991 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-02-21 02:02:51,993 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:51,996 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[account.account] = ['code'] 
+2023-02-21 02:02:51,997 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.coa_sale not found 
+2023-02-21 02:02:52,112 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 product.template.store_resource_data(z0bug.product_template_1,name=product.template,group=base) 
+2023-02-21 02:02:52,112 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: xref ('product.template') 'z0bug.product_template_1' -> ('product.product') 'z0bug.product_product_1' 
+2023-02-21 02:02:52,114 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 product.product.store_resource_data(z0bug.product_product_1,name=product.product,group=base) 
+2023-02-21 02:02:52,115 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,116 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,117 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,120 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,121 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,124 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-02-21 02:02:52,125 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,128 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-02-21 02:02:52,129 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,131 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.coa_sale not found 
+2023-02-21 02:02:52,224 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 product.template.store_resource_data(z0bug.product_template_18,name=product.template,group=base) 
+2023-02-21 02:02:52,225 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: xref ('product.template') 'z0bug.product_template_18' -> ('product.product') 'z0bug.product_product_18' 
+2023-02-21 02:02:52,227 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 product.product.store_resource_data(z0bug.product_product_18,name=product.product,group=base) 
+2023-02-21 02:02:52,228 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,230 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,231 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,235 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,237 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,239 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-02-21 02:02:52,240 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,241 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-02-21 02:02:52,243 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,245 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.coa_sale not found 
+2023-02-21 02:02:52,340 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 product.template.store_resource_data(z0bug.product_template_2,name=product.template,group=base) 
+2023-02-21 02:02:52,340 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: xref ('product.template') 'z0bug.product_template_2' -> ('product.product') 'z0bug.product_product_2' 
+2023-02-21 02:02:52,342 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 product.product.store_resource_data(z0bug.product_product_2,name=product.product,group=base) 
+2023-02-21 02:02:52,343 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,344 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,345 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,348 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,349 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,351 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-02-21 02:02:52,352 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,354 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-02-21 02:02:52,355 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,357 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.coa_sale2 not found 
+2023-02-21 02:02:52,465 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 product.template.store_resource_data(z0bug.product_template_23,name=product.template,group=base) 
+2023-02-21 02:02:52,465 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: xref ('product.template') 'z0bug.product_template_23' -> ('product.product') 'z0bug.product_product_23' 
+2023-02-21 02:02:52,467 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 product.product.store_resource_data(z0bug.product_product_23,name=product.product,group=base) 
+2023-02-21 02:02:52,468 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,470 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,471 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,506 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,507 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,508 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,542 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,543 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,544 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,577 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,578 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,579 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(551)/_test_setup()
+['        self.setup_env()\n'] 
+2023-02-21 02:02:52,699 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(553)/_test_setup()
+['            self.resource_bind("z0bug.bank_company_1").acc_number.replace(" ", ""),\n'] 
+2023-02-21 02:02:52,710 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(558)/_test_setup()
+['            self.resource_bind("z0bug.res_partner_2")["city"],\n'] 
+2023-02-21 02:02:52,717 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(565)/_test_setup()
+['            self.resource_bind("z0bug.partner_mycompany")["vat"], "IT05111810015"\n'] 
+2023-02-21 02:02:52,720 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(569)/_test_setup()
+['            self.resource_bind("base.main_company")["vat"], "IT05111810015"\n'] 
+2023-02-21 02:02:52,723 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(577)/_test_setup()
+['        self.declare_all_data(data, group="payment_term")\n'] 
+2023-02-21 02:02:52,723 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(account.payment.term,group=payment_term) 
+2023-02-21 02:02:52,723 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.payment.term.store_resource_data(z0bug.payment_term_1,name=account.payment.term,group=payment_term) 
+2023-02-21 02:02:52,723 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.payment.term.store_resource_data(z0bug.payment_term_2,name=account.payment.term,group=payment_term) 
+2023-02-21 02:02:52,723 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(account.payment.term.line,group=payment_term) 
+2023-02-21 02:02:52,724 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.payment.term.line.store_resource_data(z0bug.payment_term_1_1,name=account.payment.term.line,group=payment_term) 
+2023-02-21 02:02:52,725 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.payment.term.line.store_resource_data(z0bug.payment_term_2_1,name=account.payment.term.line,group=payment_term) 
+2023-02-21 02:02:52,726 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field months does not exist in account.payment.term.line 
+2023-02-21 02:02:52,726 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.payment.term.line.store_resource_data(z0bug.payment_term_2_2,name=account.payment.term.line,group=payment_term) 
+2023-02-21 02:02:52,726 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺🎺 Starting test v2.0.5.2 (debug_level=2) 
+2023-02-21 02:02:52,735 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Testing module: test_testenv (12.0.2.0.5) 
+2023-02-21 02:02:52,736 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,738 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.product[type]: 'product' -> 'consu' 
+2023-02-21 02:02:52,738 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.template[type]: 'product' -> 'consu' 
+2023-02-21 02:02:52,739 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ account.payment.term.line._cvt_account_payment_term_line(all) 
+2023-02-21 02:02:52,739 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,740 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,741 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,745 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,767 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.payment.term.store_resource_data(z0bug.payment_term_1,name=account.payment.term,group=payment_term) 
+2023-02-21 02:02:52,768 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,769 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,771 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,775 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,806 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.payment.term.store_resource_data(z0bug.payment_term_2,name=account.payment.term,group=payment_term) 
+2023-02-21 02:02:52,808 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,809 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,810 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,812 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,818 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,819 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,819 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,821 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,827 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,828 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,829 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,831 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(578)/_test_setup()
+['        self.setup_env(group="payment_term")\n'] 
+2023-02-21 02:02:52,837 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(580)/_test_setup()
+['            self.resource_bind("z0bug.payment_term_1")["name"], "RiBA 30 GG"\n'] 
+2023-02-21 02:02:52,839 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(584)/_test_many2one()
+['        partner = self.resource_bind("z0bug.res_partner_2")\n'] 
+2023-02-21 02:02:52,841 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(588)/_test_many2one()
+['            values={"country_id": self.env.ref("base.it").id},\n'] 
+2023-02-21 02:02:52,843 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(588)/_test_many2one()
+['            values={"country_id": self.env.ref("base.it").id},\n'] 
+2023-02-21 02:02:52,855 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(594)/_test_many2one()
+['            values={"country_id": self.env.ref("base.it")},\n'] 
+2023-02-21 02:02:52,856 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(594)/_test_many2one()
+['            values={"country_id": self.env.ref("base.it")},\n'] 
+2023-02-21 02:02:52,863 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(600)/_test_many2one()
+['            values={"country_id": "external.%s" % self.env.ref("base.it").id},\n'] 
+2023-02-21 02:02:52,864 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(600)/_test_many2one()
+['            values={"country_id": "external.%s" % self.env.ref("base.it").id},\n'] 
+2023-02-21 02:02:52,866 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(600)/_test_many2one()
+['            values={"country_id": "external.%s" % self.env.ref("base.it").id},\n'] 
+2023-02-21 02:02:52,868 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_resource[res.country] = res.country.state 
+2023-02-21 02:02:52,868 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_name[res.country] = state_ids 
+2023-02-21 02:02:52,869 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_resource[res.country.state] = res.country 
+2023-02-21 02:02:52,869 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_name[res.country.state] = country_id 
+2023-02-21 02:02:52,869 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[res.country.state] = ['code'] 
+2023-02-21 02:02:52,869 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[res.country] = ['code'] 
+2023-02-21 02:02:52,870 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference external.109 not found 
+2023-02-21 02:02:52,870 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ res.partner.cast_type() = {} 
+2023-02-21 02:02:52,871 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: 🎺 Testing test_currency_2many() 
+2023-02-21 02:02:52,872 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(621)/_test_currency_2many()
+['                            self.resource_bind(xref).id,\n'] 
+2023-02-21 02:02:52,874 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(621)/_test_currency_2many()
+['                            self.resource_bind(xref).id,\n'] 
+2023-02-21 02:02:52,878 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(622)/_test_currency_2many()
+['                            self.resource_bind(xref1).id,\n'] 
+2023-02-21 02:02:52,880 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(622)/_test_currency_2many()
+['                            self.resource_bind(xref1).id,\n'] 
+2023-02-21 02:02:52,882 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(622)/_test_currency_2many()
+['                            self.resource_bind(xref1).id,\n'] 
+2023-02-21 02:02:52,883 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(622)/_test_currency_2many()
+['                            self.resource_bind(xref1).id,\n'] 
+2023-02-21 02:02:52,890 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(632)/_test_currency_2many()
+['                "rate_ids": [(6, 0, [xref, xref1])]\n'] 
+2023-02-21 02:02:52,891 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(632)/_test_currency_2many()
+['                "rate_ids": [(6, 0, [xref, xref1])]\n'] 
+2023-02-21 02:02:52,893 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(632)/_test_currency_2many()
+['                "rate_ids": [(6, 0, [xref, xref1])]\n'] 
+2023-02-21 02:02:52,898 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(632)/_test_currency_2many()
+['                "rate_ids": [(6, 0, [xref, xref1])]\n'] 
+2023-02-21 02:02:52,906 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(641)/_test_currency_2many()
+['                    (0, 0, {"name": "2022-01-01", "rate": 0.77}),\n'] 
+2023-02-21 02:02:52,907 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(641)/_test_currency_2many()
+['                    (0, 0, {"name": "2022-01-01", "rate": 0.77}),\n'] 
+2023-02-21 02:02:52,912 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(654)/_test_currency_2many()
+['                        self.resource_bind(xref).id,\n'] 
+2023-02-21 02:02:52,914 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(654)/_test_currency_2many()
+['                        self.resource_bind(xref).id,\n'] 
+2023-02-21 02:02:52,917 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(659)/_test_currency_2many()
+['                        self.resource_bind(xref1).id,\n'] 
+2023-02-21 02:02:52,919 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(659)/_test_currency_2many()
+['                        self.resource_bind(xref1).id,\n'] 
+2023-02-21 02:02:52,922 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(660)/_test_currency_2many()
+['                        self.get_resource_data("res.currency.rate", xref1),\n'] 
+2023-02-21 02:02:52,923 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(660)/_test_currency_2many()
+['                        self.get_resource_data("res.currency.rate", xref1),\n'] 
+2023-02-21 02:02:52,928 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(672)/_test_currency_2many()
+['                    self.resource_bind(xref).id,\n'] 
+2023-02-21 02:02:52,930 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(672)/_test_currency_2many()
+['                    self.resource_bind(xref).id,\n'] 
+2023-02-21 02:02:52,932 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(673)/_test_currency_2many()
+['                    self.resource_bind(xref1).id,\n'] 
+2023-02-21 02:02:52,935 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(673)/_test_currency_2many()
+['                    self.resource_bind(xref1).id,\n'] 
+2023-02-21 02:02:52,938 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(673)/_test_currency_2many()
+['                    self.resource_bind(xref1).id,\n'] 
+2023-02-21 02:02:52,939 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(673)/_test_currency_2many()
+['                    self.resource_bind(xref1).id,\n'] 
+2023-02-21 02:02:52,944 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(679)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": [xref, xref1]})\n'] 
+2023-02-21 02:02:52,945 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(679)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": [xref, xref1]})\n'] 
+2023-02-21 02:02:52,947 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(679)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": [xref, xref1]})\n'] 
+2023-02-21 02:02:52,949 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(679)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": [xref, xref1]})\n'] 
+2023-02-21 02:02:52,952 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(679)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": [xref, xref1]})\n'] 
+2023-02-21 02:02:52,955 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(679)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": [xref, xref1]})\n'] 
+2023-02-21 02:02:52,960 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(681)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": "%s,%s" % (xref, xref1)})\n'] 
+2023-02-21 02:02:52,961 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(681)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": "%s,%s" % (xref, xref1)})\n'] 
+2023-02-21 02:02:52,963 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(681)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": "%s,%s" % (xref, xref1)})\n'] 
+2023-02-21 02:02:52,965 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(681)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": "%s,%s" % (xref, xref1)})\n'] 
+2023-02-21 02:02:52,968 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(681)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": "%s,%s" % (xref, xref1)})\n'] 
+2023-02-21 02:02:52,971 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(681)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": "%s,%s" % (xref, xref1)})\n'] 
+2023-02-21 02:02:52,977 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(684)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": xref})\n'] 
+2023-02-21 02:02:52,978 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(684)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": xref})\n'] 
+2023-02-21 02:02:52,980 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(684)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": xref})\n'] 
+2023-02-21 02:02:52,982 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(684)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {"rate_ids": xref})\n'] 
+2023-02-21 02:02:52,990 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(689)/_test_currency_2many()
+['            {"rate_ids": self.resource_bind(xref).id},\n'] 
+2023-02-21 02:02:52,992 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(689)/_test_currency_2many()
+['            {"rate_ids": self.resource_bind(xref).id},\n'] 
+2023-02-21 02:02:52,994 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(689)/_test_currency_2many()
+['            {"rate_ids": self.resource_bind(xref).id},\n'] 
+2023-02-21 02:02:52,995 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(689)/_test_currency_2many()
+['            {"rate_ids": self.resource_bind(xref).id},\n'] 
+2023-02-21 02:02:52,999 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(692)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {})\n'] 
+2023-02-21 02:02:53,000 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(692)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {})\n'] 
+2023-02-21 02:02:53,002 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(692)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {})\n'] 
+2023-02-21 02:02:53,004 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(692)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {})\n'] 
+2023-02-21 02:02:53,008 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(692)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {})\n'] 
+2023-02-21 02:02:53,010 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(692)/_test_currency_2many()
+['        self.resource_write(model, "base.EUR", {})\n'] 
+2023-02-21 02:02:53,019 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(970)/_test_testenv_all_fields()
+['                        "z0bug.product_product_23",\n'] 
+2023-02-21 02:02:53,019 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞testenv.all.fields.resource_edit(['create']) 
+2023-02-21 02:02:53,025 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[testenv.all.fields] = ['description'] 
+2023-02-21 02:02:53,038 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(970)/_test_testenv_all_fields()
+['                        "z0bug.product_product_23",\n'] 
+2023-02-21 02:02:53,043 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(970)/_test_testenv_all_fields()
+['                        "z0bug.product_product_23",\n'] 
+2023-02-21 02:02:53,045 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(970)/_test_testenv_all_fields()
+['                        "z0bug.product_product_23",\n'] 
+2023-02-21 02:02:53,047 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(970)/_test_testenv_all_fields()
+['                        "z0bug.product_product_23",\n'] 
+2023-02-21 02:02:53,049 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(970)/_test_testenv_all_fields()
+['                        "z0bug.product_product_23",\n'] 
+2023-02-21 02:02:53,051 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(970)/_test_testenv_all_fields()
+['                        "z0bug.product_product_23",\n'] 
+2023-02-21 02:02:53,053 26817 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted testenv.all.fields records with IDs: [] 
+2023-02-21 02:02:53,073 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(994)/_test_testenv_all_fields()
+['        self.assertEqual(self.field_download(record, "attachment"), source_xml)\n'] 
+2023-02-21 02:02:53,074 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1000)/_test_testenv_all_fields()
+['        res |= self.resource_bind("z0bug.res_partner_1")\n'] 
+2023-02-21 02:02:53,076 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1001)/_test_testenv_all_fields()
+['        res |= self.resource_bind("z0bug.res_partner_2")\n'] 
+2023-02-21 02:02:53,080 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1004)/_test_testenv_all_fields()
+['        res |= self.resource_bind("z0bug.product_product_1")\n'] 
+2023-02-21 02:02:53,082 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1005)/_test_testenv_all_fields()
+['        res |= self.resource_bind("z0bug.product_product_18")\n'] 
+2023-02-21 02:02:53,083 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1006)/_test_testenv_all_fields()
+['        res |= self.resource_bind("z0bug.product_product_23")\n'] 
+2023-02-21 02:02:53,087 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1013)/_test_testenv_all_fields()
+['                ("date", datetime(2022, 6, 22, 23, 22, 21)),\n'] 
+2023-02-21 02:02:53,087 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞testenv.all.fields(1,).resource_edit(['save']) 
+2023-02-21 02:02:53,111 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1024)/_test_testenv_all_fields()
+['                "updated_dt": saved_ts,\n'] 
+2023-02-21 02:02:53,114 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1034)/_test_testenv_all_fields()
+['            [record],\n'] 
+2023-02-21 02:02:53,115 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞validate_records(template(1), [testenv.all.fields(1,)]) 
+2023-02-21 02:02:53,116 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).date:'2022-06-22', rec(1):'2022-06-22') 
+2023-02-21 02:02:53,116 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).updated_dt:'2023-02-21 02:02:53.018450', rec(1):'2023-02-21 02:02:53') 
+2023-02-21 02:02:53,116 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞2 assertion validated for validate_records(template(1{(None, testenv.all.fields(1,))=2})) 
+2023-02-21 02:02:53,116 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: 🎺 Testing test_product() 
+2023-02-21 02:02:53,117 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(732)/_test_product()
+['            self.resource_bind("z0bug.product_product_18").type,\n'] 
+2023-02-21 02:02:53,121 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(737)/_test_product()
+['            self.resource_bind("z0bug.product_product_23").type,\n'] 
+2023-02-21 02:02:53,126 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(745)/_test_product()
+['        product = self.resource_bind(xref)\n'] 
+2023-02-21 02:02:53,128 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(695)/_simple_field_test()
+['        record = self.resource_write(record, xref, values={field: target_value})\n'] 
+2023-02-21 02:02:53,137 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(709)/_simple_field_test()
+['        product = self.resource_write(record, xref)\n'] 
+2023-02-21 02:02:53,173 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(695)/_simple_field_test()
+['        record = self.resource_write(record, xref, values={field: target_value})\n'] 
+2023-02-21 02:02:53,179 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(709)/_simple_field_test()
+['        product = self.resource_write(record, xref)\n'] 
+2023-02-21 02:02:53,212 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(695)/_simple_field_test()
+['        record = self.resource_write(record, xref, values={field: target_value})\n'] 
+2023-02-21 02:02:53,218 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(709)/_simple_field_test()
+['        product = self.resource_write(record, xref)\n'] 
+2023-02-21 02:02:53,252 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(695)/_simple_field_test()
+['        record = self.resource_write(record, xref, values={field: target_value})\n'] 
+2023-02-21 02:02:53,258 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(709)/_simple_field_test()
+['        product = self.resource_write(record, xref)\n'] 
+2023-02-21 02:02:53,290 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(695)/_simple_field_test()
+['        record = self.resource_write(record, xref, values={field: target_value})\n'] 
+2023-02-21 02:02:53,300 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(709)/_simple_field_test()
+['        product = self.resource_write(record, xref)\n'] 
+2023-02-21 02:02:53,337 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(695)/_simple_field_test()
+['        record = self.resource_write(record, xref, values={field: target_value})\n'] 
+2023-02-21 02:02:53,344 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(709)/_simple_field_test()
+['        product = self.resource_write(record, xref)\n'] 
+2023-02-21 02:02:53,378 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(695)/_simple_field_test()
+['        record = self.resource_write(record, xref, values={field: target_value})\n'] 
+2023-02-21 02:02:53,387 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(709)/_simple_field_test()
+['        product = self.resource_write(record, xref)\n'] 
+2023-02-21 02:02:53,425 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(695)/_simple_field_test()
+['        record = self.resource_write(record, xref, values={field: target_value})\n'] 
+2023-02-21 02:02:53,431 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(709)/_simple_field_test()
+['        product = self.resource_write(record, xref)\n'] 
+2023-02-21 02:02:53,464 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: 🎺 Testing wizard.lang_install() 
+2023-02-21 02:02:53,465 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(784)/_test_wizard()
+['            button_name="lang_install",\n'] 
+2023-02-21 02:02:53,498 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞wizard starting(Load a Translation) 
+2023-02-21 02:02:53,502 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  base.language.install.lang_install() 
+2023-02-21 02:02:53,557 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module base: loading translation file (it) for language it_IT 
+2023-02-21 02:02:53,557 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/odoo/addons/base/i18n/it.po 
+2023-02-21 02:02:55,802 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web: loading translation file (it) for language it_IT 
+2023-02-21 02:02:55,802 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web/i18n/it.po 
+2023-02-21 02:02:55,926 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module base_setup: loading translation file (it) for language it_IT 
+2023-02-21 02:02:55,926 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/base_setup/i18n/it.po 
+2023-02-21 02:02:55,945 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module decimal_precision: loading translation file (it) for language it_IT 
+2023-02-21 02:02:55,945 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/decimal_precision/i18n/it.po 
+2023-02-21 02:02:55,949 26817 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Warning!' (code, addons/decimal_precision/models/decimal_precision.py, 24) not found in reference pot, skipping 
+2023-02-21 02:02:55,961 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module bus: loading translation file (it) for language it_IT 
+2023-02-21 02:02:55,962 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/bus/i18n/it.po 
+2023-02-21 02:02:55,976 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web_tour: loading translation file (it) for language it_IT 
+2023-02-21 02:02:55,977 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web_tour/i18n/it.po 
+2023-02-21 02:02:55,993 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module mail: loading translation file (it) for language it_IT 
+2023-02-21 02:02:55,993 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/mail/i18n/it.po 
+2023-02-21 02:02:56,278 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module uom: loading translation file (it) for language it_IT 
+2023-02-21 02:02:56,278 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/uom/i18n/it.po 
+2023-02-21 02:02:56,303 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module product: loading translation file (it) for language it_IT 
+2023-02-21 02:02:56,303 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/product/i18n/it.po 
+2023-02-21 02:02:56,432 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module analytic: loading translation file (it) for language it_IT 
+2023-02-21 02:02:56,433 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/analytic/i18n/it.po 
+2023-02-21 02:02:56,463 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module http_routing: loading translation file (it) for language it_IT 
+2023-02-21 02:02:56,463 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/http_routing/i18n/it.po 
+2023-02-21 02:02:56,476 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module auth_signup: loading translation file (it) for language it_IT 
+2023-02-21 02:02:56,476 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/auth_signup/i18n/it.po 
+2023-02-21 02:02:56,499 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module portal: loading translation file (it) for language it_IT 
+2023-02-21 02:02:56,499 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/portal/i18n/it.po 
+2023-02-21 02:02:56,542 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module digest: loading translation file (it) for language it_IT 
+2023-02-21 02:02:56,542 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/digest/i18n/it.po 
+2023-02-21 02:02:56,564 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module account: loading translation file (it) for language it_IT 
+2023-02-21 02:02:56,564 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/account/i18n/it.po 
+2023-02-21 02:02:57,231 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module account_bank_statement_import: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,231 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/account_bank_statement_import/i18n/it.po 
+2023-02-21 02:02:57,258 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module account_cancel: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,258 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/account_cancel/i18n/it.po 
+2023-02-21 02:02:57,271 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module account_facturx: no translation for language it 
+2023-02-21 02:02:57,273 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module base_import: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,274 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/base_import/i18n/it.po 
+2023-02-21 02:02:57,313 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module fetchmail: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,313 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/fetchmail/i18n/it.po 
+2023-02-21 02:02:57,332 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module l10n_generic_coa: no translation for language it 
+2023-02-21 02:02:57,334 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module l10n_us: no translation for language it 
+2023-02-21 02:02:57,336 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module mail_bot: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,336 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/mail_bot/i18n/it.po 
+2023-02-21 02:02:57,359 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module module_version: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,359 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/custom-addons/module_version/i18n/it.po 
+2023-02-21 02:02:57,364 26817 INFO test_test_testenv_12 odoo.tools.translate: Translation 'To upgrade' (view, ir.module.module, 0) not found in reference pot, skipping 
+2023-02-21 02:02:57,365 26817 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Upgrade' (view, ir.module.module, 0) not found in reference pot, skipping 
+2023-02-21 02:02:57,365 26817 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Not Installed' (view, ir.module.module, 0) not found in reference pot, skipping 
+2023-02-21 02:02:57,365 26817 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Cancel Upgrade' (view, ir.module.module, 0) not found in reference pot, skipping 
+2023-02-21 02:02:57,365 26817 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Need Upgrade' (code, addons/module_version/module.py, 60) not found in reference pot, skipping 
+2023-02-21 02:02:57,365 26817 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Need Upgrade' (field, ir.module.module,check_upgrade, 0) not found in reference pot, skipping 
+2023-02-21 02:02:57,365 26817 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Need Upgrade' (field, ir.module.module,need_upgrade, 0) not found in reference pot, skipping 
+2023-02-21 02:02:57,374 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module payment: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,374 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/payment/i18n/it.po 
+2023-02-21 02:02:57,454 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module payment_transfer: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,455 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/payment_transfer/i18n/it.po 
+2023-02-21 02:02:57,470 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module sales_team: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,470 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/sales_team/i18n/it.po 
+2023-02-21 02:02:57,497 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module sale: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,497 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/sale/i18n/it.po 
+2023-02-21 02:02:57,663 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web_diagram: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,663 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web_diagram/i18n/it.po 
+2023-02-21 02:02:57,677 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web_editor: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,677 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web_editor/i18n/it.po 
+2023-02-21 02:02:57,723 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web_kanban_gauge: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,723 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web_kanban_gauge/i18n/it.po 
+2023-02-21 02:02:57,734 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web_settings_dashboard: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,734 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web_settings_dashboard/i18n/it.po 
+2023-02-21 02:02:57,755 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web_unsplash: loading translation file (it) for language it_IT 
+2023-02-21 02:02:57,755 26817 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web_unsplash/i18n/it.po 
+2023-02-21 02:02:57,878 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(790)/_test_wizard()
+['        self.wizard(act_windows=act_windows)\n'] 
+2023-02-21 02:02:57,878 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞wizard starting(Language Pack) 
+2023-02-21 02:02:57,880 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺🎺 Starting test v2.0.5.2 (debug_level=2) 
+2023-02-21 02:02:57,893 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Testing module: test_testenv (12.0.2.0.5) 
+2023-02-21 02:02:57,895 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:57,897 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.product[type]: 'product' -> 'consu' 
+2023-02-21 02:02:57,897 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.template[type]: 'product' -> 'consu' 
+2023-02-21 02:02:57,899 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ account.payment.term.line._cvt_account_payment_term_line(all) 
+2023-02-21 02:02:57,901 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:57,902 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:57,904 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:57,968 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:57,969 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:57,970 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,032 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,033 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,034 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,086 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,087 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,088 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,091 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,097 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,098 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,100 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,102 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,108 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,109 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,110 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,117 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,119 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,120 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,129 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,130 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,132 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,141 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,142 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,143 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,171 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,172 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,173 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,194 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,195 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,196 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,221 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,223 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,226 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,283 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,284 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,285 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,328 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,329 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,331 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,372 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,373 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,374 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,415 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,416 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,417 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(798)/_test_partner()
+['        self.setup_env(lang=self.iso_code)\n'] 
+2023-02-21 02:02:58,536 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(804)/_test_partner()
+['        partner = self.resource_bind("z0bug.res_partner_1")\n'] 
+2023-02-21 02:02:58,537 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(812)/_test_partner()
+['            ctx={"gravatar_image": True},\n'] 
+2023-02-21 02:02:58,537 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞res.partner(42,).resource_edit(['save']) 
+2023-02-21 02:02:58,700 26817 INFO test_test_testenv_12 odoo.addons.base.models.ir_attachment: _read_file reading /home/odoo/.local/share/Odoo12/filestore/test_test_testenv_12/91/91cf91f4bb4e8ab1dda361b7ce81fd7a215616cb 
+Traceback (most recent call last):
+  File "/home/odoo/12.0/odoo/api.py", line 1049, in get
+    value = self._data[key][field][record._ids[0]]
+KeyError: 42
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/odoo/12.0/odoo/fields.py", line 1064, in __get__
+    value = record.env.cache.get(record, self)
+  File "/home/odoo/12.0/odoo/api.py", line 1051, in get
+    raise CacheMiss(record, field)
+odoo.exceptions.CacheMiss: ('res.partner(42,).image', None)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/odoo/12.0/odoo/api.py", line 1049, in get
+    value = self._data[key][field][record._ids[0]]
+KeyError: 497
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/odoo/12.0/odoo/fields.py", line 1064, in __get__
+    value = record.env.cache.get(record, self)
+  File "/home/odoo/12.0/odoo/api.py", line 1051, in get
+    raise CacheMiss(record, field)
+odoo.exceptions.CacheMiss: ('ir.attachment(497,).datas', None)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/odoo/12.0/odoo/addons/base/models/ir_attachment.py", line 113, in _file_read
+    r = base64.b64encode(open(full_path,'rb').read())
+FileNotFoundError: [Errno 2] No such file or directory: '/home/odoo/.local/share/Odoo12/filestore/test_test_testenv_12/91/91cf91f4bb4e8ab1dda361b7ce81fd7a215616cb'
+2023-02-21 02:02:58,702 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(852)/_test_invoice()
+['        self.declare_all_data(data, group="invoice")\n'] 
+2023-02-21 02:02:58,702 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(account.account,group=invoice) 
+2023-02-21 02:02:58,705 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.account.store_resource_data(z0bug.coa_sale,name=account.account,group=invoice) 
+2023-02-21 02:02:58,705 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.account.store_resource_data(z0bug.coa_sale2,name=account.account,group=invoice) 
+2023-02-21 02:02:58,708 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.account.store_resource_data(z0bug.coa_tax_recv,name=account.account,group=invoice) 
+2023-02-21 02:02:58,708 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(account.tax,group=invoice) 
+2023-02-21 02:02:58,709 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[account.tax] = ['description'] 
+2023-02-21 02:02:58,712 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.tax.store_resource_data(external.22v,name=account.tax,group=invoice) 
+2023-02-21 02:02:58,712 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(account.journal,group=invoice) 
+2023-02-21 02:02:58,715 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[account.journal] = ['code'] 
+2023-02-21 02:02:58,715 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.journal.store_resource_data(external.BNK1,name=account.journal,group=invoice) 
+2023-02-21 02:02:58,715 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.journal.store_resource_data(external.INV,name=account.journal,group=invoice) 
+2023-02-21 02:02:58,715 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(account.invoice,group=invoice) 
+2023-02-21 02:02:58,719 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_resource[account.invoice] = account.invoice.line 
+2023-02-21 02:02:58,719 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_name[account.invoice] = invoice_line_ids 
+2023-02-21 02:02:58,724 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_resource[account.invoice.line] = account.invoice 
+2023-02-21 02:02:58,724 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_name[account.invoice.line] = invoice_id 
+2023-02-21 02:02:58,724 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[account.invoice.line] = ['sequence'] 
+2023-02-21 02:02:58,724 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[account.invoice] = ['number'] 
+2023-02-21 02:02:58,729 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.invoice.store_resource_data(z0bug.invoice_Z0_1,name=account.invoice,group=invoice) 
+2023-02-21 02:02:58,733 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.invoice.store_resource_data(z0bug.invoice_Z0_2,name=account.invoice,group=invoice) 
+2023-02-21 02:02:58,733 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(account.invoice.line,group=invoice) 
+2023-02-21 02:02:58,736 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.invoice.line.store_resource_data(z0bug.invoice_Z0_1_03,name=account.invoice.line,group=invoice) 
+2023-02-21 02:02:58,740 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.invoice.line.store_resource_data(z0bug.invoice_Z0_1_1,name=account.invoice.line,group=invoice) 
+2023-02-21 02:02:58,744 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.invoice.line.store_resource_data(z0bug.invoice_Z0_1_2,name=account.invoice.line,group=invoice) 
+2023-02-21 02:02:58,748 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.invoice.line.store_resource_data(z0bug.invoice_Z0_2_1,name=account.invoice.line,group=invoice) 
+2023-02-21 02:02:58,752 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.invoice.line.store_resource_data(z0bug.invoice_Z0_2_2,name=account.invoice.line,group=invoice) 
+2023-02-21 02:02:58,752 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺🎺 Starting test v2.0.5.2 (debug_level=2) 
+2023-02-21 02:02:58,752 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Testing module: test_testenv (12.0.2.0.5) 
+2023-02-21 02:02:58,754 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,755 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.product[type]: 'product' -> 'consu' 
+2023-02-21 02:02:58,755 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.template[type]: 'product' -> 'consu' 
+2023-02-21 02:02:58,756 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ account.payment.term.line._cvt_account_payment_term_line(all) 
+2023-02-21 02:02:58,758 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,760 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,762 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,834 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,836 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,837 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,840 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,855 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.account.store_resource_data(z0bug.coa_sale2,name=account.account,group=invoice) 
+2023-02-21 02:02:58,856 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,857 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,858 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,877 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,879 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,880 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,884 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,885 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,888 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,899 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.tax.store_resource_data(external.22v,name=account.tax,group=invoice) 
+2023-02-21 02:02:58,901 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,902 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,903 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,912 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,914 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,915 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,921 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,922 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,923 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,928 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:58,931 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,252 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.invoice.store_resource_data(z0bug.invoice_Z0_1,name=account.invoice,group=invoice) 
+2023-02-21 02:02:59,253 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,254 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,255 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,259 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,261 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,490 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.invoice.store_resource_data(z0bug.invoice_Z0_2,name=account.invoice,group=invoice) 
+2023-02-21 02:02:59,491 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,492 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,493 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,495 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,533 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,535 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,536 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,538 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,571 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,572 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,573 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,576 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,606 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,607 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,608 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,610 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,646 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,647 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,649 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,651 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(853)/_test_invoice()
+['        self.setup_env(group="invoice")\n'] 
+2023-02-21 02:02:59,683 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(855)/_test_invoice()
+['        invoice = self.resource_bind("z0bug.invoice_Z0_1")\n'] 
+2023-02-21 02:02:59,685 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(860)/_test_invoice()
+['        invoice = self.resource_bind("z0bug.invoice_Z0_2")\n'] 
+2023-02-21 02:02:59,687 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(867)/_test_invoice()
+['        self.resource_bind("external.BNK1")\n'] 
+2023-02-21 02:02:59,692 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(869)/_test_invoice()
+['        invoice = self.resource_bind("z0bug.invoice_Z0_2")\n'] 
+2023-02-21 02:02:59,694 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(870)/_test_invoice()
+['        self.resource_edit(resource=invoice, actions="action_invoice_open")\n'] 
+2023-02-21 02:02:59,694 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞account.invoice(10,).resource_edit(['action_invoice_open']) 
+2023-02-21 02:02:59,729 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  account.invoice.action_invoice_open() 
+2023-02-21 02:02:59,980 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(875)/_test_invoice()
+['        self.resource_edit(resource=invoice, actions="action_invoice_cancel")\n'] 
+2023-02-21 02:02:59,981 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞account.invoice(10,).resource_edit(['action_invoice_cancel']) 
+2023-02-21 02:03:00,006 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  account.invoice.action_invoice_cancel() 
+2023-02-21 02:03:00,080 26817 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted account.move.line records with IDs: [24, 23, 22, 21, 20] 
+2023-02-21 02:03:00,099 26817 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted account.move records with IDs: [8] 
+2023-02-21 02:03:00,103 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(882)/_test_invoice()
+['            actions="action_invoice_draft",\n'] 
+2023-02-21 02:03:00,103 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞account.invoice(10,).resource_edit(['action_invoice_draft']) 
+2023-02-21 02:03:00,134 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  account.invoice.action_invoice_draft() 
+2023-02-21 02:03:00,245 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(891)/_test_wizard_invoice()
+['        invoices |= self.resource_bind("z0bug.invoice_Z0_1")\n'] 
+2023-02-21 02:03:00,247 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(892)/_test_wizard_invoice()
+['        invoices |= self.resource_bind("z0bug.invoice_Z0_2")\n'] 
+2023-02-21 02:03:00,249 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(898)/_test_wizard_invoice()
+['            button_name="invoice_confirm",\n'] 
+2023-02-21 02:03:00,261 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞wizard starting(Confirm Draft Invoices) 
+2023-02-21 02:03:00,262 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ act_windows['multi'] does not match # of records! 
+2023-02-21 02:03:00,266 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  account.invoice.confirm.invoice_confirm() 
+2023-02-21 02:03:00,777 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(905)/_test_wizard_invoice()
+['        invoice = self.resource_bind("z0bug.invoice_Z0_1")\n'] 
+2023-02-21 02:03:00,779 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(908)/_test_wizard_invoice()
+['            actions="account.action_account_invoice_payment",\n'] 
+2023-02-21 02:03:00,779 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞account.invoice(9,).resource_edit(['account.action_account_invoice_payment']) 
+2023-02-21 02:03:00,831 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐜  act_windows(account.action_account_invoice_payment) 
+2023-02-21 02:03:00,833 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(916)/_test_wizard_invoice()
+['            button_name="post",\n'] 
+2023-02-21 02:03:00,833 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞wizard starting(Register Payment) 
+2023-02-21 02:03:00,835 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[account.payment] = ['move_name'] 
+2023-02-21 02:03:00,836 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(916)/_test_wizard_invoice()
+['            button_name="post",\n'] 
+2023-02-21 02:03:00,941 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  account.payment.post() 
+2023-02-21 02:03:01,247 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(921)/_test_move()
+['        self.resource_edit(resource=move, actions="button_cancel")\n'] 
+2023-02-21 02:03:01,247 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞account.move(9,).resource_edit(['button_cancel']) 
+2023-02-21 02:03:01,252 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_resource[account.move] = account.move.line 
+2023-02-21 02:03:01,252 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_name[account.move] = line_ids 
+2023-02-21 02:03:01,253 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_resource[account.move.line] = account.move 
+2023-02-21 02:03:01,253 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_name[account.move.line] = move_id 
+2023-02-21 02:03:01,253 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[account.move.line] = ['partner_id'] 
+2023-02-21 02:03:01,254 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[account.move] = ['name'] 
+2023-02-21 02:03:01,254 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  account.move.button_cancel() 
+2023-02-21 02:03:01,261 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(924)/_test_move()
+['        self.resource_write(move, values={"ref": "payment"})\n'] 
+2023-02-21 02:03:01,261 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ No *2many value for account.move.line.[] 
+2023-02-21 02:03:01,272 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(925)/_test_move()
+['        self.resource_write("account.move", move.id, values={"ref": saved_ref})\n'] 
+2023-02-21 02:03:01,274 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(925)/_test_move()
+['        self.resource_write("account.move", move.id, values={"ref": saved_ref})\n'] 
+2023-02-21 02:03:01,274 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ No *2many value for account.move.line.[] 
+2023-02-21 02:03:01,282 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(926)/_test_move()
+['        self.resource_edit(resource=move, actions="post")\n'] 
+2023-02-21 02:03:01,282 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞account.move(9,).resource_edit(['post']) 
+2023-02-21 02:03:01,307 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  account.move.post() 
+2023-02-21 02:03:01,358 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(828)/_test_sale_order()
+['        self.declare_all_data(data, group="order")\n'] 
+2023-02-21 02:03:01,358 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(sale.order,group=order) 
+2023-02-21 02:03:01,360 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_resource[sale.order] = sale.order.line 
+2023-02-21 02:03:01,360 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_name[sale.order] = order_line 
+2023-02-21 02:03:01,362 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_resource[sale.order.line] = sale.order 
+2023-02-21 02:03:01,362 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_name[sale.order.line] = order_id 
+2023-02-21 02:03:01,362 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[sale.order.line] = ['sequence'] 
+2023-02-21 02:03:01,362 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[sale.order] = ['name'] 
+2023-02-21 02:03:01,363 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field ddt_type_id does not exist in sale.order 
+2023-02-21 02:03:01,364 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field carrier_id does not exist in sale.order 
+2023-02-21 02:03:01,364 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 sale.order.store_resource_data(z0bug.sale_order_Z0_2,name=sale.order,group=order) 
+2023-02-21 02:03:01,364 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(sale.order.line,group=order) 
+2023-02-21 02:03:01,365 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field weight does not exist in sale.order.line 
+2023-02-21 02:03:01,368 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 sale.order.line.store_resource_data(z0bug.sale_order_Z0_2_1,name=sale.order.line,group=order) 
+2023-02-21 02:03:01,369 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ field weight does not exist in sale.order.line 
+2023-02-21 02:03:01,372 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 sale.order.line.store_resource_data(z0bug.sale_order_Z0_2_2,name=sale.order.line,group=order) 
+2023-02-21 02:03:01,372 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺🎺 Starting test v2.0.5.2 (debug_level=2) 
+2023-02-21 02:03:01,381 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Testing module: test_testenv (12.0.2.0.5) 
+2023-02-21 02:03:01,383 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,384 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.product[type]: 'product' -> 'consu' 
+2023-02-21 02:03:01,384 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.template[type]: 'product' -> 'consu' 
+2023-02-21 02:03:01,385 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ account.payment.term.line._cvt_account_payment_term_line(all) 
+2023-02-21 02:03:01,386 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,387 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,388 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,392 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,408 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-02-21 02:03:01,426 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-02-21 02:03:01,632 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 sale.order.store_resource_data(z0bug.sale_order_Z0_2,name=sale.order,group=order) 
+2023-02-21 02:03:01,633 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,634 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,635 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,637 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,674 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,675 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,676 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,678 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(829)/_test_sale_order()
+['        self.setup_env(group="order")\n'] 
+2023-02-21 02:03:01,714 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(831)/_test_sale_order()
+['        order = self.resource_bind("z0bug.sale_order_Z0_2")\n'] 
+2023-02-21 02:03:01,714 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: 🎺 Testing validate_record() 
+2023-02-21 02:03:01,715 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1039)/_test_validate_record()
+['        self.resource_write("res.partner", xref="z0bug.res_partner_1")\n'] 
+2023-02-21 02:03:01,716 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1039)/_test_validate_record()
+['        self.resource_write("res.partner", xref="z0bug.res_partner_1")\n'] 
+2023-02-21 02:03:01,778 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1040)/_test_validate_record()
+['        self.resource_write("res.partner", xref="z0bug.res_partner_2")\n'] 
+2023-02-21 02:03:01,779 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1040)/_test_validate_record()
+['        self.resource_write("res.partner", xref="z0bug.res_partner_2")\n'] 
+2023-02-21 02:03:01,841 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1042)/_test_validate_record()
+['        records |= self.resource_bind("z0bug.res_partner_1")\n'] 
+2023-02-21 02:03:01,842 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1043)/_test_validate_record()
+['        records |= self.resource_bind("z0bug.res_partner_2")\n'] 
+2023-02-21 02:03:01,844 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1056)/_test_validate_record()
+['        self.validate_records(template, records)\n'] 
+2023-02-21 02:03:01,846 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞validate_records(template(Prima Alpha S.p.A., Latte Beta Due s.n.c.), res.partner(42, 41)) 
+2023-02-21 02:03:01,847 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(Prima Alpha S.p.A.).name:'Prima Alpha S.p.A.', rec(42):'Prima Alpha S.p.A.') 
+2023-02-21 02:03:01,847 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(Prima Alpha S.p.A.).street:'Via I Maggio, 101', rec(42):'Via I Maggio, 101') 
+2023-02-21 02:03:01,847 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(Latte Beta Due s.n.c.).name:'Latte Beta Due s.n.c.', rec(41):'Latte Beta Due s.n.c.') 
+2023-02-21 02:03:01,847 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(Latte Beta Due s.n.c.).country_id:'base.it', rec(41):'res.country(109,)') 
+2023-02-21 02:03:01,848 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1056)/_test_validate_record()
+['        self.validate_records(template, records)\n'] 
+2023-02-21 02:03:01,849 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞4 assertion validated for validate_records(template(Prima Alpha S.p.A.{(None, res.partner(42,))=2}, Latte Beta Due s.n.c.{(None, res.partner(41,))=2})) 
+2023-02-21 02:03:01,850 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1063)/_test_validate_record()
+['        self.validate_records(template, records)\n'] 
+2023-02-21 02:03:01,851 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞validate_records(template(1, 2), res.partner(42, 41)) 
+2023-02-21 02:03:01,851 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).customer:'True', rec(42):'True') 
+2023-02-21 02:03:01,852 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(2).customer:'True', rec(42):'True') 
+2023-02-21 02:03:01,852 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞2 assertion validated for validate_records(template(1{(None, res.partner(42,))=1}, 2{(None, res.partner(42,))=1})) 
+2023-02-21 02:03:01,854 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1066)/_test_validate_record()
+['        self.resource_write("account.payment.term", xref="z0bug.payment_term_2")\n'] 
+2023-02-21 02:03:01,855 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1066)/_test_validate_record()
+['        self.resource_write("account.payment.term", xref="z0bug.payment_term_2")\n'] 
+2023-02-21 02:03:01,857 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1066)/_test_validate_record()
+['        self.resource_write("account.payment.term", xref="z0bug.payment_term_2")\n'] 
+2023-02-21 02:03:01,861 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1066)/_test_validate_record()
+['        self.resource_write("account.payment.term", xref="z0bug.payment_term_2")\n'] 
+2023-02-21 02:03:01,865 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1066)/_test_validate_record()
+['        self.resource_write("account.payment.term", xref="z0bug.payment_term_2")\n'] 
+2023-02-21 02:03:01,868 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1066)/_test_validate_record()
+['        self.resource_write("account.payment.term", xref="z0bug.payment_term_2")\n'] 
+2023-02-21 02:03:01,882 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1091)/_test_validate_record()
+['        records = [self.resource_bind("z0bug.payment_term_2")]\n'] 
+2023-02-21 02:03:01,884 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1092)/_test_validate_record()
+['        self.validate_records(template, records)\n'] 
+2023-02-21 02:03:01,887 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞validate_records(template(RiBA 30/60 GG), [account.payment.term(9,)]) 
+2023-02-21 02:03:01,887 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(RiBA 30/60 GG).name:'RiBA 30/60 GG', rec(9):'RiBA 30/60 GG') 
+2023-02-21 02:03:01,887 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(line.101).days:'30', rec(10):'30') 
+2023-02-21 02:03:01,887 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(line.101).value:'percent', rec(10):'percent') 
+2023-02-21 02:03:01,888 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(line.101).value_amount:'50', rec(10):'50.0') 
+2023-02-21 02:03:01,888 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(line.102).days:'60', rec(11):'60') 
+2023-02-21 02:03:01,888 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(line.102).value:'balance', rec(11):'balance') 
+2023-02-21 02:03:01,889 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞6 assertion validated for validate_records(template(RiBA 30/60 GG{(None, account.payment.term(9,))=6})) 
+2023-02-21 02:03:01,890 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1154)/_test_wizard_from_menu()
+['                button_name="do_example",\n'] 
+2023-02-21 02:03:01,907 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞wizard starting(Wizard Example from menu) 
+2023-02-21 02:03:01,916 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  wizard.example.menu.do_example() 
+2023-02-21 02:03:01,951 26817 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted testenv.all.fields records with IDs: [2] 
+2023-02-21 02:03:01,952 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1154)/_test_wizard_from_menu()
+['                button_name="do_example",\n'] 
+2023-02-21 02:03:01,972 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞wizard starting(Wizard Example from menu) 
+2023-02-21 02:03:01,977 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  wizard.example.menu.do_example() 
+2023-02-21 02:03:02,018 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1187)/_test_wizard_from_menu()
+['                    self.resource_bind("z0bug.res_partner_1"),\n'] 
+2023-02-21 02:03:02,019 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1188)/_test_wizard_from_menu()
+['                    self.resource_bind("z0bug.res_partner_2"),\n'] 
+2023-02-21 02:03:02,021 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1192)/_test_wizard_from_menu()
+['        self.validate_records(template, records)\n'] 
+2023-02-21 02:03:02,024 26817 WARNING test_test_testenv_12 odoo.models: Comparing apples and oranges: res.currency(2,) == 2 (/home/odoo/12.0/zerobug-test/test_testenv/tests/testenv.py:2464) 
+2023-02-21 02:03:02,027 26817 WARNING test_test_testenv_12 odoo.models: Comparing apples and oranges: res.currency(2,) == 2 (/home/odoo/12.0/zerobug-test/test_testenv/tests/testenv.py:2464) 
+2023-02-21 02:03:02,027 26817 WARNING test_test_testenv_12 odoo.models: Comparing apples and oranges: res.currency(2,) == 2 (/home/odoo/12.0/zerobug-test/test_testenv/tests/testenv.py:2464) 
+2023-02-21 02:03:02,028 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞validate_records(template(1, 2, 3), testenv.all.fields(3, 4, 5)) 
+2023-02-21 02:03:02,028 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).rank:'1', rec(3):'1') 
+2023-02-21 02:03:02,028 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).active:'True', rec(3):'True') 
+2023-02-21 02:03:02,029 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).currency_id:'2', rec(3):'res.currency(2,)') 
+2023-02-21 02:03:02,029 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).description:'I was born in Caserta', rec(3):'I was born in Caserta') 
+2023-02-21 02:03:02,029 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).amount:'1234.5', rec(3):'1234.5') 
+2023-02-21 02:03:02,029 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).date:'####-##-<1', rec(3):'2023-02-20') 
+2023-02-21 02:03:02,029 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).created_dt:'####-<1-01 10:00:59', rec(3):'2023-01-01 10:00:59') 
+2023-02-21 02:03:02,030 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(2).rank:'2', rec(4):'2') 
+2023-02-21 02:03:02,030 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(2).active:'1', rec(4):'True') 
+2023-02-21 02:03:02,030 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(2).description:'', rec(4):'') 
+2023-02-21 02:03:02,031 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(2).measure:'98.7', rec(4):'98.7') 
+2023-02-21 02:03:02,031 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(2).date:'####-##-<5', rec(4):'2023-02-16') 
+2023-02-21 02:03:02,031 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(2).created_dt:'####-<1-02 11:10:52', rec(4):'2023-01-02 11:10:52') 
+2023-02-21 02:03:02,032 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(3).rank:'3', rec(5):'3') 
+2023-02-21 02:03:02,032 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(3).state:'draft', rec(5):'draft') 
+2023-02-21 02:03:02,032 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(3).currency_id:'res.currency(2,)', rec(5):'res.currency(2,)') 
+2023-02-21 02:03:02,032 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(3).description:'We live in Turin', rec(5):'We live in Turin') 
+2023-02-21 02:03:02,032 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(3).date:'####-##-<14', rec(5):'2023-02-07') 
+2023-02-21 02:03:02,033 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(3).created_dt:'####-<1-03 12:20:45', rec(5):'2023-01-03 12:20:45') 
+2023-02-21 02:03:02,033 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(3).partner_ids:'(res.partner(42,), res.partner(41,))', rec(5):'res.partner(41, 42)') 
+2023-02-21 02:03:02,034 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞20 assertion validated for validate_records(template(1{(None, testenv.all.fields(3,))=7}, 2{(None, testenv.all.fields(4,))=6}, 3{(None, testenv.all.fields(5,))=5})) 
+2023-02-21 02:03:02,035 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1118)/_test_validate_move_record()
+['        self.resource_make("account.move", xref="z0bug.move1", values=vals)\n'] 
+2023-02-21 02:03:02,036 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1118)/_test_validate_move_record()
+['        self.resource_make("account.move", xref="z0bug.move1", values=vals)\n'] 
+2023-02-21 02:03:02,037 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1118)/_test_validate_move_record()
+['        self.resource_make("account.move", xref="z0bug.move1", values=vals)\n'] 
+2023-02-21 02:03:02,041 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1118)/_test_validate_move_record()
+['        self.resource_make("account.move", xref="z0bug.move1", values=vals)\n'] 
+2023-02-21 02:03:02,042 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1118)/_test_validate_move_record()
+['        self.resource_make("account.move", xref="z0bug.move1", values=vals)\n'] 
+2023-02-21 02:03:02,136 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.move.store_resource_data(z0bug.move1,name=account.move,group=base) 
+2023-02-21 02:03:02,137 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1141)/_test_validate_move_record()
+['        self.resource_make("account.move", xref="z0bug.move2", values=vals)\n'] 
+2023-02-21 02:03:02,138 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1141)/_test_validate_move_record()
+['        self.resource_make("account.move", xref="z0bug.move2", values=vals)\n'] 
+2023-02-21 02:03:02,140 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1141)/_test_validate_move_record()
+['        self.resource_make("account.move", xref="z0bug.move2", values=vals)\n'] 
+2023-02-21 02:03:02,143 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1141)/_test_validate_move_record()
+['        self.resource_make("account.move", xref="z0bug.move2", values=vals)\n'] 
+2023-02-21 02:03:02,145 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1141)/_test_validate_move_record()
+['        self.resource_make("account.move", xref="z0bug.move2", values=vals)\n'] 
+2023-02-21 02:03:02,231 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 account.move.store_resource_data(z0bug.move2,name=account.move,group=base) 
+2023-02-21 02:03:02,234 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1146)/_test_validate_move_record()
+['        self.validate_records(template=template, records=records)\n'] 
+2023-02-21 02:03:02,239 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞validate_records(template(1, 2), account.move(13, 12)) 
+2023-02-21 02:03:02,240 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).date:'2023-02-21', rec(12):'2023-02-21') 
+2023-02-21 02:03:02,240 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).journal_id:'7', rec(12):'account.journal(7,)') 
+2023-02-21 02:03:02,241 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).ref:'For test validate_records()', rec(12):'For test validate_records()') 
+2023-02-21 02:03:02,241 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(Bank fee).account_id:'30', rec(37):'account.account(30,)') 
+2023-02-21 02:03:02,241 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(Bank fee).debit:'0.5', rec(37):'0.5') 
+2023-02-21 02:03:02,241 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(Bank fee).credit:'0.0', rec(37):'0.0') 
+2023-02-21 02:03:02,241 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(Bank fee).name:'Bank fee', rec(37):'Bank fee') 
+2023-02-21 02:03:02,241 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(Bank fee).account_id:'28', rec(38):'account.account(28,)') 
+2023-02-21 02:03:02,242 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(Bank fee).debit:'0.0', rec(38):'0.0') 
+2023-02-21 02:03:02,242 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(Bank fee).credit:'0.5', rec(38):'0.5') 
+2023-02-21 02:03:02,242 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(Bank fee).name:'Bank fee', rec(38):'Bank fee') 
+2023-02-21 02:03:02,242 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(2).date:'2023-02-21', rec(13):'2023-02-21') 
+2023-02-21 02:03:02,242 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(2).journal_id:'7', rec(13):'account.journal(7,)') 
+2023-02-21 02:03:02,242 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(2).ref:'For test validate_records()', rec(13):'For test validate_records()') 
+2023-02-21 02:03:02,242 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(VAT payment).account_id:'14', rec(39):'account.account(14,)') 
+2023-02-21 02:03:02,243 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(VAT payment).debit:'2.5', rec(39):'2.5') 
+2023-02-21 02:03:02,243 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(VAT payment).credit:'0.0', rec(39):'0.0') 
+2023-02-21 02:03:02,243 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(VAT payment).name:'VAT payment', rec(39):'VAT payment') 
+2023-02-21 02:03:02,243 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(VAT payment).account_id:'28', rec(40):'account.account(28,)') 
+2023-02-21 02:03:02,243 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(VAT payment).debit:'0.0', rec(40):'0.0') 
+2023-02-21 02:03:02,243 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(VAT payment).credit:'2.5', rec(40):'2.5') 
+2023-02-21 02:03:02,243 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(VAT payment).name:'VAT payment', rec(40):'VAT payment') 
+2023-02-21 02:03:02,244 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞22 assertion validated for validate_records(template(1{(None, account.move(12,))=13}, 2{(None, account.move(13,))=23})) 
+2023-02-21 02:03:02,255 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: Ran 1 test in 11.249s 
+2023-02-21 02:03:02,256 26817 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: OK 
+2023-02-21 02:03:02,256 26817 INFO test_test_testenv_12 odoo.modules.module: odoo.addons.test_testenv.tests.test_testenv tested in 11.25s, 5299 queries 
+2023-02-21 02:03:02,282 26817 INFO test_test_testenv_12 odoo.modules.loading: 34 modules loaded in 13.14s, 5305 queries 
+2023-02-21 02:03:03,038 26817 INFO test_test_testenv_12 odoo.modules.loading: Modules loaded. 
+2023-02-21 02:03:03,043 26817 INFO test_test_testenv_12 odoo.service.server: Starting post tests 
+2023-02-21 02:03:03,044 26817 INFO test_test_testenv_12 odoo.service.server: All post-tested in 0.00s, 0 queries 
+2023-02-21 02:03:03,045 26817 INFO test_test_testenv_12 odoo.service.server: Initiating shutdown 
+2023-02-21 02:03:03,045 26817 INFO test_test_testenv_12 odoo.service.server: Hit CTRL-C again or send a second signal to force the shutdown. 
+
++===================================================================
+| please test [36mtest_testenv[0m (12.0): [32mSUCCESS![0m
++===================================================================
+
+Name                                                      Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------------------
+zerobug-test/test_testenv/models/testenv_model.py            37      0   100%
+zerobug-test/test_testenv/tests/test_testenv.py             301      0   100%
+zerobug-test/test_testenv/tests/testenv.py                  997     48    95%   492, 535, 550-551, 650, 762, 787, 875, 944, 958, 1134, 1154, 1220, 1246-1250, 1305, 1330, 1834-1835, 1923-1934, 1948-1952, 1954-1955, 2225-2240, 2357, 2371-2374, 2424, 2490
+zerobug-test/test_testenv/wizard/wizard_example_menu.py      34      5    85%   32, 34, 36, 42, 113
+---------------------------------------------------------------------------------------
+TOTAL                                                      1369     53    96%
