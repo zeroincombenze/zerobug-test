@@ -13,7 +13,22 @@ _logger = logging.getLogger(__name__)
 
 
 TEST_ACCOUNT_ACCOUNT = {
-    "z0bug.coa_tax_recv": {
+    # Output (paid) VAT account
+    "z0bug.coa_tax_ova": {
+        "code": "101300",
+        "reconcile": False,
+        "user_type_id": "account.data_account_type_current_assets",
+        "name": "IVA n/credito",
+    },
+    # The bank account is linked to demo data: usually is 101401
+    "z0bug.coa_bnk1": {
+        # "code": "101401",
+        "name": "Banca",
+        "reconcile": False,
+        "user_type_id": "account.data_account_type_liquidity",
+    },
+    # Input (received) VAT account
+    "z0bug.coa_tax_iva": {
         "code": "111200",
         "reconcile": False,
         "user_type_id": "account.data_account_type_current_liabilities",
@@ -159,8 +174,8 @@ TEST_ACCOUNT_TAX = {
         "description": "22v",
         "name": "IVA 22% su vendite",
         "amount_type": "percent",
-        "account_id": "z0bug.coa_tax_recv",
-        "refund_account_id": "z0bug.coa_tax_recv",
+        "account_id": "z0bug.coa_tax_iva",
+        "refund_account_id": "z0bug.coa_tax_iva",
         "amount": 22,
         "type_tax_use": "sale",
         "price_include": False,
@@ -530,6 +545,8 @@ class MyTest(SingleTransactionCase):
             self.default_company(),
             xref="z0bug.mycompany",
             partner_xref="z0bug.partner_mycompany",
+            recv_xref="z0bug.coa_recv",
+            pay_xref="z0bug.coa_pay",
             bnk1_xref="z0bug.coa_bnk1",
             values={
                 "name": "Test Company",
@@ -1139,7 +1156,7 @@ class MyTest(SingleTransactionCase):
             "line_ids": [],
         }
         line_vals = {
-            "account_id": "z0bug.coa_tax_recv",
+            "account_id": "z0bug.coa_tax_iva",
             "debit": 2.50,
             "credit": 0.0,
             "name": "VAT payment",
