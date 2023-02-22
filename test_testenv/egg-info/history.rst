@@ -4,7 +4,7 @@
 * [NEW] Regression test on sale order
 * [IMP] Regression test with reduced parameters to test new improvements
 * [IMP] Regression test using text and/or dict on *2many fields
-* [IMP] TestEnv coverage 96% (987/43)
+* [IMP] TestEnv coverage 96% (999/43)
 
 12.0.2.0.5 (2023-01-25)
 ~~~~~~~~~~~~~~~~~~~~~~~
