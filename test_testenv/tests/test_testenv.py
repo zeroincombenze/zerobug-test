@@ -67,9 +67,9 @@ TEST_ACCOUNT_INVOICE = {
     "z0bug.invoice_Z0_1": {
         "date_invoice": "####-<#-99",
         "journal_id": "external.INV",
-        "origin": "P1/2021/0001",
+        "origin": "P1/2023/0001",
         "partner_id": "z0bug.res_partner_1",
-        "reference": "P1/2021/0001",
+        "reference": "P1/2023/0001",
         "type": "out_invoice",
         "payment_term_id": "z0bug.payment_term_1",
     },
@@ -281,17 +281,17 @@ TEST_RES_PARTNER_BANK = {
     "z0bug.bank_company_1": {
         "acc_number": "IT15A0123412345100000123456",
         "partner_id": "base.main_partner",
-        "acc_type": "iban",
+        # "acc_type": "iban",
     },
     "z0bug.bank_partner_1": {
         "acc_number": "IT73C0102001011010101987654",
         "partner_id": "z0bug.res_partner_1",
-        "acc_type": "iban",
+        # "acc_type": "iban",
     },
     "z0bug.bank_partner_2": {
         "acc_number": "IT82B0200802002200000000022",
         "partner_id": "z0bug.res_partner_2",
-        "acc_type": "iban",
+        # "acc_type": "iban",
     },
 }
 
@@ -460,12 +460,15 @@ class MyTest(SingleTransactionCase):
             self.get_resource_data("res.partner", "z0bug.res_partner_1")["city"],
             "Castano Primo",
         )
-        self.assertFalse(
-            self.get_resource_data("res.partner", "z0bug.res_partner_1")["customer"],
-        )
-        self.assertFalse(
-            self.get_resource_data("res.partner", "z0bug.res_partner_1")["supplier"],
-        )
+        if self.odoo_major_version < 13:
+            self.assertFalse(
+                self.get_resource_data("res.partner",
+                                       "z0bug.res_partner_1")["customer"],
+            )
+            self.assertFalse(
+                self.get_resource_data("res.partner",
+                                       "z0bug.res_partner_1")["supplier"],
+            )
 
     def _test_03(self):
         # ===[Test declare_resource_data() + compute_date() functions]===
@@ -824,18 +827,19 @@ class MyTest(SingleTransactionCase):
         # Based on Odoo partner feature. Tested on Odoo 10.0, 12.0; it requires:
         # - image is null (2° web_change)
         # - email with gravatar (antoniomaria.vigliotti@gmail.com)
+        image_field = "image" if self.odoo_major_version < 13 else "image_1024"
         partner = self.resource_bind("z0bug.res_partner_1")
         self.resource_edit(
             resource=partner,
             web_changes=[
                 ("name", "PRIMA ALPHA S.P.A."),
-                ("image", False),
+                (image_field, False),
                 ("email", "antoniomaria.vigliotti@gmail.com"),
             ],
             ctx={"gravatar_image": True},
         )
         self.assertTrue(
-            partner.image,
+            partner[image_field],
             "partner.onchange_email() FAILED: no gravatar image downloaded!",
         )
 
@@ -1009,7 +1013,7 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(record.state, "draft")
         self.assertEqual(record.description, "Almost long long description")
         self.assertEqual(record.rank, 17)
-        self.assertEqual(record.amount, 23.4)
+        self.assertEqual(round(record.amount, 2), 23.4)
         self.assertEqual(record.measure, 45.6)
         self.assertEqual(record.date, "2022-06-26" if PY2 else date(2022, 6, 26))
         res = self.compute_date("####-##-02 10:11:12")
@@ -1089,8 +1093,8 @@ class MyTest(SingleTransactionCase):
 
         # Test with weak information
         template = [
-            {"customer": True},
-            {"customer": True},
+            {"is_company": True},
+            {"is_company": True},
         ]
         self.validate_records(template, records)
 
