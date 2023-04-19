@@ -37,6 +37,9 @@ class MyTest(SingleTransactionCase):
             self.assertTrue(models, "Imported models from odoo_score")
         except BaseException:
             self.assertTrue(models, "Imported models from odoo_score")
+            return
+        self.assertTrue(hasattr(models.Model, "_abstract"), "models.Model attribute")
+        self.assertTrue(hasattr(models.Model, "_transient"), "models.Model attribute")
 
     def test_odoo_score(self):
         self._test_global_function()
