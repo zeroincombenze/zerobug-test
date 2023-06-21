@@ -75,4 +75,6 @@ repos:
   - repo: local
     hooks:
       - id: arcangelo
-        entry: arcangelo -b12.0
+        name: arcangelo
+        language: python
+        entry: arcangelo -i -b12.0
