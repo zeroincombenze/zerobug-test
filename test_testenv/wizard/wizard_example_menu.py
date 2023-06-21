@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # Copyright 2019-22 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
@@ -11,6 +12,7 @@ from datetime import datetime, timedelta
 from random import random, randint
 
 from odoo import fields, models, api, _
+
 # from odoo.exceptions import UserError
 
 try:
@@ -36,7 +38,6 @@ class WizardExamplMenu(models.TransientModel):
             self.numrecords = 3
 
     def do_example(self):
-
         if not self.numrecords:
             # Case 1: no record, show the same windows with "no results"
             return {
@@ -48,8 +49,9 @@ class WizardExamplMenu(models.TransientModel):
                 "res_id": self.id,
                 "target": "new",
                 "context": {"active_id": self.id},
-                "view_id":
-                    self.env.ref("test_testenv.result_wizard_example_menu_view").id,
+                "view_id": self.env.ref(
+                    "test_testenv.result_wizard_example_menu_view"
+                ).id,
                 "domain": [("id", "=", self.id)],
             }
 
@@ -61,13 +63,13 @@ class WizardExamplMenu(models.TransientModel):
             (datetime.today() - timedelta(days=5)).date(),
             (datetime.today() - timedelta(days=14)).date(),
         )
-        refdate = (datetime.now() - timedelta(days=27))
-        partners = [x.id for x in self.env["res.partner"].search(
-            ["|",
-             ("name", "like", "Prima Alpha"),
-             ("name", "like", "Latte Beta")
-             ]
-        )]
+        refdate = datetime.now() - timedelta(days=27)
+        partners = [
+            x.id
+            for x in self.env["res.partner"].search(
+                ["|", ("name", "like", "Prima Alpha"), ("name", "like", "Latte Beta")]
+            )
+        ]
 
         rec_ids = []
         for nr in range(self.numrecords):
@@ -86,7 +88,7 @@ class WizardExamplMenu(models.TransientModel):
                     nr + 10,
                     nr * 10,
                     59 - (nr * 7),
-                    0
+                    0,
                 ),
                 "updated_dt": datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S"),
                 "date": dates[nr],
@@ -104,9 +106,10 @@ class WizardExamplMenu(models.TransientModel):
             "domain": [("id", "in", rec_ids)],
             "type": "ir.actions.act_window",
             "view_id": False,
-            "views":
-                [(self.env.ref("test_testenv.testenv_all_fields_tree").id, "tree"),
-                 (self.env.ref("test_testenv.testenv_all_fields_form").id, "form")],
+            "views": [
+                (self.env.ref("test_testenv.testenv_all_fields_tree").id, "tree"),
+                (self.env.ref("test_testenv.testenv_all_fields_form").id, "form"),
+            ],
         }
 
     def close_window(self):

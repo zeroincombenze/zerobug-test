@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2018-23 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
@@ -45,7 +46,7 @@ class TestenvAllFields(models.Model):
         [("draft", "Draft"), ("confirmed", "Confirmed")],
         "State",
         default="draft",
-        help="Selection field"
+        help="Selection field",
     )
     company_id = fields.Many2one("res.company", string="Company", help="Company field")
     currency_id = fields.Many2one(
@@ -59,13 +60,13 @@ class TestenvAllFields(models.Model):
         string="Amount",
         currency_field="currency_id",
         default=_default_amount,
-        help="Monetary field")
+        help="Monetary field",
+    )
     measure = fields.Float("Amount", default=_default_measure, help="Float field")
     date = fields.Date(string='Date', default=_default_date, help="Date field")
     created_dt = fields.Datetime(
-        string='Created timestamp',
-        default=_default_created_dt,
-        help="Datetime field")
+        string='Created timestamp', default=_default_created_dt, help="Datetime field"
+    )
     updated_dt = fields.Datetime(string='Delivery timestamp', help="Datetime field")
     attachment = fields.Binary("Attachemnt")
     webpage = fields.Html("Html")
