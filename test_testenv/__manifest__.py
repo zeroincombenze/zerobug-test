@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Copyright 2016-22 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
@@ -10,7 +9,7 @@
 {
     "name": "testenv",
     "summary": "z0bug_odoo test suite",
-    "version": "12.0.2.0.6",
+    "version": "12.0.2.0.8",
     "category": "Generic Modules/Accounting",
     "author": "SHS-AV s.r.l.",
     "website": "https://github.com/OCA/l10n-italy",
@@ -21,8 +20,13 @@
             "past",  # TODO: pylint bug, it is to remove
         ],
     },
+    "version_external_dependencies": ["z0bug_odoo==2.0.8"],
     "depends": [
-        "base", "account", "account_cancel", "product", "sale",
+        "base",
+        "account",
+        "account_cancel",
+        "product",
+        "sale",
     ],
     "data": [
         "security/ir.model.access.csv",
@@ -32,4 +36,5 @@
     "installable": True,
     "maintainer": "Antonio Maria Vigliotti",
     "development_status": "Production/Stable",
+    "pre_init_hook": "check_4_depending",
 }
