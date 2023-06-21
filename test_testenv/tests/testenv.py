@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test Environment v2.0.6.1
+"""Test Environment v2.0.8.1
 
 Copy this file in tests directory of your module.
 Please copy the documentation testenv.rst file too in your module.
@@ -1244,13 +1244,14 @@ class MainTest(SingleTransactionCase):
         for field in list(values.keys()):
             if field in SUPERMAGIC_COLUMNS:  # pragma: no cover
                 continue
-            method = "_upgrade_field_%s" % record._fields[field].type
-            method = method if hasattr(self, method) else "_upgrade_field_base"
-            value = getattr(self, method)(record, field, values[field])
-            if not value and default.get(field):
-                value = getattr(self, method)(record, field, default[field])
-            if value is not None:
-                setattr(record, field, value)
+            if field not in default:
+                method = "_upgrade_field_%s" % record._fields[field].type
+                method = method if hasattr(self, method) else "_upgrade_field_base"
+                value = getattr(self, method)(record, field, values[field])
+                # if not value and default.get(field):
+                #     value = getattr(self, method)(record, field, default[field])
+                if value is not None:
+                    setattr(record, field, value)
         return record
 
     @api.model
@@ -1333,14 +1334,23 @@ class MainTest(SingleTransactionCase):
             return record.read()[0]
 
     @api.model
-    def _exec_action(self, record, action, default={}, web_changes=[], ctx={}):
+    def _set_origin(self, record, ctx={}):
         resource_model = self._get_model_from_records(record)
         origin = self.env[resource_model]
-        if self._is_transient(origin) and action in ("save", "create", "discard"):
-            self.raise_error(
-                "Invalid action %s for %s!"
-                % (action, resource_model)  # pragma: no cover
+        if is_iterable(record) and len(record) == 1:
+            origin = self._create_object(
+                resource_model,
+                default=self._convert_to_write(record[0], new=True),
+                origin=origin,
+                ctx=ctx,
             )
+        return origin
+
+    @api.model
+    def _exec_action(self, record, action, default={}, web_changes=[], origin=None,
+                     ctx={}):
+        resource_model = self._get_model_from_records(record)
+        origin = origin or self.env[resource_model]
         if isinstance(record, basestring):
             record = self._create_object(
                 resource_model,
@@ -1354,13 +1364,13 @@ class MainTest(SingleTransactionCase):
                     _ctx = self.env["ir.actions.actions"]._get_eval_context()
                     _ctx.update(self._ctx_active_ids(record, ctx))
                     record = record.with_context(_ctx)
-                if len(record) == 1:
-                    origin = self._create_object(
-                        resource_model,
-                        default=self._convert_to_write(record[0], new=True),
-                        origin=origin,
-                        ctx=ctx,
-                    )
+                if not origin or origin._name != resource_model:
+                    origin = self._set_origin(record, ctx=ctx)
+        if self._is_transient(origin) and action in ("save", "create", "discard"):
+            self.raise_error(
+                "Invalid action %s for %s!"
+                % (action, resource_model)  # pragma: no cover
+            )
         self._load_field_struct(resource_model)
         for args in web_changes:
             self._wiz_edit(
@@ -1408,18 +1418,16 @@ class MainTest(SingleTransactionCase):
 
     @api.model
     def _get_src_model_from_act_windows(self, act_windows):
-        model_name = act_windows.get(
-            "src_model",
-            act_windows.get(
-                "binding_model_id", self._get_model_from_act_windows(act_windows)
-            ),
-        )
+        model_name = act_windows.get("src_model")
+        if not model_name and act_windows.get("binding_model_id"):
+            model_name = self.env.ref(act_windows["binding_model_id"])["model"]
         if not model_name or self._is_transient(model_name):
             model_name = None
             value = "%s,%d" % (act_windows["type"], act_windows["id"])
-            records = self.env["ir.values"].search([("value", "=", value)])
-            if len(records) == 1:
-                model_name = records[0].model
+            if "ir.values" in self.env:
+                records = self.env["ir.values"].search([("value", "=", value)])
+                if len(records) == 1:
+                    model_name = records[0].model
         return model_name
 
     @api.model
@@ -1454,6 +1462,8 @@ class MainTest(SingleTransactionCase):
         Returns:
             Odoo windows action to pass to wizard execution
         """
+        if not isinstance(act_windows, dict):  # pragma: no cover
+            self.raise_error("Invalid act_windows")
         self.log_lvl_2("🐞wizard starting(%s)" % act_windows.get("name"), strict=True)
         self.log_lvl_3(
             "🐞wizard starting(%s,%s,\nrec=%s,\ndef=%s,\nctx=%s)"
@@ -1466,8 +1476,6 @@ class MainTest(SingleTransactionCase):
             ),
             strict=True,
         )
-        if not isinstance(act_windows, dict):  # pragma: no cover
-            self.raise_error("Invalid act_windows")
         if (
             records
             and isinstance(records, (list, tuple))
@@ -1477,6 +1485,7 @@ class MainTest(SingleTransactionCase):
         self._finalize_ctx_act_windows(records, act_windows, ctx)
         if ctx and ctx.get("res_id"):
             act_windows["res_id"] = ctx.pop("res_id")
+
         if records:
             # The record type have to be the same of the action windows model
             # Warning: action windows may not contain any model declaration
@@ -1485,21 +1494,23 @@ class MainTest(SingleTransactionCase):
             rec_model = self._get_model_from_records(records)
             act_model = self._get_model_from_act_windows(act_windows)
             src_model = self._get_src_model_from_act_windows(act_windows)
-            if rec_model != src_model:  # pragma: no cover
-                self.raise_error(
-                    "Records model %s differs from declared model %s in %s"
-                    % (rec_model, src_model, act_model)
-                )
-            if (
-                act_model != src_model
-                and self._is_transient(act_model)
-                and not act_windows.get("src_model")
-            ):  # pragma: no cover
-                self.log_lvl_1(
-                    "💡 You should specify the src_model %s for the action %s"
-                    % (src_model, act_windows.get("name"))
-                )
-                act_windows["src_model"] = src_model
+            if src_model:
+                # Check only for Odoo 10.0-
+                if rec_model != src_model:  # pragma: no cover
+                    self.raise_error(
+                        "Records model %s differs from declared model %s in %s"
+                        % (rec_model, src_model, act_model)
+                    )
+                if (
+                    act_model != src_model
+                    and self._is_transient(act_model)
+                    and not act_windows.get("src_model")
+                ):  # pragma: no cover
+                    self.log_lvl_1(
+                        "💡 You should specify the src_model %s for the action %s"
+                        % (src_model, act_windows.get("name"))
+                    )
+                    act_windows["src_model"] = src_model
             if "active_ids" not in act_windows["context"]:
                 act_windows["context"].update(
                     self._ctx_active_ids(records, ctx=act_windows["context"])
@@ -1581,7 +1592,12 @@ class MainTest(SingleTransactionCase):
         """
         # act_model = "ir.actions.act_window"
         module = self.module.name if module == "." else module
-        act_windows = self.for_xml_id(module, action_name)
+        try:
+            act_windows = self.for_xml_id(module, action_name)
+        except BaseException:
+            if not records or len(records) != 1:
+                self.raise_error(
+                    "Invalid action_name %s" % action_name)
         return self._wiz_launch(
             act_windows,
             default=default,
@@ -1611,7 +1627,12 @@ class MainTest(SingleTransactionCase):
         cur_vals = {}
         for name in wizard._fields.keys():
             if name not in SUPERMAGIC_COLUMNS:
-                cur_vals[name] = getattr(wizard, name)
+                try:
+                    cur_vals[name] = getattr(wizard, name)
+                except BaseException:
+                    self.raise_error(
+                        "Wrong compute for %s.%s! Forgot @multi?" % (wizard._name,
+                                                                     name))
         value = self._cast_field(resource, field, value, fmt="cmd")
         if value is not None:
             setattr(wizard, field, value)
@@ -1644,31 +1665,6 @@ class MainTest(SingleTransactionCase):
             " 🐜 wizard running(%s, %s)"
             % (act_windows.get("name"), self.dict_2_print(act_windows))
         )
-        # if act_windows["type"] == "ir.actions.server":
-        #     if not records and "_wizard_" in act_windows:
-        #         records = act_windows.pop("_wizard_")
-        #     if not records:
-        #         raise (ValueError, "No records supplied")
-        #     if records._name != act_windows["model_name"]:
-        #         raise (ValueError, "Records model different from declared model")
-        #     ctx = {
-        #         "active_model": act_windows["model_name"],
-        #         "active_ids": [x.id for x in records],
-        #     }
-        #     eval_context = {
-        #         "env": self.env,
-        #         "model": records.with_context(ctx),
-        #         "Warning": Warning,
-        #         "record": records[0] if len(records) == 1 else None,
-        #         "records": records,
-        #         "log": self._logger,
-        #     }
-        #     eval_context.update(ctx)
-        #     act_windows = safe_eval(
-        #         act_windows["code"].strip(), eval_context, mode="exec", nocopy=True
-        #     )
-        #     return act_windows
-
         wizard = act_windows.pop("_wizard_")
         if button_name:
             return self._exec_action(wizard, button_name, web_changes=web_changes)
@@ -2270,7 +2266,7 @@ class MainTest(SingleTransactionCase):
             None
         """
         self._logger.info(
-            "🎺🎺🎺 Starting test v2.0.6.1 (debug_level=%s)" % (self.debug_level)
+            "🎺🎺🎺 Starting test v2.0.7.1 (debug_level=%s)" % (self.debug_level)
         )
         self._logger.info(
             "🎺🎺 Testing module: %s (%s)"
@@ -2365,14 +2361,18 @@ class MainTest(SingleTransactionCase):
                 self.dict_2_print(ctx),
             )
         )
+        origin = self._set_origin(resource, ctx=ctx)
         for action in actions:
             result = self._exec_action(
-                resource, action, default=default, web_changes=web_changes, ctx=ctx
+                resource, action,
+                default=default, web_changes=web_changes, origin=origin, ctx=ctx
             )
             # Web changes executed, clear them, same for default
             web_changes = []
             default = {}
-            resource = result
+            if hasattr(result, "_name"):
+                # action returned recordset
+                resource = result
         return result
 
     @api.model
@@ -2463,6 +2463,7 @@ class MainTest(SingleTransactionCase):
         return isinstance(act_windows, dict) and act_windows.get("type") in (
             "ir.actions.act_window",
             "ir.actions.client",
+            "ir.actions.act_window_close"
         )
 
     @api.model
@@ -2668,6 +2669,8 @@ class MainTest(SingleTransactionCase):
             return match
 
         resource = self._get_model_from_records(record)
+        if not resource:
+            self.raise_error("No valid record supplied for comparation!")
         self._load_field_struct(resource)
         childs_name = self.childs_name.get(resource)
         resource_child = self.childs_resource.get(resource)
@@ -2680,7 +2683,7 @@ class MainTest(SingleTransactionCase):
             if field in (childs_name, "id") or field.startswith("_"):
                 continue
             if self._cast_field(
-                resource, field, template[field]
+                resource, field, template[field], fmt="py"
             ) == self._convert_field_to_write(record, field):
                 template["_MATCH"][key] += 1
         if childs_name:

@@ -376,7 +376,7 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(
             self.get_resource_list(),
             ["res.partner"],
-            "declare_resource_data() FAILED: 'res.partner' not found in resource list!"
+            "declare_resource_data() FAILED: 'res.partner' not found in resource list!",
         )
         self.assertEqual(
             self.get_resource_data_list("res.partner"),
@@ -384,20 +384,20 @@ class MyTest(SingleTransactionCase):
             (
                 "declare_resource_data() FAILED: "
                 "'z0bug.res_partner_1' xref not found in 'res.partner' data!"
-            )
+            ),
         )
         self.assertTrue(
             self.get_resource_data("res.partner", "z0bug.res_partner_1"),
-            "get_resource_data() FAILED: no value found for 'z0bug.res_partner_1'!"
+            "get_resource_data() FAILED: no value found for 'z0bug.res_partner_1'!",
         )
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_1")["name"],
             "Prima Alpha S.p.A.",
-            "TestEnv FAILED: unexpected value for 'name'!"
+            "TestEnv FAILED: unexpected value for 'name'!",
         )
         self.assertFalse(
             "zip" in self.get_resource_data("res.partner", "z0bug.res_partner_1"),
-            "TestEnv FAILED: unexpected field value for 'zip'!"
+            "TestEnv FAILED: unexpected field value for 'zip'!",
         )
         self.assertFalse(
             "not_exist_field"
