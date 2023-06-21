@@ -1,14 +1,15 @@
 10.0.2.0.8 (2023-06-20)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* [IMP] TestEnv coverage 93% (1542/114) +192cp
+* [QUA] Test coverage 93% (1542: 114+1428) +192 TestPoint
 
 10.0.2.0.6 (2023-02-20)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+* [IMP] Activated package version check
 * [NEW] Regression test on sale order
 * [IMP] Regression test with reduced parameters to test new improvements
-* [IMP] Regression test using text and/or dict on *2many fields
+* [IMP] Regression test using text and/or dict on \*2many fields
 * [IMP] TestEnv coverage 95% (999/45)
 
 10.0.2.0.5 (2023-01-25)

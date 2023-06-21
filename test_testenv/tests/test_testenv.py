@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
-from future.utils import PY2
+import base64
+import logging
 import os
 from datetime import date, datetime
-import logging
-import base64
-from odoo.modules.module import get_module_resource
-from .testenv import MainTest as SingleTransactionCase
 
 import python_plus
+from future.utils import PY2
+
+from odoo.modules.module import get_module_resource
+
+from .testenv import MainTest as SingleTransactionCase
 
 _logger = logging.getLogger(__name__)
 
@@ -340,7 +342,6 @@ TEST_SETUP_LIST = [
 
 
 class MyTest(SingleTransactionCase):
-
     def setUp(self):
         super(MyTest, self).setUp()
         self.debug_level = 2
@@ -349,9 +350,9 @@ class MyTest(SingleTransactionCase):
 
     def tearDown(self):
         super(MyTest, self).tearDown()
-        if os.environ.get("ODOO_COMMIT_TEST", ""):                   # pragma: no cover
+        if os.environ.get("ODOO_COMMIT_TEST", ""):  # pragma: no cover
             # Save test environment, so it is available to use
-            self.env.cr.commit()                       # pylint: disable=invalid-commit
+            self.env.cr.commit()  # pylint: disable=invalid-commit
             _logger.info("✨ Test data committed")
 
     def _test_00(self):
@@ -406,7 +407,7 @@ class MyTest(SingleTransactionCase):
         )
         self.assertFalse(
             "street" in self.get_resource_data("res.partner", "z0bug.res_partner_1"),
-            "TestEnv FAILED: unexpected field value for 'street'!"
+            "TestEnv FAILED: unexpected field value for 'street'!",
         )
 
     def _test_02(self):
@@ -419,7 +420,7 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_2")["city"],
             "S. Secondo Parmense",
-            "TestEnv FAILED: unexpected value for 'city'!"
+            "TestEnv FAILED: unexpected value for 'city'!",
         )
         _logger.info("Please, ignore field <...> does not exist in <...>")
         self.declare_resource_data(
@@ -462,12 +463,14 @@ class MyTest(SingleTransactionCase):
         )
         if self.odoo_major_version < 13:
             self.assertFalse(
-                self.get_resource_data("res.partner",
-                                       "z0bug.res_partner_1")["customer"],
+                self.get_resource_data("res.partner", "z0bug.res_partner_1")[
+                    "customer"
+                ],
             )
             self.assertFalse(
-                self.get_resource_data("res.partner",
-                                       "z0bug.res_partner_1")["supplier"],
+                self.get_resource_data("res.partner", "z0bug.res_partner_1")[
+                    "supplier"
+                ],
             )
 
     def _test_03(self):
@@ -648,11 +651,7 @@ class MyTest(SingleTransactionCase):
             },
         )
 
-        self.resource_write(
-            model, "base.EUR",
-            {
-                "rate_ids": [(6, 0, [xref, xref1])]
-            })
+        self.resource_write(model, "base.EUR", {"rate_ids": [(6, 0, [xref, xref1])]})
 
         # *xmany as Odoo convention (2)
         self.resource_write(
@@ -856,16 +855,13 @@ class MyTest(SingleTransactionCase):
         self.setup_env(group="order")
 
         order = self.resource_bind("z0bug.sale_order_Z0_2")
-        self.assertEqual(
-            len(order.order_line),
-            2
-        )
+        self.assertEqual(len(order.order_line), 2)
 
         line = self.resource_bind(xref="z0bug.sale_order_Z0_2_2")
         self.resource_write(
             "sale.order",
             xref="z0bug.sale_order_Z0_2",
-            values={"order_line": [2, line.id]}
+            values={"order_line": [2, line.id]},
         )
         # TODO> Check for test failing
         # self.assertFalse(self.resource_bind(xref="z0bug.sale_order_Z0_2_2"))
@@ -889,15 +885,9 @@ class MyTest(SingleTransactionCase):
         self.setup_env(group="invoice")
 
         invoice = self.resource_bind("z0bug.invoice_Z0_1")
-        self.assertEqual(
-            len(invoice.invoice_line_ids),
-            3
-        )
+        self.assertEqual(len(invoice.invoice_line_ids), 3)
         invoice = self.resource_bind("z0bug.invoice_Z0_2")
-        self.assertEqual(
-            len(invoice.invoice_line_ids),
-            2
-        )
+        self.assertEqual(len(invoice.invoice_line_ids), 2)
 
         # Test reading record without resource declaration by <external> xref
         self.resource_bind("external.BNK1")
