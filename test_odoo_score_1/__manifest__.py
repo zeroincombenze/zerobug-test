@@ -9,7 +9,7 @@
 {
     "name": "Test Odoo score",
     "summary": "odoo_score test suite",
-    "version": "10.0.0.1.0",
+    "version": "1.0.2.0.6",
     "category": "Generic Modules/Accounting",
     "author": "SHS-AV s.r.l.",
     "website": "https://github.com/OCA/l10n-italy",
@@ -20,6 +20,7 @@
             "past",  # TODO: pylint bug, it is to remove
         ],
     },
+    "version_external_dependencies": ["odoo_score==2.0.6"],
     "depends": [
         "base",
         "account",
@@ -31,4 +32,5 @@
     "installable": True,
     "maintainer": "Antonio Maria Vigliotti",
     "development_status": "Alpha",
+    "pre_init_hook": "check_4_depending",
 }

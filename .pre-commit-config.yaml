@@ -44,6 +44,9 @@ exclude: |
   ^l10n_it_fatturapa_out_di/tests/data
 default_language_version:
   python: python3
+
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
@@ -71,5 +74,5 @@ repos:
       - id: requirements-txt-fixer
   - repo: local
     hooks:
-      - id: do_migrate
-        entry: arcangelo -b0.0
+      - id: arcangelo
+        entry: arcangelo -b12.0

@@ -25,7 +25,6 @@ class MyTest(SingleTransactionCase):
             self.env.cr.commit()                       # pylint: disable=invalid-commit
             _logger.info("✨ Test data committed")
 
-
     def _test_global_function(self):
         self.assertTrue(odoo_score.check_object_name("a.b"))
         self.assertFalse(odoo_score.check_object_name("a-b"))

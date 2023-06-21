@@ -93,6 +93,7 @@ multiprocess==0.70.14
 num2words==0.5.6
 numpy==1.21.6
 odoo==12.0
+odoo-score==2.0.6
 OdooRPC==0.9.0
 OERPLib==0.8.4
 ofxparse==0.16
