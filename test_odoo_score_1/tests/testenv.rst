@@ -181,9 +181,9 @@ magic text.
     ...
 
     # Get 'product.template' record
-    self.resource_bind("z0bug.product_template_1")
+    self.resource_browse("z0bug.product_template_1")
     # Get 'product.product' record
-    self.resource_bind("z0bug.product_product_1")
+    self.resource_browse("z0bug.product_product_1")
 
 
 External reference
@@ -413,12 +413,12 @@ company_id
 ~~~~~~~~~~
 
 If value is empty, user company is used.
-When data is searched by resource_bind() function the "company_id" field
+When data is searched by resource_browse() function the "company_id" field
 is automatically filled and added to search domain.
 This behavior is not applied on
 "res.users", "res.partner","product.template" and "product.product" models.
 For these models you must fill the "company_id" field.
-For these models resource_bind() function searches for record with company_id
+For these models resource_browse() function searches for record with company_id
 null or equal to current user company.
 
 boolean
@@ -654,7 +654,7 @@ def compute_date(self, date, refdate=None):
     date (date or string or integer): formula; read aboove
     refdate (date or string): reference date
 
-resource_bind
+resource_browse
 ~~~~~~~~~~~~~
 
 Bind record by xref or searching it or browsing it.
@@ -666,7 +666,7 @@ This function returns a record using issued parameters. It works in follow ways:
     * xref is searched in stored data
     * xref ("MODULE.NAME"): if MODULE == "external", NAME is the record key
 
-def resource_bind(self, xref, raise_if_not_found=True, resource=None):
+def resource_browse(self, xref, raise_if_not_found=True, resource=None):
 
     Args:
         xref (str): external reference
