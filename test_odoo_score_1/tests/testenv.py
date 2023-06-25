@@ -1758,8 +1758,8 @@ class MainTest(SingleTransactionCase):
         return python_plus.compute_date(self.u(date), refdate=self.u(refdate))
 
     @api.model
-    def resource_bind(self, xref, raise_if_not_found=True, resource=None, group=None):
-        self.log_lvl_1("resource_bind() is deprecated: please use resource_browse()")
+    def resource_browse(self, xref, raise_if_not_found=True, resource=None, group=None):
+        self.log_lvl_1("resource_browse() is deprecated: please use resource_browse()")
         return self.resource_browse(xref=xref,
                                     raise_if_not_found=raise_if_not_found,
                                     resource=resource,
