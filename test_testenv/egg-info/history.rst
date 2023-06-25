@@ -1,7 +1,8 @@
-12.0.2.0.8 (2023-06-20)
+12.0.2.0.8 (2023-06-24)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* [QUA] Test coverage 93% (1540: 112+1428) +246 TestPoint
+* [NEW] Regression test on account.move
+* [QUA] Test coverage 93% (1565: 110+1455) [286 TestPoint]
 
 12.0.2.0.6 (2023-02-20)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -38,4 +39,3 @@
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] First release
-* [QUA] Test coverage 93% (1540: 112+1428) +246 TestPoint

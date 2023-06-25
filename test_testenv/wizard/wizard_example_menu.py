@@ -61,13 +61,13 @@ class WizardExamplMenu(models.TransientModel):
             (datetime.today() - timedelta(days=5)).date(),
             (datetime.today() - timedelta(days=14)).date(),
         )
-        refdate = (datetime.now() - timedelta(days=27))
-        partners = [x.id for x in self.env["res.partner"].search(
-            ["|",
-             ("name", "like", "Prima Alpha"),
-             ("name", "like", "Latte Beta")
+        refdate = datetime.now() - timedelta(days=27)
+        partners = [
+            x.id
+            for x in self.env["res.partner"].search(
+                ["|", ("name", "like", "Prima Alpha"), ("name", "like", "Latte Beta")]
+            )
              ]
-        )]
 
         rec_ids = []
         for nr in range(self.numrecords):
@@ -86,7 +86,7 @@ class WizardExamplMenu(models.TransientModel):
                     nr + 10,
                     nr * 10,
                     59 - (nr * 7),
-                    0
+                    0,
                 ),
                 "updated_dt": datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S"),
                 "date": dates[nr],
@@ -104,9 +104,10 @@ class WizardExamplMenu(models.TransientModel):
             "domain": [("id", "in", rec_ids)],
             "type": "ir.actions.act_window",
             "view_id": False,
-            "views":
-                [(self.env.ref("test_testenv.testenv_all_fields_tree").id, "tree"),
-                 (self.env.ref("test_testenv.testenv_all_fields_form").id, "form")],
+            "views": [
+                (self.env.ref("test_testenv.testenv_all_fields_tree").id, "tree"),
+                (self.env.ref("test_testenv.testenv_all_fields_form").id, "form"),
+            ],
         }
 
     def close_window(self):

@@ -45,7 +45,7 @@ class TestenvAllFields(models.Model):
         [("draft", "Draft"), ("confirmed", "Confirmed")],
         "State",
         default="draft",
-        help="Selection field"
+        help="Selection field",
     )
     company_id = fields.Many2one("res.company", string="Company", help="Company field")
     currency_id = fields.Many2one(
@@ -59,7 +59,8 @@ class TestenvAllFields(models.Model):
         string="Amount",
         currency_field="currency_id",
         default=_default_amount,
-        help="Monetary field")
+        help="Monetary field",
+    )
     measure = fields.Float("Amount", default=_default_measure, help="Float field")
     date = fields.Date(string='Date', default=_default_date, help="Date field")
     created_dt = fields.Datetime(

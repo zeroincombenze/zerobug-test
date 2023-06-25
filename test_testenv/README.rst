@@ -160,7 +160,7 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
-12.0.2.0.8 (2023-06-20)
+12.0.2.0.9 (2023-06-20)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] TestEnv coverage 93% (1540/112) +246cp
@@ -258,11 +258,11 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of  project.
 
-Last Update / Ultimo aggiornamento: 
+Last Update / Ultimo aggiornamento:
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Mature-green.png
     :target: https://odoo-community.org/page/development-status
-    :alt: 
+    :alt:
 .. |Build Status| image:: https://travis-ci.org/zeroincombenze/.svg?branch=12.0
     :target: https://travis-ci.com/zeroincombenze/
     :alt: github.com

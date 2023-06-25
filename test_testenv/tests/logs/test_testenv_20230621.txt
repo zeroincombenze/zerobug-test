@@ -68,9 +68,9 @@
 2023-06-21 17:35:51,427 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid value it_IT 
 2023-06-21 17:35:51,535 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 skeys[mail.followers] = ['partner_id'] 
 2023-06-21 17:35:51,535 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 💼 res.partner.store_resource_data(z0bug.res_partner_2,name=res.partner,group=base) 
-2023-06-21 17:35:51,535 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:35:51,535 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:51,537 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(456)/_test_02()
-['        self.assertEqual(self.resource_bind("z0bug.res_partner_2")["lang"], "en_US")\n'] 
+['        self.assertEqual(self.resource_browse("z0bug.res_partner_2")["lang"], "en_US")\n']
 2023-06-21 17:35:51,540 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_resource[res.currency.rate] = res.currency 
 2023-06-21 17:35:51,540 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 parent_name[res.currency.rate] = currency_id 
 2023-06-21 17:35:51,541 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🌍 childs_resource[res.currency] = res.currency.rate 
@@ -91,24 +91,24 @@
 ['        self.resource_write(model, "base.EUR", {"active": True})\n'] 
 2023-06-21 17:35:51,562 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(510)/_test_04()
 ['        self.resource_write(model, "base.EUR", {"active": True})\n'] 
-2023-06-21 17:35:51,571 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:35:51,571 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:51,573 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(511)/_test_04()
-['        self.assertTrue(self.resource_bind("base.EUR").active)\n'] 
-2023-06-21 17:35:51,576 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        self.assertTrue(self.resource_browse("base.EUR").active)\n']
+2023-06-21 17:35:51,576 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:51,577 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(516)/_test_04()
-['        self.assertEqual(self.resource_bind(xref, resource=model).rate, 0.9)\n'] 
+['        self.assertEqual(self.resource_browse(xref, resource=model).rate, 0.9)\n']
 2023-06-21 17:35:51,580 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(516)/_test_04()
-['        self.assertEqual(self.resource_bind(xref, resource=model).rate, 0.9)\n'] 
-2023-06-21 17:35:51,583 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        self.assertEqual(self.resource_browse(xref, resource=model).rate, 0.9)\n']
+2023-06-21 17:35:51,583 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:51,584 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(520)/_test_04()
-['        self.assertEqual(self.resource_bind(xref).rate, 0.95)\n'] 
+['        self.assertEqual(self.resource_browse(xref).rate, 0.95)\n']
 2023-06-21 17:35:51,586 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(520)/_test_04()
-['        self.assertEqual(self.resource_bind(xref).rate, 0.95)\n'] 
-2023-06-21 17:35:51,592 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        self.assertEqual(self.resource_browse(xref).rate, 0.95)\n']
+2023-06-21 17:35:51,592 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:51,594 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(534)/_test_04()
-['        self.assertEqual(self.resource_bind(xref).rate, 0.88)\n'] 
+['        self.assertEqual(self.resource_browse(xref).rate, 0.88)\n']
 2023-06-21 17:35:51,599 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(534)/_test_04()
-['        self.assertEqual(self.resource_bind(xref).rate, 0.88)\n'] 
+['        self.assertEqual(self.resource_browse(xref).rate, 0.88)\n']
 2023-06-21 17:35:51,603 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(544)/_test_setup()
 ['        self.declare_all_data(data)\n'] 
 2023-06-21 17:35:51,603 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(res.partner,group=base) 
@@ -323,18 +323,18 @@
 ['        self.setup_env()\n'] 
 2023-06-21 17:35:53,029 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(570)/_test_setup()
 ['        self.setup_env()\n'] 
-2023-06-21 17:35:53,189 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:35:53,189 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,190 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(572)/_test_setup()
-['            self.resource_bind("z0bug.bank_company_1").acc_number.replace(" ", ""),\n'] 
-2023-06-21 17:35:53,204 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['            self.resource_browse("z0bug.bank_company_1").acc_number.replace(" ", ""),\n']
+2023-06-21 17:35:53,204 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,205 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(577)/_test_setup()
-['            self.resource_bind("z0bug.res_partner_2")["city"],\n'] 
-2023-06-21 17:35:53,211 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['            self.resource_browse("z0bug.res_partner_2")["city"],\n']
+2023-06-21 17:35:53,211 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,213 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(584)/_test_setup()
-['            self.resource_bind("z0bug.partner_mycompany")["vat"], "IT05111810015"\n'] 
-2023-06-21 17:35:53,216 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['            self.resource_browse("z0bug.partner_mycompany")["vat"], "IT05111810015"\n']
+2023-06-21 17:35:53,216 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,217 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(588)/_test_setup()
-['            self.resource_bind("base.main_company")["vat"], "IT05111810015"\n'] 
+['            self.resource_browse("base.main_company")["vat"], "IT05111810015"\n']
 2023-06-21 17:35:53,221 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(596)/_test_setup()
 ['        self.declare_all_data(data, group="payment_term")\n'] 
 2023-06-21 17:35:53,221 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🐜 declare_all_data(account.payment.term,group=payment_term) 
@@ -394,12 +394,12 @@
 ['        self.setup_env(group="payment_term")\n'] 
 2023-06-21 17:35:53,359 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(597)/_test_setup()
 ['        self.setup_env(group="payment_term")\n'] 
-2023-06-21 17:35:53,364 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:35:53,364 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,365 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(599)/_test_setup()
-['            self.resource_bind("z0bug.payment_term_1")["name"], "RiBA 30 GG"\n'] 
-2023-06-21 17:35:53,368 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['            self.resource_browse("z0bug.payment_term_1")["name"], "RiBA 30 GG"\n']
+2023-06-21 17:35:53,368 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,369 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(603)/_test_many2one()
-['        partner = self.resource_bind("z0bug.res_partner_2")\n'] 
+['        partner = self.resource_browse("z0bug.res_partner_2")\n']
 2023-06-21 17:35:53,371 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(607)/_test_many2one()
 ['            values={"country_id": self.env.ref("base.it").id},\n'] 
 2023-06-21 17:35:53,373 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(607)/_test_many2one()
@@ -423,20 +423,20 @@
 2023-06-21 17:35:53,406 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference external.109 not found 
 2023-06-21 17:35:53,406 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv:  🕶️ res.partner.cast_type() = {} 
 2023-06-21 17:35:53,408 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: 🎺 Testing test_currency_2many() 
-2023-06-21 17:35:53,408 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:35:53,408 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,409 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(641)/_test_currency_2many()
-['                            self.resource_bind(xref).id,\n'] 
+['                            self.resource_browse(xref).id,\n']
 2023-06-21 17:35:53,411 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(641)/_test_currency_2many()
-['                            self.resource_bind(xref).id,\n'] 
-2023-06-21 17:35:53,416 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['                            self.resource_browse(xref).id,\n']
+2023-06-21 17:35:53,416 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,417 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(642)/_test_currency_2many()
-['                            self.resource_bind(xref1).id,\n'] 
+['                            self.resource_browse(xref1).id,\n']
 2023-06-21 17:35:53,420 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(642)/_test_currency_2many()
-['                            self.resource_bind(xref1).id,\n'] 
+['                            self.resource_browse(xref1).id,\n']
 2023-06-21 17:35:53,423 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(642)/_test_currency_2many()
-['                            self.resource_bind(xref1).id,\n'] 
+['                            self.resource_browse(xref1).id,\n']
 2023-06-21 17:35:53,424 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(642)/_test_currency_2many()
-['                            self.resource_bind(xref1).id,\n'] 
+['                            self.resource_browse(xref1).id,\n']
 2023-06-21 17:35:53,431 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(649)/_test_currency_2many()
 ['        self.resource_write(model, "base.EUR", {"rate_ids": [(6, 0, [xref, xref1])]})\n'] 
 2023-06-21 17:35:53,432 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(649)/_test_currency_2many()
@@ -449,34 +449,34 @@
 ['                    (0, 0, {"name": "2022-01-01", "rate": 0.77}),\n'] 
 2023-06-21 17:35:53,450 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(657)/_test_currency_2many()
 ['                    (0, 0, {"name": "2022-01-01", "rate": 0.77}),\n'] 
-2023-06-21 17:35:53,455 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:35:53,455 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,456 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(670)/_test_currency_2many()
-['                        self.resource_bind(xref).id,\n'] 
+['                        self.resource_browse(xref).id,\n']
 2023-06-21 17:35:53,459 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(670)/_test_currency_2many()
-['                        self.resource_bind(xref).id,\n'] 
-2023-06-21 17:35:53,460 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['                        self.resource_browse(xref).id,\n']
+2023-06-21 17:35:53,460 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,462 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(675)/_test_currency_2many()
-['                        self.resource_bind(xref1).id,\n'] 
+['                        self.resource_browse(xref1).id,\n']
 2023-06-21 17:35:53,464 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(675)/_test_currency_2many()
-['                        self.resource_bind(xref1).id,\n'] 
+['                        self.resource_browse(xref1).id,\n']
 2023-06-21 17:35:53,467 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(676)/_test_currency_2many()
 ['                        self.get_resource_data("res.currency.rate", xref1),\n'] 
 2023-06-21 17:35:53,469 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(676)/_test_currency_2many()
 ['                        self.get_resource_data("res.currency.rate", xref1),\n'] 
-2023-06-21 17:35:53,475 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:35:53,475 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,477 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(688)/_test_currency_2many()
-['                    self.resource_bind(xref).id,\n'] 
+['                    self.resource_browse(xref).id,\n']
 2023-06-21 17:35:53,479 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(688)/_test_currency_2many()
-['                    self.resource_bind(xref).id,\n'] 
-2023-06-21 17:35:53,481 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['                    self.resource_browse(xref).id,\n']
+2023-06-21 17:35:53,481 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,482 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(689)/_test_currency_2many()
-['                    self.resource_bind(xref1).id,\n'] 
+['                    self.resource_browse(xref1).id,\n']
 2023-06-21 17:35:53,485 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(689)/_test_currency_2many()
-['                    self.resource_bind(xref1).id,\n'] 
+['                    self.resource_browse(xref1).id,\n']
 2023-06-21 17:35:53,488 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(689)/_test_currency_2many()
-['                    self.resource_bind(xref1).id,\n'] 
+['                    self.resource_browse(xref1).id,\n']
 2023-06-21 17:35:53,490 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(689)/_test_currency_2many()
-['                    self.resource_bind(xref1).id,\n'] 
+['                    self.resource_browse(xref1).id,\n']
 2023-06-21 17:35:53,496 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(695)/_test_currency_2many()
 ['        self.resource_write(model, "base.EUR", {"rate_ids": [xref, xref1]})\n'] 
 2023-06-21 17:35:53,497 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(695)/_test_currency_2many()
@@ -509,15 +509,15 @@
 ['        self.resource_write(model, "base.EUR", {"rate_ids": xref})\n'] 
 2023-06-21 17:35:53,541 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(700)/_test_currency_2many()
 ['        self.resource_write(model, "base.EUR", {"rate_ids": xref})\n'] 
-2023-06-21 17:35:53,547 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:35:53,547 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,549 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(705)/_test_currency_2many()
-['            {"rate_ids": self.resource_bind(xref).id},\n'] 
+['            {"rate_ids": self.resource_browse(xref).id},\n']
 2023-06-21 17:35:53,551 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(705)/_test_currency_2many()
-['            {"rate_ids": self.resource_bind(xref).id},\n'] 
+['            {"rate_ids": self.resource_browse(xref).id},\n']
 2023-06-21 17:35:53,554 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(705)/_test_currency_2many()
-['            {"rate_ids": self.resource_bind(xref).id},\n'] 
+['            {"rate_ids": self.resource_browse(xref).id},\n']
 2023-06-21 17:35:53,555 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(705)/_test_currency_2many()
-['            {"rate_ids": self.resource_bind(xref).id},\n'] 
+['            {"rate_ids": self.resource_browse(xref).id},\n']
 2023-06-21 17:35:53,560 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(709)/_test_currency_2many()
 ['        self.resource_write(model, "base.EUR", {})\n'] 
 2023-06-21 17:35:53,562 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(709)/_test_currency_2many()
@@ -530,11 +530,11 @@
 ['        self.resource_write(model, "base.EUR", {})\n'] 
 2023-06-21 17:35:53,570 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(709)/_test_currency_2many()
 ['        self.resource_write(model, "base.EUR", {})\n'] 
-2023-06-21 17:35:53,577 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:35:53,577 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,579 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(711)/_test_currency_2many()
-['        record = self.resource_bind(xref1)\n'] 
+['        record = self.resource_browse(xref1)\n']
 2023-06-21 17:35:53,581 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(711)/_test_currency_2many()
-['        record = self.resource_bind(xref1)\n'] 
+['        record = self.resource_browse(xref1)\n']
 2023-06-21 17:35:53,586 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(990)/_test_testenv_all_fields()
 ['                        "z0bug.product_product_23",\n'] 
 2023-06-21 17:35:53,586 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞testenv.all.fields.resource_edit(['create']) 
@@ -554,21 +554,21 @@
 2023-06-21 17:35:53,628 355044 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted testenv.all.fields records with IDs: [] 
 2023-06-21 17:35:53,652 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1014)/_test_testenv_all_fields()
 ['        self.assertEqual(self.field_download(record, "attachment"), source_xml)\n'] 
-2023-06-21 17:35:53,652 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:35:53,652 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,653 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1020)/_test_testenv_all_fields()
-['        res |= self.resource_bind("z0bug.res_partner_1")\n'] 
-2023-06-21 17:35:53,654 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        res |= self.resource_browse("z0bug.res_partner_1")\n']
+2023-06-21 17:35:53,654 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,655 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1021)/_test_testenv_all_fields()
-['        res |= self.resource_bind("z0bug.res_partner_2")\n'] 
-2023-06-21 17:35:53,658 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        res |= self.resource_browse("z0bug.res_partner_2")\n']
+2023-06-21 17:35:53,658 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,659 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1024)/_test_testenv_all_fields()
-['        res |= self.resource_bind("z0bug.product_product_1")\n'] 
-2023-06-21 17:35:53,660 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        res |= self.resource_browse("z0bug.product_product_1")\n']
+2023-06-21 17:35:53,660 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,661 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1025)/_test_testenv_all_fields()
-['        res |= self.resource_bind("z0bug.product_product_18")\n'] 
-2023-06-21 17:35:53,662 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        res |= self.resource_browse("z0bug.product_product_18")\n']
+2023-06-21 17:35:53,662 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,664 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1026)/_test_testenv_all_fields()
-['        res |= self.resource_bind("z0bug.product_product_23")\n'] 
+['        res |= self.resource_browse("z0bug.product_product_23")\n']
 2023-06-21 17:35:53,668 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1033)/_test_testenv_all_fields()
 ['                ("date", datetime(2022, 6, 22, 23, 22, 21)),\n'] 
 2023-06-21 17:35:53,668 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞testenv.all.fields(1,).resource_edit(['save']) 
@@ -581,15 +581,15 @@
 2023-06-21 17:35:53,693 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞 ... assertEqual(template(1).updated_dt:'2023-06-21 17:35:53.585623', rec(1):'2023-06-21 17:35:53') 
 2023-06-21 17:35:53,693 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞2 assertion validated for validate_records(template(1{(None, testenv.all.fields(1,))=2})) 
 2023-06-21 17:35:53,693 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: 🎺 Testing test_product() 
-2023-06-21 17:35:53,693 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:35:53,693 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,694 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(752)/_test_product()
-['            self.resource_bind("z0bug.product_product_18").type,\n'] 
-2023-06-21 17:35:53,699 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['            self.resource_browse("z0bug.product_product_18").type,\n']
+2023-06-21 17:35:53,699 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,702 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(757)/_test_product()
-['            self.resource_bind("z0bug.product_product_23").type,\n'] 
-2023-06-21 17:35:53,707 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['            self.resource_browse("z0bug.product_product_23").type,\n']
+2023-06-21 17:35:53,707 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:53,709 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(765)/_test_product()
-['        product = self.resource_bind(xref)\n'] 
+['        product = self.resource_browse(xref)\n']
 2023-06-21 17:35:53,711 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(715)/_simple_field_test()
 ['        record = self.resource_write(record, xref, values={field: target_value})\n'] 
 2023-06-21 17:35:53,723 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(729)/_simple_field_test()
@@ -818,9 +818,9 @@
 ['        self.setup_env(lang=self.iso_code)\n'] 
 2023-06-21 17:35:59,067 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(818)/_test_partner()
 ['        self.setup_env(lang=self.iso_code)\n'] 
-2023-06-21 17:35:59,210 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:35:59,210 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:35:59,211 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(824)/_test_partner()
-['        partner = self.resource_bind("z0bug.res_partner_1")\n'] 
+['        partner = self.resource_browse("z0bug.res_partner_1")\n']
 2023-06-21 17:35:59,213 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(832)/_test_partner()
 ['            ctx={"gravatar_image": True},\n'] 
 2023-06-21 17:35:59,213 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞res.partner(42,).resource_edit(['save']) 
@@ -981,18 +981,18 @@
 ['        self.setup_env(group="invoice")\n'] 
 2023-06-21 17:36:00,488 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(879)/_test_invoice()
 ['        self.setup_env(group="invoice")\n'] 
-2023-06-21 17:36:00,521 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:36:00,521 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:00,523 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(881)/_test_invoice()
-['        invoice = self.resource_bind("z0bug.invoice_Z0_1")\n'] 
-2023-06-21 17:36:00,524 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        invoice = self.resource_browse("z0bug.invoice_Z0_1")\n']
+2023-06-21 17:36:00,524 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:00,525 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(883)/_test_invoice()
-['        invoice = self.resource_bind("z0bug.invoice_Z0_2")\n'] 
-2023-06-21 17:36:00,527 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        invoice = self.resource_browse("z0bug.invoice_Z0_2")\n']
+2023-06-21 17:36:00,527 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:00,528 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(887)/_test_invoice()
-['        self.resource_bind("external.BNK1")\n'] 
-2023-06-21 17:36:00,530 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        self.resource_browse("external.BNK1")\n']
+2023-06-21 17:36:00,530 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:00,531 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(889)/_test_invoice()
-['        invoice = self.resource_bind("z0bug.invoice_Z0_2")\n'] 
+['        invoice = self.resource_browse("z0bug.invoice_Z0_2")\n']
 2023-06-21 17:36:00,533 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(890)/_test_invoice()
 ['        self.resource_edit(resource=invoice, actions="action_invoice_open")\n'] 
 2023-06-21 17:36:00,534 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞account.invoice(10,).resource_edit(['action_invoice_open']) 
@@ -1007,20 +1007,20 @@
 ['            actions="action_invoice_draft",\n'] 
 2023-06-21 17:36:01,007 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞account.invoice(10,).resource_edit(['action_invoice_draft']) 
 2023-06-21 17:36:01,038 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  account.invoice.action_invoice_draft() 
-2023-06-21 17:36:01,129 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:36:01,129 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:01,130 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(911)/_test_wizard_invoice()
-['        invoices |= self.resource_bind("z0bug.invoice_Z0_1")\n'] 
-2023-06-21 17:36:01,130 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        invoices |= self.resource_browse("z0bug.invoice_Z0_1")\n']
+2023-06-21 17:36:01,130 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:01,131 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(912)/_test_wizard_invoice()
-['        invoices |= self.resource_bind("z0bug.invoice_Z0_2")\n'] 
+['        invoices |= self.resource_browse("z0bug.invoice_Z0_2")\n']
 2023-06-21 17:36:01,133 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(918)/_test_wizard_invoice()
 ['            button_name="invoice_confirm",\n'] 
 2023-06-21 17:36:01,143 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞wizard starting(Confirm Draft Invoices) 
 2023-06-21 17:36:01,144 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ act_windows['multi'] does not match # of records! 
 2023-06-21 17:36:01,147 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  account.invoice.confirm.invoice_confirm() 
-2023-06-21 17:36:01,611 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:36:01,611 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:01,612 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(925)/_test_wizard_invoice()
-['        invoice = self.resource_bind("z0bug.invoice_Z0_1")\n'] 
+['        invoice = self.resource_browse("z0bug.invoice_Z0_1")\n']
 2023-06-21 17:36:01,614 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(928)/_test_wizard_invoice()
 ['            actions="account.action_account_invoice_payment",\n'] 
 2023-06-21 17:36:01,614 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞account.invoice(9,).resource_edit(['account.action_account_invoice_payment']) 
@@ -1105,14 +1105,14 @@
 ['        self.setup_env(group="order")\n'] 
 2023-06-21 17:36:02,397 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(849)/_test_sale_order()
 ['        self.setup_env(group="order")\n'] 
-2023-06-21 17:36:02,435 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:36:02,435 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:02,436 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(851)/_test_sale_order()
-['        order = self.resource_bind("z0bug.sale_order_Z0_2")\n'] 
-2023-06-21 17:36:02,436 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        order = self.resource_browse("z0bug.sale_order_Z0_2")\n']
+2023-06-21 17:36:02,436 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:02,438 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(854)/_test_sale_order()
-['        line = self.resource_bind(xref="z0bug.sale_order_Z0_2_2")\n'] 
+['        line = self.resource_browse(xref="z0bug.sale_order_Z0_2_2")\n']
 2023-06-21 17:36:02,440 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(854)/_test_sale_order()
-['        line = self.resource_bind(xref="z0bug.sale_order_Z0_2_2")\n'] 
+['        line = self.resource_browse(xref="z0bug.sale_order_Z0_2_2")\n']
 2023-06-21 17:36:02,443 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(858)/_test_sale_order()
 ['            values={"order_line": [2, line.id]},\n'] 
 2023-06-21 17:36:02,444 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(858)/_test_sale_order()
@@ -1127,12 +1127,12 @@
 ['        self.resource_write("res.partner", xref="z0bug.res_partner_2")\n'] 
 2023-06-21 17:36:02,608 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1060)/_test_validate_record()
 ['        self.resource_write("res.partner", xref="z0bug.res_partner_2")\n'] 
-2023-06-21 17:36:02,671 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:36:02,671 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:02,673 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1062)/_test_validate_record()
-['        records |= self.resource_bind("z0bug.res_partner_1")\n'] 
-2023-06-21 17:36:02,673 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['        records |= self.resource_browse("z0bug.res_partner_1")\n']
+2023-06-21 17:36:02,673 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:02,674 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1063)/_test_validate_record()
-['        records |= self.resource_bind("z0bug.res_partner_2")\n'] 
+['        records |= self.resource_browse("z0bug.res_partner_2")\n']
 2023-06-21 17:36:02,676 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1076)/_test_validate_record()
 ['        self.validate_records(template, records)\n'] 
 2023-06-21 17:36:02,677 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1076)/_test_validate_record()
@@ -1165,9 +1165,9 @@
 ['        self.resource_write("account.payment.term", xref="z0bug.payment_term_2")\n'] 
 2023-06-21 17:36:02,699 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1086)/_test_validate_record()
 ['        self.resource_write("account.payment.term", xref="z0bug.payment_term_2")\n'] 
-2023-06-21 17:36:02,708 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:36:02,708 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:02,711 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1111)/_test_validate_record()
-['        records = [self.resource_bind("z0bug.payment_term_2")]\n'] 
+['        records = [self.resource_browse("z0bug.payment_term_2")]\n']
 2023-06-21 17:36:02,713 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1112)/_test_validate_record()
 ['        self.validate_records(template, records)\n'] 
 2023-06-21 17:36:02,714 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞validate_records(template(RiBA 30/60 GG), [account.payment.term(9,)]) 
@@ -1187,12 +1187,12 @@
 ['                button_name="do_example",\n'] 
 2023-06-21 17:36:02,796 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🐞wizard starting(Wizard Example from menu) 
 2023-06-21 17:36:02,802 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚴‍♂️  wizard.example.menu.do_example() 
-2023-06-21 17:36:02,836 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+2023-06-21 17:36:02,836 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:02,838 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1207)/_test_wizard_from_menu()
-['                    self.resource_bind("z0bug.res_partner_1"),\n'] 
-2023-06-21 17:36:02,839 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_bind() is deprecated: please use resource_browse() 
+['                    self.resource_browse("z0bug.res_partner_1"),\n']
+2023-06-21 17:36:02,839 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: resource_browse() is deprecated: please use resource_browse()
 2023-06-21 17:36:02,840 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1208)/_test_wizard_from_menu()
-['                    self.resource_bind("z0bug.res_partner_2"),\n'] 
+['                    self.resource_browse("z0bug.res_partner_2"),\n']
 2023-06-21 17:36:02,842 355044 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🚧 test_testenv.py(1212)/_test_wizard_from_menu()
 ['        self.validate_records(template, records)\n'] 
 2023-06-21 17:36:02,849 355044 WARNING test_test_testenv_12 odoo.models: Comparing apples and oranges: res.partner(res.partner(42,), res.partner(41,)) == [(6, 0, [1])] (/home/odoo/12.0/zerobug-test/test_testenv/tests/testenv.py:2687) 
