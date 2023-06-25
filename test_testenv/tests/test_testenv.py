@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
-import base64
-import logging
+from future.utils import PY2
 import os
 from datetime import date, datetime
-
-import python_plus
-from future.utils import PY2
-
+import logging
+import base64
 from odoo.modules.module import get_module_resource
 
 from .testenv import MainTest as SingleTransactionCase
+
+import python_plus
 
 _logger = logging.getLogger(__name__)
 
@@ -136,6 +135,35 @@ TEST_ACCOUNT_INVOICE_LINE = {
         "product_id": "z0bug.product_product_18",
         "quantity": 10,
         "sequence": 2,
+    },
+}
+
+TEST_ACCOUNT_MOVE = {
+    "z0bug.move_1": {
+        "partner_id": "z0bug.res_partner_2",
+        "date": "####-##-99",
+        "type": "entry",
+        "ref": "invoice payment",
+        "journal_id": "external.BNK1",
+    },
+}
+
+TEST_ACCOUNT_MOVE_LINE = {
+    "z0bug.move_1_1": {
+        "move_id": "z0bug.move_1",
+        "name": "invoice payment (SO123)",
+        "account_id": "z0bug.coa_recv",
+        "partner_id": "z0bug.res_partner_2",
+        "credit": 123.10,
+        "ref": "invoice payment",
+    },
+    "z0bug.move_1_2": {
+        "move_id": "z0bug.move_1",
+        "name": "invoice payment (SO123)",
+        "account_id": "z0bug.coa_bnk1",
+        "partner_id": "z0bug.res_partner_2",
+        "debit": 123.10,
+        "ref": "invoice payment",
     },
 }
 
@@ -344,7 +372,7 @@ TEST_SETUP_LIST = [
 class MyTest(SingleTransactionCase):
     def setUp(self):
         super(MyTest, self).setUp()
-        self.debug_level = 2
+        self.debug_level = 0
         self.iso_code = "it_IT"
         self.date_rate_0 = self.compute_date("####-12-30")
 
@@ -453,7 +481,7 @@ class MyTest(SingleTransactionCase):
             "it_IT",
         )
         self.resource_make("res.partner", "z0bug.res_partner_2")
-        self.assertEqual(self.resource_bind("z0bug.res_partner_2")["lang"], "en_US")
+        self.assertEqual(self.resource_browse("z0bug.res_partner_2")["lang"], "en_US")
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_1")["zip"], "20022"
         )
@@ -513,16 +541,16 @@ class MyTest(SingleTransactionCase):
         model = "res.currency"
         # The resource_write activates the child record of res.currency.rate
         self.resource_write(model, "base.EUR", {"active": True})
-        self.assertTrue(self.resource_bind("base.EUR").active)
+        self.assertTrue(self.resource_browse("base.EUR").active)
 
         # Test binding with declared resource
         model = "res.currency.rate"
         xref = "base.EUR_%s" % self.date_rate_0
-        self.assertEqual(self.resource_bind(xref, resource=model).rate, 0.9)
+        self.assertEqual(self.resource_browse(xref, resource=model).rate, 0.9)
 
         # Test binding without declared resource
         xref = "base.EUR_%s" % self.date_rate_1
-        self.assertEqual(self.resource_bind(xref).rate, 0.95)
+        self.assertEqual(self.resource_browse(xref).rate, 0.95)
 
         # Now create a record out of test environment (w/o xref)
         # then we test binding w/o declared resource
@@ -536,7 +564,7 @@ class MyTest(SingleTransactionCase):
                 "company_id": self.default_company().id,
             }
         )
-        self.assertEqual(self.resource_bind(xref).rate, 0.88)
+        self.assertEqual(self.resource_browse(xref).rate, 0.88)
 
     def _test_setup(self):
         # ===[test declare_all_data() + setup_env() functions]===
@@ -574,23 +602,23 @@ class MyTest(SingleTransactionCase):
         )
         self.setup_env()
         self.assertEqual(
-            self.resource_bind("z0bug.bank_company_1").acc_number.replace(" ", ""),
+            self.resource_browse("z0bug.bank_company_1").acc_number.replace(" ", ""),
             "IT15A0123412345100000123456",
         )
         self.assertEqual(self.default_company().country_id, self.env.ref("base.it"))
         self.assertEqual(
-            self.resource_bind("z0bug.res_partner_2")["city"],
+            self.resource_browse("z0bug.res_partner_2")["city"],
             "S. Secondo Parmense",
             "TestEnv FAILED: unexpected value for 'city'!",
         )
 
         # Test alias
         self.assertEqual(
-            self.resource_bind("z0bug.partner_mycompany")["vat"], "IT05111810015"
+            self.resource_browse("z0bug.partner_mycompany")["vat"], "IT05111810015"
         )
         # Vat number must be loaded by setup_company()
         self.assertEqual(
-            self.resource_bind("base.main_company")["vat"], "IT05111810015"
+            self.resource_browse("base.main_company")["vat"], "IT05111810015"
         )
 
         data = {
@@ -601,11 +629,11 @@ class MyTest(SingleTransactionCase):
         self.declare_all_data(data, group="payment_term")
         self.setup_env(group="payment_term")
         self.assertEqual(
-            self.resource_bind("z0bug.payment_term_1")["name"], "RiBA 30 GG"
+            self.resource_browse("z0bug.payment_term_1")["name"], "RiBA 30 GG"
         )
 
     def _test_many2one(self):
-        partner = self.resource_bind("z0bug.res_partner_2")
+        partner = self.resource_browse("z0bug.res_partner_2")
         self.resource_write(
             "res.partner",
             "z0bug.res_partner_2",
@@ -643,8 +671,8 @@ class MyTest(SingleTransactionCase):
                         6,
                         0,
                         [
-                            self.resource_bind(xref).id,
-                            self.resource_bind(xref1).id,
+                            self.resource_browse(xref).id,
+                            self.resource_browse(xref1).id,
                         ],
                     )
                 ]
@@ -672,12 +700,12 @@ class MyTest(SingleTransactionCase):
                 "rate_ids": [
                     (
                         1,
-                        self.resource_bind(xref).id,
+                        self.resource_browse(xref).id,
                         self.get_resource_data("res.currency.rate", xref),
                     ),
                     (
                         1,
-                        self.resource_bind(xref1).id,
+                        self.resource_browse(xref1).id,
                         self.get_resource_data("res.currency.rate", xref1),
                     ),
                 ]
@@ -690,8 +718,8 @@ class MyTest(SingleTransactionCase):
             "base.EUR",
             {
                 "rate_ids": [
-                    self.resource_bind(xref).id,
-                    self.resource_bind(xref1).id,
+                    self.resource_browse(xref).id,
+                    self.resource_browse(xref1).id,
                 ]
             },
         )
@@ -707,13 +735,13 @@ class MyTest(SingleTransactionCase):
         self.resource_write(
             model,
             "base.EUR",
-            {"rate_ids": self.resource_bind(xref).id},
+            {"rate_ids": self.resource_browse(xref).id},
         )
 
         # without *2many field: rate_ids will be loaded internally
         self.resource_write(model, "base.EUR", {})
         # bind w/o resource
-        record = self.resource_bind(xref1)
+        record = self.resource_browse(xref1)
         self.assertEqual(record._name, "res.currency.rate")
 
     def _simple_field_test(self, record, xref, field, target_value):
@@ -754,12 +782,12 @@ class MyTest(SingleTransactionCase):
         # So, type 'product' becomes 'cons'; type 'service' still keeps its own value
         _logger.info("🎺 Testing test_product()")
         self.assertEqual(
-            self.resource_bind("z0bug.product_product_18").type,
+            self.resource_browse("z0bug.product_product_18").type,
             "consu",
             "TestEnv FAILED: invalid product type!",
         )
         self.assertEqual(
-            self.resource_bind("z0bug.product_product_23").type,
+            self.resource_browse("z0bug.product_product_23").type,
             "service",
             "TestEnv FAILED: invalid product type!",
         )
@@ -767,7 +795,7 @@ class MyTest(SingleTransactionCase):
         # *** Now we test different field type values ***
         # resource = "product.template"
         xref = "z0bug.product_product_18"
-        product = self.resource_bind(xref)
+        product = self.resource_browse(xref)
 
         # Type <char>
         self._simple_field_test(product, xref, "default_code", "ρ")
@@ -827,7 +855,7 @@ class MyTest(SingleTransactionCase):
         # - image is null (2° web_change)
         # - email with gravatar (antoniomaria.vigliotti@gmail.com)
         image_field = "image" if self.odoo_major_version < 13 else "image_1024"
-        partner = self.resource_bind("z0bug.res_partner_1")
+        partner = self.resource_browse("z0bug.res_partner_1")
         self.resource_edit(
             resource=partner,
             web_changes=[
@@ -854,17 +882,17 @@ class MyTest(SingleTransactionCase):
         self.declare_all_data(data, group="order")
         self.setup_env(group="order")
 
-        order = self.resource_bind("z0bug.sale_order_Z0_2")
+        order = self.resource_browse("z0bug.sale_order_Z0_2")
         self.assertEqual(len(order.order_line), 2)
 
-        line = self.resource_bind(xref="z0bug.sale_order_Z0_2_2")
+        line = self.resource_browse(xref="z0bug.sale_order_Z0_2_2")
         self.resource_write(
             "sale.order",
             xref="z0bug.sale_order_Z0_2",
             values={"order_line": [2, line.id]},
         )
         # TODO> Check for test failing
-        # self.assertFalse(self.resource_bind(xref="z0bug.sale_order_Z0_2_2"))
+        # self.assertFalse(self.resource_browse(xref="z0bug.sale_order_Z0_2_2"))
 
     def _test_invoice(self):
         data = {
@@ -884,15 +912,15 @@ class MyTest(SingleTransactionCase):
         self.declare_all_data(data, group="invoice")
         self.setup_env(group="invoice")
 
-        invoice = self.resource_bind("z0bug.invoice_Z0_1")
+        invoice = self.resource_browse("z0bug.invoice_Z0_1")
         self.assertEqual(len(invoice.invoice_line_ids), 3)
-        invoice = self.resource_bind("z0bug.invoice_Z0_2")
+        invoice = self.resource_browse("z0bug.invoice_Z0_2")
         self.assertEqual(len(invoice.invoice_line_ids), 2)
 
         # Test reading record without resource declaration by <external> xref
-        self.resource_bind("external.BNK1")
+        self.resource_browse("external.BNK1")
 
-        invoice = self.resource_bind("z0bug.invoice_Z0_2")
+        invoice = self.resource_browse("z0bug.invoice_Z0_2")
         self.resource_edit(resource=invoice, actions="action_invoice_open")
         self.assertEqual(
             invoice.state, "open", "action_invoice_open() FAILED: no state changed!"
@@ -912,10 +940,51 @@ class MyTest(SingleTransactionCase):
         )
         return invoice
 
+    def _test_moves(self):
+        data = {
+            "TEST_SETUP_LIST": [
+                "account.move",
+                "account.move.line",
+            ],
+            "TEST_ACCOUNT_MOVE": TEST_ACCOUNT_MOVE,
+            "TEST_ACCOUNT_MOVE_LINE": TEST_ACCOUNT_MOVE_LINE,
+        }
+        self.declare_all_data(data, group="account_entry")
+        self.setup_env(group="account_entry")
+
+        template = []
+        vals = {
+            "date": "####-##-99",
+            "journal_id": "external.BNK1",
+            "ref": "invoice payment",
+            "line_ids": [],
+            "state": "draft",
+        }
+        line_vals = {
+            "account_id": "z0bug.coa_recv",
+            "debit": 0.00,
+            "credit": 123.10,
+            "name": "invoice payment (SO123)",
+        }
+        vals["line_ids"].append(line_vals)
+        template.append(vals)
+        line_vals = {
+            "account_id": "z0bug.coa_bnk1",
+            "debit": 123.10,
+            "credit": 0.0,
+            "name": "invoice payment (SO123)",
+        }
+        vals["line_ids"].append(line_vals)
+        template.append(vals)
+
+        records = self.env["account.move"]
+        records |= self.resource_browse("z0bug.move_1")
+        self.validate_records(template, records)
+
     def _test_wizard_invoice(self):
         invoices = self.env["account.invoice"]
-        invoices |= self.resource_bind("z0bug.invoice_Z0_1")
-        invoices |= self.resource_bind("z0bug.invoice_Z0_2")
+        invoices |= self.resource_browse("z0bug.invoice_Z0_1")
+        invoices |= self.resource_browse("z0bug.invoice_Z0_2")
 
         self.wizard(
             module="account",
@@ -928,7 +997,7 @@ class MyTest(SingleTransactionCase):
                 invoice.state, "open", "action_invoice_open() FAILED: no state changed!"
             )
 
-        invoice = self.resource_bind("z0bug.invoice_Z0_1")
+        invoice = self.resource_browse("z0bug.invoice_Z0_1")
         act_windows = self.resource_edit(
             resource=invoice,
             actions="account.action_account_invoice_payment",
@@ -943,7 +1012,7 @@ class MyTest(SingleTransactionCase):
         )
         return invoice.move_id
 
-    def _test_move(self, move):
+    def _test_one_move(self, move):
         self.resource_edit(resource=move, actions="button_cancel")
         self.assertEqual(move.state, "draft")
         saved_ref = move.ref
@@ -1023,13 +1092,13 @@ class MyTest(SingleTransactionCase):
             "<p>" + html.replace("<div>", "").replace("</div>", "") + "</p>",
         )
         res = self.env["res.partner"]
-        res |= self.resource_bind("z0bug.res_partner_1")
-        res |= self.resource_bind("z0bug.res_partner_2")
+        res |= self.resource_browse("z0bug.res_partner_1")
+        res |= self.resource_browse("z0bug.res_partner_2")
         self.assertEqual(record.partner_ids, res)
         res = self.env["product.product"]
-        res |= self.resource_bind("z0bug.product_product_1")
-        res |= self.resource_bind("z0bug.product_product_18")
-        res |= self.resource_bind("z0bug.product_product_23")
+        res |= self.resource_browse("z0bug.product_product_1")
+        res |= self.resource_browse("z0bug.product_product_18")
+        res |= self.resource_browse("z0bug.product_product_23")
         self.assertEqual(record.product_ids, res)
 
         record = self.resource_edit(
@@ -1065,8 +1134,8 @@ class MyTest(SingleTransactionCase):
         self.resource_write("res.partner", xref="z0bug.res_partner_1")
         self.resource_write("res.partner", xref="z0bug.res_partner_2")
         records = self.env["res.partner"]
-        records |= self.resource_bind("z0bug.res_partner_1")
-        records |= self.resource_bind("z0bug.res_partner_2")
+        records |= self.resource_browse("z0bug.res_partner_1")
+        records |= self.resource_browse("z0bug.res_partner_2")
 
         # Test with good information
         template = [
@@ -1114,7 +1183,7 @@ class MyTest(SingleTransactionCase):
                 ],
             },
         ]
-        records = [self.resource_bind("z0bug.payment_term_2")]
+        records = [self.resource_browse("z0bug.payment_term_2")]
         self.validate_records(template, records)
 
     def _test_validate_move_record(self):
@@ -1210,8 +1279,8 @@ class MyTest(SingleTransactionCase):
                 "date": "####-##-<14",
                 "created_dt": "####-<1-03 12:20:45",
                 "partner_ids": (
-                    self.resource_bind("z0bug.res_partner_1"),
-                    self.resource_bind("z0bug.res_partner_2"),
+                    self.resource_browse("z0bug.res_partner_1"),
+                    self.resource_browse("z0bug.res_partner_2"),
                 ),
             },
         ]
@@ -1233,8 +1302,10 @@ class MyTest(SingleTransactionCase):
         self._test_partner()
         self._test_invoice()
         move = self._test_wizard_invoice()
-        self._test_move(move)
+        self._test_one_move(move)
         self._test_sale_order()
         self._test_validate_record()
         self._test_wizard_from_menu()
         self._test_validate_move_record()
+        #
+        self._test_moves()

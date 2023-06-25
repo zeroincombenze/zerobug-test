@@ -4,12 +4,12 @@
 #
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 #
-import logging
 import os
-import re
 import sys
+import re
+import logging
 
-from odoo import SUPERUSER_ID, api
+from odoo import api, SUPERUSER_ID
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -51,22 +51,27 @@ def check_4_depending(cr):
     """
 
     def comp_versions(version):
-        return ["%05d" % int(x) if x.isdigit() else x for x in version.split(".")]
+        return [
+            "%05d" % int(x) if x.isdigit() else x
+            for x in version.split(".")
+        ]
 
     def display_name(mtype):
         return "Package" if mtype == "pypi" else "Module"
 
     def eval_condition_conflicts(mtype, app, op, disable_check):
         if app["version"]:
-            uninstallable_reason = "Module '%s' conflicts with installed %s '%s'" % (
-                cur_module,
-                display_name(mtype),
-                app["name"],
+            uninstallable_reason = (
+                "Module '%s' conflicts with installed %s '%s'"
+                % (
+                    cur_module,
+                    display_name(mtype),
+                    app["name"],
+                )
             )
             if "!" not in op:
                 uninstallable_reason += (
-                    " - Use config param <disable_module_incompatibility> to install!"
-                )
+                    " - Use config param <disable_module_incompatibility> to install!")
             _logger.error(uninstallable_reason)
             if not disable_check or "!" in op:
                 return uninstallable_reason
@@ -88,8 +93,7 @@ def check_4_depending(cr):
             )
             if "?" in op:
                 uninstallable_reason += (
-                    " - Use config param <disable_module_incompatibility> to install!"
-                )
+                    " - Use config param <disable_module_incompatibility> to install!")
             _logger.error(uninstallable_reason)
             if not disable_check or "?" not in op:
                 return uninstallable_reason
@@ -106,17 +110,16 @@ def check_4_depending(cr):
             )
             if "?" in op:
                 uninstallable_reason += (
-                    " - Use config param <disable_module_incompatibility> to install!"
-                )
+                    " - Use config param <disable_module_incompatibility> to install!")
             _logger.error(uninstallable_reason)
             if not disable_check or "?" not in op:
                 return uninstallable_reason
         return False
 
     def eval_version_match(mtype, app, op, ver_to_match, condition):
-        if not eval(
-            "%s%s%s" % (comp_versions(app["version"]), op, comp_versions(ver_to_match))
-        ):
+        if not eval("%s%s%s" % (comp_versions(app["version"]),
+                                op,
+                                comp_versions(ver_to_match))):
             uninstallable_reason = (
                 "%s '%s' is not installable because it does not match with '%s%s'"
                 " (is %s)"
@@ -135,8 +138,8 @@ def check_4_depending(cr):
         """evaluate condition and return reason for match"""
         x = op_re.match(condition)
         if x:
-            op = condition[x.start() : x.end()]
-            ver_to_match = condition[x.end() :]
+            op = condition[x.start(): x.end()]
+            ver_to_match = condition[x.end():]
         else:
             op = ver_to_match = ""
         if op in ("", "!"):
@@ -157,32 +160,27 @@ def check_4_depending(cr):
         if not odoo_module or odoo_module[0].state != "installed":
             app = {"name": app_name, "version": False, "author": "", "maintainer": ""}
         else:
-            app = {
-                "name": app_name,
-                "version": odoo_module[0].installed_version,
-                "author": odoo_module[0].author or "",
-                "maintainer": odoo_module[0].maintainer or "",
-            }
+            app = {"name": app_name,
+                   "version": odoo_module[0].installed_version,
+                   "author": odoo_module[0].author or "",
+                   "maintainer": odoo_module[0].maintainer or ""}
         return app
 
     def get_pypi_info(app_name):
         if sys.version_info[0] == 2:
             import pkg_resources
-
             try:
                 version = pkg_resources.get_distribution(app_name).version
             except BaseException:
                 version = False
         elif sys.version_info < (3, 8):
             import importlib_metadata as metadata
-
             try:
                 version = metadata.version(app_name)
             except BaseException:
                 version = False
         else:
             from importlib import metadata
-
             try:
                 version = metadata.version(app_name)
             except BaseException:
@@ -200,7 +198,7 @@ def check_4_depending(cr):
                 conditions = []
             else:
                 ix = x.end()
-                app_name = pkg_with_ver[x.start() : ix]
+                app_name = pkg_with_ver[x.start(): ix]
                 conditions = pkg_with_ver[ix:].split(",")
             if mtype in ("odoo", "conflicts"):
                 app = get_odoo_module_info(app_name)
@@ -211,8 +209,7 @@ def check_4_depending(cr):
 
             for condition in conditions:
                 uninstallable_reason = eval_condition(
-                    mtype, app, condition, disable_check
-                )
+                    mtype, app, condition, disable_check)
                 if uninstallable_reason:
                     break
             if uninstallable_reason:
@@ -243,8 +240,7 @@ def check_4_depending(cr):
     op_re = re.compile("[>=<~!?]+")
     check_for_all_dependecies(
         manifest.get("version_external_dependencies", []),
-        mtype="pypi",
-        disable_check=disable_check,
+        mtype="pypi", disable_check=disable_check
     )
     check_for_all_dependecies(
         manifest.get("version_depends", []), mtype="odoo", disable_check=disable_check

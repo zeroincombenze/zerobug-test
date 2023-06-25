@@ -164,7 +164,7 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History / Cronologia modifiche
 ----------------------------------------
 
-10.0.2.0.8 (2023-06-20)
+10.0.2.0.9 (2023-06-20)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] TestEnv coverage 93% (1542/114) +192cp
