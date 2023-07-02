@@ -49,9 +49,8 @@ class WizardExamplMenu(models.TransientModel):
                 "res_id": self.id,
                 "target": "new",
                 "context": {"active_id": self.id},
-                "view_id": self.env.ref(
-                    "test_testenv.result_wizard_example_menu_view"
-                ).id,
+                "view_id":
+                    self.env.ref("test_testenv.result_wizard_example_menu_view").id,
                 "domain": [("id", "=", self.id)],
             }
 
@@ -63,7 +62,7 @@ class WizardExamplMenu(models.TransientModel):
             (datetime.today() - timedelta(days=5)).date(),
             (datetime.today() - timedelta(days=14)).date(),
         )
-        refdate = datetime.now() - timedelta(days=27)
+        refdate = datetime.now() - timedelta(days=datetime.today().day + 2)
         partners = [
             x.id
             for x in self.env["res.partner"].search(

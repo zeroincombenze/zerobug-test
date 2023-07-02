@@ -180,13 +180,13 @@ WebTest==2.0.35
 Werkzeug==0.11.11
 wheel==0.37.1
 whichcraft==0.6.1
-wok-code==2.0.8
+wok-code==2.0.9
 wrapt==1.15.0
 WSGIProxy2==0.5.1
 xlrd==1.0.0
 XlsxWriter==0.9.3
 xlwt==1.1.2
-z0bug-odoo==2.0.9
+z0bug-odoo==2.0.10
 z0lib==2.0.3
 z3c.pt==3.3.1
 zc.lockfile==2.0
