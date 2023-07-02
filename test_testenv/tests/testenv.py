@@ -766,9 +766,9 @@ class MainTest(SingleTransactionCase):
         if ((isinstance(value, str) or (sys.version_info[0] == 2
                                         and isinstance(value, unicode)))
                 and value.startswith("<?odoo")
-                and value.enswith("?>")
+                and value.endswith("?>")
                 and len(value.split(".")) == 3):
-            xref, field = value[6: -2].rsplit(".", 1)
+            xref, field = [x.strip() for x in value[6: -2].rsplit(".", 1)]
             value = self.resource_browse(xref=xref)[field]
         if value is None or (
             isinstance(value, basestring)

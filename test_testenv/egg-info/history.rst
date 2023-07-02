@@ -2,8 +2,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Tests failed on day 28-31 of every month
-* [QUA] Test coverage 93% (1660: 116+1544) [314 TestPoint]
-
+* [QUA] Test coverage 93% (1661: 114+1547) [317 TestPoint]
 
 12.0.2.0.9 (2023-06-24)
 ~~~~~~~~~~~~~~~~~~~~~~~
