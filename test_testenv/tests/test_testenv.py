@@ -90,7 +90,7 @@ TEST_ACCOUNT_INVOICE_LINE = {
         "invoice_id": "z0bug.invoice_Z0_1",
         "account_id": "z0bug.coa_sale",
         "invoice_line_tax_ids": "external.22v",
-        "name": "<? z0bug.product_product_1.name ?>",
+        "name": "<?odoo z0bug.product_product_1.name ?>",
         "price_unit": 0.84,
         "product_id": "z0bug.product_product_1",
         "quantity": 100,
@@ -100,7 +100,7 @@ TEST_ACCOUNT_INVOICE_LINE = {
         "invoice_id": "z0bug.invoice_Z0_1",
         "account_id": "z0bug.coa_sale2",
         "invoice_line_tax_ids": "external.22v",
-        "name": "<? z0bug.product_product_23.name ?>",
+        "name": "<?odoo z0bug.product_product_23.name ?>",
         "price_unit": 1.88,
         "product_id": "z0bug.product_product_23",
         "quantity": 1,
@@ -120,7 +120,7 @@ TEST_ACCOUNT_INVOICE_LINE = {
         "invoice_id": "z0bug.invoice_Z0_2",
         "account_id": "z0bug.coa_sale",
         "invoice_line_tax_ids": "external.22v",
-        "name": "<? z0bug.product_product_1.name ?>",
+        "name": "<?odoo z0bug.product_product_1.name ?>",
         "price_unit": 0.84,
         "product_id": "z0bug.product_product_1",
         "quantity": 100,
@@ -130,7 +130,7 @@ TEST_ACCOUNT_INVOICE_LINE = {
         "invoice_id": "z0bug.invoice_Z0_2",
         "account_id": "z0bug.coa_sale",
         "invoice_line_tax_ids": "external.22v",
-        "name": "<? z0bug.product_product_18.name ?>",
+        "name": "<?odoo z0bug.product_product_18.name ?>",
         "price_unit": 1.69,
         "product_id": "z0bug.product_product_18",
         "quantity": 10,
@@ -1097,6 +1097,10 @@ class MyTest(SingleTransactionCase):
         invoice = self.resource_browse("z0bug.invoice_Z0_1")
         self.assertNotEqual(invoice.invoice_line_ids, False)
         self.assertEqual(len(invoice.invoice_line_ids), 3)
+        self.assertEqual(
+            invoice.invoice_line_ids[0].name,
+            self.resource_browse("z0bug.product_product_1").name,
+            "Invalid value for line name #1")
         invoice = self.resource_browse("z0bug.invoice_Z0_2")
         self.assertEqual(len(invoice.invoice_line_ids), 2)
 
