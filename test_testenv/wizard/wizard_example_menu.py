@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
 from random import random, randint
 
 from odoo import fields, models, api, _
+
 # from odoo.exceptions import UserError
 
 try:
@@ -36,7 +37,6 @@ class WizardExamplMenu(models.TransientModel):
             self.numrecords = 3
 
     def do_example(self):
-
         if not self.numrecords:
             # Case 1: no record, show the same windows with "no results"
             return {
@@ -61,13 +61,13 @@ class WizardExamplMenu(models.TransientModel):
             (datetime.today() - timedelta(days=5)).date(),
             (datetime.today() - timedelta(days=14)).date(),
         )
-        refdate = datetime.now() - timedelta(days=27)
+        refdate = datetime.now() - timedelta(days=datetime.today().day + 2)
         partners = [
             x.id
             for x in self.env["res.partner"].search(
                 ["|", ("name", "like", "Prima Alpha"), ("name", "like", "Latte Beta")]
             )
-             ]
+        ]
 
         rec_ids = []
         for nr in range(self.numrecords):

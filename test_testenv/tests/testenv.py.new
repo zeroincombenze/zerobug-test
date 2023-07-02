@@ -1021,50 +1021,33 @@ class MainTest(SingleTransactionCase):
     # Return [*] (fmt), string (for xref before bind)
 
     @api.model
-    def _value2dict(self, resource, value, fmt=None, group=None, field2rm=None):
+    def _value2dict(self, resource, value, fmt=None, group=None):
         if isinstance(value, dict):
-            return self._purge_values(
-                self.cast_types(resource, value, fmt=fmt), fieldname=field2rm)
+            return self.cast_types(resource, value, fmt=fmt)
         elif isinstance(value, basestring):
-            return self._purge_values(
-                self.cast_types(
-                    resource,
-                    self.get_resource_data(resource, value, group=group),
-                    fmt=fmt,
-                    group=group,
-                ),
-                fieldname=field2rm
+            return self.cast_types(
+                resource,
+                self.get_resource_data(resource, value, group=group),
+                fmt=fmt,
+                group=group,
             )
         return value                                                 # pragma: no cover
 
     @api.model
-    def _cast_2many(self, resource, field, value, fmt=None, group=None, levl=0):
+    def _cast_2many(self, resource, field, value, fmt=None, group=None, cmd=-1):
         """ "One2many and many2many may have more representations.
         standard Odoo 2many:
-
-        * [0, 0, values (dict)]               # CREATE record and link
-        * [1, ID (int), values (dict)]        # UPDATE linked record
+        * [0, 0, values list((dict))]         # CREATE record and link
+        * [1, ID (int), values list((dict))]  # UPDATE linked record
         * [2, ID (int)]                       # DELETE linked record by ID
         * [3, ID (int)]                       # UNLINK record ID (do not delete record)
         * [4, ID (int)]                       # LINK record by ID
         * [5, x] or [5]                       # CLEAR unlink all record IDs
         * [6, x, IDs (list)]                  # SET link record IDs
-
-        TestEnv accepts external reference (str) to replace every int or dict value.
-
-        Please, read cast_types docs, about value casting.
+        TestEnv supplemental representation:
+        * External reference (str) -> 1 value or None
+        Every int value may be an external reference
         """
-
-        def mergelist(value):
-            # itertool.chain.from_iterable cannot work with [int, int, ...]
-            res = []
-            for item in value:
-                if hasattr(item, "__iter__"):
-                    for x in mergelist(item):
-                        res.append(x)
-                else:
-                    res.append(item)
-            return res
 
         def value2list(value):
             if isinstance(value, basestring):
@@ -1074,111 +1057,70 @@ class MainTest(SingleTransactionCase):
             return value
 
         res = []
-        is_cmd = False
         items = value2list(value)
-        child_resource = self.struct[resource][field].get("relation", resource)
-        if levl == 1:
+        if cmd == -1:
             if (
                     len(items) == 3
                     and items[0] in (0, 1)
                     and isinstance(items[1], (int, long))
             ):
-                # (0|1,x,dict) -> (0|1,x,dict) / dict
-                # (0|1,x,xref) -> (0|1,x,dict) / dict
-                res1 = self._value2dict(
-                    child_resource,
-                    items[2], fmt="id" if fmt else None,
-                    field2rm=self.parent_name.get(child_resource))
-                res = (items[0], items[1], res1) if fmt in ("cmd", None) else res1
-                is_cmd = True
+                cmd = items[0]
+                res = (
+                    items[0],
+                    items[1],
+                    self._cast_field_many2one(
+                        resource, field, items[2:], fmt="id", cmd=cmd)
+                )
                 items = []
             elif len(items) == 2 and items[0] in (2, 3, 4, 5):
-                # (2|3|4|5,id)  -> as is
-                # (2|3|4|5,xref) -> (2|3|4|5,int)
+                cmd = items[0]
                 res = (
                     items[0],
                     self._cast_field_many2one(
-                        resource, field, items[1], fmt="id" if fmt else None)
+                        resource, field, items[2:], fmt="id", cmd=cmd)
                 )
-                is_cmd = True
                 items = []
             elif len(items) == 3 and items[0] == 6 and items[1] == 0:
-                # (6,0,ids)        -> as is
-                # (6,0,xref)       -> (6,0,[id]) / [id]
-                # (6,0,[xref,...]) -> (6,0,[ids])  / [ids]
-                res1 = mergelist(self._cast_2many(
-                    resource, field, items[2],
-                    fmt="id" if fmt else None, levl=levl + 1))
-                res = (items[0], items[1], res1) if fmt in ("cmd", None) else res1
-                is_cmd = True
+                cmd = items[0]
+                res = (
+                    items[0],
+                    items[1],
+                    self._cast_field_many2one(
+                        resource, field, items[2:], fmt="id", cmd=cmd)
+                )
                 items = []
-        elif levl == 0 and isinstance(items, dict):
-            # dict  -> [(0,0,dict)]  / [dict]
-            res1 = self.cast_types(resource, items, fmt="cmd")
-            res.append((0, 0, res1) if fmt == "cmd" else res1)
-            is_cmd = True
-            items = []
         for item in items:
             if isinstance(item, basestring):
-                # xref (exists)           -> (6,0,[id])       / [id]
-                # xref (not exists)       -> (0,0,dict)       / dict
-                xid = self._get_xref_id(child_resource, item, fmt=fmt, group=group)
-                if not xid and self.get_resource_data(child_resource, item):
-                    res1 = self._value2dict(
-                        child_resource,
-                        item,
-                        fmt="cmd",
-                        field2rm=self.parent_name.get(child_resource))
-                    res.append((0, 0, res1) if fmt == "cmd" else res1)
+                xid = self._get_xref_id(resource, item, fmt=fmt, group=group)
+                if not xid and self.get_resource_data(resource, item):
+                    res.append(
+                        self.cast_types(
+                            resource, self.get_resource_data(resource, item), fmt=fmt)
+                    )
                 elif xid == item and fmt:                            # pragma: no cover
                     self.raise_error("Unknown value %s of %s" % (item, items))
                 elif xid:
-                    res.append((6, 0, [xid]) if fmt == "cmd" else xid)
-                is_cmd = True
-                levl = 0
+                    res.append(xid)
             elif isinstance(item, dict):
-                # dict  -> (0,0,dict)  / dict
-                res1 = self.cast_types(child_resource, item, fmt="cmd")
-                res.append((0, 0, res1) if fmt == "cmd" else res1)
-                is_cmd = True
-                levl = 0
-            elif isinstance(item, (list, tuple)) and levl == 0:
-                # [xref] (exists)         -> (6,0,[id])       / [id]
-                # [xref] (not exists)     -> (0,0,dict)       / dict
-                # [xref,...] (exists)     -> (6,0,[ids])      / [ids]
-                # [xref,...] (not exists) -> (0,0,dict),(...) / dict,...
+                res.append(self.cast_types(resource, item, fmt=fmt))
+            elif isinstance(item, (list, tuple)):
                 res.append(self._cast_2many(
-                    resource, field, item, group=group, fmt=fmt, levl=levl + 1))
-            elif isinstance(item, (list, tuple)) and levl > 0:
-                # '§(6,0,§ ids )'         -> ids
-                res.append(self._cast_2many(
-                    resource, field, item, group=group, fmt="id", levl=levl + 1))
-            # elif isinstance(item, (int, long)) and levl == 0:
-            #     res.append((4, item) if fmt == "cmd" else item)
+                    resource, field, item,
+                    fmt="id" if fmt else None, group=group, cmd=cmd))
             else:
                 res.append(item)
 
         if len(res):
-            if (
-                levl == 0 and fmt == "cmd" and not is_cmd
-                and all([isinstance(x, (int, long)) for x in items])
-            ):
-                res = [(6, 0, res)]
-            elif (levl == 0 and fmt == "cmd" and len(res) > 1
-                  and all([isinstance(x, (list, tuple)) and x[0] == 6 and x[1] == 0
-                           for x in res])):
-                res = [(6, 0, mergelist([x[2] for x in res]))]
-            elif levl == 1 and not is_cmd:
-                if fmt == "cmd":
-                    if isinstance(res[0], dict):
-                        res = (0, 0, res)
-                    else:
-                        res = (6, 0, res)
-                elif fmt == "py":
-                    ids = res[2:] if levl >= 0 and res[0] in (0, 1, 6) else res
-                    res = self.env[resource]
-                    for id in ids:
-                        res |= self.env[resource].browse(id)
+            if fmt == "cmd" and cmd == -1:
+                if isinstance(res[0], dict):
+                    res = [0, 0, res]
+                else:
+                    res = [(6, 0, res)]
+            elif fmt == "py":
+                ids = res[2:] if cmd and res[0] in (0, 1, 6) else res
+                res = self.env[resource]
+                for id in ids:
+                    res |= self.env[resource].browse(id)
         else:
             res = False
             if fmt:
@@ -1188,7 +1130,7 @@ class MainTest(SingleTransactionCase):
     @api.model
     def _cast_field_one2many(self, resource, field, value, fmt=None, group=None):
         value = self._cast_2many(
-            resource,  # self.struct[resource][field]["relation"],
+            self.struct[resource][field]["relation"],
             field,
             value,
             fmt=fmt,
@@ -1201,7 +1143,7 @@ class MainTest(SingleTransactionCase):
     @api.model
     def _cast_field_many2many(self, resource, field, value, fmt=None, group=None):
         return self._cast_2many(
-            resource,  # self.struct[resource][field]["relation"],
+            self.struct[resource][field]["relation"],
             field,
             value,
             fmt=fmt,
@@ -1228,50 +1170,29 @@ class MainTest(SingleTransactionCase):
     def cast_types(self, resource, values, fmt=None, group=None):
         """Convert resource fields in appropriate type, based on Odoo type.
         The parameter fmt declares the purpose of casting: 'cmd' means convert to Odoo
-        API format; <2many> fields are prefixed with 0|1|2|3|4|5|6 value (read
-        _cast_2many docs).
-        'id' is like 'cmd': prefix are added inside dict not at the beginning.
-        'py' means convert to native python (remove all Odoo command prefixes). It is
-        used for comparison.
+        API format and 'py' means convert to native python format.
         When no format is required (fmt=None), some conversion may be not applicable:
-        <many2one> field will be left unchanged when invalid xref is issued and <2many>
-        field me will be left unchanged when one or more invalid xref are issued.
-        str, int, long, selection, binary, html fields are always left as is
-        date, datetime fields and fmt=='cmd' and python2 (odoo 10.0-) return ISO format
-        many2one fields, if value is (int|long) are left as is; if value is (xref) the
-        id of xref is returned.
-                                        | fmt=='cmd'         | fmt=='id'  | fmt=='py'
-        <2many> [(0|1,x,dict)]          | [(0|1,x,dict)] *   | [dict] *   | [dict] *
-        <2many> [(0|1,x,xref)]          | [(0|1,x,dict)]     | [dict]     | [dict]
-        <2many> [(2|3|4|5,id)]          | as is              | as is      | as is
-        <2many> [(2|3|4|5,xref)]        | [(2|3|4|5,id)]     | as is      | as is
-        <2many> [(6,0,[ids])]           | as is              | [ids]      | [ids]
-        <2many> [(6,0,xref)]            | [(6,0,[id])]       | [id]       | [id]
-        <2many> [(6,0,[xref,...])]      | [(6,0,[ids])]      | [ids]      | [ids]
-        <2many> dict                    | [(0,0,dict)        | [dict]     | [dict]
-        <2many> xref (exists)           | [(6,0,[id])]       | [id]       | [id]
-        <2many> xref (not exists)       | [(0,0,dict)]       | [dict]     | [dict]
-        <2many> [xref] (exists)         | [(6,0,[id])]       | [id]       | [id]
-        <2many> [xref] (not exists)     | [(0,0,dict)]       | [dict]     | [dict]
-        <2many> [xref,...] (exists)     | [(6,0,[ids])]      | [ids]      | [ids]
-        <2many> [xref,...] (not exists) | [(0,0,dict),(...)] | [dict,...] | [dict,...]
-        <2many> [ids] **                | [(6,0,[ids])]      | [ids]      | [ids]
-        <2many> id                      | [(6,0,[id])]       | [id]       | [id]
-        <2many> "xref,..." (exists)     | [(6,0,[ids])]      | [ids]      | [ids]
-        <2many> "xref,..." (not exists) | [(0,0,dict),(...)] | [dict,...] | [dict,...]
-        Caption: dict -> {'a': 'A', ..}, xref -> "abc.def", id -> 10, ids -> 1,2,...
-        * fields of dict are recursively processed
-        ** ids 1-6 have processed as Odoo cmd
-        Notice: Odoo one2many valid cmd are: 0,1 and 2 (not checked)
+        * many2one field will be leave unchanged if invalid xref is issued
+        * 2many field me will be leave unchanged if one or more invalid xref is issued
+
+        When Odoo API format (fmt='cmd') is required:
+        * date & datetime fields will be returned as ISO string format for Odoo 10.0-
+        * 2many fields are checked for Odoo API prefixes (see 2many functions)
+
+        The fmt='py' may be useful for comparison.
 
         Args:
             resource (str): Odoo model name
             values (dict): record data
-            fmt (selection): output format (read above)
+            fmt (selection): output format:
+            - "": read above
+            - "cmd": format in order to swallow by Odoo API
+            - "py": writable data to store directly in object
+            - "id": like 'cmd' but does not add prefixes for Odoo API
             group (str): used to manager group data; default is "base"
 
         Returns:
-            Appropriate values
+            Dictionary values
         """
         if not isinstance(values, dict):
             self.raise_error(
@@ -1338,8 +1259,8 @@ class MainTest(SingleTransactionCase):
         return record
 
     @api.model
-    def _purge_values(self, values, timed=None, fieldname=None):
-        for field in BITTER_COLUMNS + [fieldname]:
+    def _purge_values(self, values, timed=None):
+        for field in BITTER_COLUMNS:
             if field in values:
                 del values[field]
         if timed:  # pragma: no cover
@@ -1716,10 +1637,8 @@ class MainTest(SingleTransactionCase):
                     self.raise_error(
                         "Wrong compute for %s.%s! Forgot @multi?" % (wizard._name,
                                                                      name))
-        value = self._cast_field(resource, field, value, fmt="id")
+        value = self._cast_field(resource, field, value, fmt="cmd")
         if value is not None:
-            if wizard._fields[field].type in ("one2many", "many2many"):
-                setattr(wizard, field, False)
             setattr(wizard, field, value)
         user_act = True
         while user_act:
@@ -1797,8 +1716,8 @@ class MainTest(SingleTransactionCase):
             ]
             if child_values:
                 values[field_child] = child_values
-        self.setup_data[group][name][xref] = self._purge_values(
-            self.cast_types(resource, values, group=group)
+        self.setup_data[group][name][xref] = self.cast_types(
+            resource, values, group=group
         )
         self.log_lvl_2(
             "💼 %s.store_resource_data(%s,name=%s,group=%s)"
@@ -1985,19 +1904,14 @@ class MainTest(SingleTransactionCase):
             % (resource, self.dict_2_print(values), xref)
         )
         values = self.cast_types(resource, values, fmt="cmd", group=group)
-        try:
-            if resource.startswith("account.move") and "line_ids" not in values:
-                res = (
-                    self.env[resource]
-                    .with_context(check_move_validity=False)
-                    .create(values)
-                )
-            else:
-                res = self.env[resource].create(values)
-        except BaseException as e:
-            self.raise_error("Resource '%s' create error '%s'\n%s"
-                             % (resource, e, self.dict_2_print(values)))
-            return None
+        if resource.startswith("account.move") and "line_ids" not in values:
+            res = (
+                self.env[resource]
+                .with_context(check_move_validity=False)
+                .create(values)
+            )
+        else:
+            res = self.env[resource].create(values)
         if self._is_xref(xref):
             self._add_xref(xref, res.id, resource)
             self.store_resource_data(resource, xref, values, group=group)
@@ -2060,24 +1974,18 @@ class MainTest(SingleTransactionCase):
             if values:
                 values = self.unicodes(values)
             else:
-                values = self._purge_values(
-                    self.get_resource_data(resource, xref, group=group))
+                values = self.get_resource_data(resource, xref, group=group)
+                values = self._purge_values(values)
             values = self._add_child_records(resource, xref, values, group=group)
             values = self.cast_types(resource, values, fmt="cmd", group=group)
             self.log_lvl_3(
                 "🐞%s.resource_write(%s,%s,xref=%s)"
                 % (resource, record.id, self.dict_2_print(values), xref)
             )
-            try:
-                if resource.startswith("account.move"):
-                    record.with_context(check_move_validity=False).write(values)
-                else:
-                    record.write(values)
-            except BaseException as e:
-                self.raise_error("Resource '%s' write error '%s'\n%s"
-                                 % (resource, e, self.dict_2_print(values)))
-
-                return None
+            if resource.startswith("account.move"):
+                record.with_context(check_move_validity=False).write(values)
+            else:
+                record.write(values)
         return record
 
     @api.model

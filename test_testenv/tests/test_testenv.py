@@ -90,7 +90,7 @@ TEST_ACCOUNT_INVOICE_LINE = {
         "invoice_id": "z0bug.invoice_Z0_1",
         "account_id": "z0bug.coa_sale",
         "invoice_line_tax_ids": "external.22v",
-        "name": "Prodotto Alpha",
+        "name": "<? z0bug.product_product_1.name ?>",
         "price_unit": 0.84,
         "product_id": "z0bug.product_product_1",
         "quantity": 100,
@@ -100,7 +100,7 @@ TEST_ACCOUNT_INVOICE_LINE = {
         "invoice_id": "z0bug.invoice_Z0_1",
         "account_id": "z0bug.coa_sale2",
         "invoice_line_tax_ids": "external.22v",
-        "name": "Special Worldwide service",
+        "name": "<? z0bug.product_product_23.name ?>",
         "price_unit": 1.88,
         "product_id": "z0bug.product_product_23",
         "quantity": 1,
@@ -120,7 +120,7 @@ TEST_ACCOUNT_INVOICE_LINE = {
         "invoice_id": "z0bug.invoice_Z0_2",
         "account_id": "z0bug.coa_sale",
         "invoice_line_tax_ids": "external.22v",
-        "name": "Prodotto Alpha",
+        "name": "<? z0bug.product_product_1.name ?>",
         "price_unit": 0.84,
         "product_id": "z0bug.product_product_1",
         "quantity": 100,
@@ -130,7 +130,7 @@ TEST_ACCOUNT_INVOICE_LINE = {
         "invoice_id": "z0bug.invoice_Z0_2",
         "account_id": "z0bug.coa_sale",
         "invoice_line_tax_ids": "external.22v",
-        "name": "Prodotto Rho",
+        "name": "<? z0bug.product_product_18.name ?>",
         "price_unit": 1.69,
         "product_id": "z0bug.product_product_18",
         "quantity": 10,
@@ -386,9 +386,9 @@ class MyTest(SingleTransactionCase):
 
     def _test_00(self):
         # ===[Preliminary tests]===
-        self.assertTrue(isinstance(self.setup_data_list, dict))
-        self.assertTrue(isinstance(self.setup_data, dict))
-        self.assertTrue(isinstance(self.struct, dict))
+        self.assertIsInstance(self.setup_data_list, dict)
+        self.assertIsInstance(self.setup_data, dict)
+        self.assertIsInstance(self.struct, dict)
 
     def _test_01(self):
         # ===[Test declare_resource_data() function w/o merge]===
@@ -425,17 +425,19 @@ class MyTest(SingleTransactionCase):
             "Prima Alpha S.p.A.",
             "TestEnv FAILED: unexpected value for 'name'!",
         )
-        self.assertFalse(
-            "zip" in self.get_resource_data("res.partner", "z0bug.res_partner_1"),
+        self.assertNotIn(
+            "zip",
+            self.get_resource_data("res.partner", "z0bug.res_partner_1"),
             "TestEnv FAILED: unexpected field value for 'zip'!",
         )
-        self.assertFalse(
-            "not_exist_field"
-            in self.get_resource_data("res.partner", "z0bug.res_partner_1"),
+        self.assertNotIn(
+            "not_exist_field",
+            self.get_resource_data("res.partner", "z0bug.res_partner_1"),
             "TestEnv FAILED: unexpected field 'not_exist_field'!",
         )
-        self.assertFalse(
-            "street" in self.get_resource_data("res.partner", "z0bug.res_partner_1"),
+        self.assertNotIn(
+            "street",
+            self.get_resource_data("res.partner", "z0bug.res_partner_1"),
             "TestEnv FAILED: unexpected field value for 'street'!",
         )
 
@@ -492,10 +494,12 @@ class MyTest(SingleTransactionCase):
         )
         if self.odoo_major_version < 13:
             self.assertFalse(
-                self.get_resource_data("res.partner", "z0bug.res_partner_1")["customer"],
+                self.get_resource_data(
+                    "res.partner", "z0bug.res_partner_1")["customer"],
             )
             self.assertFalse(
-                self.get_resource_data("res.partner", "z0bug.res_partner_1")["supplier"],
+                self.get_resource_data(
+                    "res.partner", "z0bug.res_partner_1")["supplier"],
             )
 
     def _test_03(self):
@@ -586,10 +590,8 @@ class MyTest(SingleTransactionCase):
             },
         )
         # In TEST_RES_PARTNER vat is not declared
-        self.assertFalse(
-            self.get_resource_data("res.partner", "z0bug.partner_mycompany").get(
-                "vat", ""
-            ),
+        self.assertIsNone(
+            self.get_resource_data("res.partner", "z0bug.partner_mycompany").get("vat")
         )
         self.assertEqual(
             self.get_resource_data("res.partner.bank", "z0bug.bank_company_1")[
@@ -653,32 +655,42 @@ class MyTest(SingleTransactionCase):
     def _test_currency_2many(self):
         # ===[test *many values]===
         # Types <one2many>
+        #                              | fmt=='cmd'         | fmt=='id'  | fmt=='py'
+        # (a)  [(0|1,x,dict)]          | [(0|1,x,dict)] *   | [dict] *   | [dict] *
+        # (b)  [(0|1,x,xref)]          | [(0|1,x,dict)]     | [dict]     | [dict]
+        # (c)  [(2|3|4|5,id)]          | as is              | as is      | as is
+        # (d)  [(2|3|4|5,xref)]        | [(2|3|4|5,id)]     | as is      | as is
+        # (e)  [(6,0,[ids])]           | as is              | [ids]      | [ids]
+        # (f)  [(6,0,xref)]            | [(6,0,[id])]       | [id]       | [id]
+        # (g)  [(6,0,[xref,...])]      | [(6,0,[ids])]      | [ids]      | [ids]
+        # (h)  dict                    | [(0,0,dict)        | [dict]     | [dict]
+        # (i)  xref (exists)           | [(6,0,[id])]       | [id]       | [id]
+        # (j)  xref (not exists)       | [(0,0,dict)]       | [dict]     | [dict]
+        # (k)  [xref] (exists)         | [(6,0,[id])]       | [id]       | [id]
+        # (l)  [xref] (not exists)     | [(0,0,dict)]       | [dict]     | [dict]
+        # (m)  [xref,...] (exists)     | [(6,0,[ids])]      | [ids]      | [ids]
+        # (n)  [xref,...] (not exists) | [(0,0,dict),(...)] | [dict,...] | [dict,...]
+        # (o)  [ids] **                | [(6,0,[ids])]      | [ids]      | [ids]
+        # (p)  id                      | [(6,0,[id])]       | [id]       | [id]
+        # (q)  "xref,..." (exists)     | [(6,0,[ids])]      | [ids]      | [ids]
+        # (r)  "xref,..." (not exists) | [(0,0,dict),(...)] | [dict,...] | [dict,...]
+        def read_curreny_rate(name):
+            ccy_id = self.env.ref("base.EUR").id
+            res = self.env["res.currency.rate"].search(
+                [("currency_id", "=", ccy_id), ("name", "=", name)])
+            if res:
+                return res[0]
+            return res
+
         _logger.info("🎺 Testing test_currency_2many()")
         model = "res.currency"
-        xref = "base.EUR_%s" % self.date_rate_0
-        xref1 = "base.EUR_%s" % self.date_rate_1
+        ccy_xref = "base.EUR_%s" % self.date_rate_0
+        ccy_xref1 = "base.EUR_%s" % self.date_rate_1
+        # Default rate for xref nd xref1
+        def_rate = self.get_resource_data("res.currency.rate", ccy_xref)["rate"]
+        def_rate1 = self.get_resource_data("res.currency.rate", ccy_xref1)["rate"]
 
-        # *xmany as Odoo convention (1)
-        self.resource_write(
-            model,
-            "base.EUR",
-            {
-                "rate_ids": [
-                    (
-                        6,
-                        0,
-                        [
-                            self.resource_browse(xref).id,
-                            self.resource_browse(xref1).id,
-                        ],
-                    )
-                ]
-            },
-        )
-
-        self.resource_write(model, "base.EUR", {"rate_ids": [(6, 0, [xref, xref1])]})
-
-        # *xmany as Odoo convention (2)
+        # *xmany as Odoo convention - test-case (a)
         self.resource_write(
             model,
             "base.EUR",
@@ -688,8 +700,9 @@ class MyTest(SingleTransactionCase):
                 ]
             },
         )
+        self.assertEqual(read_curreny_rate("2022-01-01").rate, 0.77)
 
-        # *xmany as Odoo convention (3)
+        # *xmany as Odoo convention - test-case (a)
         self.resource_write(
             model,
             "base.EUR",
@@ -697,48 +710,218 @@ class MyTest(SingleTransactionCase):
                 "rate_ids": [
                     (
                         1,
-                        self.resource_browse(xref).id,
-                        self.get_resource_data("res.currency.rate", xref),
-                    ),
-                    (
-                        1,
-                        self.resource_browse(xref1).id,
-                        self.get_resource_data("res.currency.rate", xref1),
+                        read_curreny_rate("2022-01-01").id,
+                        {"name": "2022-01-01", "rate": 0.67}
                     ),
                 ]
             },
         )
+        self.assertEqual(read_curreny_rate("2022-01-01").rate, 0.67)
 
-        # *xmany as simple list
+        # *xmany as Odoo convention - test-case (a)
+        self.resource_browse(ccy_xref).write({"rate": def_rate - 0.2})
+        self.resource_browse(ccy_xref1).write({"rate": def_rate1 - 0.2})
         self.resource_write(
             model,
             "base.EUR",
             {
                 "rate_ids": [
-                    self.resource_browse(xref).id,
-                    self.resource_browse(xref1).id,
+                    (
+                        1,
+                        self.resource_browse(ccy_xref).id,
+                        self.get_resource_data("res.currency.rate", ccy_xref),
+                    ),
+                    (
+                        1,
+                        self.resource_browse(ccy_xref1).id,
+                        self.get_resource_data("res.currency.rate", ccy_xref1),
+                    ),
                 ]
             },
         )
+        self.assertEqual(self.resource_browse(ccy_xref).rate, def_rate)
+        self.assertEqual(self.resource_browse(ccy_xref1).rate, def_rate1)
 
-        # *xmany as simple list of text
-        self.resource_write(model, "base.EUR", {"rate_ids": [xref, xref1]})
-        # *2many as list in text value
-        self.resource_write(model, "base.EUR", {"rate_ids": "%s,%s" % (xref, xref1)})
-
-        # *2many as text value
-        self.resource_write(model, "base.EUR", {"rate_ids": xref})
-        # *xmany as integer
+        # *xmany as Odoo convention and xref - test-case (b)
+        self.resource_browse(ccy_xref).write({"rate": def_rate - 0.2})
+        self.assertLess(self.resource_browse(ccy_xref).rate, def_rate)
         self.resource_write(
             model,
             "base.EUR",
-            {"rate_ids": self.resource_browse(xref).id},
+            {
+                "rate_ids": [(1, self.resource_browse(ccy_xref).id, ccy_xref)],
+            },
+        )
+        self.assertEqual(self.resource_browse(ccy_xref).rate, def_rate)
+
+        # *xmany as Odoo convention [(2,id)] - test-case (c)
+        self.resource_write(
+            model,
+            "base.EUR",
+            {
+                "rate_ids": [(2, read_curreny_rate("2022-01-01").id)],
+            },
+        )
+        self.assertFalse(read_curreny_rate("2022-01-01"))
+
+        # *xmany as Odoo convention [(3,xref1)] - test-case (d)
+        self.resource_write(
+            model,
+            "base.EUR",
+            {
+                "rate_ids": [(3, ccy_xref1)],
+            },
+        )
+        # TODO> Weird behavior, xref1 record is deleted
+        #  self.assertTrue(self.resource_browse(xref1))
+        self.resource_make("res.currency.rate", xref=ccy_xref1)
+        self.assertIn(
+            self.resource_browse(ccy_xref),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+        self.assertNotIn(
+            self.resource_browse(ccy_xref1),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+
+        # *xmany as Odoo convention [(4,xref1)] - test-case (d)
+        self.resource_write(
+            model,
+            "base.EUR",
+            {
+                "rate_ids": [(4, ccy_xref1)],
+            },
+        )
+        self.assertIn(
+            self.resource_browse(ccy_xref),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+        self.assertIn(
+            self.resource_browse(ccy_xref1),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+
+        # *xmany as Odoo convention - test-case (e)
+        self.resource_write(
+            model,
+            "base.EUR",
+            {
+                "rate_ids": [
+                    (
+                        6,
+                        0,
+                        [
+                            self.resource_browse(ccy_xref).id,
+                            self.resource_browse(ccy_xref1).id,
+                        ],
+                    )
+                ]
+            },
+        )
+        self.assertIn(
+            self.resource_browse(ccy_xref),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+        self.assertIn(
+            self.resource_browse(ccy_xref1),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+
+        # test-case (f) (g)
+        self.resource_write(model, "base.EUR", {"rate_ids": [(6, 0, ccy_xref)]})
+        self.resource_write(
+            model, "base.EUR", {"rate_ids": [(6, 0, [ccy_xref, ccy_xref1])]})
+
+        # *xmany as Odoo convention - test-case (h)
+        self.resource_write(
+            model,
+            "base.EUR",
+            {
+                "rate_ids": {"name": "2022-01-01", "rate": 0.68},
+            },
+        )
+        self.assertEqual(read_curreny_rate("2022-01-01").rate, 0.68)
+        self.assertIn(
+            self.resource_browse(ccy_xref),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+        self.assertIn(
+            self.resource_browse(ccy_xref1),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+
+        # *2many as text value - test-case (i)
+        self.resource_write(model, "base.EUR", {"rate_ids": ccy_xref})
+        self.assertIn(
+            self.resource_browse(ccy_xref),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+        self.assertNotIn(
+            self.resource_browse(ccy_xref1),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+
+        # *2many as text value - test-case (j)
+        self.resource_browse(ccy_xref1).unlink()
+        self.resource_write(model, "base.EUR", {"rate_ids": ccy_xref1})
+        self.assertTrue(self.resource_browse(ccy_xref1))
+
+        # *2many as text value - test-case (k)
+        self.resource_write(model, "base.EUR", {"rate_ids": [ccy_xref]})
+        self.assertTrue(self.resource_browse(ccy_xref))
+
+        # *2many as text value - test-case (l) (m) (n)
+        # self.resource_browse(ccy_xref1).unlink()
+        self.resource_write(model, "base.EUR", {"rate_ids": [ccy_xref, ccy_xref1]})
+        self.assertTrue(self.resource_browse(ccy_xref))
+        self.assertTrue(self.resource_browse(ccy_xref1))
+        self.assertIn(
+            self.resource_browse(ccy_xref),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+        self.assertIn(
+            self.resource_browse(ccy_xref1),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+
+        # *xmany as simple list - test-case (o)
+        self.resource_write(
+            model,
+            "base.EUR",
+            {
+                "rate_ids": [
+                    self.resource_browse(ccy_xref).id,
+                    self.resource_browse(ccy_xref1).id,
+                ]
+            },
+        )
+        self.assertIn(
+            self.resource_browse(ccy_xref),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+        self.assertIn(
+            self.resource_browse(ccy_xref1),
+            self.resource_browse("base.EUR").rate_ids,
+        )
+
+        # *xmany as integer - test-case (p)
+        self.resource_write(
+            model,
+            "base.EUR",
+            {"rate_ids": self.resource_browse(ccy_xref).id},
+        )
+
+        # *xmany as integer - test-case (p)
+        self.resource_write(
+            model,
+            "base.EUR",
+            {"rate_ids": "%s,%s" % (ccy_xref, ccy_xref1)},
         )
 
         # without *2many field: rate_ids will be loaded internally
         self.resource_write(model, "base.EUR", {})
         # bind w/o resource
-        record = self.resource_browse(xref1)
+        record = self.resource_browse(ccy_xref1)
         self.assertEqual(record._name, "res.currency.rate")
 
     def _simple_field_test(self, record, xref, field, target_value):
@@ -881,14 +1064,16 @@ class MyTest(SingleTransactionCase):
 
         order = self.resource_browse("z0bug.sale_order_Z0_2")
         self.assertEqual(len(order.order_line), 2)
-
         line = self.resource_browse(xref="z0bug.sale_order_Z0_2_2")
+        self.assertIn(line, order.order_line)
+
         self.resource_write(
             "sale.order",
             xref="z0bug.sale_order_Z0_2",
             values={"order_line": [2, line.id]},
         )
         # TODO> Check for test failing
+        order = self.resource_browse("z0bug.sale_order_Z0_2")
         # self.assertFalse(self.resource_browse(xref="z0bug.sale_order_Z0_2_2"))
 
     def _test_invoice(self):
@@ -910,6 +1095,7 @@ class MyTest(SingleTransactionCase):
         self.setup_env(group="invoice")
 
         invoice = self.resource_browse("z0bug.invoice_Z0_1")
+        self.assertNotEqual(invoice.invoice_line_ids, False)
         self.assertEqual(len(invoice.invoice_line_ids), 3)
         invoice = self.resource_browse("z0bug.invoice_Z0_2")
         self.assertEqual(len(invoice.invoice_line_ids), 2)
@@ -1276,8 +1462,8 @@ class MyTest(SingleTransactionCase):
                 "date": "####-##-<14",
                 "created_dt": "####-<1-03 12:20:45",
                 "partner_ids": (
-                    self.resource_browse("z0bug.res_partner_1"),
                     self.resource_browse("z0bug.res_partner_2"),
+                    self.resource_browse("z0bug.res_partner_1"),
                 ),
             },
         ]

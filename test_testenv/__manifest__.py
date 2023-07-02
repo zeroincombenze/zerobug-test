@@ -9,7 +9,7 @@
 {
     "name": "testenv",
     "summary": "z0bug_odoo test suite",
-    "version": "12.0.2.0.9",
+    "version": "12.0.2.0.10",
     "category": "Generic Modules/Accounting",
     "author": "SHS-AV s.r.l.",
     "website": "https://github.com/OCA/l10n-italy",
@@ -20,7 +20,7 @@
             "past",  # TODO: pylint bug, it is to remove
         ],
     },
-    "version_external_dependencies": ["z0bug_odoo==2.0.9"],
+    "version_external_dependencies": ["z0bug_odoo==2.0.10"],
     "depends": [
         "base",
         "account",

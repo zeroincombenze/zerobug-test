@@ -1,4 +1,11 @@
-12.0.2.0.8 (2023-06-24)
+12.0.2.0.10 (2023-07-02)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] Tests failed on day 28-31 of every month
+* [QUA] Test coverage 93% (1660: 116+1544) [314 TestPoint]
+
+
+12.0.2.0.9 (2023-06-24)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [NEW] Regression test on account.move
