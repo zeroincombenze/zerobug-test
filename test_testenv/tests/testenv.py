@@ -1115,7 +1115,8 @@ class MainTest(SingleTransactionCase):
         elif levl == 0 and isinstance(items, dict):
             # dict  -> [(0,0,dict)]  / [dict]
             res1 = self.cast_types(resource, items, fmt="cmd")
-            res.append((0, 0, res1) if fmt == "cmd" else res1)
+            if res1:
+                res.append((0, 0, res1) if fmt == "cmd" else res1)
             is_cmd = True
             items = []
         for item in items:
@@ -1129,7 +1130,8 @@ class MainTest(SingleTransactionCase):
                         item,
                         fmt="cmd",
                         field2rm=self.parent_name.get(child_resource))
-                    res.append((0, 0, res1) if fmt == "cmd" else res1)
+                    if res1:
+                        res.append((0, 0, res1) if fmt == "cmd" else res1)
                 elif xid == item and fmt:                            # pragma: no cover
                     self.raise_error("Unknown value %s of %s" % (item, items))
                 elif xid:
@@ -1139,7 +1141,8 @@ class MainTest(SingleTransactionCase):
             elif isinstance(item, dict):
                 # dict  -> (0,0,dict)  / dict
                 res1 = self.cast_types(child_resource, item, fmt="cmd")
-                res.append((0, 0, res1) if fmt == "cmd" else res1)
+                if res1:
+                    res.append((0, 0, res1) if fmt == "cmd" else res1)
                 is_cmd = True
                 levl = 0
             elif isinstance(item, (list, tuple)) and levl == 0:
@@ -2392,7 +2395,7 @@ class MainTest(SingleTransactionCase):
             self.install_language(lang)
         self._convert_test_data(group=group)
         for resource in self.get_resource_list(group=group):
-            for xref in self.get_resource_data_list(resource, group=group):
+            for xref in sorted(self.get_resource_data_list(resource, group=group)):
                 self.resource_make(resource, xref, group=group)
         if self.odoo_major_version < 13:
             self.env["account.journal"].search([("update_posted", "!=", True)]).write(
