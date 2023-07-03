@@ -1,1 +1,1 @@
-less -R $(readlink -f $(dirname $0))/test_testenv_20230702.txt
+less -R $(readlink -f $(dirname $0))/test_testenv_20230703.txt
