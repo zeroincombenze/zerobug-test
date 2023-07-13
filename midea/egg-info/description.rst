@@ -11,7 +11,8 @@ This module aims to:
 Developer info
 --------------
 
-There are two table in this module: qci is independent from company, the other is company dependent.
+There are two table in this module: qci is independent from company,
+the other is company dependent.
 Here some difference among versions:
 
 .. $include description_characters.csv

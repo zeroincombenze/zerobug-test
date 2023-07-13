@@ -44,7 +44,7 @@ class TestMidea(test_common.SingleTransactionCase):
         self.assertEqual(rec.state, self.MIDEA_NO_COMPANY_STATE)
         # Now test the <write_rec> functon
         self.write_rec(model_name, self.midea_no_company_id,
-                      {'name': self.MIDEA_NO_COMPANY_ALTER_NAME})
+                       {'name': self.MIDEA_NO_COMPANY_ALTER_NAME})
         rec = self.browse_rec(model_name, self.midea_no_company_id)
         self.assertEqual(rec.name, self.MIDEA_NO_COMPANY_ALTER_NAME)
         self.assertEqual(rec.state, self.MIDEA_NO_COMPANY_STATE)

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa - pylint: skip-file
 #
-# Copyright 2018-20 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
+# Copyright 2016-22 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -8,51 +9,54 @@
 # License APGL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
 {
-    'name': 'midea',
-    'summary': 'z0bug_odoo test suite',
-    'version': '7.0.0.1.4',
-    'category': 'Generic Modules/Accounting',
-    'author': 'SHS-AV s.r.l.',
-    'website': 'https://www.zeroincombenze.it/servizi-le-imprese/',
-    'depends': ['base'],
-    'data': [
-        'views/midea_qci_view.xml',
-        'views/midea_table_wco_view.xml',
-        'views/midea_menu.xml',
-        'security/ir.model.access.csv',
-        'data/midea_qci.xml',
+    "name": "midea",
+    "version": "7.0.0.1.7",
+    "category": "Generic Modules/Accounting",
+    "summary": "z0bug_odoo test suite",
+    "author": "SHS-AV s.r.l.",
+    "website": "https://github.com/OCA/l10n-italy",
+    "development_status": "Beta",
+    "license": "AGPL-3",
+    "depends": [''],
+    "data": [
+        "views/midea_qci_view.xml",
+        "views/midea_table_wco_view.xml",
+        "views/midea_menu.xml",
+        "security/ir.model.access.csv",
+        "data/midea_qci.xml",
     ],
-    'installable': True,
-    'maintainer': 'Antonio Maria Vigliotti',
-    'development_status': 'Beta',
+    "maintainer": "Antonio Maria Vigliotti",
+    "installable": True,
     'description': r'''
 Overview / Panoramica
 =====================
 
-|en| z0bug_odoo test suite
-==========================
+|en| This module has no specific function for End-user,
+it is designed for Odoo developers.
 
-This module has no specific function for End-user.
+This module aims to:
 
-It is a just a Odoo module example useful to developers. It is possible to see the differences among different Odoo versions.
-Another purpose of this module is to validate the z0bug_odoo package.
+* It shows the differences among different Odoo versions
+* It is used to validate the z0bug_odoo package
+* Define the qci table to manage test environment
 
 
 Developer info
 --------------
 
-There are two table in this module: one is indipendent from company, the other is company dependent.
+There are two table in this module: qci is independent from company,
+the other is company dependent.
 Here some difference among versions:
 
 +-----------+------------------------------------------------------------------------------+
 | Parameter | Notes                                                                        |
 +-----------+------------------------------------------------------------------------------+
-| Default   | Old api (6.1 and 7.0) use __default variable; new api ia attribute of field. |
+| Default   | Old api (6.1 and 7.0) use __default variable; new api is attribute of field. |
 +-----------+------------------------------------------------------------------------------+
 | xml tag   | From 10.0 root tab is <odoo>; before it was <openerp><data>                  |
 +-----------+------------------------------------------------------------------------------+
 
-Look at how default values are declared in different Odoo versions.
+
 
 
 Test info
@@ -71,10 +75,16 @@ The tests/test_midea file executes following unit tests:
 
 |
 
-|it| suite di test z0bug_odoo
-=============================
+|it| Suite z0bug_odoo
 
 Modulo a scopo tecnico fornito soltanto con documentazione in inglese.
+
+Permette di:
+
+* Mostrare le differenze dei test tra le varie versioni di Odoo
+* Valida il package z0bug_odoo
+* Definisce la tabella qci per gestire i casi di test
+
 
 |
 |
@@ -126,29 +136,30 @@ is mainly designed to cover Italian law and markeplace.
 che distribuisce e promuove **Odoo** pronto all'uso sulla propria infrastuttura.
 La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ è progettata per le esigenze del mercato italiano.
 
+
 |
 
-This module is part of zerobug-test project.
+This module is part of  project.
 
-Last Update / Ultimo aggiornamento: 2019-11-11
+Last Update / Ultimo aggiornamento:
 
-.. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
+.. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Alfa
-.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=7.0
-    :target: https://travis-ci.org/zeroincombenze/zerobug-test
+    :alt:
+.. |Build Status| image:: https://travis-ci.org/zeroincombenze/.svg?branch=7.0
+    :target: https://travis-ci.com/zeroincombenze/
     :alt: github.com
 .. |license gpl| image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |license opl| image:: https://img.shields.io/badge/licence-OPL-7379c3.svg
-    :target: https://www.odoo.com/documentation/user/9.0/legal/licenses/licenses.html
+    :target: https://www.odoo.com/documentation/user/14.0/legal/licenses/licenses.html
     :alt: License: OPL
-.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=7.0
-    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=7.0
+.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze//badge.svg?branch=7.0
+    :target: https://coveralls.io/github/zeroincombenze/?branch=7.0
     :alt: Coverage
-.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/7.0/graph/badge.svg
-    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/7.0
+.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze//branch/7.0/graph/badge.svg
+    :target: https://codecov.io/gh/zeroincombenze//branch/7.0
     :alt: Codecov
 .. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-7.svg
     :target: https://wiki.zeroincombenze.org/en/Odoo/7.0/dev
@@ -159,8 +170,8 @@ Last Update / Ultimo aggiornamento: 2019-11-11
 .. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-7.svg
     :target: https://erp7.zeroincombenze.it
     :alt: Try Me
-.. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/7.0/graph/badge.svg
-    :target: https://codecov.io/gh/OCA/zerobug-test/branch/7.0
+.. |OCA Codecov| image:: https://codecov.io/gh/OCA//branch/7.0/graph/badge.svg
+    :target: https://codecov.io/gh/OCA//branch/7.0
     :alt: Codecov
 .. |Odoo Italia Associazione| image:: https://www.odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20126x56.png
    :target: https://odoo-italia.org
@@ -189,6 +200,8 @@ Last Update / Ultimo aggiornamento: 2019-11-11
 .. |FatturaPA| image:: https://raw.githubusercontent.com/zeroincombenze/grymb/master/certificates/ade/icons/fatturapa.png
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
-   :target: https://tawk.to/85d4f6e06e68dd4e358797643fe5ee67540e408b
+   :target: https://t.me/Assitenza_clienti_powERP
+
+
 ''',
 }

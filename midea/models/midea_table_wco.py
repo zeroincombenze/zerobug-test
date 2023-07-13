@@ -15,8 +15,8 @@ class MideaNoCompany(orm.Model):
 
     _columns = {
         'name': fields.char('Name',
-                        required=True,
-                        translate=True),
+                            required=True,
+                            translate=True),
         'active': fields.boolean('Active'),
         'state': fields.selection([('draft', 'Draft'),
                                    ('confirmed', 'Confirmed'),
