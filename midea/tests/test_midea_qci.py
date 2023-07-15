@@ -11,8 +11,7 @@ import logging
 
 from past.builtins import long
 
-# from z0bug_odoo import test_common
-from .envtest import SingleTransactionCase
+from .testenv import MainTest as SingleTransactionCase
 
 _logger = logging.getLogger(__name__)
 
@@ -42,24 +41,27 @@ class TestMideaQci(SingleTransactionCase):
             "state": self.MIDEA_QCI_STATE,
         }
         # Test the <create> function
-        self.midea_no_company_id = self.create_id(model_name, vals)
+        self.midea_no_company = self.resource_create(model_name, vals)
+        self.assertTrue(
+            self.midea_no_company, "z0bug_odoo.create_id does not return a valid record"
+        )
         self.assertIsInstance(
-            self.midea_no_company_id,
+            self.midea_no_company.id,
             (int, long),
             "z0bug_odoo.create_id does not return an integer id",
         )
-        self.assertTrue(
-            self.midea_no_company_id, "z0bug_odoo.create_id does not return a valid id"
-        )
+
         # Now test the <browse> function
-        rec = self.browse_rec(model_name, self.midea_no_company_id)
+        rec = self.resource_browse(self.midea_no_company.id, resource=model_name)
         self.assertEqual(rec.name, self.MIDEA_QCI_NAME)
         self.assertEqual(rec.state, self.MIDEA_QCI_STATE)
         # Now test the <write_rec> functon
-        self.write_rec(
-            model_name, self.midea_no_company_id, {"name": self.MIDEA_QCI_ALTER_NAME}
+        self.resource_write(
+            model_name,
+            self.midea_no_company.id,
+            values={"name": self.MIDEA_QCI_ALTER_NAME},
         )
-        rec = self.browse_rec(model_name, self.midea_no_company_id)
+        rec = self.resource_browse(self.midea_no_company.id, resource=model_name)
         self.assertEqual(rec.name, self.MIDEA_QCI_ALTER_NAME)
         self.assertEqual(rec.state, self.MIDEA_QCI_STATE)
         _logger.info("Test %s SUCCESSFULLY ended." % __file__)

@@ -8,6 +8,4 @@
 #
 from . import test_midea_qci
 from . import test_midea_table_wco
-from . import test_res_partner
-from . import test_wizard
-from . import envtest
+from . import testenv

@@ -1,0 +1,149 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* midea
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo (12.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-15 07:39+0000\n"
+"PO-Revision-Date: 2023-07-15 07:39+0000\n"
+"Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
+"Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_qci__active
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__active
+msgid "Active"
+msgstr "Attivo"
+
+#. module: midea
+#: selection:midea.qci,state:0
+msgid "Canceled"
+msgstr "Annullato"
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_qci__code
+msgid "Code"
+msgstr "Codice"
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: midea
+#: selection:midea.qci,state:0
+#: selection:midea.table_wco,state:0
+msgid "Confirmed"
+msgstr "Confermato"
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_qci__create_uid
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_qci__create_date
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: midea
+#: model:ir.ui.menu,name:midea.menu_midea_table
+msgid "Dev.Quality"
+msgstr "Dev.Qualità"
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_qci__display_name
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: midea
+#: selection:midea.qci,state:0
+#: selection:midea.table_wco,state:0
+msgid "Draft"
+msgstr "Bozza"
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_qci__id
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__id
+msgid "ID"
+msgstr ""
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_qci____last_update
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_qci__write_uid
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_qci__write_date
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: midea
+#: model_terms:ir.ui.view,arch_db:midea.table_wco_form
+#: model_terms:ir.ui.view,arch_db:midea.table_wco_tree
+#: model_terms:ir.ui.view,arch_db:midea.view_midea_form
+msgid "Midea form"
+msgstr "Midea albero"
+
+#. module: midea
+#: model:ir.ui.menu,name:midea.menu_midea_table_wco_test
+msgid "My idea test (with company)"
+msgstr "My idea test (with azienda)"
+
+#. module: midea
+#: model:ir.actions.act_window,name:midea.action_test_wco
+msgid "My idea test record"
+msgstr "My idea test documentazione"
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_qci__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: midea
+#: model:ir.actions.act_window,name:midea.action_qci
+#: model:ir.ui.menu,name:midea.menu_midea_qci_test
+#: model_terms:ir.ui.view,arch_db:midea.view_midea_tree
+msgid "Quality Check Id"
+msgstr "Qualità Controllo Id"
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_qci__state
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__state
+msgid "State"
+msgstr "Stato Federale"
+
+#. module: midea
+#: model:ir.model,name:midea.model_midea_qci
+msgid "midea.qci"
+msgstr ""
+
+#. module: midea
+#: model:ir.model,name:midea.model_midea_table_wco
+msgid "midea.table_wco"
+msgstr ""
+
+#. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__name
+msgid "name"
+msgstr "nome"
+
+
