@@ -1,11 +1,9 @@
-# Copyright 2016-19 SHS-AV s.r.l. <https://www.zeroincombenze.it>
-#
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+# Copyright 2018-22 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
 from odoo import fields, models
 

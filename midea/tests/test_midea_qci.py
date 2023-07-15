@@ -1,20 +1,22 @@
 #
-# Copyright 2018-20 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2018-22 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
+import os
 import logging
 
 from past.builtins import long
-from z0bug_odoo import test_common
+
+from .testenv import MainTest as SingleTransactionCase
 
 _logger = logging.getLogger(__name__)
 
 
-class TestMideaQci(test_common.SingleTransactionCase):
+class TestMideaQci(SingleTransactionCase):
 
     MIDEA_QCI_CODE = "Test-01"
     MIDEA_QCI_NAME = "Test this module"
@@ -22,9 +24,16 @@ class TestMideaQci(test_common.SingleTransactionCase):
     MIDEA_QCI_ALTER_NAME = "Test module itself"
 
     def setUp(self):
-        super(TestMideaQci, self).setUp()
+        super().setUp()
+
+    def tearDown(self):
+        super().tearDown()
+        if os.environ.get("ODOO_COMMIT_TEST", ""):
+            self.env.cr.commit()  # pylint: disable=invalid-commit
+            _logger.info("✨ Test data committed")
 
     def test_midea_no_company(self):
+        _logger.info("🎺 Testing test_midea_no_company()")
         model_name = "midea.qci"
         vals = {
             "code": self.MIDEA_QCI_CODE,
@@ -32,24 +41,27 @@ class TestMideaQci(test_common.SingleTransactionCase):
             "state": self.MIDEA_QCI_STATE,
         }
         # Test the <create> function
-        self.midea_no_company_id = self.create_id(model_name, vals)
+        self.midea_no_company = self.resource_create(model_name, vals)
+        self.assertTrue(
+            self.midea_no_company, "z0bug_odoo.create_id does not return a valid record"
+        )
         self.assertIsInstance(
-            self.midea_no_company_id,
+            self.midea_no_company.id,
             (int, long),
             "z0bug_odoo.create_id does not return an integer id",
         )
-        self.assertTrue(
-            self.midea_no_company_id, "z0bug_odoo.create_id does not return a valid id"
-        )
+
         # Now test the <browse> function
-        rec = self.browse_rec(model_name, self.midea_no_company_id)
+        rec = self.resource_browse(self.midea_no_company.id, resource=model_name)
         self.assertEqual(rec.name, self.MIDEA_QCI_NAME)
         self.assertEqual(rec.state, self.MIDEA_QCI_STATE)
         # Now test the <write_rec> functon
-        self.write_rec(
-            model_name, self.midea_no_company_id, {"name": self.MIDEA_QCI_ALTER_NAME}
+        self.resource_write(
+            model_name,
+            self.midea_no_company.id,
+            values={"name": self.MIDEA_QCI_ALTER_NAME},
         )
-        rec = self.browse_rec(model_name, self.midea_no_company_id)
+        rec = self.resource_browse(self.midea_no_company.id, resource=model_name)
         self.assertEqual(rec.name, self.MIDEA_QCI_ALTER_NAME)
         self.assertEqual(rec.state, self.MIDEA_QCI_STATE)
         _logger.info("Test %s SUCCESSFULLY ended." % __file__)
