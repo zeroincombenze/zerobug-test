@@ -107,22 +107,18 @@ For furthermore information, please:
 """
 from __future__ import unicode_literals
 
+import base64
+import inspect
+import json
+import logging
 import os
+import re
 import sys
+from datetime import datetime, date
 
 from future.utils import PY2, PY3
 from past.builtins import basestring, long
 
-from datetime import datetime, date
-import re
-import json
-import logging
-import base64
-import inspect
-
-from odoo import api
-from odoo.tools.safe_eval import safe_eval
-from odoo.modules.module import get_module_resource
 try:
     import odoo.release as release
 except ImportError:
@@ -130,8 +126,19 @@ except ImportError:
         import openerp.release as release
     except ImportError:
         release = None
+if release:
+    if int(release.major_version.split('.')[0]) < 10:
+        import openerp.tests.common as test_common
+        from openerp import workflow  # noqa: F401
+        from openerp.modules.module import get_module_resource  # noqa: F401
+    else:
+        from odoo import api
+        import odoo.tests.common as test_common
+        from odoo.modules.module import get_module_resource  # noqa: F401
+        from odoo.tools.safe_eval import safe_eval
+
 import python_plus
-from z0bug_odoo.test_common import SingleTransactionCase
+# from z0bug_odoo.test_common import TransactionCase
 from z0bug_odoo import z0bug_odoo_lib
 
 # from clodoo import transodoo
@@ -187,6 +194,8 @@ KEY_CANDIDATE = (
     "partner_id",
     "product_id",
     "product_tmpl_id",
+    "agent",
+    "commission",
     "ref",
     "reference",
     "account_id",
@@ -219,7 +228,7 @@ def is_iterable(obj):
     return hasattr(obj, "__iter__")
 
 
-class MainTest(SingleTransactionCase):
+class MainTest(test_common.TransactionCase):
 
     def setUp(self):
         super(MainTest, self).setUp()
@@ -229,7 +238,7 @@ class MainTest(SingleTransactionCase):
         self._logger = _logger
         # List of stored data by groups: grp1: [a,b,c], grp2: [d,e,f]
         self.setup_data_list = {}
-        # Data keys by group, name, resource, xref
+        # Data keys by group, resource, xref
         self.setup_data = {}
         # List of (group, resource) for every xref
         self.setup_xrefs = {}
@@ -1114,7 +1123,7 @@ class MainTest(SingleTransactionCase):
                 items = []
         elif levl == 0 and isinstance(items, dict):
             # dict  -> [(0,0,dict)]  / [dict]
-            res1 = self.cast_types(resource, items, fmt="cmd")
+            res1 = self.cast_types(resource, items, fmt="cmd" if fmt else None)
             if res1:
                 res.append((0, 0, res1) if fmt == "cmd" else res1)
             is_cmd = True
@@ -1128,7 +1137,7 @@ class MainTest(SingleTransactionCase):
                     res1 = self._value2dict(
                         child_resource,
                         item,
-                        fmt="cmd",
+                        fmt="cmd" if fmt else None,
                         field2rm=self.parent_name.get(child_resource))
                     if res1:
                         res.append((0, 0, res1) if fmt == "cmd" else res1)
@@ -1140,7 +1149,7 @@ class MainTest(SingleTransactionCase):
                 levl = 0
             elif isinstance(item, dict):
                 # dict  -> (0,0,dict)  / dict
-                res1 = self.cast_types(child_resource, item, fmt="cmd")
+                res1 = self.cast_types(child_resource, item, fmt="cmd" if fmt else None)
                 if res1:
                     res.append((0, 0, res1) if fmt == "cmd" else res1)
                 is_cmd = True
@@ -1180,8 +1189,12 @@ class MainTest(SingleTransactionCase):
                 elif fmt == "py":
                     ids = res[2:] if levl >= 0 and res[0] in (0, 1, 6) else res
                     res = self.env[resource]
-                    for id in ids:
-                        res |= self.env[resource].browse(id)
+                    if self.odoo_major_version <= 7:
+                        for id in ids:
+                            res |= self.registry(resource).browse(self.cr, self.uid, id)
+                    else:
+                        for id in ids:
+                            res |= self.env[resource].browse(id)
         else:
             res = False
             if fmt:
@@ -1681,9 +1694,9 @@ class MainTest(SingleTransactionCase):
         try:
             act_windows = self.for_xml_id(module, action_name)
         except BaseException:
-            if not records or len(records) != 1:
-                self.raise_error(
-                    "Invalid action_name %s" % action_name)
+            # if not records or len(records) != 1:
+            self.raise_error(
+                "Invalid action_name %s" % action_name)
         return self._wiz_launch(
             act_windows,
             default=default,
@@ -1821,6 +1834,8 @@ class MainTest(SingleTransactionCase):
                     parent[field_child] = []
                 if xref not in parent[field_child]:
                     parent[field_child].append(xref)
+            if isinstance(ln, (int, long)) and "sequence" in self.struct[resource]:
+                self.setup_data[group][name][xref]["sequence"] = ln
         if name not in self.setup_data_list[group]:
             self.setup_data_list[group].append(name)
         self.setup_xrefs[xref] = (group, resource)
@@ -1872,7 +1887,6 @@ class MainTest(SingleTransactionCase):
                     domain.append((field, "=", k1))
                     kk = False
                 elif field in values:
-                    # domain = [(field, "=", values[field])]
                     domain.append((field, "=", self._cast_field(
                         resource, field, values[field], fmt="cmd")))
             if domain and (
@@ -1892,7 +1906,10 @@ class MainTest(SingleTransactionCase):
             if not resource:  # pragma: no cover
                 self.raise_error("No model issued for binding")
                 return False
-            record = self.env[resource].browse(xref)
+            if self.odoo_major_version <= 7:
+                record = self.registry(resource).browse(self.cr, self.uid, xref)
+            else:
+                record = self.env[resource].browse(xref)
         elif isinstance(xref, basestring):
             record = self.env.ref(
                 self._get_conveyed_value(None, None, xref), raise_if_not_found=False
@@ -1952,6 +1969,8 @@ class MainTest(SingleTransactionCase):
             if domain:
                 record = self.env[resource].search(domain)
         if len(record) == 1:
+            if self.odoo_major_version <= 7:
+                return self.registry(resource).browse(self.cr, self.uid, record[0].id)
             return self.env[resource].browse(record[0].id)
         if raise_if_not_found:
             self.raise_error("External ID %s not found" % xref)  # pragma: no cover
@@ -1964,6 +1983,7 @@ class MainTest(SingleTransactionCase):
 
         * It can create external reference too
         * It can use stored data if no values supplied
+        * Use new api even on Odoo 7.0 or less
 
         Args:
             resource (str): Odoo model name, i.e. "res.partner"
@@ -1995,6 +2015,10 @@ class MainTest(SingleTransactionCase):
                     .with_context(check_move_validity=False)
                     .create(values)
                 )
+            elif self.odoo_major_version <= 7:
+                res = self.registry(resource).browse(
+                    self.cr, self.uid,
+                    self.registry(resource).create(self.cr, self.uid, values))
             else:
                 res = self.env[resource].create(values)
         except BaseException as e:
@@ -2031,6 +2055,7 @@ class MainTest(SingleTransactionCase):
         * If resource is a record, xref is ignored (it should be None)
         * It resource is a string, xref must be a valid xref or an integer
         * If values is not supplied, record is restored to stored data values
+        * Use new api even on Odoo 7.0 or less
 
         Args:
             resource (str|obj): Odoo model name or record to update
@@ -2074,6 +2099,8 @@ class MainTest(SingleTransactionCase):
             try:
                 if resource.startswith("account.move"):
                     record.with_context(check_move_validity=False).write(values)
+                elif self.odoo_major_version <= 7:
+                    self.registry(resource).write(self.cr, self.uid, [id], values)
                 else:
                     record.write(values)
             except BaseException as e:
@@ -2395,7 +2422,14 @@ class MainTest(SingleTransactionCase):
             self.install_language(lang)
         self._convert_test_data(group=group)
         for resource in self.get_resource_list(group=group):
+            resource_parent = self.parent_resource.get(resource)
             for xref in sorted(self.get_resource_data_list(resource, group=group)):
+                if resource_parent:
+                    parent_xref, ln = self._unpack_xref(xref)
+                    if self.get_resource_data(resource_parent, parent_xref,
+                                              group=group):
+                        # Childs record alread loaded with header record
+                        continue
                 self.resource_make(resource, xref, group=group)
         if self.odoo_major_version < 13:
             self.env["account.journal"].search([("update_posted", "!=", True)]).write(
