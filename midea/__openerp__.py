@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# flake8: noqa - pylint: skip-file
 #
 # Copyright 2016-22 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
@@ -17,7 +16,7 @@
     "website": "https://github.com/OCA/l10n-italy",
     "development_status": "Beta",
     "license": "AGPL-3",
-    "depends": [''],
+    "depends": [],
     "data": [
         "views/midea_qci_view.xml",
         "views/midea_table_wco_view.xml",

@@ -1,0 +1,103 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* midea
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo (7.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-15 07:09+0000\n"
+"PO-Revision-Date: 2023-07-15 07:09+0000\n"
+"Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
+"Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: midea
+#: field:midea.qci,active:0
+#: field:midea.table_wco,active:0
+msgid "Active"
+msgstr "Active"
+
+#. module: midea
+#: field:midea.qci,code:0
+msgid "Code"
+msgstr "Code"
+
+#. module: midea
+#: field:midea.table_wco,company_id:0
+msgid "Company"
+msgstr "Company"
+
+#. module: midea
+#: selection:midea.qci,state:0
+#: selection:midea.table_wco,state:0
+msgid "Confirmed"
+msgstr "Confirmed"
+
+#. module: midea
+#: selection:midea.qci,state:0
+#: selection:midea.table_wco,state:0
+msgid "Deleted"
+msgstr "Deleted"
+
+#. module: midea
+#: model:ir.ui.menu,name:midea.menu_midea_table
+msgid "Dev.Quality"
+msgstr "Dev.Quality"
+
+#. module: midea
+#: selection:midea.qci,state:0
+#: selection:midea.table_wco,state:0
+msgid "Draft"
+msgstr "Draft"
+
+#. module: midea
+#: view:midea.qci:0
+#: view:midea.table_wco:0
+msgid "Midea form"
+msgstr "Midea form"
+
+#. module: midea
+#: model:ir.ui.menu,name:midea.menu_midea_table_wco_test
+msgid "My idea test (with company)"
+msgstr "My idea test (with company)"
+
+#. module: midea
+#: model:ir.actions.act_window,name:midea.action_test_wco
+msgid "My idea test record"
+msgstr "My idea test record"
+
+#. module: midea
+#: field:midea.qci,name:0
+#: field:midea.table_wco,name:0
+msgid "Name"
+msgstr "Name"
+
+#. module: midea
+#: model:ir.actions.act_window,name:midea.action_qci
+#: model:ir.ui.menu,name:midea.menu_midea_qci_test
+#: view:midea.qci:0
+msgid "Quality Check Id"
+msgstr "Quality Check Id"
+
+#. module: midea
+#: field:midea.qci,state:0
+#: field:midea.table_wco,state:0
+msgid "State"
+msgstr "State"
+
+#. module: midea
+#: model:ir.model,name:midea.model_midea_qci
+msgid "midea.qci"
+msgstr "midea.qci"
+
+#. module: midea
+#: model:ir.model,name:midea.model_midea_table_wco
+msgid "midea.table_wco"
+msgstr "midea.table_wco"
+
+

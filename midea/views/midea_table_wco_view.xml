@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-<data>
+    <data>
 
     <record model="ir.ui.view" id="midea.table_wco_tree">
         <field name="name">Midea tabel without company (tree)</field>
@@ -39,6 +39,5 @@
         <field name="view_id" ref="midea.table_wco_tree"/>
     </record>
 
-</data>
+    </data>
 </openerp>
-

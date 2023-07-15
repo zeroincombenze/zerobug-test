@@ -5,12 +5,10 @@
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# License APGL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
 import os
 import logging
-
-from past.builtins import long
 
 from .testenv import MainTest as SingleTransactionCase
 
@@ -25,8 +23,7 @@ class TestMidea(SingleTransactionCase):
 
     def setUp(self):
         super(TestMidea, self).setUp()
-        self.debug_level = 0
-        self.company_id = self.set_test_company()
+        self.company = self.default_company()
 
     def tearDown(self):
         super(TestMidea, self).tearDown()
@@ -36,39 +33,36 @@ class TestMidea(SingleTransactionCase):
 
     def test_midea_table_wco(self):
         _logger.info("🎺 Testing test_midea_table_wco()")
-        # Check for valid company
-        company = self.browse_rec("res.company", self.company_id)
-        self.assertEqual(company.name, "Test Company")
-        #
         model_name = "midea.table_wco"
         vals = {
             "name": self.MIDEA_TABLE_WCO_NAME,
             "state": self.MIDEA_TABLE_WCO_STATE,
-            "company_id": self.company_id,
+            "company_id": self.company.id,
         }
         # Test the <create> function
-        self.midea_table_wco_id = self.create_id(model_name, vals)
+        self.midea_table_wco = self.resource_create(model_name, vals)
+        self.assertTrue(
+            self.midea_table_wco, "z0bug_odoo.create_id does not return a valid record"
+        )
         self.assertIsInstance(
-            self.midea_table_wco_id,
+            self.midea_table_wco.id,
             (int, long),
             "z0bug_odoo.create_id does not return an integer id",
         )
-        self.assertTrue(
-            self.midea_table_wco_id, "z0bug_odoo.create_id does not return a valid id"
-        )
+
         # Now test the <browse> function
-        rec = self.browse_rec(model_name, self.midea_table_wco_id)
+        rec = self.resource_browse(self.midea_table_wco.id, resource=model_name)
         self.assertEqual(rec.name, self.MIDEA_TABLE_WCO_NAME)
         self.assertEqual(rec.state, self.MIDEA_TABLE_WCO_STATE)
-        self.assertEqual(rec.company_id.id, self.company_id)
+        self.assertEqual(rec.company_id, self.company)
         # Now test the <write_rec> functon
-        self.write_rec(
+        self.resource_write(
             model_name,
-            self.midea_table_wco_id,
-            {"name": self.MIDEA_TABLE_WCO_ALTER_NAME},
+            self.midea_table_wco.id,
+            values={"name": self.MIDEA_TABLE_WCO_ALTER_NAME},
         )
-        rec = self.browse_rec(model_name, self.midea_table_wco_id)
+        rec = self.resource_browse(self.midea_table_wco.id, resource=model_name)
         self.assertEqual(rec.name, self.MIDEA_TABLE_WCO_ALTER_NAME)
         self.assertEqual(rec.state, self.MIDEA_TABLE_WCO_STATE)
-        self.assertEqual(rec.company_id.id, self.company_id)
+        self.assertEqual(rec.company_id, self.company)
         _logger.info("Test %s SUCCESSFULLY ended." % __file__)

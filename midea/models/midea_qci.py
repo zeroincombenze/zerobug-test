@@ -5,13 +5,13 @@
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# License APGL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
-from openerp.osv import orm, fields
+from openerp.osv import fields, orm
 
 
 class MideaQci(orm.Model):
-    _name = 'midea.qci'
+    _name = "midea.qci"
 
     _columns = {
         'code': fields.char('Code', required=True),
