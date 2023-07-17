@@ -7,7 +7,7 @@ certifi==2021.10.8
 cffi==1.15.1
 chardet==4.0.0
 click==7.1.2
-clodoo==2.0.3
+clodoo==2.0.6
 codecov==2.1.12
 codicefiscale==0.9
 configparser==4.0.2
@@ -28,6 +28,8 @@ future==0.18.3
 futures==3.4.0
 gdata==2.0.18
 gevent==1.0.2
+gitdb2==2.0.6
+GitPython==2.1.15
 greenlet==2.0.2
 html2text==2019.8.11
 idna==2.10
@@ -70,7 +72,7 @@ pycodestyle==2.7.0
 pycparser==2.21
 pydot==1.0.2
 pyflakes==2.3.1
-Pygments==2.5.2
+Pygments==2.2.0
 pylint==1.9.5
 pylint-odoo==3.5.0
 pylint-plugin-utils==0.6
@@ -103,6 +105,8 @@ setuptools==44.1.1
 simplejson==3.5.3
 singledispatch==3.7.0
 six==1.9.0
+smmap==3.0.5
+smmap2==3.0.1
 tqdm==4.64.1
 twine==1.15.0
 typing==3.10.0.0
@@ -119,7 +123,7 @@ whichcraft==0.6.1
 wok-code==2.0.10
 wrapt==1.15.0
 xlwt==0.7.5
-z0bug-odoo==1.0.16
+z0bug-odoo==2.0.11
 z0lib==2.0.6
 zerobug==2.0.9
 zipp==1.2.0

@@ -1,0 +1,190 @@
+/home/odoo/7.0/venv_odoo/lib/python2.7/site-packages/OpenSSL/crypto.py:14: CryptographyDeprecationWarning: Python 2 is no longer supported by the Python core team. Support for it is now deprecated in cryptography, and will be removed in the next release.
+  from cryptography import utils, x509
+2023-07-17 10:06:22,547 583781 INFO ? openerp: OpenERP version 7.0
+2023-07-17 10:06:22,547 583781 INFO ? openerp: addons paths: /home/odoo/7.0/openerp/addons,/home/odoo/7.0/addons,/home/odoo/7.0/account-analytic,/home/odoo/7.0/account-budgeting,/home/odoo/7.0/account-closing,/home/odoo/7.0/account-consolidation,/home/odoo/7.0/account-financial-reporting,/home/odoo/7.0/account-financial-tools,/home/odoo/7.0/account-fiscal-rule,/home/odoo/7.0/account-invoice-reporting,/home/odoo/7.0/account-invoicing,/home/odoo/7.0/account-payment,/home/odoo/7.0/account-reconcile,/home/odoo/7.0/bank-payment,/home/odoo/7.0/commission,/home/odoo/7.0/community-data-files,/home/odoo/7.0/connector,/home/odoo/7.0/contract,/home/odoo/7.0/crm,/home/odoo/7.0/delivery-carrier,/home/odoo/7.0/e-commerce,/home/odoo/7.0/geospatial,/home/odoo/7.0/hr,/home/odoo/7.0/knowledge,/home/odoo/7.0/l10n-italy,/home/odoo/7.0/l10n-italy-supplemental,/home/odoo/7.0/manufacture,/home/odoo/7.0/manufacture-reporting,/home/odoo/7.0/margin-analysis,/home/odoo/7.0/mgmtsystem,/home/odoo/7.0/mis-builder,/home/odoo/7.0/multi-company,/home/odoo/7.0/partner-contact,/home/odoo/7.0/pos,/home/odoo/7.0/product-attribute,/home/odoo/7.0/product-kitting,/home/odoo/7.0/product-variant,/home/odoo/7.0/project,/home/odoo/7.0/project-reporting,/home/odoo/7.0/purchase-reporting,/home/odoo/7.0/purchase-workflow,/home/odoo/7.0/report-print-send,/home/odoo/7.0/reporting-engine,/home/odoo/7.0/rma,/home/odoo/7.0/sale-financial,/home/odoo/7.0/sale-reporting,/home/odoo/7.0/sale-workflow,/home/odoo/7.0/server-tools,/home/odoo/7.0/stock-logistics-barcode,/home/odoo/7.0/stock-logistics-reporting,/home/odoo/7.0/stock-logistics-tracking,/home/odoo/7.0/stock-logistics-transport,/home/odoo/7.0/stock-logistics-warehouse,/home/odoo/7.0/stock-logistics-workflow,/home/odoo/7.0/timesheet,/home/odoo/7.0/uncovered,/home/odoo/7.0/web,/home/odoo/7.0/webkit-tools,/home/odoo/7.0/zerobug-test
+2023-07-17 10:06:22,547 583781 INFO ? openerp: database hostname: localhost
+2023-07-17 10:06:22,547 583781 INFO ? openerp: database port: 5432
+2023-07-17 10:06:22,547 583781 INFO ? openerp: database user: odoo7
+2023-07-17 10:06:22,588 583781 INFO ? openerp.modules.loading: init db
+2023-07-17 10:06:26,252 583781 INFO test_midea_7 openerp.modules.loading: loading 1 modules...
+2023-07-17 10:06:26,398 583781 INFO test_midea_7 openerp.modules.module: module base: creating or updating database tables
+2023-07-17 10:06:27,097 583781 INFO test_midea_7 openerp.osv.orm: Computing parent left and right for table ir_ui_menu...
+2023-07-17 10:06:29,376 583781 INFO test_midea_7 openerp.osv.orm: Computing parent left and right for table res_partner_category...
+2023-07-17 10:06:30,838 583781 INFO test_midea_7 openerp.osv.orm: storing computed values of fields.function 'report_file'
+2023-07-17 10:06:30,838 583781 INFO test_midea_7 openerp.osv.orm: storing computed values of fields.function 'res_name'
+2023-07-17 10:06:30,839 583781 INFO test_midea_7 openerp.osv.orm: storing computed values of fields.function 'global'
+2023-07-17 10:06:30,840 583781 INFO test_midea_7 openerp.osv.orm: storing computed values of fields.function 'web_icon_data'
+2023-07-17 10:06:30,840 583781 INFO test_midea_7 openerp.osv.orm: storing computed values of fields.function 'web_icon_hover_data'
+2023-07-17 10:06:30,840 583781 INFO test_midea_7 openerp.osv.orm: storing computed values of fields.function 'needaction_enabled'
+2023-07-17 10:06:30,841 583781 INFO test_midea_7 openerp.osv.orm: storing computed values of fields.function 'menus_by_module'
+2023-07-17 10:06:31,316 583781 INFO test_midea_7 openerp.osv.orm: storing computed values of fields.function 'reports_by_module'
+2023-07-17 10:06:31,861 583781 INFO test_midea_7 openerp.osv.orm: storing computed values of fields.function 'views_by_module'
+2023-07-17 10:06:32,360 583781 INFO test_midea_7 openerp.osv.orm: storing computed values of fields.function 'logo_web'
+2023-07-17 10:06:32,361 583781 INFO test_midea_7 openerp.osv.orm: storing computed values of fields.function 'image_medium'
+2023-07-17 10:06:32,362 583781 INFO test_midea_7 openerp.osv.orm: storing computed values of fields.function 'image_small'
+2023-07-17 10:06:32,365 583781 INFO test_midea_7 openerp.modules.loading: module base: loading base_data.xml
+2023-07-17 10:06:32,487 583781 INFO test_midea_7 openerp.modules.loading: module base: loading currency_data.xml
+2023-07-17 10:06:33,534 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_country_data.xml
+2023-07-17 10:06:34,363 583781 INFO test_midea_7 openerp.modules.loading: module base: loading security/base_security.xml
+2023-07-17 10:06:34,479 583781 INFO test_midea_7 openerp.modules.loading: module base: loading base_menu.xml
+2023-07-17 10:06:34,625 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_security.xml
+2023-07-17 10:06:34,666 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_config.xml
+2023-07-17 10:06:34,699 583781 INFO test_midea_7 openerp.modules.loading: module base: loading data/res.country.state.csv
+2023-07-17 10:06:34,844 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/wizard/wizard_menu_view.xml
+2023-07-17 10:06:34,852 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_actions.xml
+2023-07-17 10:06:35,151 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_attachment_view.xml
+2023-07-17 10:06:35,208 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_config_parameter_view.xml
+2023-07-17 10:06:35,258 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_cron_view.xml
+2023-07-17 10:06:35,326 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_filters.xml
+2023-07-17 10:06:35,391 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_mail_server_view.xml
+2023-07-17 10:06:35,441 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_model_view.xml
+2023-07-17 10:06:35,720 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_rule_view.xml
+2023-07-17 10:06:35,772 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_sequence_view.xml
+2023-07-17 10:06:35,867 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_translation_view.xml
+2023-07-17 10:06:35,921 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_ui_menu_view.xml
+2023-07-17 10:06:35,970 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_ui_view_view.xml
+2023-07-17 10:06:36,080 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/ir_values_view.xml
+2023-07-17 10:06:36,171 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/osv_memory_autovacuum.xml
+2023-07-17 10:06:36,181 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/report/ir_report.xml
+2023-07-17 10:06:36,196 583781 INFO test_midea_7 openerp.modules.loading: module base: loading ir/workflow/workflow_view.xml
+2023-07-17 10:06:36,443 583781 INFO test_midea_7 openerp.modules.loading: module base: loading module/module_view.xml
+2023-07-17 10:06:36,566 583781 INFO test_midea_7 openerp.modules.loading: module base: loading module/module_data.xml
+2023-07-17 10:06:36,645 583781 INFO test_midea_7 openerp.modules.loading: module base: loading module/module_report.xml
+2023-07-17 10:06:36,656 583781 INFO test_midea_7 openerp.modules.loading: module base: loading module/wizard/base_module_import_view.xml
+2023-07-17 10:06:36,674 583781 INFO test_midea_7 openerp.modules.loading: module base: loading module/wizard/base_module_update_view.xml
+2023-07-17 10:06:36,705 583781 INFO test_midea_7 openerp.modules.loading: module base: loading module/wizard/base_language_install_view.xml
+2023-07-17 10:06:36,736 583781 INFO test_midea_7 openerp.modules.loading: module base: loading module/wizard/base_import_language_view.xml
+2023-07-17 10:06:36,766 583781 INFO test_midea_7 openerp.modules.loading: module base: loading module/wizard/base_module_upgrade_view.xml
+2023-07-17 10:06:36,809 583781 INFO test_midea_7 openerp.modules.loading: module base: loading module/wizard/base_module_configuration_view.xml
+2023-07-17 10:06:36,820 583781 INFO test_midea_7 openerp.modules.loading: module base: loading module/wizard/base_export_language_view.xml
+2023-07-17 10:06:36,855 583781 INFO test_midea_7 openerp.modules.loading: module base: loading module/wizard/base_update_translations_view.xml
+2023-07-17 10:06:36,886 583781 INFO test_midea_7 openerp.modules.loading: module base: loading module/wizard/base_module_immediate_install.xml
+2023-07-17 10:06:36,896 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_company_view.xml
+2023-07-17 10:06:37,044 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_request_view.xml
+2023-07-17 10:06:37,090 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_lang_view.xml
+2023-07-17 10:06:37,146 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_partner_report.xml
+2023-07-17 10:06:37,159 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_partner_view.xml
+2023-07-17 10:06:37,423 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_partner_shortcut_data.xml
+2023-07-17 10:06:37,433 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_bank_view.xml
+2023-07-17 10:06:37,561 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_country_view.xml
+2023-07-17 10:06:37,645 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_currency_view.xml
+2023-07-17 10:06:37,725 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/wizard/change_password_wizard_view.xml
+2023-07-17 10:06:37,758 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_users_view.xml
+2023-07-17 10:06:37,936 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_partner_data.xml
+2023-07-17 10:06:37,980 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/ir_property_view.xml
+2023-07-17 10:06:38,035 583781 INFO test_midea_7 openerp.modules.loading: module base: loading security/base_security.xml
+2023-07-17 10:06:38,319 583781 INFO test_midea_7 openerp.modules.loading: module base: loading security/ir.model.access.csv
+2023-07-17 10:06:38,928 583781 INFO test_midea_7 openerp.modules.loading: module base: loading base_demo.xml
+2023-07-17 10:06:39,083 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_partner_demo.xml
+2023-07-17 10:06:39,747 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_partner_demo.yml
+2023-07-17 10:06:41,351 583781 INFO test_midea_7 openerp.modules.loading: module base: loading res/res_partner_image_demo.xml
+2023-07-17 10:06:41,918 583781 INFO test_midea_7 openerp.modules.loading: module base: loading test/base_test.yml
+2023-07-17 10:06:42,191 583781 INFO test_midea_7 openerp.modules.loading: module base: loading test/test_context.xml
+2023-07-17 10:06:42,196 583781 INFO test_midea_7 openerp.modules.loading: module base: loading test/bug_lp541545.xml
+2023-07-17 10:06:42,198 583781 INFO test_midea_7 openerp.modules.loading: module base: loading test/test_osv_expression.yml
+2023-07-17 10:06:43,114 583781 INFO test_midea_7 openerp.addons.base.ir.ir_translation: module base: loading translation file (fr) for language fr_FR
+2023-07-17 10:06:43,114 583781 INFO test_midea_7 openerp.tools.translate: loading /home/odoo/7.0/openerp/addons/base/i18n/fr.po
+2023-07-17 10:06:43,116 583781 WARNING test_midea_7 openerp.addons.base.res.res_lang: Unable to get information for locale fr_FR. Information from the default locale (en_US) have been used.
+2023-07-17 10:06:45,210 583781 INFO test_midea_7 openerp.modules.loading: module base: loading test/test_ir_rule.yml
+2023-07-17 10:07:01,047 583781 INFO test_midea_7 openerp.addons.base.ir.ir_translation: module base: loading translation file (fr) for language fr_FR
+2023-07-17 10:07:01,047 583781 INFO test_midea_7 openerp.tools.translate: loading /home/odoo/7.0/openerp/addons/base/i18n/fr.po
+2023-07-17 10:07:01,049 583781 WARNING test_midea_7 openerp.addons.base.res.res_lang: Unable to get information for locale fr_FR. Information from the default locale (en_US) have been used.
+2023-07-17 10:07:02,896 583781 INFO test_midea_7 openerp.addons.base.ir.ir_translation: module base: loading translation file (fr) for language fr_FR
+2023-07-17 10:07:02,896 583781 INFO test_midea_7 openerp.tools.translate: loading /home/odoo/7.0/openerp/addons/base/i18n/fr.po
+2023-07-17 10:07:02,898 583781 WARNING test_midea_7 openerp.addons.base.res.res_lang: Unable to get information for locale fr_FR. Information from the default locale (en_US) have been used.
+2023-07-17 10:07:04,340 583781 INFO test_midea_7 openerp.addons.base.ir.ir_translation: module base: loading translation file (fr) for language fr_FR
+2023-07-17 10:07:04,341 583781 INFO test_midea_7 openerp.tools.translate: loading /home/odoo/7.0/openerp/addons/base/i18n/fr.po
+2023-07-17 10:07:04,342 583781 WARNING test_midea_7 openerp.addons.base.res.res_lang: Unable to get information for locale fr_FR. Information from the default locale (en_US) have been used.
+2023-07-17 10:07:07,075 583781 INFO test_midea_7 openerp.modules.loading: updating modules list
+2023-07-17 10:07:11,225 583781 INFO test_midea_7 openerp.modules.loading: loading 1 modules...
+2023-07-17 10:07:11,282 583781 INFO test_midea_7 openerp.modules.loading: loading 14 modules...
+2023-07-17 10:07:11,786 583781 INFO test_midea_7 openerp.addons.google_docs.google_docs: GData lib version `%s GData-Python/2.0.18` detected
+2023-07-17 10:07:12,762 583781 WARNING test_midea_7 openerp.addons.delivery_carrier_label_gls.report.label: Please install python lib pycountry
+2023-07-17 10:07:12,763 583781 WARNING test_midea_7 openerp.addons.delivery_carrier_label_gls.stock: Please install python lib pycountry
+2023-07-17 10:07:12,775 583781 WARNING test_midea_7 openerp.addons.base_geoengine.geo_helper.geo_convertion_helper: Shapely or geojson are not available in the sys path
+2023-07-17 10:07:12,778 583781 WARNING test_midea_7 openerp.addons.base_geoengine.geo_field: Shapely or geojson are not available in the sys path
+2023-07-17 10:07:13,693 583781 WARNING test_midea_7 root: Sentry DSN not defined in config file
+2023-07-17 10:07:13,782 583781 WARNING test_midea_7 openerp.addons.smsclient.smsclient: ERROR IMPORTING SOAPpy, if not installed, please install it: e.g.: apt-get install python-soappy
+2023-07-17 10:07:15,019 583781 INFO test_midea_7 openerp.modules.module: module _web_oca: creating or updating database tables
+2023-07-17 10:07:15,025 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/testing.js
+2023-07-17 10:07:15,026 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/class.js
+2023-07-17 10:07:15,026 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/registry.js
+2023-07-17 10:07:15,026 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/form.js
+2023-07-17 10:07:15,026 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/data.js
+2023-07-17 10:07:15,027 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/list-utils.js
+2023-07-17 10:07:15,027 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/formats.js
+2023-07-17 10:07:15,027 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/rpc.js
+2023-07-17 10:07:15,028 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/evals.js
+2023-07-17 10:07:15,028 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/search.js
+2023-07-17 10:07:15,028 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/Widget.js
+2023-07-17 10:07:15,028 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/list.js
+2023-07-17 10:07:15,028 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/list-editable.js
+2023-07-17 10:07:15,029 583781 INFO test_midea_7 openerp.modules.loading: module _web_oca: loading static/test/mutex.js
+2023-07-17 10:07:15,093 583781 INFO test_midea_7 openerp.modules.module: module midea: creating or updating database tables
+2023-07-17 10:07:15,256 583781 INFO test_midea_7 openerp.modules.loading: module midea: loading views/midea_qci_view.xml
+2023-07-17 10:07:15,283 583781 INFO test_midea_7 openerp.modules.loading: module midea: loading views/midea_table_wco_view.xml
+2023-07-17 10:07:15,288 583781 WARNING test_midea_7 openerp.addons.base.ir.ir_ui_view: Setting the `type` field is deprecated in the `ir.ui.view` model.
+2023-07-17 10:07:15,298 583781 WARNING test_midea_7 openerp.addons.base.ir.ir_ui_view: Setting the `type` field is deprecated in the `ir.ui.view` model.
+2023-07-17 10:07:15,311 583781 INFO test_midea_7 openerp.modules.loading: module midea: loading views/midea_menu.xml
+2023-07-17 10:07:15,350 583781 INFO test_midea_7 openerp.modules.loading: module midea: loading security/ir.model.access.csv
+2023-07-17 10:07:15,370 583781 INFO test_midea_7 openerp.modules.loading: module midea: loading data/midea_qci.xml
+2023-07-17 10:07:15,502 583781 INFO test_midea_7 openerp.modules.module: module web: creating or updating database tables
+2023-07-17 10:07:15,506 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/testing.js
+2023-07-17 10:07:15,507 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/class.js
+2023-07-17 10:07:15,507 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/registry.js
+2023-07-17 10:07:15,508 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/form.js
+2023-07-17 10:07:15,508 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/data.js
+2023-07-17 10:07:15,508 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/list-utils.js
+2023-07-17 10:07:15,508 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/formats.js
+2023-07-17 10:07:15,509 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/rpc.js
+2023-07-17 10:07:15,509 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/evals.js
+2023-07-17 10:07:15,509 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/search.js
+2023-07-17 10:07:15,509 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/Widget.js
+2023-07-17 10:07:15,509 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/list.js
+2023-07-17 10:07:15,510 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/list-editable.js
+2023-07-17 10:07:15,510 583781 INFO test_midea_7 openerp.modules.loading: module web: loading static/test/mutex.js
+2023-07-17 10:07:15,585 583781 INFO test_midea_7 openerp.modules.module: module web_tests: creating or updating database tables
+2023-07-17 10:07:15,643 583781 INFO test_midea_7 openerp.modules.module: module web_zeroincombenze: creating or updating database tables
+2023-07-17 10:07:15,648 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/testing.js
+2023-07-17 10:07:15,651 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/class.js
+2023-07-17 10:07:15,653 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/registry.js
+2023-07-17 10:07:15,656 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/form.js
+2023-07-17 10:07:15,658 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/data.js
+2023-07-17 10:07:15,660 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/list-utils.js
+2023-07-17 10:07:15,661 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/formats.js
+2023-07-17 10:07:15,663 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/rpc.js
+2023-07-17 10:07:15,665 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/evals.js
+2023-07-17 10:07:15,667 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/search.js
+2023-07-17 10:07:15,669 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/Widget.js
+2023-07-17 10:07:15,671 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/list.js
+2023-07-17 10:07:15,674 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/list-editable.js
+2023-07-17 10:07:15,676 583781 INFO test_midea_7 openerp.modules.loading: module web_zeroincombenze: loading static/test/mutex.js
+2023-07-17 10:07:15,755 583781 INFO test_midea_7 openerp.modules.module: module base_import: creating or updating database tables
+2023-07-17 10:07:16,131 583781 INFO test_midea_7 openerp.modules.loading: module base_import: loading security/ir.model.access.csv
+2023-07-17 10:07:16,205 583781 INFO test_midea_7 openerp.modules.loading: module base_import: loading static/test/states.js
+2023-07-17 10:07:16,367 583781 INFO test_midea_7 openerp.modules.module: module process: creating or updating database tables
+2023-07-17 10:07:16,712 583781 INFO test_midea_7 openerp.modules.loading: module process: loading security/ir.model.access.csv
+2023-07-17 10:07:16,731 583781 INFO test_midea_7 openerp.modules.loading: module process: loading process_view.xml
+2023-07-17 10:07:16,894 583781 INFO test_midea_7 openerp.modules.module: module web_calendar: creating or updating database tables
+2023-07-17 10:07:16,908 583781 INFO test_midea_7 openerp.modules.module: module web_diagram: creating or updating database tables
+2023-07-17 10:07:16,924 583781 INFO test_midea_7 openerp.modules.module: module web_gantt: creating or updating database tables
+2023-07-17 10:07:16,941 583781 INFO test_midea_7 openerp.modules.module: module web_graph: creating or updating database tables
+2023-07-17 10:07:16,956 583781 INFO test_midea_7 openerp.modules.module: module web_kanban: creating or updating database tables
+2023-07-17 10:07:16,972 583781 INFO test_midea_7 openerp.modules.module: module web_view_editor: creating or updating database tables
+2023-07-17 10:07:16,988 583781 INFO test_midea_7 openerp.modules.loading: loading 14 modules...
+2023-07-17 10:07:16,991 583781 INFO test_midea_7 openerp.modules.loading: loading 14 modules...
+2023-07-17 10:07:16,993 583781 INFO test_midea_7 openerp.modules.loading: loading 14 modules...
+2023-07-17 10:07:17,074 583781 INFO test_midea_7 openerp.modules.loading: Modules loaded.
+2023-07-17 10:07:17,075 583781 INFO test_midea_7 openerp.osv.orm: Computing parent left and right for table ir_ui_menu...
+2023-07-17 10:07:17,141 583781 INFO test_midea_7 openerp.osv.orm: Computing parent left and right for table res_partner_category...
+
++===================================================================
+| please test [36mmidea[0m (7.0): [32mSUCCESS![0m
++===================================================================
+
+Name                                                          Stmts   Miss  Cover   Missing
+-------------------------------------------------------------------------------------------
+/home/odoo/7.0/zerobug-test/midea/models/midea_qci.py             5      0   100%
+/home/odoo/7.0/zerobug-test/midea/models/midea_table_wco.py       5      0   100%
+-------------------------------------------------------------------------------------------
+TOTAL                                                            10      0   100%
