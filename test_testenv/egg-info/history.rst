@@ -2,7 +2,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Tests failed on day 28-31 of every month
- 
+* [QUA] Test coverage 92% (1688: 129+1559) [317 TestPoint]
 
 12.0.2.0.9 (2023-06-24)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -45,4 +45,3 @@
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] First release
-* [QUA] Test coverage 92% (1688: 129+1559) [317 TestPoint]
