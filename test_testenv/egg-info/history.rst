@@ -1,4 +1,4 @@
-12.0.2.0.10 (2023-07-15)
+12.0.2.0.10 (2023-07-17)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Tests failed on day 28-31 of every month
@@ -45,4 +45,4 @@
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] First release
-* [QUA] Test coverage 92% (1686: 127+1559) [317 TestPoint]
+* [QUA] Test coverage 92% (1688: 129+1559) [317 TestPoint]
