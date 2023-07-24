@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
-# Copyright 2016-19 Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2016-23 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
+#
+# Contributions to development, thanks to:
+# * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
+#
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
 from . import midea_qci
 from . import midea_table_wco
-

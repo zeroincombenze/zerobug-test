@@ -1,0 +1,142 @@
+/home/odoo/8.0/venv_odoo/lib/python2.7/site-packages/OpenSSL/crypto.py:14: CryptographyDeprecationWarning: Python 2 is no longer supported by the Python core team. Support for it is now deprecated in cryptography, and will be removed in the next release.
+  from cryptography import utils, x509
+2023-07-15 12:21:14,409 3412336 INFO ? openerp: OpenERP version 8.0
+2023-07-15 12:21:14,409 3412336 INFO ? openerp: addons paths: ['/home/odoo/.local/share/Odoo8/addons/8.0', u'/home/odoo/8.0/openerp/addons', u'/home/odoo/8.0/addons', u'/home/odoo/.local/share/Odoo12/addons', u'/home/odoo/8.0/account-analytic', u'/home/odoo/8.0/account-budgeting', u'/home/odoo/8.0/account-closing', u'/home/odoo/8.0/account-consolidation', u'/home/odoo/8.0/account-financial-reporting', u'/home/odoo/8.0/account-financial-tools', u'/home/odoo/8.0/account-fiscal-rule', u'/home/odoo/8.0/account-invoice-reporting', u'/home/odoo/8.0/account-invoicing', u'/home/odoo/8.0/account-payment', u'/home/odoo/8.0/account-reconcile', u'/home/odoo/8.0/bank-payment', u'/home/odoo/8.0/bank-statement-import', u'/home/odoo/8.0/business-requirement', u'/home/odoo/8.0/commission', u'/home/odoo/8.0/community-data-files', u'/home/odoo/8.0/connector', u'/home/odoo/8.0/contract', u'/home/odoo/8.0/crm', u'/home/odoo/8.0/data-protection', u'/home/odoo/8.0/delivery-carrier', u'/home/odoo/8.0/e-commerce', u'/home/odoo/8.0/edi', u'/home/odoo/8.0/geospatial', u'/home/odoo/8.0/hr', u'/home/odoo/8.0/intrastat-extrastat', u'/home/odoo/8.0/knowledge', u'/home/odoo/8.0/l10n-italy', u'/home/odoo/8.0/l10n-italy-supplemental', u'/home/odoo/8.0/manufacture', u'/home/odoo/8.0/manufacture-reporting', u'/home/odoo/8.0/margin-analysis', u'/home/odoo/8.0/mgmtsystem', u'/home/odoo/8.0/mis-builder', u'/home/odoo/8.0/multi-company', u'/home/odoo/8.0/partner-contact', u'/home/odoo/8.0/pos', u'/home/odoo/8.0/product-attribute', u'/home/odoo/8.0/product-variant', u'/home/odoo/8.0/profiles', u'/home/odoo/8.0/project', u'/home/odoo/8.0/project-reporting', u'/home/odoo/8.0/purchase-reporting', u'/home/odoo/8.0/purchase-workflow', u'/home/odoo/8.0/report-print-send', u'/home/odoo/8.0/reporting-engine', u'/home/odoo/8.0/rma', u'/home/odoo/8.0/sale-financial', u'/home/odoo/8.0/sale-reporting', u'/home/odoo/8.0/sale-workflow', u'/home/odoo/8.0/server-auth', u'/home/odoo/8.0/server-tools', u'/home/odoo/8.0/social', u'/home/odoo/8.0/stock-logistics-barcode', u'/home/odoo/8.0/stock-logistics-reporting', u'/home/odoo/8.0/stock-logistics-tracking', u'/home/odoo/8.0/stock-logistics-transport', u'/home/odoo/8.0/stock-logistics-warehouse', u'/home/odoo/8.0/stock-logistics-workflow', u'/home/odoo/8.0/timesheet', u'/home/odoo/8.0/uncovered', u'/home/odoo/8.0/web', u'/home/odoo/8.0/zerobug-test', u'/home/odoo/8.0/didotech_80']
+2023-07-15 12:21:14,409 3412336 INFO ? openerp: database hostname: localhost
+2023-07-15 12:21:14,409 3412336 INFO ? openerp: database port: 5432
+2023-07-15 12:21:14,409 3412336 INFO ? openerp: database user: odoo8
+2023-07-15 12:21:14,591 3412336 INFO ? openerp.service.server: HTTP service (werkzeug) running on 0.0.0.0:46668
+2023-07-15 12:21:14,606 3412336 INFO test_midea_8 openerp.modules.loading: loading 1 modules...
+2023-07-15 12:21:14,618 3412336 INFO test_midea_8 openerp.modules.loading: 1 modules loaded in 0.01s, 0 queries
+2023-07-15 12:21:14,789 3412336 INFO test_midea_8 openerp.modules.loading: updating modules list
+2023-07-15 12:21:21,852 3412336 INFO ? openerp.addons.bus.bus: Bus.loop listen imbus on db postgres
+2023-07-15 12:21:22,134 3412336 INFO test_midea_8 openerp.addons.report.models.report: Will use the Wkhtmltopdf binary at /usr/local/bin/wkhtmltopdf
+2023-07-15 12:21:22,477 3412336 WARNING test_midea_8 openerp.addons.account_bank_statement_import_ofx.account_bank_statement_import_ofx: ofxparse not found, OFX parsing disabled.
+2023-07-15 12:21:22,603 3412336 WARNING test_midea_8 openerp.addons.base_geoengine.geo_field: Shapely or geojson are not available in the sys path
+2023-07-15 12:21:22,603 3412336 WARNING test_midea_8 openerp.addons.base_geoengine.geo_helper.geo_convertion_helper: Shapely or geojson are not available in the sys path
+2023-07-15 12:21:22,604 3412336 WARNING test_midea_8 openerp.addons.base_geoengine.fields: Shapely or geojson are not available in the sys path
+2023-07-15 12:21:23,932 3412336 INFO test_midea_8 openerp.http: HTTP Configuring static files
+2023-07-15 12:21:24,254 3412336 INFO test_midea_8 openerp.modules.loading: loading 15 modules...
+2023-07-15 12:21:24,300 3412336 INFO test_midea_8 openerp.modules.loading: 15 modules loaded in 0.05s, 0 queries
+2023-07-15 12:21:24,305 3412336 INFO test_midea_8 openerp.modules.loading: loading 16 modules...
+2023-07-15 12:21:24,503 3412336 INFO test_midea_8 openerp.modules.module: module midea: creating or updating database tables
+2023-07-15 12:21:24,724 3412336 INFO test_midea_8 openerp.modules.loading: loading midea/views/midea_qci_view.xml
+2023-07-15 12:21:24,783 3412336 INFO test_midea_8 openerp.modules.loading: loading midea/views/midea_table_wco_view.xml
+2023-07-15 12:21:24,833 3412336 INFO test_midea_8 openerp.modules.loading: loading midea/views/midea_menu.xml
+2023-07-15 12:21:24,892 3412336 INFO test_midea_8 openerp.modules.loading: loading midea/security/ir.model.access.csv
+2023-07-15 12:21:24,928 3412336 INFO test_midea_8 openerp.modules.loading: loading midea/data/midea_qci.xml
+2023-07-15 12:21:24,941 3412336 CRITICAL test_midea_8 openerp.service.server: Failed to initialize database `test_midea_8`.
+Traceback (most recent call last):
+  File "/home/odoo/8.0/openerp/service/server.py", line 941, in preload_registries
+    registry = RegistryManager.new(dbname, update_module=update_module)
+  File "/home/odoo/8.0/openerp/modules/registry.py", line 370, in new
+    openerp.modules.load_modules(registry._db, force_demo, status, update_module)
+  File "/home/odoo/8.0/openerp/modules/loading.py", line 357, in load_modules
+    loaded_modules, update_module)
+  File "/home/odoo/8.0/openerp/modules/loading.py", line 255, in load_marked_modules
+    loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules, perform_checks=perform_checks)
+  File "/home/odoo/8.0/openerp/modules/loading.py", line 176, in load_module_graph
+    _load_data(cr, module_name, idref, mode, kind='data')
+  File "/home/odoo/8.0/openerp/modules/loading.py", line 118, in _load_data
+    tools.convert_file(cr, module_name, filename, idref, mode, noupdate, kind, report)
+  File "/home/odoo/8.0/openerp/tools/convert.py", line 897, in convert_file
+    convert_xml_import(cr, module, fp, idref, mode, noupdate, report)
+  File "/home/odoo/8.0/openerp/tools/convert.py", line 970, in convert_xml_import
+    doc = etree.parse(xmlfile)
+  File "src/lxml/etree.pyx", line 3541, in lxml.etree.parse
+  File "src/lxml/parser.pxi", line 1900, in lxml.etree._parseDocument
+  File "src/lxml/parser.pxi", line 1920, in lxml.etree._parseFilelikeDocument
+  File "src/lxml/parser.pxi", line 1814, in lxml.etree._parseDocFromFilelike
+  File "src/lxml/parser.pxi", line 1204, in lxml.etree._BaseParser._parseDocFromFilelike
+  File "src/lxml/parser.pxi", line 618, in lxml.etree._ParserContext._handleParseResultDoc
+  File "src/lxml/parser.pxi", line 728, in lxml.etree._handleParseResult
+  File "src/lxml/parser.pxi", line 657, in lxml.etree._raiseParseError
+XMLSyntaxError: Document is empty, line 1, column 1 (line 1)
+2023-07-15 12:21:24,946 3412336 INFO test_midea_8 openerp.service.server: Initiating shutdown
+2023-07-15 12:21:24,946 3412336 INFO test_midea_8 openerp.service.server: Hit CTRL-C again or send a second signal to force the shutdown.
+2023-07-15 12:21:24,950 3412336 INFO test_midea_8 openerp.modules.loading: loading 1 modules...
+2023-07-15 12:21:24,956 3412336 INFO test_midea_8 openerp.modules.loading: 1 modules loaded in 0.01s, 0 queries
+2023-07-15 12:21:24,983 3412336 INFO test_midea_8 openerp.modules.loading: loading 15 modules...
+2023-07-15 12:21:24,986 3412336 INFO test_midea_8 openerp.modules.loading: 15 modules loaded in 0.00s, 0 queries
+2023-07-15 12:21:25,198 3412336 INFO test_midea_8 openerp.modules.loading: Modules loaded.
+2023-07-15 12:21:25,214 3412336 INFO test_midea_8 openerp.modules.module: openerp.addons.base.tests.test_xmlrpc running tests.
+2023-07-15 12:21:25,214 3412336 INFO test_midea_8 openerp.addons.base.tests.test_xmlrpc: test_01_xmlrpc_login (openerp.addons.base.tests.test_xmlrpc.test_xmlrpc)
+2023-07-15 12:21:25,215 3412336 INFO test_midea_8 openerp.addons.base.tests.test_xmlrpc: ` Try to login on the common service.
+2023-07-15 12:21:25,229 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: ERROR
+2023-07-15 12:21:25,230 3412336 INFO test_midea_8 openerp.addons.base.tests.test_xmlrpc: test_xmlrpc_ir_model_search (openerp.addons.base.tests.test_xmlrpc.test_xmlrpc)
+2023-07-15 12:21:25,230 3412336 INFO test_midea_8 openerp.addons.base.tests.test_xmlrpc: ` Try a search on the object service.
+2023-07-15 12:21:25,233 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: ERROR
+2023-07-15 12:21:25,234 3412336 INFO test_midea_8 openerp.addons.base.tests.test_xmlrpc: ======================================================================
+2023-07-15 12:21:25,234 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: ERROR: test_01_xmlrpc_login (openerp.addons.base.tests.test_xmlrpc.test_xmlrpc)
+2023-07-15 12:21:25,234 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: ` Try to login on the common service.
+2023-07-15 12:21:25,234 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: Traceback (most recent call last):
+2023-07-15 12:21:25,234 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/home/odoo/8.0/openerp/addons/base/tests/test_xmlrpc.py", line 12, in test_01_xmlrpc_login
+2023-07-15 12:21:25,234 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     uid = self.xmlrpc_common.login(db_name, 'admin', 'admin')
+2023-07-15 12:21:25,234 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/xmlrpclib.py", line 1243, in __call__
+2023-07-15 12:21:25,234 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     return self.__send(self.__name, args)
+2023-07-15 12:21:25,234 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/xmlrpclib.py", line 1602, in __request
+2023-07-15 12:21:25,235 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     verbose=self.__verbose
+2023-07-15 12:21:25,235 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/xmlrpclib.py", line 1283, in request
+2023-07-15 12:21:25,235 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     return self.single_request(host, handler, request_body, verbose)
+2023-07-15 12:21:25,235 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/xmlrpclib.py", line 1311, in single_request
+2023-07-15 12:21:25,235 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     self.send_content(h, request_body)
+2023-07-15 12:21:25,235 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/xmlrpclib.py", line 1459, in send_content
+2023-07-15 12:21:25,235 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     connection.endheaders(request_body)
+2023-07-15 12:21:25,235 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/httplib.py", line 1095, in endheaders
+2023-07-15 12:21:25,235 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     self._send_output(message_body)
+2023-07-15 12:21:25,235 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/httplib.py", line 898, in _send_output
+2023-07-15 12:21:25,235 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     self.send(msg)
+2023-07-15 12:21:25,235 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/httplib.py", line 860, in send
+2023-07-15 12:21:25,236 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     self.connect()
+2023-07-15 12:21:25,236 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/httplib.py", line 837, in connect
+2023-07-15 12:21:25,236 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     self.timeout, self.source_address)
+2023-07-15 12:21:25,236 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/socket.py", line 575, in create_connection
+2023-07-15 12:21:25,236 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     raise err
+2023-07-15 12:21:25,236 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: ` error: [Errno 111] Connection refused
+2023-07-15 12:21:25,236 3412336 INFO test_midea_8 openerp.addons.base.tests.test_xmlrpc: ======================================================================
+2023-07-15 12:21:25,236 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: ERROR: test_xmlrpc_ir_model_search (openerp.addons.base.tests.test_xmlrpc.test_xmlrpc)
+2023-07-15 12:21:25,236 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: ` Try a search on the object service.
+2023-07-15 12:21:25,236 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: Traceback (most recent call last):
+2023-07-15 12:21:25,236 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/home/odoo/8.0/openerp/addons/base/tests/test_xmlrpc.py", line 19, in test_xmlrpc_ir_model_search
+2023-07-15 12:21:25,236 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     ids = o.execute(db_name, 1, 'admin', 'ir.model', 'search', [])
+2023-07-15 12:21:25,236 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/xmlrpclib.py", line 1243, in __call__
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     return self.__send(self.__name, args)
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/xmlrpclib.py", line 1602, in __request
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     verbose=self.__verbose
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/xmlrpclib.py", line 1283, in request
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     return self.single_request(host, handler, request_body, verbose)
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/xmlrpclib.py", line 1311, in single_request
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     self.send_content(h, request_body)
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/xmlrpclib.py", line 1459, in send_content
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     connection.endheaders(request_body)
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/httplib.py", line 1095, in endheaders
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     self._send_output(message_body)
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/httplib.py", line 898, in _send_output
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     self.send(msg)
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/httplib.py", line 860, in send
+2023-07-15 12:21:25,237 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     self.connect()
+2023-07-15 12:21:25,238 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/httplib.py", line 837, in connect
+2023-07-15 12:21:25,238 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     self.timeout, self.source_address)
+2023-07-15 12:21:25,238 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `   File "/usr/lib/python2.7/socket.py", line 575, in create_connection
+2023-07-15 12:21:25,238 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: `     raise err
+2023-07-15 12:21:25,238 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: ` error: [Errno 111] Connection refused
+2023-07-15 12:21:25,238 3412336 INFO test_midea_8 openerp.addons.base.tests.test_xmlrpc: Ran 2 tests in 0.023s
+2023-07-15 12:21:25,238 3412336 ERROR test_midea_8 openerp.addons.base.tests.test_xmlrpc: FAILED
+2023-07-15 12:21:25,238 3412336 INFO test_midea_8 openerp.addons.base.tests.test_xmlrpc:  (errors=2)
+2023-07-15 12:21:25,238 3412336 ERROR test_midea_8 openerp.modules.module: Module base: 0 failures, 2 errors
+2023-07-15 12:21:25,239 3412336 INFO test_midea_8 openerp.modules.module: openerp.addons.report.tests.test_reports running tests.
+2023-07-15 12:21:25,239 3412336 INFO test_midea_8 openerp.addons.report.tests.test_reports: test_reports (openerp.addons.report.tests.test_reports.TestReports)
+2023-07-15 12:21:25,242 3412336 INFO test_midea_8 openerp.addons.report.tests.test_reports: Ran 1 test in 0.003s
+2023-07-15 12:21:25,242 3412336 INFO test_midea_8 openerp.addons.report.tests.test_reports: OK
+2023-07-15 12:21:25,244 3412336 INFO test_midea_8 openerp.modules.loading: All post-tested in 0.05s, 3 queries
+
++===================================================================
+| please test [36mmidea[0m (8.0): [31mFAILED![0m
++===================================================================
+
+Name                                                          Stmts   Miss  Cover   Missing
+-------------------------------------------------------------------------------------------
+/home/odoo/8.0/zerobug-test/midea/models/midea_qci.py             7      0   100%
+/home/odoo/8.0/zerobug-test/midea/models/midea_table_wco.py       7      0   100%
+-------------------------------------------------------------------------------------------
+TOTAL                                                            14      0   100%
