@@ -98,7 +98,7 @@ class MyTest(SingleTransactionCase):
 
     def setUp(self):
         super(MyTest, self).setUp()
-        self.debug_level = 3
+        self.debug_level = 0
         self.iso_code = "it_IT"
 
     def tearDown(self):

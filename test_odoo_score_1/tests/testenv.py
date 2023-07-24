@@ -22,7 +22,7 @@ Your python test file should have to contain some following example lines:
         def setUp(self):
             super().setUp()
             # Add following statement just for get debug information
-            self.debug_level = 2
+            self.debug_level = 0
             data = {"TEST_SETUP_LIST": TEST_SETUP_LIST}
             for resource in TEST_SETUP_LIST:
                 item = "TEST_%s" % resource.upper().replace(".", "_")
@@ -68,7 +68,7 @@ External key reference (c) is identified by "external." prefix followed by
 the key value used to retrieve the record.
 The field "code" or "name" are used to search record;
 for account.tax the "description" field is used.
-Please set self.debug_level = 2 (or more) to log these field keys.
+Please set self.debug_level = 0 (or more) to log these field keys.
 
 The 2 keys reference (d) needs to address child record inside header record
 at 2 level model (header/detail) relationship.
@@ -76,7 +76,7 @@ The key MUST BE the same key of the parent record,
 plus "_", plus line identifier (usually 'sequence' field).
 i.e. "z0bug.move_1_3" means: line with sequence 3 of 'account.move.line'
 which is child of record "z0bug.move_1" of 'account.move'.
-Please set self.debug_level = 2 (or more) to log these relationships.
+Please set self.debug_level = 0 (or more) to log these relationships.
 
 For 'product.template' (product) you must use '_template' text in reference (e).
 TestEnv inherit 'product.product' (variant) external reference.

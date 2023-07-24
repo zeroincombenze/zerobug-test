@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test Environment v2.0.10
+"""Test Environment v2.0.11
 
 Copy this file in tests directory of your module.
 Please copy the documentation testenv.rst file too in your module.
@@ -22,7 +22,7 @@ Your python test file should have to contain some following example lines:
         def setUp(self):
             super().setUp()
             # Add following statement just for get debug information
-            self.debug_level = 2
+            self.debug_level = 0
             data = {"TEST_SETUP_LIST": TEST_SETUP_LIST}
             for resource in TEST_SETUP_LIST:
                 item = "TEST_%s" % resource.upper().replace(".", "_")
@@ -68,7 +68,7 @@ test environment. They are identified by "z0bug." prefix module name.
 External key reference (c) is identified by "external." prefix followed by
 the key value used to retrieve the record. The field "code" or "name" are usually used
 to search record; for account.tax the "description" field is used.
-Please set self.debug_level = 2 (or more) to log these field keys.
+Please set self.debug_level = 0 (or more) to log these field keys.
 
 The 2 keys reference (d) needs to address child record inside header record
 at 2 level model (header/detail) relationship.
@@ -83,7 +83,7 @@ i.e. "z0bug.invoice_1_3" means: line with sequence 3 of 'account.invoice.line'
 which is child of record "z0bug.invoice_1" of 'account.invoice'.
 i.e.: "EUR.2023-06-26" should be the key for res.currency.rate where "EUR" is the header
 key (res.currency) and "2023-06-26" is the date of rate.
-Please set self.debug_level = 2 (or more) to log these relationships.
+Please set self.debug_level = 0 (or more) to log these relationships.
 
 For 'product.template' (product) you must use '_template' text in reference (e).
 TestEnv inherit 'product.product' (variant) external reference (read above
@@ -128,6 +128,8 @@ except ImportError:
         release = None
 if release:
     if int(release.major_version.split('.')[0]) < 10:
+        if int(release.major_version.split('.')[0]) > 7:
+            from openerp import api
         import openerp.tests.common as test_common
         from openerp import workflow  # noqa: F401
         from openerp.modules.module import get_module_resource  # noqa: F401
@@ -138,10 +140,7 @@ if release:
         from odoo.tools.safe_eval import safe_eval
 
 import python_plus
-# from z0bug_odoo.test_common import TransactionCase
 from z0bug_odoo import z0bug_odoo_lib
-
-# from clodoo import transodoo
 
 _logger = logging.getLogger(__name__)
 
@@ -2409,7 +2408,7 @@ class MainTest(test_common.TransactionCase):
             None
         """
         self._logger.info(
-            "🎺🎺🎺 Starting test v2.0.10 (debug_level=%s)" % (self.debug_level)
+            "🎺🎺🎺 Starting test v2.0.11 (debug_level=%s)" % (self.debug_level)
         )
         self._logger.info(
             "🎺🎺 Testing module: %s (%s)"

@@ -16,7 +16,7 @@ class MyTest(SingleTransactionCase):
 
     def setUp(self):
         super(MyTest, self).setUp()
-        self.debug_level = 2
+        self.debug_level = 0
 
     def tearDown(self):
         super(MyTest, self).tearDown()
