@@ -1154,7 +1154,7 @@ class MyTest(SingleTransactionCase):
             "name": "invoice payment (SO123)",
         }
         vals["line_ids"].append(line_vals)
-        template.append(vals)
+        # template.append(vals)
         line_vals = {
             "account_id": "z0bug.coa_bnk1",
             "debit": 123.10,

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test Environment v2.0.11
+"""Test Environment v2.0.12
 
 Copy this file in tests directory of your module.
 Please copy the documentation testenv.rst file too in your module.
@@ -22,7 +22,7 @@ Your python test file should have to contain some following example lines:
         def setUp(self):
             super().setUp()
             # Add following statement just for get debug information
-            self.debug_level = 0
+            self.debug_level = 2
             data = {"TEST_SETUP_LIST": TEST_SETUP_LIST}
             for resource in TEST_SETUP_LIST:
                 item = "TEST_%s" % resource.upper().replace(".", "_")
@@ -68,7 +68,7 @@ test environment. They are identified by "z0bug." prefix module name.
 External key reference (c) is identified by "external." prefix followed by
 the key value used to retrieve the record. The field "code" or "name" are usually used
 to search record; for account.tax the "description" field is used.
-Please set self.debug_level = 0 (or more) to log these field keys.
+Please set self.debug_level = 2 (or more) to log these field keys.
 
 The 2 keys reference (d) needs to address child record inside header record
 at 2 level model (header/detail) relationship.
@@ -83,7 +83,7 @@ i.e. "z0bug.invoice_1_3" means: line with sequence 3 of 'account.invoice.line'
 which is child of record "z0bug.invoice_1" of 'account.invoice'.
 i.e.: "EUR.2023-06-26" should be the key for res.currency.rate where "EUR" is the header
 key (res.currency) and "2023-06-26" is the date of rate.
-Please set self.debug_level = 0 (or more) to log these relationships.
+Please set self.debug_level = 2 (or more) to log these relationships.
 
 For 'product.template' (product) you must use '_template' text in reference (e).
 TestEnv inherit 'product.product' (variant) external reference (read above
@@ -129,14 +129,14 @@ except ImportError:
 if release:
     if int(release.major_version.split('.')[0]) < 10:
         if int(release.major_version.split('.')[0]) > 7:
-            from openerp import api
+            from openerp import api                                        # noqa: F401
         import openerp.tests.common as test_common
         from openerp import workflow  # noqa: F401
-        from openerp.modules.module import get_module_resource  # noqa: F401
+        from openerp.modules.module import get_module_resource             # noqa: F401
     else:
-        from odoo import api
+        from odoo import api                                               # noqa: F401
         import odoo.tests.common as test_common
-        from odoo.modules.module import get_module_resource  # noqa: F401
+        from odoo.modules.module import get_module_resource                # noqa: F401
         from odoo.tools.safe_eval import safe_eval
 
 import python_plus
@@ -2408,7 +2408,7 @@ class MainTest(test_common.TransactionCase):
             None
         """
         self._logger.info(
-            "🎺🎺🎺 Starting test v2.0.11 (debug_level=%s)" % (self.debug_level)
+            "🎺🎺🎺 Starting test v2.0.12 (debug_level=%s)" % (self.debug_level)
         )
         self._logger.info(
             "🎺🎺 Testing module: %s (%s)"
@@ -2914,6 +2914,11 @@ class MainTest(test_common.TransactionCase):
                 matched.append((match_tmpl, match_key))
                 self.tmpl_purge_matrix(
                     match_tmpl, match_key[1], rec_parent=match_key[0])
+                for tmpl in template:
+                    if tmpl == match_tmpl:
+                        continue
+                    if match_key in tmpl["_MATCH"]:
+                        del tmpl["_MATCH"][match_key]
             return matched
 
         for key in template["_MATCH"].copy().keys():
@@ -2969,9 +2974,16 @@ class MainTest(test_common.TransactionCase):
         This function do following steps:
 
         * matches templates and record, based on template supplied data
-        * check if all template are matched with 1 record to validate
+        * check if all templates are matched with 1 record to validate
         * execute self.assertEqual() for every field in template
         * check for every template record has matched with assert
+        * check if all templates matched 1 to 1 with a record
+
+        Notice: all templates must be matched but not all record must be matched.
+        You can supply the complete table, this function check for all records that
+        match with templates, remaining records are ignored.
+        In this way you do not have to select records to match, just issue all records
+        which contain the test set.
 
         Args:
              template (list of dict): list of dictionaries with expected values
@@ -2990,6 +3002,13 @@ class MainTest(test_common.TransactionCase):
         )
         self.tmpl_purge_matrix(template, records)
         ctr_assertion = self.tmpl_validate_record(template, records)
+        matches = []
+        for tmpl in template:
+            if tmpl["_MATCH"] not in matches:
+                matches.append(tmpl["_MATCH"])
+                ctr_assertion += 1
+            else:
+                self.raise_error("One template item matches twice!\n%s" % tmpl)
         self.log_lvl_1(
             "🐞%d assertion validated for validate_records(%s)"
             % (ctr_assertion, self.tmpl_repr(template, match=True)),
