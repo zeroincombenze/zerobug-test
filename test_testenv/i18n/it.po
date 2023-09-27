@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo (12.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-14 18:15+0000\n"
-"PO-Revision-Date: 2023-07-14 18:15+0000\n"
+"POT-Creation-Date: 2023-09-13 12:09+0000\n"
+"PO-Revision-Date: 2023-09-13 12:09+0000\n"
 "Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
 "Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
 "Language: it_IT\n"
@@ -62,7 +62,7 @@ msgstr "Booleano campo"
 #: model_terms:ir.ui.view,arch_db:test_testenv.result_wizard_example_menu_view
 #: model_terms:ir.ui.view,arch_db:test_testenv.wizard_example_menu_view
 msgid "Cancel"
-msgstr "Annullare"
+msgstr "Annulla"
 
 #. module: test_testenv
 #: model:ir.model.fields,help:test_testenv.field_testenv_all_fields__name
@@ -92,7 +92,7 @@ msgstr "Contatto"
 #. module: test_testenv
 #: model_terms:ir.ui.view,arch_db:test_testenv.wizard_example_menu_view
 msgid "Create"
-msgstr "Creare"
+msgstr "Crea"
 
 #. module: test_testenv
 #: model:ir.model.fields,field_description:test_testenv.field_testenv_all_fields__create_uid
@@ -114,7 +114,7 @@ msgstr "Creato timestamp"
 #. module: test_testenv
 #: model:ir.model.fields,field_description:test_testenv.field_testenv_all_fields__currency_id
 msgid "Currency"
-msgstr "Divisa"
+msgstr "Valuta"
 
 #. module: test_testenv
 #: model:ir.model.fields,field_description:test_testenv.field_testenv_all_fields__date
@@ -227,12 +227,12 @@ msgstr "Parametri Esempio"
 #. module: test_testenv
 #: model:ir.model.fields,field_description:test_testenv.field_testenv_all_fields__partner_ids
 msgid "Partners"
-msgstr "Nominativi"
+msgstr "Partner"
 
 #. module: test_testenv
 #: model:ir.model.fields,field_description:test_testenv.field_testenv_all_fields__product_ids
 msgid "Products"
-msgstr "E seguono direttamente la modalità standard di gestione dei diritti di accesso di Odoo"
+msgstr "Prodotti"
 
 #. module: test_testenv
 #: model:ir.model.fields,field_description:test_testenv.field_testenv_all_fields__rank
@@ -247,7 +247,7 @@ msgstr "Selezione campo"
 #. module: test_testenv
 #: model:ir.model.fields,field_description:test_testenv.field_testenv_all_fields__state
 msgid "State"
-msgstr "Stato Federale"
+msgstr "Provincia"
 
 #. module: test_testenv
 #: model:ir.model.fields,field_description:test_testenv.field_res_partner__testenv_id

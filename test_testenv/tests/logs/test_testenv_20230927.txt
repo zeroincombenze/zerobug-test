@@ -1,0 +1,247 @@
+2023-09-27 15:09:54,000 16344 DAEMON test_test_testenv_12 run_odoo_debug.sh: cd /home/odoo/12.0/venv_odoo && source ./bin/activate
+2023-09-27 13:10:00,076 18992 INFO ? odoo: Odoo version 12.0 
+2023-09-27 13:10:00,076 18992 INFO ? odoo: Using configuration file at /home/odoo/12.0/zerobug-test/test_testenv/tests/logs/zero12.zerobug-test.test_testenv.conf 
+2023-09-27 13:10:00,076 18992 INFO ? odoo: addons paths: ['/home/odoo/.local/share/Odoo12/addons/12.0', '/home/odoo/12.0/odoo/addons', '/home/odoo/12.0/addons', '/home/odoo/.local/share/Odoo12/addons', '/home/odoo/12.0/account-analytic', '/home/odoo/12.0/account-budgeting', '/home/odoo/12.0/account-closing', '/home/odoo/12.0/account-consolidation', '/home/odoo/12.0/account-financial-reporting', '/home/odoo/12.0/account-financial-tools', '/home/odoo/12.0/account-fiscal-rule', '/home/odoo/12.0/account-invoice-reporting', '/home/odoo/12.0/account-invoicing', '/home/odoo/12.0/account-payment', '/home/odoo/12.0/account-reconcile', '/home/odoo/12.0/apps-store', '/home/odoo/12.0/bank-payment', '/home/odoo/12.0/bank-statement-import', '/home/odoo/12.0/brand', '/home/odoo/12.0/business-requirement', '/home/odoo/12.0/calendar', '/home/odoo/12.0/commission', '/home/odoo/12.0/community-data-files', '/home/odoo/12.0/connector', '/home/odoo/12.0/contract', '/home/odoo/12.0/credit-control', '/home/odoo/12.0/crm', '/home/odoo/12.0/currency', '/home/odoo/12.0/data-protection', '/home/odoo/12.0/delivery-carrier', '/home/odoo/12.0/dms', '/home/odoo/12.0/e-commerce', '/home/odoo/12.0/edi', '/home/odoo/12.0/geospatial', '/home/odoo/12.0/helpdesk', '/home/odoo/12.0/hr', '/home/odoo/12.0/intrastat-extrastat', '/home/odoo/12.0/iot', '/home/odoo/12.0/knowledge', '/home/odoo/12.0/l10n-italy', '/home/odoo/12.0/l10n-italy-supplemental', '/home/odoo/12.0/maintenance', '/home/odoo/12.0/mgmtsystem', '/home/odoo/12.0/manufacture', '/home/odoo/12.0/manufacture-reporting', '/home/odoo/12.0/margin-analysis', '/home/odoo/12.0/mis-builder', '/home/odoo/12.0/mis-builder-contrib', '/home/odoo/12.0/multi-company', '/home/odoo/12.0/partner-contact', '/home/odoo/12.0/pos', '/home/odoo/12.0/product-attribute', '/home/odoo/12.0/product-pack', '/home/odoo/12.0/product-variant', '/home/odoo/12.0/profiles', '/home/odoo/12.0/project', '/home/odoo/12.0/project-agile', '/home/odoo/12.0/project-reporting', '/home/odoo/12.0/purchase-reporting', '/home/odoo/12.0/purchase-workflow', '/home/odoo/12.0/queue', '/home/odoo/12.0/report-print-send', '/home/odoo/12.0/reporting-engine', '/home/odoo/12.0/rma', '/home/odoo/12.0/sale-reporting', '/home/odoo/12.0/sale-workflow', '/home/odoo/12.0/search-engine', '/home/odoo/12.0/server-auth', '/home/odoo/12.0/server-backend', '/home/odoo/12.0/server-brand', '/home/odoo/12.0/server-env', '/home/odoo/12.0/server-tools', '/home/odoo/12.0/server-ux', '/home/odoo/12.0/social', '/home/odoo/12.0/stock-logistics-barcode', '/home/odoo/12.0/stock-logistics-reporting', '/home/odoo/12.0/stock-logistics-transport', '/home/odoo/12.0/stock-logistics-warehouse', '/home/odoo/12.0/stock-logistics-workflow', '/home/odoo/12.0/storage', '/home/odoo/12.0/timesheet', '/home/odoo/12.0/uncovered', '/home/odoo/12.0/web', '/home/odoo/12.0/website', '/home/odoo/12.0/wms', '/home/odoo/12.0/zerobug-test', '/home/odoo/12.0/venv_odoo/lib/python3.7/site-packages/odoo/addons'] 
+2023-09-27 13:10:00,076 18992 INFO ? odoo: database: odoo12@localhost:default 
+2023-09-27 13:10:00,172 18992 INFO ? odoo.addons.base.models.ir_actions_report: Will use the Wkhtmltopdf binary at /home/odoo/12.0/venv_odoo/bin/wkhtmltopdf 
+2023-09-27 13:10:00,277 18992 INFO ? odoo.service.server: HTTP service (werkzeug) running on nb200z0.:49191 
+2023-09-27 13:10:00,292 18992 INFO test_test_testenv_12 odoo.modules.loading: loading 1 modules... 
+2023-09-27 13:10:00,299 18992 INFO test_test_testenv_12 odoo.modules.loading: 1 modules loaded in 0.01s, 0 queries 
+2023-09-27 13:10:00,406 18992 INFO test_test_testenv_12 odoo.modules.loading: updating modules list 
+2023-09-27 13:10:00,409 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_module: ALLOW access to module.update_list on [] to user __system__ #1 via n/a 
+2023-09-27 13:10:10,995 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_module: ALLOW access to module.button_install on ['test_testenv'] to user __system__ #1 via n/a 
+2023-09-27 13:10:11,306 18992 INFO test_test_testenv_12 odoo.modules.loading: loading 38 modules... 
+2023-09-27 13:10:11,582 18992 INFO test_test_testenv_12 odoo.modules.loading: 38 modules loaded in 0.28s, 0 queries 
+2023-09-27 13:10:11,588 18992 INFO test_test_testenv_12 odoo.modules.loading: loading 39 modules... 
+2023-09-27 13:10:11,945 18992 WARNING test_test_testenv_12 odoo.models: The model testenv.all.fields has no _description 
+2023-09-27 13:10:12,114 18992 INFO test_test_testenv_12 odoo.modules.registry: module test_testenv: creating or updating database tables 
+2023-09-27 13:10:12,297 18992 WARNING test_test_testenv_12 odoo.addons.base.models.ir_model: Two fields (measure, amount) of testenv.all.fields() have the same label: Amount. 
+2023-09-27 13:10:12,388 18992 INFO test_test_testenv_12 odoo.modules.loading: loading test_testenv/security/ir.model.access.csv 
+2023-09-27 13:10:12,425 18992 INFO test_test_testenv_12 odoo.modules.loading: loading test_testenv/views/testenv_model_view.xml 
+2023-09-27 13:10:12,504 18992 INFO test_test_testenv_12 odoo.modules.loading: loading test_testenv/wizard/wizard_example_menu.xml 
+2023-09-27 13:10:12,572 18992 INFO test_test_testenv_12 odoo.modules.loading: Module test_testenv: loading demo 
+2023-09-27 13:10:13,023 18992 INFO test_test_testenv_12 odoo.modules.module: odoo.addons.test_testenv.tests.test_testenv running tests. 
+2023-09-27 13:10:13,023 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: test_mytest (odoo.addons.test_testenv.tests.test_testenv.MyTest) 
+2023-09-27 13:10:13,042 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: Please, ignore field <...> does not exist in <...> 
+2023-09-27 13:10:13,146 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: Now, all warning & messages are valid! 
+2023-09-27 13:10:13,260 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.fiscal.position 
+2023-09-27 13:10:13,260 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.fiscalpos_it not found 
+2023-09-27 13:10:13,270 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.payment.term 
+2023-09-27 13:10:13,270 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.payment_2 not found 
+2023-09-27 13:10:13,271 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid value it_IT 
+2023-09-27 13:10:13,540 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ xref 'z0bug.mycompany' -> 'base.main_company' 
+2023-09-27 13:10:13,541 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ xref 'z0bug.partner_mycompany' -> 'base.main_partner' 
+2023-09-27 13:10:13,558 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺🎺 Starting test v2.0.12 (debug_level=0) 
+2023-09-27 13:10:13,562 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Testing module: test_testenv (12.0.2.0.12) 
+2023-09-27 13:10:13,564 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.product[type]: 'product' -> 'consu' 
+2023-09-27 13:10:13,564 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.template[type]: 'product' -> 'consu' 
+2023-09-27 13:10:13,565 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ account.payment.term.line._cvt_account_payment_term_line(all) 
+2023-09-27 13:10:13,798 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model uom.uom 
+2023-09-27 13:10:13,798 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-09-27 13:10:13,800 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model uom.uom 
+2023-09-27 13:10:13,800 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-09-27 13:10:13,802 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.account 
+2023-09-27 13:10:13,802 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.coa_sale not found 
+2023-09-27 13:10:13,883 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: xref ('product.template') 'z0bug.product_template_1' -> ('product.product') 'z0bug.product_product_1' 
+2023-09-27 13:10:13,891 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model uom.uom 
+2023-09-27 13:10:13,891 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-09-27 13:10:13,892 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model uom.uom 
+2023-09-27 13:10:13,893 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-09-27 13:10:13,894 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.account 
+2023-09-27 13:10:13,894 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.coa_sale not found 
+2023-09-27 13:10:13,968 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: xref ('product.template') 'z0bug.product_template_18' -> ('product.product') 'z0bug.product_product_18' 
+2023-09-27 13:10:13,975 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model uom.uom 
+2023-09-27 13:10:13,975 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-09-27 13:10:13,977 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model uom.uom 
+2023-09-27 13:10:13,977 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-09-27 13:10:13,979 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.account 
+2023-09-27 13:10:13,979 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.coa_sale not found 
+2023-09-27 13:10:14,055 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: xref ('product.template') 'z0bug.product_template_2' -> ('product.product') 'z0bug.product_product_2' 
+2023-09-27 13:10:14,063 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model uom.uom 
+2023-09-27 13:10:14,063 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-09-27 13:10:14,065 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model uom.uom 
+2023-09-27 13:10:14,065 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-09-27 13:10:14,067 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.account 
+2023-09-27 13:10:14,067 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.coa_sale2 not found 
+2023-09-27 13:10:14,162 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: xref ('product.template') 'z0bug.product_template_23' -> ('product.product') 'z0bug.product_product_23' 
+2023-09-27 13:10:14,369 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺🎺 Starting test v2.0.12 (debug_level=0) 
+2023-09-27 13:10:14,375 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Testing module: test_testenv (12.0.2.0.12) 
+2023-09-27 13:10:14,376 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.product[type]: 'product' -> 'consu' 
+2023-09-27 13:10:14,377 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.template[type]: 'product' -> 'consu' 
+2023-09-27 13:10:14,378 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ account.payment.term.line._cvt_account_payment_term_line(all) 
+2023-09-27 13:10:14,388 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Parent xref z0bug.payment_term_1 not found for account.payment.term.line 
+2023-09-27 13:10:14,414 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Parent xref z0bug.payment_term_2 not found for account.payment.term.line 
+2023-09-27 13:10:14,421 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Parent xref z0bug.payment_term_2 not found for account.payment.term.line 
+2023-09-27 13:10:14,457 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model res.country 
+2023-09-27 13:10:14,457 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference external.109 not found 
+2023-09-27 13:10:14,459 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: 🎺 Testing test_currency_2many() 
+2023-09-27 13:10:14,522 18992 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted res.currency.rate records with IDs: [176] 
+2023-09-27 13:10:14,649 18992 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted ir.model.data records with IDs: [11388] 
+2023-09-27 13:10:14,654 18992 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted res.currency.rate records with IDs: [177] 
+2023-09-27 13:10:14,787 18992 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted testenv.all.fields records with IDs: [] 
+2023-09-27 13:10:14,831 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: 🎺 Testing test_product() 
+2023-09-27 13:10:15,091 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: 🎺 Testing wizard.lang_install() 
+2023-09-27 13:10:15,166 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module base: loading translation file (it) for language it_IT 
+2023-09-27 13:10:15,166 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/odoo/addons/base/i18n/it.po 
+2023-09-27 13:10:16,780 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web: loading translation file (it) for language it_IT 
+2023-09-27 13:10:16,780 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web/i18n/it.po 
+2023-09-27 13:10:16,873 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module base_setup: loading translation file (it) for language it_IT 
+2023-09-27 13:10:16,873 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/base_setup/i18n/it.po 
+2023-09-27 13:10:16,893 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module decimal_precision: loading translation file (it) for language it_IT 
+2023-09-27 13:10:16,893 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/decimal_precision/i18n/it.po 
+2023-09-27 13:10:16,898 18992 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Warning!' (code, addons/decimal_precision/models/decimal_precision.py, 24) not found in reference pot, skipping 
+2023-09-27 13:10:16,908 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module bus: loading translation file (it) for language it_IT 
+2023-09-27 13:10:16,909 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/bus/i18n/it.po 
+2023-09-27 13:10:16,924 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web_tour: loading translation file (it) for language it_IT 
+2023-09-27 13:10:16,924 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web_tour/i18n/it.po 
+2023-09-27 13:10:16,938 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module mail: loading translation file (it) for language it_IT 
+2023-09-27 13:10:16,938 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/mail/i18n/it.po 
+2023-09-27 13:10:17,154 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module uom: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,154 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/uom/i18n/it.po 
+2023-09-27 13:10:17,181 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module product: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,181 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/product/i18n/it.po 
+2023-09-27 13:10:17,281 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module analytic: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,281 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/analytic/i18n/it.po 
+2023-09-27 13:10:17,309 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module http_routing: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,309 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/http_routing/i18n/it.po 
+2023-09-27 13:10:17,321 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module portal: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,321 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/portal/i18n/it.po 
+2023-09-27 13:10:17,350 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module digest: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,350 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/digest/i18n/it.po 
+2023-09-27 13:10:17,371 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module account: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,371 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/account/i18n/it.po 
+2023-09-27 13:10:17,877 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module account_bank_statement_import: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,877 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/account_bank_statement_import/i18n/it.po 
+2023-09-27 13:10:17,905 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module account_cancel: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,905 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/account_cancel/i18n/it.po 
+2023-09-27 13:10:17,918 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module account_facturx: no translation for language it 
+2023-09-27 13:10:17,920 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module auth_signup: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,920 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/auth_signup/i18n/it.po 
+2023-09-27 13:10:17,942 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module base_import: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,943 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/base_import/i18n/it.po 
+2023-09-27 13:10:17,973 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module fetchmail: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,974 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/fetchmail/i18n/it.po 
+2023-09-27 13:10:17,992 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web_settings_dashboard: loading translation file (it) for language it_IT 
+2023-09-27 13:10:17,992 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web_settings_dashboard/i18n/it.po 
+2023-09-27 13:10:18,009 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module iap: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,009 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/iap/i18n/it.po 
+2023-09-27 13:10:18,024 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module l10n_generic_coa: no translation for language it 
+2023-09-27 13:10:18,026 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module l10n_us: no translation for language it 
+2023-09-27 13:10:18,027 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module mail_bot: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,028 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/mail_bot/i18n/it.po 
+2023-09-27 13:10:18,045 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module module_version: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,046 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/uncovered/module_version/i18n/it.po 
+2023-09-27 13:10:18,051 18992 INFO test_test_testenv_12 odoo.tools.translate: Translation 'To upgrade' (view, ir.module.module, 0) not found in reference pot, skipping 
+2023-09-27 13:10:18,051 18992 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Upgrade' (view, ir.module.module, 0) not found in reference pot, skipping 
+2023-09-27 13:10:18,051 18992 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Not Installed' (view, ir.module.module, 0) not found in reference pot, skipping 
+2023-09-27 13:10:18,051 18992 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Cancel Upgrade' (view, ir.module.module, 0) not found in reference pot, skipping 
+2023-09-27 13:10:18,051 18992 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Need Upgrade' (code, addons/module_version/module.py, 60) not found in reference pot, skipping 
+2023-09-27 13:10:18,051 18992 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Need Upgrade' (field, ir.module.module,check_upgrade, 0) not found in reference pot, skipping 
+2023-09-27 13:10:18,051 18992 INFO test_test_testenv_12 odoo.tools.translate: Translation 'Need Upgrade' (field, ir.module.module,need_upgrade, 0) not found in reference pot, skipping 
+2023-09-27 13:10:18,060 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module partner_autocomplete: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,060 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/partner_autocomplete/i18n/it.po 
+2023-09-27 13:10:18,075 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module payment: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,075 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/payment/i18n/it.po 
+2023-09-27 13:10:18,131 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module payment_transfer: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,131 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/payment_transfer/i18n/it.po 
+2023-09-27 13:10:18,143 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module sales_team: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,144 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/sales_team/i18n/it.po 
+2023-09-27 13:10:18,166 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module sale: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,167 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/sale/i18n/it.po 
+2023-09-27 13:10:18,280 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module sms: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,281 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/sms/i18n/it.po 
+2023-09-27 13:10:18,294 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module snailmail: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,294 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/snailmail/i18n/it.po 
+2023-09-27 13:10:18,310 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module snailmail_account: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,310 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/snailmail_account/i18n/it.po 
+2023-09-27 13:10:18,323 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web_diagram: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,323 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web_diagram/i18n/it.po 
+2023-09-27 13:10:18,338 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web_editor: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,338 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web_editor/i18n/it.po 
+2023-09-27 13:10:18,376 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web_kanban_gauge: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,377 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web_kanban_gauge/i18n/it.po 
+2023-09-27 13:10:18,386 18992 INFO test_test_testenv_12 odoo.addons.base.models.ir_translation: module web_unsplash: loading translation file (it) for language it_IT 
+2023-09-27 13:10:18,387 18992 INFO test_test_testenv_12 odoo.tools.translate: loading /home/odoo/12.0/addons/web_unsplash/i18n/it.po 
+2023-09-27 13:10:18,480 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺🎺 Starting test v2.0.12 (debug_level=0) 
+2023-09-27 13:10:18,486 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Testing module: test_testenv (12.0.2.0.12) 
+2023-09-27 13:10:18,488 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.product[type]: 'product' -> 'consu' 
+2023-09-27 13:10:18,488 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.template[type]: 'product' -> 'consu' 
+2023-09-27 13:10:18,489 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ account.payment.term.line._cvt_account_payment_term_line(all) 
+2023-09-27 13:10:19,154 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺🎺 Starting test v2.0.12 (debug_level=0) 
+2023-09-27 13:10:19,154 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Testing module: test_testenv (12.0.2.0.12) 
+2023-09-27 13:10:19,156 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.product[type]: 'product' -> 'consu' 
+2023-09-27 13:10:19,156 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.template[type]: 'product' -> 'consu' 
+2023-09-27 13:10:19,157 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ account.payment.term.line._cvt_account_payment_term_line(all) 
+2023-09-27 13:10:19,326 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.invoice 
+2023-09-27 13:10:19,333 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.invoice 
+2023-09-27 13:10:19,333 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Parent xref z0bug.invoice_Z0_1 not found for account.invoice.line 
+2023-09-27 13:10:19,335 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.invoice 
+2023-09-27 13:10:19,345 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.invoice 
+2023-09-27 13:10:19,345 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Parent xref z0bug.invoice_Z0_1 not found for account.invoice.line 
+2023-09-27 13:10:19,346 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.invoice 
+2023-09-27 13:10:19,358 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.invoice 
+2023-09-27 13:10:19,358 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Parent xref z0bug.invoice_Z0_1 not found for account.invoice.line 
+2023-09-27 13:10:19,359 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.invoice 
+2023-09-27 13:10:19,550 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.invoice 
+2023-09-27 13:10:19,556 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.invoice 
+2023-09-27 13:10:19,556 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Parent xref z0bug.invoice_Z0_2 not found for account.invoice.line 
+2023-09-27 13:10:19,558 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.invoice 
+2023-09-27 13:10:19,567 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.invoice 
+2023-09-27 13:10:19,567 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Parent xref z0bug.invoice_Z0_2 not found for account.invoice.line 
+2023-09-27 13:10:19,569 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.invoice 
+2023-09-27 13:10:20,026 18992 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted account.move.line records with IDs: [24, 23, 22, 21, 20] 
+2023-09-27 13:10:20,042 18992 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted account.move records with IDs: [8] 
+2023-09-27 13:10:20,151 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ act_windows['multi'] does not match # of records! 
+2023-09-27 13:10:20,802 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ No *2many value for account.move.[] 
+2023-09-27 13:10:20,809 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ No *2many value for account.move.[] 
+2023-09-27 13:10:20,871 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺🎺 Starting test v2.0.12 (debug_level=0) 
+2023-09-27 13:10:20,878 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Testing module: test_testenv (12.0.2.0.12) 
+2023-09-27 13:10:20,880 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.product[type]: 'product' -> 'consu' 
+2023-09-27 13:10:20,880 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.template[type]: 'product' -> 'consu' 
+2023-09-27 13:10:20,881 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ account.payment.term.line._cvt_account_payment_term_line(all) 
+2023-09-27 13:10:20,884 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model sale.order 
+2023-09-27 13:10:20,889 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model sale.order 
+2023-09-27 13:10:20,889 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Parent xref z0bug.sale_order_Z0_2 not found for sale.order.line 
+2023-09-27 13:10:20,892 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model sale.order 
+2023-09-27 13:10:20,894 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model uom.uom 
+2023-09-27 13:10:20,894 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-09-27 13:10:20,901 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model sale.order 
+2023-09-27 13:10:20,901 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Parent xref z0bug.sale_order_Z0_2 not found for sale.order.line 
+2023-09-27 13:10:20,904 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model sale.order 
+2023-09-27 13:10:20,906 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model uom.uom 
+2023-09-27 13:10:20,906 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference product.product_uom_unit not found 
+2023-09-27 13:10:21,109 18992 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted sale.order.line records with IDs: [45] 
+2023-09-27 13:10:21,163 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: 🎺 Testing validate_record() 
+2023-09-27 13:10:21,331 18992 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted testenv.all.fields records with IDs: [2] 
+2023-09-27 13:10:21,397 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.move 
+2023-09-27 13:10:21,474 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid search keys for model account.move 
+2023-09-27 13:10:21,556 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺🎺 Starting test v2.0.12 (debug_level=0) 
+2023-09-27 13:10:21,561 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Testing module: test_testenv (12.0.2.0.12) 
+2023-09-27 13:10:21,563 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.product[type]: 'product' -> 'consu' 
+2023-09-27 13:10:21,563 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ product.template[type]: 'product' -> 'consu' 
+2023-09-27 13:10:21,564 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ account.payment.term.line._cvt_account_payment_term_line(all) 
+2023-09-27 13:10:21,575 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Parent xref z0bug.move_1 not found for account.move.line 
+2023-09-27 13:10:21,583 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Parent xref z0bug.move_1 not found for account.move.line 
+2023-09-27 13:10:21,669 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🏆🥇 297 tests SUCCESSFULLY completed 
+2023-09-27 13:10:21,831 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: Ran 1 test in 8.808s 
+2023-09-27 13:10:21,831 18992 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: OK 
+2023-09-27 13:10:21,831 18992 INFO test_test_testenv_12 odoo.modules.module: odoo.addons.test_testenv.tests.test_testenv tested in 8.81s, 5682 queries 
+2023-09-27 13:10:21,866 18992 INFO test_test_testenv_12 odoo.modules.loading: 39 modules loaded in 10.28s, 5688 queries 
+2023-09-27 13:10:22,486 18992 INFO test_test_testenv_12 odoo.modules.loading: Modules loaded. 
+2023-09-27 13:10:22,494 18992 INFO test_test_testenv_12 odoo.service.server: Starting post tests 
+2023-09-27 13:10:22,495 18992 INFO test_test_testenv_12 odoo.service.server: All post-tested in 0.00s, 0 queries 
+2023-09-27 13:10:22,495 18992 INFO test_test_testenv_12 odoo.service.server: Initiating shutdown 
+2023-09-27 13:10:22,495 18992 INFO test_test_testenv_12 odoo.service.server: Hit CTRL-C again or send a second signal to force the shutdown. 
+
++===================================================================
+| please test [36mtest_testenv[0m (12.0): [32mSUCCESS![0m
++===================================================================
+
+Name                                                                      Stmts   Miss  Cover   Missing
+-------------------------------------------------------------------------------------------------------
+/home/odoo/12.0/zerobug-test/test_testenv/models/testenv_model.py            37      0   100%
+/home/odoo/12.0/zerobug-test/test_testenv/tests/test_testenv.py             376      0   100%
+/home/odoo/12.0/zerobug-test/test_testenv/tests/testenv.py                 1251    125    90%   131-135, 371-372, 375-376, 383-384, 387-388, 391-392, 399-400, 407-408, 507, 602, 609, 615, 619, 625, 670, 677-678, 691, 792, 800, 813, 817, 891, 919, 929, 947, 972, 1020, 1165, 1183-1196, 1227, 1235, 1380, 1405, 1409-1414, 1427, 1431-1432, 1498, 1512, 1518, 1521, 1523-1528, 1532, 1585, 1613, 1695-1697, 1730-1731, 1843, 1909, 1966-1969, 1972, 2012, 2018, 2023-2026, 2102, 2105-2109, 2161-2162, 2255-2266, 2280-2284, 2286-2287, 2528, 2591-2606, 2611, 2706, 2727, 2741-2744, 3011
+/home/odoo/12.0/zerobug-test/test_testenv/wizard/wizard_example_menu.py      34      5    85%   33, 35, 37, 42, 114
+-------------------------------------------------------------------------------------------------------
+TOTAL                                                                      1698    130    92%
