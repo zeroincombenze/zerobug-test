@@ -6,11 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo (10.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-15 06:43+0000\n"
-"PO-Revision-Date: 2023-07-15 06:43+0000\n"
+"POT-Creation-Date: 2023-11-18 14:07+0000\n"
+"PO-Revision-Date: 2023-11-18 14:07+0000\n"
 "Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
 "Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
-"Language: it_IT\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -101,12 +101,12 @@ msgstr "Ultimo aggiornamento il"
 #: model:ir.ui.view,arch_db:midea.table_wco_tree
 #: model:ir.ui.view,arch_db:midea.view_midea_form
 msgid "Midea form"
-msgstr "Midea albero"
+msgstr "Modulo Midea"
 
 #. module: midea
 #: model:ir.ui.menu,name:midea.menu_midea_table_wco_test
 msgid "My idea test (with company)"
-msgstr "My idea test (with azienda)"
+msgstr "My idea test (con azienda)"
 
 #. module: midea
 #: model:ir.actions.act_window,name:midea.action_test_wco
@@ -123,13 +123,13 @@ msgstr "Nome"
 #: model:ir.ui.menu,name:midea.menu_midea_qci_test
 #: model:ir.ui.view,arch_db:midea.view_midea_tree
 msgid "Quality Check Id"
-msgstr "Qualità Controllo Id"
+msgstr "ID controllo qualità"
 
 #. module: midea
 #: model:ir.model.fields,field_description:midea.field_midea_qci_state
 #: model:ir.model.fields,field_description:midea.field_midea_table_wco_state
 msgid "State"
-msgstr "Stato Federale"
+msgstr "Stato"
 
 #. module: midea
 #: model:ir.model,name:midea.model_midea_qci

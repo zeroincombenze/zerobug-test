@@ -1,0 +1,1 @@
+2023-11-18 15:46:50,000 2128482 DAEMON test_midea_10 run_odoo_debug.sh: cd /home/odoo/10.0/venv_odoo && source ./bin/activate

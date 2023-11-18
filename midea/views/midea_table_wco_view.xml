@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record model="ir.ui.view" id="midea.table_wco_tree">
-        <field name="name">Midea tabel without company (tree)</field>
+    <record model="ir.ui.view" id="table_wco_tree">
+        <field name="name">Midea table with company (tree)</field>
         <field name="model">midea.table_wco</field>
-        <field name="type">form</field>
         <field name="priority" eval="16" />
         <field name="arch" type="xml">
-            <tree string="Midea form">
+            <tree string="Midea tree">
                 <field name="name" />
-                <field name="company_id" />
                 <field name="active" />
                 <field name="state" />
+                <field name="company_id" />
             </tree>
         </field>
     </record>
 
-    <record model="ir.ui.view" id="midea.table_wco_form">
-        <field name="name">Midea tabel without company (form)</field>
+    <record model="ir.ui.view" id="table_wco_form">
+        <field name="name">Midea tablr with company (form)</field>
         <field name="model">midea.table_wco</field>
         <field name="type">form</field>
         <field name="priority" eval="16" />
         <field name="arch" type="xml">
             <form string="Midea form">
-                <field name="name" />
-                <field name="company_id" />
-                <field name="active" />
-                <field name="state" />
+                <group>
+                    <field name="name" />
+                    <field name="active" />
+                    <field name="state" />
+                    <field name="company_id" />
+                </group>
             </form>
         </field>
     </record>
@@ -34,7 +35,6 @@
     <record id="midea.action_test_wco" model="ir.actions.act_window">
         <field name="name">My idea test record</field>
         <field name="res_model">midea.table_wco</field>
-        <field name="view_mode">tree,form</field>
         <field name="view_id" ref="midea.table_wco_tree" />
     </record>
 
