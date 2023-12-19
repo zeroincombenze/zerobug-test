@@ -85,7 +85,7 @@ openpyxl==2.6.4
 openupgradelib==3.4.2.dev4+gf45dcfe
 os0==2.0.1
 packaging==20.9
-paramiko==2.12.0
+paramiko==3.4.0
 passlib==1.6.5
 PasteDeploy==2.1.1
 pathlib2==2.3.7.post1
