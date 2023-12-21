@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo (12.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-01 20:16+0000\n"
-"PO-Revision-Date: 2023-12-01 20:16+0000\n"
+"POT-Creation-Date: 2023-12-06 08:44+0000\n"
+"PO-Revision-Date: 2023-12-06 08:44+0000\n"
 "Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
 "Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
 "Language: it\n"
@@ -232,7 +232,9 @@ msgstr "Nominativi"
 #. module: test_testenv
 #: model:ir.model.fields,field_description:test_testenv.field_testenv_all_fields__product_ids
 msgid "Products"
-msgstr "Prodotti"
+msgstr ""
+"E seguono direttamente la modalità standard di gestione dei diritti di accesso "
+"di Odoo"
 
 #. module: test_testenv
 #: model:ir.model.fields,field_description:test_testenv.field_testenv_all_fields__rank
