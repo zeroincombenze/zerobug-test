@@ -1,8 +1,8 @@
-10.0.0.1.7 (2023-11-17)
+10.0.0.1.7 (2023-11-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Tests upgrade
-* [QUA] Test coverage 100% (14: 0+14) [14 TestPoint]
+* [QUA] Test coverage 100% (14: 0+14) [8 TestPoints] - quality rating 237 (target 100)
 
 10.0.0.1.6 (2022-11-11)
 ~~~~~~~~~~~~~~~~~~~~~~~

@@ -65,8 +65,9 @@ class TestenvAllFields(models.Model):
     measure = fields.Float("Amount", default=_default_measure, help="Float field")
     date = fields.Date(string='Date', default=_default_date, help="Date field")
     created_dt = fields.Datetime(
-        string='Created timestamp', default=_default_created_dt, help="Datetime field"
-    )
+        string='Created timestamp',
+        default=_default_created_dt,
+        help="Datetime field")
     updated_dt = fields.Datetime(string='Delivery timestamp', help="Datetime field")
     attachment = fields.Binary("Attachemnt")
     webpage = fields.Html("Html")

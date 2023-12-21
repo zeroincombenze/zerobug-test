@@ -453,7 +453,7 @@ class MyTest(SingleTransactionCase):
             "S. Secondo Parmense",
             "TestEnv FAILED: unexpected value for 'city'!",
         )
-        _logger.info("Please, ignore field <...> does not exist in <...>")
+        _logger.info("Please, ignore messages 'field <...> does not exist in <...>'")
         self.declare_resource_data(
             "res.partner",
             {
