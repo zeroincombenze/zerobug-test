@@ -1,5 +1,5 @@
 =======================================
-|icon| testenv/test_testenv 12.0.2.0.13
+|icon| testenv/test_testenv 12.0.2.0.14
 =======================================
 
 **z0bug_odoo test suite**
@@ -15,12 +15,14 @@ Overview | Panoramica
 =====================
 
 |en| This module has no specific function for End-user,
-it is designed to test the TestEnv object.
+it is designed to test the TestEnv object in
+`z0bug_odoo <https://zeroincombenze-tools.readthedocs.io/en/latest/pypi_z0bug_odoo.html>`__
+
+Warning: Coverage e quality results refer to
+`z0bug_odoo <https://github.com/zeroincombenze/tools>`__
 
 
-|it| Suite z0bug_odoo
-
-Modulo a scopo tecnico fornito soltanto con documentazione in inglese.
+|it| Modulo a scopo tecnico fornito soltanto con documentazione in inglese.
 
 
 
@@ -119,6 +121,11 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History | Cronologia modifiche
 ----------------------------------------
 
+12.0.2.0.14 (2023-12-30)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [QUA] Test coverage 92% (1698: 130+1568) [297 TestPoints] - quality rating 36/100
+
 12.0.2.0.13 (2023-12-03)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -127,19 +134,19 @@ ChangeLog History | Cronologia modifiche
 12.0.2.0.12 (2023-09-27)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-* [QUA] Test coverage 92% (1698: 130+1568) [297 TestPoints] - quality rating 36/100
+* [QUA] Test coverage 92% (1698: 132+1566) [239 TestPoints] - quality rating 29/100
 
 12.0.2.0.10 (2023-07-17)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Tests failed on day 28-31 of every month
-* [QUA] Test coverage 92% (1688: 129+1559) [317 TestPoint]
+* [QUA] Test coverage 92% (1688: 131+1557) [245 TestPoint]
 
 12.0.2.0.9 (2023-06-24)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [NEW] Regression test on account.move
-* [QUA] Test coverage 93% (1565: 110+1455) [286 TestPoint]
+* [QUA] Test coverage 93% (1565: 112+1453) [232 TestPoint]
 
 12.0.2.0.6 (2023-02-20)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -148,7 +155,7 @@ ChangeLog History | Cronologia modifiche
 * [NEW] Regression test on sale order
 * [IMP] Regression test with reduced parameters to test new improvements
 * [IMP] Regression test using text and/or dict on \*2many fields
-* [IMP] TestEnv coverage 96% (999/43)
+* [IMP] TestEnv coverage 95% (999/45)
 
 12.0.2.0.5 (2023-01-25)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -163,7 +170,7 @@ ChangeLog History | Cronologia modifiche
 * [IMP] account.account code uses symbolic name, not numeric account code
 * [IMP] Regression test on wizard with multiple records
 * [IMP] Regression test more sophisticated on validate_records()
-* [IMP] TestEnv coverage 96% (863/36)
+* [IMP] Coverage 96% (863/36)
 
 12.0.2.0.4 (2023-01-13)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -172,8 +179,8 @@ ChangeLog History | Cronologia modifiche
 * [IMP] Test on validate_records()
 * [IMP] Coverage 95%
 
-12.0.0.1.0 (2022-11-11)
-~~~~~~~~~~~~~~~~~~~~~~~
+12.0.0
+~~~~~~
 
 * [IMP] First release
 
@@ -226,7 +233,7 @@ La distribuzione `Zeroincombenze® <https://www.zeroincombenze.it/>`__ è proget
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2023-12-20
+Last Update / Ultimo aggiornamento: 2023-12-29
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Mature-green.png
     :target: https://odoo-community.org/page/development-status
