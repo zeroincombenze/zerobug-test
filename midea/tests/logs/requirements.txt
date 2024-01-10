@@ -50,7 +50,7 @@ gdata==2.0.18
 Genshi==0.7.7
 gevent==22.10.2
 gitdb2==2.0.6
-GitPython==2.1.15
+GitPython==3.1.41
 greenlet==2.0.2
 html2text==2019.8.11
 idna==2.10
