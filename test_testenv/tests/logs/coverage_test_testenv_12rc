@@ -1,6 +1,7 @@
 # Config file .coveragerc 2022-04-07
 [run]
 
+data_file=/home/odoo/12.0/zerobug-test/test_testenv/tests/logs/coverage_test_testenv_12
 
 # to avoid being overridden by server tests
 omit = *system_site_packages*, *site-packages*, *virtualenv*, *venv_odoo*
@@ -8,7 +9,8 @@ omit = *system_site_packages*, *site-packages*, *virtualenv*, *venv_odoo*
 [report]
 include =
 #    ${TRAVIS_BUILD_DIR}/*
-    *.py
+#    *.py
+    /home/odoo/12.0/zerobug-test/test_testenv/*
 
 omit =
     */scenario/*

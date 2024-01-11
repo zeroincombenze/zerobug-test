@@ -248,7 +248,7 @@ yarl==1.9.2
 z0bug-odoo==2.0.14
 z0lib==2.0.8
 zeep==2.4.0
-zerobug==2.0.12
+zerobug==2.0.13
 zipp==3.15.0
 zpl2==1.2.1
 zxcvbn==4.4.28
