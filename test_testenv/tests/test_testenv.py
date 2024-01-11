@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from future.utils import PY2
-import os
+# import os
 from datetime import date, datetime
 import logging
 import base64
@@ -13,41 +13,41 @@ import python_plus
 _logger = logging.getLogger(__name__)
 
 
-TEST_ACCOUNT_ACCOUNT = {
-    # Output (paid) VAT account
-    "z0bug.coa_tax_ova": {
-        "code": "101300",
-        "reconcile": False,
-        "user_type_id": "account.data_account_type_current_assets",
-        "name": "IVA n/credito",
-    },
-    # The bank account is linked to demo data: usually is 101401
-    "z0bug.coa_bnk1": {
-        # "code": "101401",
-        "name": "Banca",
-        "reconcile": False,
-        "user_type_id": "account.data_account_type_liquidity",
-    },
-    # Input (received) VAT account
-    "z0bug.coa_tax_iva": {
-        "code": "111200",
-        "reconcile": False,
-        "user_type_id": "account.data_account_type_current_liabilities",
-        "name": "IVA n/debito",
-    },
-    "z0bug.coa_sale": {
-        "code": "200000",
-        "name": "Merci c/vendita",
-        "user_type_id": "account.data_account_type_revenue",
-        "reconcile": False,
-    },
-    "z0bug.coa_sale2": {
-        "code": "200010",
-        "name": "Ricavi da servizi",
-        "user_type_id": "account.data_account_type_revenue",
-        "reconcile": False,
-    },
-}
+# TEST_ACCOUNT_ACCOUNT = {
+#     # Output (paid) VAT account
+#     "l10n_generic_coa.conf_ova": {
+#         "code": "101300",
+#         "reconcile": False,
+#         "user_type_id": "account.data_account_type_current_assets",
+#         "name": "IVA n/credito",
+#     },
+#     # The bank account is linked to demo data: usually is 101401
+#     "z0bug.coa_bank": {
+#         # "code": "101401",
+#         "name": "Banca",
+#         "reconcile": False,
+#         "user_type_id": "account.data_account_type_liquidity",
+#     },
+#     # Input (received) VAT account
+#     "l10n_generic_coa.conf_a_recv": {
+#         "code": "111200",
+#         "reconcile": False,
+#         "user_type_id": "account.data_account_type_current_liabilities",
+#         "name": "IVA n/debito",
+#     },
+#     "l10n_generic_coa.conf_a_sale": {
+#         "code": "200000",
+#         "name": "Merci c/vendita",
+#         "user_type_id": "account.data_account_type_revenue",
+#         "reconcile": False,
+#     },
+#     "z0bug.conf_a_sale2": {
+#         "code": "200010",
+#         "name": "Ricavi da servizi",
+#         "user_type_id": "account.data_account_type_revenue",
+#         "reconcile": False,
+#     },
+# }
 
 TEST_ACCOUNT_JOURNAL = {
     "external.INV": {
@@ -88,8 +88,8 @@ TEST_ACCOUNT_INVOICE = {
 TEST_ACCOUNT_INVOICE_LINE = {
     "z0bug.invoice_Z0_1_1": {
         "invoice_id": "z0bug.invoice_Z0_1",
-        "account_id": "z0bug.coa_sale",
-        "invoice_line_tax_ids": "external.22v",
+        "account_id": "l10n_generic_coa.conf_a_sale",
+        "invoice_line_tax_ids": "z0bug.tax_22v",
         "name": "<?odoo z0bug.product_product_1.name ?>",
         "price_unit": 0.84,
         "product_id": "z0bug.product_product_1",
@@ -98,8 +98,8 @@ TEST_ACCOUNT_INVOICE_LINE = {
     },
     "z0bug.invoice_Z0_1_2": {
         "invoice_id": "z0bug.invoice_Z0_1",
-        "account_id": "z0bug.coa_sale2",
-        "invoice_line_tax_ids": "external.22v",
+        "account_id": "z0bug.conf_a_sale2",
+        "invoice_line_tax_ids": "z0bug.tax_22v",
         "name": "<?odoo z0bug.product_product_23.name ?>",
         "price_unit": 1.88,
         "product_id": "z0bug.product_product_23",
@@ -108,8 +108,8 @@ TEST_ACCOUNT_INVOICE_LINE = {
     },
     "z0bug.invoice_Z0_1_03": {
         "invoice_id": "z0bug.invoice_Z0_1",
-        "account_id": "z0bug.coa_sale",
-        "invoice_line_tax_ids": "external.22v",
+        "account_id": "l10n_generic_coa.conf_a_sale",
+        "invoice_line_tax_ids": "z0bug.tax_22v",
         "name": "Reference line",
         "price_unit": 0.0,
         "product_id": False,
@@ -118,8 +118,8 @@ TEST_ACCOUNT_INVOICE_LINE = {
     },
     "z0bug.invoice_Z0_2_1": {
         "invoice_id": "z0bug.invoice_Z0_2",
-        "account_id": "z0bug.coa_sale",
-        "invoice_line_tax_ids": "external.22v",
+        "account_id": "l10n_generic_coa.conf_a_sale",
+        "invoice_line_tax_ids": "z0bug.tax_22v",
         "name": "<?odoo z0bug.product_product_1.name ?>",
         "price_unit": 0.84,
         "product_id": "z0bug.product_product_1",
@@ -128,8 +128,8 @@ TEST_ACCOUNT_INVOICE_LINE = {
     },
     "z0bug.invoice_Z0_2_2": {
         "invoice_id": "z0bug.invoice_Z0_2",
-        "account_id": "z0bug.coa_sale",
-        "invoice_line_tax_ids": "external.22v",
+        "account_id": "l10n_generic_coa.conf_a_sale",
+        "invoice_line_tax_ids": "z0bug.tax_22v",
         "name": "<?odoo z0bug.product_product_18.name ?>",
         "price_unit": 1.69,
         "product_id": "z0bug.product_product_18",
@@ -160,7 +160,7 @@ TEST_ACCOUNT_MOVE_LINE = {
     "z0bug.move_1_2": {
         "move_id": "z0bug.move_1",
         "name": "invoice payment (SO123)",
-        "account_id": "z0bug.coa_bnk1",
+        "account_id": "z0bug.coa_bank",
         "partner_id": "z0bug.res_partner_2",
         "debit": 123.10,
         "ref": "invoice payment",
@@ -199,18 +199,18 @@ TEST_ACCOUNT_PAYMENT_TERM_LINE = {
     },
 }
 
-TEST_ACCOUNT_TAX = {
-    "external.22v": {
-        "description": "22v",
-        "name": "IVA 22% su vendite",
-        "amount_type": "percent",
-        "account_id": "z0bug.coa_tax_iva",
-        "refund_account_id": "z0bug.coa_tax_iva",
-        "amount": 22,
-        "type_tax_use": "sale",
-        "price_include": False,
-    },
-}
+# TEST_ACCOUNT_TAX = {
+#     "z0bug.tax_22v": {
+#         "description": "22v",
+#         "name": "IVA 22% su vendite",
+#         "amount_type": "percent",
+#         "account_id": "l10n_generic_coa.conf_a_recv",
+#         "refund_account_id": "l10n_generic_coa.conf_a_recv",
+#         "amount": 22,
+#         "type_tax_use": "sale",
+#         "price_include": False,
+#     },
+# }
 
 TEST_PRODUCT_TEMPLATE = {
     # Consumable product
@@ -225,7 +225,7 @@ TEST_PRODUCT_TEMPLATE = {
         "uom_po_id": "product.product_uom_unit",
         "weight": 0.1,
         "image": False,
-        "property_account_income_id": "z0bug.coa_sale",
+        "property_account_income_id": "l10n_generic_coa.conf_a_sale",
     },
     "z0bug.product_template_2": {
         "default_code": "BB",
@@ -236,7 +236,7 @@ TEST_PRODUCT_TEMPLATE = {
         "uom_id": "product.product_uom_unit",
         "uom_po_id": "product.product_uom_unit",
         "weight": 0.2,
-        "property_account_income_id": "z0bug.coa_sale",
+        "property_account_income_id": "l10n_generic_coa.conf_a_sale",
     },
     # Product on stock
     "z0bug.product_template_18": {
@@ -249,7 +249,7 @@ TEST_PRODUCT_TEMPLATE = {
         "uom_po_id": "product.product_uom_unit",
         "weight": 0.06,
         "image": False,
-        "property_account_income_id": "z0bug.coa_sale",
+        "property_account_income_id": "l10n_generic_coa.conf_a_sale",
     },
     # Service
     "z0bug.product_template_23": {
@@ -261,7 +261,7 @@ TEST_PRODUCT_TEMPLATE = {
         "uom_id": "product.product_uom_unit",
         "uom_po_id": "product.product_uom_unit",
         "image": "z0bug.product_template_26.png",
-        "property_account_income_id": "z0bug.coa_sale2",
+        "property_account_income_id": "z0bug.conf_a_sale2",
     },
 }
 
@@ -346,7 +346,7 @@ TEST_SALE_ORDER_LINE = {
         "price_unit": 0.42,
         "product_uom_qty": 100,
         "product_uom": "product.product_uom_unit",
-        "tax_id": "external.22v",
+        "tax_id": "z0bug.tax_22v",
         "name": "Prodotto Alpha",
     },
     "z0bug.sale_order_Z0_2_2": {
@@ -357,7 +357,7 @@ TEST_SALE_ORDER_LINE = {
         "price_unit": 1.69,
         "product_uom_qty": 10,
         "product_uom": "product.product_uom_unit",
-        "tax_id": "external.22v",
+        "tax_id": "z0bug.tax_22v",
         "name": "Prodotto Beta",
     },
 }
@@ -374,15 +374,16 @@ class MyTest(SingleTransactionCase):
     def setUp(self):
         super(MyTest, self).setUp()
         self.debug_level = 0
+        self.odoo_commit_test = False
         self.iso_code = "it_IT"
         self.date_rate_0 = self.compute_date("####-12-30")
 
     def tearDown(self):
         super(MyTest, self).tearDown()
-        if os.environ.get("ODOO_COMMIT_TEST", ""):  # pragma: no cover
-            # Save test environment, so it is available to use
-            self.env.cr.commit()  # pylint: disable=invalid-commit
-            _logger.info("✨ Test data committed")
+        # if os.environ.get("ODOO_COMMIT_TEST", ""):  # pragma: no cover
+        #     # Save test environment, so it is available to use
+        #     self.env.cr.commit()  # pylint: disable=invalid-commit
+        #     _logger.info("✨ Test data committed")
 
     def _test_00(self):
         # ===[Preliminary tests]===
@@ -568,36 +569,19 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(self.resource_browse(xref).rate, 0.88)
 
     def _test_setup(self):
-        # ===[test declare_all_data() + setup_env() functions]===
-        # This is the ordinary test way
-        data = {"TEST_SETUP_LIST": TEST_SETUP_LIST}
-        for resource in TEST_SETUP_LIST:
-            item = "TEST_%s" % resource.upper().replace(".", "_")
-            data[item] = globals()[item]
-        # Add alias to company
-        self.declare_all_data(data)
+        # ===[setup_env() functions]===
         self.setup_company(
             self.default_company(),
             xref="z0bug.mycompany",
             partner_xref="z0bug.partner_mycompany",
             recv_xref="z0bug.coa_recv",
             pay_xref="z0bug.coa_pay",
-            bnk1_xref="z0bug.coa_bnk1",
+            bnk1_xref="z0bug.coa_bank",
             values={
                 "name": "Test Company",
                 "vat": "IT05111810015",
                 "country_id": "base.it",
             },
-        )
-        # In TEST_RES_PARTNER vat is not declared
-        self.assertIsNone(
-            self.get_resource_data("res.partner", "z0bug.partner_mycompany").get("vat")
-        )
-        self.assertEqual(
-            self.get_resource_data("res.partner.bank", "z0bug.bank_company_1")[
-                "acc_number"
-            ].replace(" ", ""),
-            "IT15A0123412345100000123456",
         )
         self.setup_env()
         self.assertEqual(
@@ -1051,16 +1035,8 @@ class MyTest(SingleTransactionCase):
         )
 
     def _test_sale_order(self):
-        data = {
-            "TEST_SETUP_LIST": [
-                "sale.order",
-                "sale.order.line",
-            ],
-            "TEST_SALE_ORDER": TEST_SALE_ORDER,
-            "TEST_SALE_ORDER_LINE": TEST_SALE_ORDER_LINE,
-        }
-        self.declare_all_data(data, group="order")
-        self.setup_env(group="order")
+        self.setup_env(group="order",
+                       setup_list=["sale.order", "sale.order.line"],)
 
         order = self.resource_browse("z0bug.sale_order_Z0_2")
         self.assertEqual(len(order.order_line), 2)
@@ -1085,8 +1061,8 @@ class MyTest(SingleTransactionCase):
                 "account.invoice",
                 "account.invoice.line",
             ],
-            "TEST_ACCOUNT_ACCOUNT": TEST_ACCOUNT_ACCOUNT,
-            "TEST_ACCOUNT_TAX": TEST_ACCOUNT_TAX,
+            "TEST_ACCOUNT_ACCOUNT": {},
+            "TEST_ACCOUNT_TAX": {},
             "TEST_ACCOUNT_JOURNAL": TEST_ACCOUNT_JOURNAL,
             "TEST_ACCOUNT_INVOICE": TEST_ACCOUNT_INVOICE,
             "TEST_ACCOUNT_INVOICE_LINE": TEST_ACCOUNT_INVOICE_LINE,
@@ -1156,7 +1132,7 @@ class MyTest(SingleTransactionCase):
         vals["line_ids"].append(line_vals)
         # template.append(vals)
         line_vals = {
-            "account_id": "z0bug.coa_bnk1",
+            "account_id": "z0bug.coa_bank",
             "debit": 123.10,
             "credit": 0.0,
             "name": "invoice payment (SO123)",
@@ -1383,14 +1359,14 @@ class MyTest(SingleTransactionCase):
             "line_ids": [],
         }
         line_vals = {
-            "account_id": "z0bug.coa_sale2",
+            "account_id": "z0bug.conf_a_sale2",
             "debit": 0.50,
             "credit": 0.0,
             "name": "Bank fee",
         }
         vals["line_ids"].append(line_vals)
         line_vals = {
-            "account_id": "z0bug.coa_bnk1",
+            "account_id": "z0bug.coa_bank",
             "debit": 0.00,
             "credit": 0.50,
             "name": "Bank fee",
@@ -1406,14 +1382,14 @@ class MyTest(SingleTransactionCase):
             "line_ids": [],
         }
         line_vals = {
-            "account_id": "z0bug.coa_tax_iva",
+            "account_id": "l10n_generic_coa.conf_a_recv",
             "debit": 2.50,
             "credit": 0.0,
             "name": "VAT payment",
         }
         vals["line_ids"].append([0, 0, line_vals])
         line_vals = {
-            "account_id": "z0bug.coa_bnk1",
+            "account_id": "z0bug.coa_bank",
             "debit": 0.00,
             "credit": 2.50,
             "name": "VAT payment",
@@ -1473,6 +1449,23 @@ class MyTest(SingleTransactionCase):
         ]
         self.validate_records(template, records)
 
+    def _test_download(self):
+        _logger.info("🎺 Testing download")
+        file_csv = self.resource_download(
+            module="base",
+            action_name="wizard_lang_export",
+            default={
+                # "lang": self.iso_code,
+                "lang": "en_US",
+                "format": "csv",
+                "modules": "base.module_base",
+            },
+            button_name="act_getfile",
+        )
+        lines = self.u(file_csv).split("\n")
+        self.assertTrue(len(lines) > 1)
+        self.assertIn("module", lines[0])
+
     def test_mytest(self):
         self._test_00()
         self._test_01()
@@ -1496,3 +1489,4 @@ class MyTest(SingleTransactionCase):
         self._test_validate_move_record()
         #
         self._test_moves()
+        self._test_download()

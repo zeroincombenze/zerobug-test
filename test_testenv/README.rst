@@ -233,7 +233,7 @@ La distribuzione `Zeroincombenze® <https://www.zeroincombenze.it/>`__ è proget
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2023-12-29
+Last Update / Ultimo aggiornamento: 2024-01-10
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Mature-green.png
     :target: https://odoo-community.org/page/development-status

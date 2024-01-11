@@ -1,7 +1,8 @@
-10.0.2.0.14 (2023-12-30)
+10.0.2.0.14 (2024-01-10)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-* [QUA] Test coverage 92% (1698: 130+1568) [297 TestPoints] - quality rating 36/100
+* [IMP] Test download file
+* [QUA] Test coverage 91% (1752: 151+1601) [239 TestPoints] - quality rating 77 (target 100)
 
 10.0.2.0.13 (2023-12-03)
 ~~~~~~~~~~~~~~~~~~~~~~~~
