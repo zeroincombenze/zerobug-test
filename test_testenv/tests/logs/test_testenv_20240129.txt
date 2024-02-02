@@ -1,0 +1,1 @@
+2024-01-29 17:14:57,000 1782607 DAEMON test_test_testenv_10 run_odoo_debug.sh: cd /home/odoo/10.0/venv_odoo && source ./bin/activate
