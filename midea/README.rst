@@ -21,6 +21,10 @@ This module aims to show the differences among different Odoo versions
 
 See `development differences among Odoo version <https://itpp.dev/port/index.html>`__
 
+This module was developed for Odoo 12.0; next module versions was automatically
+migrated by arcangelo.
+You can find previous module version backported by arcangelo.
+
 
 |it| Questo modulo non ha una precisa utilità per l'utente finale; è stato progettato
 per l'utilizzo degli sviluppatori.
@@ -30,6 +34,14 @@ di Odoo.
 
 Vedere `development differences among Odoo version <https://itpp.dev/port/index.html>`__
 
+Questo module è stato sviluppato per Odoo 12.0; le versioni successive sono state
+migrate automaticamente tramite arcangelo.
+Ci sono anche versioni precedente portate all'indietro con arcangelo.
+
+
+|thumbnail|
+
+.. |thumbnail| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/12.0/midea/static/description/description.png
 
 
 Getting started | Primi passi
@@ -127,6 +139,12 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History | Cronologia modifiche
 ----------------------------------------
 
+12.0.0.1.8 (2024-02-09)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Code migrated or backported with arcangelo
+* [QUA] Test coverage 100% (14: 0+14) [16 TestPoints] - quality rating 243 (target 100)
+
 12.0.0.1.7 (2023-11-17)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -140,8 +158,8 @@ ChangeLog History | Cronologia modifiche
 
 
 
-Credits | Didascalie
-====================
+Credits | Ringraziamenti
+========================
 
 Copyright
 ---------
@@ -156,8 +174,8 @@ Authors | Autori
 
 
 
-Contributors | Contributi da
-----------------------------
+Contributors | Partecipanti
+---------------------------
 
 * `Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>`__
 
@@ -187,41 +205,20 @@ La distribuzione `Zeroincombenze® <https://www.zeroincombenze.it/>`__ è proget
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2023-11-18
+Last Update / Ultimo aggiornamento: 2024-02-09
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: 
-.. |Build Status| image:: https://travis-ci.org/zeroincombenze/zerobug-test.svg?branch=12.0
-    :target: https://travis-ci.com/zeroincombenze/zerobug-test
-    :alt: github.com
 .. |license gpl| image:: https://img.shields.io/badge/licence-LGPL--3-7379c3.svg
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |license opl| image:: https://img.shields.io/badge/licence-OPL-7379c3.svg
     :target: https://www.odoo.com/documentation/user/14.0/legal/licenses/licenses.html
     :alt: License: OPL
-.. |Coverage Status| image:: https://coveralls.io/repos/github/zeroincombenze/zerobug-test/badge.svg?branch=12.0
-    :target: https://coveralls.io/github/zeroincombenze/zerobug-test?branch=12.0
-    :alt: Coverage
-.. |Codecov Status| image:: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/12.0/graph/badge.svg
-    :target: https://codecov.io/gh/zeroincombenze/zerobug-test/branch/12.0
-    :alt: Codecov
-.. |Tech Doc| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-12.svg
-    :target: https://wiki.zeroincombenze.org/en/Odoo/12.0/dev
-    :alt: Technical Documentation
-.. |Help| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-12.svg
-    :target: https://wiki.zeroincombenze.org/it/Odoo/12.0/man
-    :alt: Technical Documentation
 .. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-12.svg
     :target: https://erp12.zeroincombenze.it
     :alt: Try Me
-.. |OCA Codecov| image:: https://codecov.io/gh/OCA/zerobug-test/branch/12.0/graph/badge.svg
-    :target: https://codecov.io/gh/OCA/zerobug-test/branch/12.0
-    :alt: Codecov
-.. |Odoo Italia Associazione| image:: https://www.odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20126x56.png
-   :target: https://odoo-italia.org
-   :alt: Odoo Italia Associazione
 .. |Zeroincombenze| image:: https://avatars0.githubusercontent.com/u/6972555?s=460&v=4
    :target: https://www.zeroincombenze.it/
    :alt: Zeroincombenze
@@ -245,5 +242,3 @@ Last Update / Ultimo aggiornamento: 2023-11-18
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/Desktoptelematico.md
 .. |FatturaPA| image:: https://raw.githubusercontent.com/zeroincombenze/grymb/master/certificates/ade/icons/fatturapa.png
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
-.. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
-   :target: https://t.me/Assitenza_clienti_powERP
