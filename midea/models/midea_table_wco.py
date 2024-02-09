@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-#
-# Copyright 2016-23 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
+# Copyright 2016-24 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
