@@ -50,7 +50,7 @@ factur-x==2.5
 feedparser==5.2.1
 fintech==7.3.1
 flake8==5.0.4
-fonttools==4.38.0
+fonttools==4.43.0
 fpdf==1.7.2
 freezegun==1.2.2
 future==0.18.3
