@@ -158,7 +158,7 @@ pyOpenSSL==23.2.0
 pyotp==2.8.0
 pyparsing==2.1.10
 pyPdf==1.13
-PyPDF2==1.26.0
+PyPDF2==1.27.9
 PyPDF4==1.27.0
 pyRFC3339==1.1
 pyrsistent==0.19.3
