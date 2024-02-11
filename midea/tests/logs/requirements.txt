@@ -26,7 +26,7 @@ codicefiscale==0.9
 compressed-rtf==1.0.6
 configparser==5.3.0
 coverage==7.2.7
-cryptography==38.0.4
+cryptography==42.0.0
 cssselect==1.2.0
 cssutils==2.7.1
 cycler==0.11.0
