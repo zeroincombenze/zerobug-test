@@ -1,5 +1,5 @@
 #
-# Copyright 2018-23 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
+# Copyright 2018-24 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -23,6 +23,6 @@
         "security/ir.model.access.csv",
         "data/midea_qci.xml",
     ],
-    "maintainer": "* Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>",
+    "maintainer": "Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>",
     "installable": True,
 }

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test Environment v2.0.14
+"""Test Environment v2.0.15
 
 You can locate the recent testenv.py in testenv directory of module
 https://github.com/zeroincombenze/tools/tree/master/z0bug_odoo/testenv
@@ -672,6 +672,8 @@ class MainTest(test_common.TransactionCase):
         self.childs_resource = {}
         self.uninstallable_modules = []
         self.convey_record = {}
+        # Enable commit data
+        self.odoo_commit_test = True
         if not hasattr(self, "assert_counter"):
             self.assert_counter = 0
         self.module = None
@@ -1538,12 +1540,13 @@ class MainTest(test_common.TransactionCase):
         def mergelist(value):
             # itertool.chain.from_iterable cannot work with [int, int, ...]
             res = []
-            for item in value:
-                if hasattr(item, "__iter__"):
-                    for x in mergelist(item):
-                        res.append(x)
-                else:
-                    res.append(item)
+            if value:
+                for item in value:
+                    if hasattr(item, "__iter__"):
+                        for x in mergelist(item):
+                            res.append(x)
+                    else:
+                        res.append(item)
             return res
 
         def value2list(value):
@@ -1807,9 +1810,12 @@ class MainTest(test_common.TransactionCase):
                         " 🕶️ field %s does not exist in %s" % (field, resource)
                     )
                     continue
-
                 value = self._cast_field(
-                    resource, field, values[field], fmt=fmt, group=group
+                    resource,
+                    field,
+                    values[field],
+                    fmt=fmt if fmt != "id" else "cmd",
+                    group=group
                 )
                 if value is None and (
                     not keep_null or field not in ("company_id", "currency_id")
@@ -1880,8 +1886,10 @@ class MainTest(test_common.TransactionCase):
                     ctx["active_id"] = records[0].id
                 else:
                     ctx["active_id"] = False
+                ctx["active_model"] = records[0]._name
             else:
                 ctx["active_id"] = records.id
+                ctx["active_model"] = records._name
         return ctx
 
     def _finalize_ctx_act_windows(self, records, act_windows, ctx={}):
@@ -3011,7 +3019,7 @@ class MainTest(test_common.TransactionCase):
             self.declare_all_data(data, group=group)
         setup_list = setup_list or self.get_resource_list(group=group)
         self._logger.info(
-            "🎺🎺🎺 Starting test v2.0.14 (debug_level=%s, commit=%s)"
+            "🎺🎺🎺 Starting test v2.0.15 (debug_level=%s, commit=%s)"
             % (self.debug_level, getattr(self, "odoo_commit_test", False))
         )
         self._logger.info(
@@ -3244,7 +3252,7 @@ class MainTest(test_common.TransactionCase):
     @api.model
     def wizard(
         self,
-        module=None,
+        module=".",
         action_name=None,
         act_windows=None,
         records=None,
@@ -3648,3 +3656,4 @@ class MainTest(test_common.TransactionCase):
             "🐞%d assertion validated for validate_records(%s)"
             % (ctr_assertion, self.tmpl_repr(template, match=True)),
         )
+

@@ -1,5 +1,5 @@
 #
-# Copyright 2018-22 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
+# Copyright 2018-24 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -8,8 +8,6 @@
 #
 import os
 import logging
-
-from past.builtins import long
 
 from .testenv import MainTest as SingleTransactionCase
 
@@ -47,7 +45,7 @@ class TestMidea(SingleTransactionCase):
         )
         self.assertIsInstance(
             self.midea_table_wco.id,
-            (int, long),
+            int,
             "z0bug_odoo.create_id does not return an integer id",
         )
 
