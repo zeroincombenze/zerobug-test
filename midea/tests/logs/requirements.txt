@@ -200,7 +200,7 @@ rich==13.4.2
 rsa==4.9
 s3transfer==0.6.1
 SecretStorage==3.3.3
-sentry-sdk==1.11.1
+sentry-sdk==1.14.0
 setuptools==57.5.0
 sgmllib3k==1.0.0
 shapely==2.0.1
