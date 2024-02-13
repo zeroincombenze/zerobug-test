@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo (11.0)\n"
+"Project-Id-Version: Odoo (12.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-09 13:21+0000\n"
-"PO-Revision-Date: 2024-02-09 13:21+0000\n"
+"POT-Creation-Date: 2024-02-09 06:07+0000\n"
+"PO-Revision-Date: 2024-02-09 06:07+0000\n"
 "Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
 "Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
 "Language: it\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_qci_active
-#: model:ir.model.fields,field_description:midea.field_midea_table_wco_active
+#: model:ir.model.fields,field_description:midea.field_midea_qci__active
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__active
 msgid "Active"
 msgstr "Attivo"
 
@@ -28,12 +28,12 @@ msgid "Canceled"
 msgstr "Annullato"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_qci_code
+#: model:ir.model.fields,field_description:midea.field_midea_qci__code
 msgid "Code"
 msgstr "Codice"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_table_wco_company_id
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__company_id
 msgid "Company"
 msgstr "Azienda"
 
@@ -54,14 +54,14 @@ msgid "Corrispettivi ripartiti (ventilazione)"
 msgstr "Corrispettivi ripartiti (ventilazione)"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_qci_create_uid
-#: model:ir.model.fields,field_description:midea.field_midea_table_wco_create_uid
+#: model:ir.model.fields,field_description:midea.field_midea_qci__create_uid
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__create_uid
 msgid "Created by"
 msgstr "Creato da"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_qci_create_date
-#: model:ir.model.fields,field_description:midea.field_midea_table_wco_create_date
+#: model:ir.model.fields,field_description:midea.field_midea_qci__create_date
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__create_date
 msgid "Created on"
 msgstr "Creato il"
 
@@ -76,8 +76,8 @@ msgid "Dev.Quality"
 msgstr "Dev.Qualità"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_qci_display_name
-#: model:ir.model.fields,field_description:midea.field_midea_table_wco_display_name
+#: model:ir.model.fields,field_description:midea.field_midea_qci__display_name
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
@@ -114,8 +114,8 @@ msgid "Full Undeductible VAT / IVA totalmente indetraibile"
 msgstr "Full Undeductible PARTITA IVA / IVA totalmente indetraibile"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_qci_id
-#: model:ir.model.fields,field_description:midea.field_midea_table_wco_id
+#: model:ir.model.fields,field_description:midea.field_midea_qci__id
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__id
 msgid "ID"
 msgstr "ID"
 
@@ -131,20 +131,20 @@ msgstr ""
 "Invoice con meno del asset/Fattura di-o tricloroacetici beni strumentali"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_qci___last_update
-#: model:ir.model.fields,field_description:midea.field_midea_table_wco___last_update
+#: model:ir.model.fields,field_description:midea.field_midea_qci____last_update
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_qci_write_uid
-#: model:ir.model.fields,field_description:midea.field_midea_table_wco_write_uid
+#: model:ir.model.fields,field_description:midea.field_midea_qci__write_uid
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__write_uid
 msgid "Last Updated by"
 msgstr "Ultimo aggiornamento di"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_qci_write_date
-#: model:ir.model.fields,field_description:midea.field_midea_table_wco_write_date
+#: model:ir.model.fields,field_description:midea.field_midea_qci__write_date
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__write_date
 msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
 
@@ -154,13 +154,13 @@ msgid "Local partner (Italy) / Cliente italiano"
 msgstr "Local come persona fisica (Italy) / Cliente italiano"
 
 #. module: midea
-#: model:ir.ui.view,arch_db:midea.table_wco_form
-#: model:ir.ui.view,arch_db:midea.view_midea_form
+#: model_terms:ir.ui.view,arch_db:midea.table_wco_form
+#: model_terms:ir.ui.view,arch_db:midea.view_midea_form
 msgid "Midea form"
 msgstr "Modulo Midea"
 
 #. module: midea
-#: model:ir.ui.view,arch_db:midea.table_wco_tree
+#: model_terms:ir.ui.view,arch_db:midea.table_wco_tree
 msgid "Midea tree"
 msgstr "Midea predefinito"
 
@@ -175,7 +175,7 @@ msgid "My idea test record"
 msgstr "My idea test documentazione"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_qci_name
+#: model:ir.model.fields,field_description:midea.field_midea_qci__name
 msgid "Name"
 msgstr "Nome"
 
@@ -255,14 +255,14 @@ msgstr ""
 #. module: midea
 #: model:ir.actions.act_window,name:midea.action_qci
 #: model:ir.ui.menu,name:midea.menu_midea_qci_test
-#: model:ir.ui.view,arch_db:midea.view_midea_tree
+#: model_terms:ir.ui.view,arch_db:midea.view_midea_tree
 msgid "Quality Check Id"
 msgstr "ID controllo qualità"
 
 #. module: midea
 #: model:midea.qci,name:midea.acc_rc
 msgid "Reverse Charge"
-msgstr "Carica inversa"
+msgstr "Reverse Charge"
 
 #. module: midea
 #: model:midea.qci,name:midea.pay_RB
@@ -353,8 +353,8 @@ msgid "Split Payment"
 msgstr "Scissione pagamenti"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_qci_state
-#: model:ir.model.fields,field_description:midea.field_midea_table_wco_state
+#: model:ir.model.fields,field_description:midea.field_midea_qci__state
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__state
 msgid "State"
 msgstr "Stato Federale"
 
@@ -374,7 +374,7 @@ msgid "midea.table_wco"
 msgstr "midea.table_wco"
 
 #. module: midea
-#: model:ir.model.fields,field_description:midea.field_midea_table_wco_name
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__name
 msgid "name"
 msgstr "Nome"
 
