@@ -1,35 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-<data>
+<odoo>
 
-    <record model="ir.ui.view" id="midea.table_wco">
-        <field name="name">Midea tabel without company</field>
+    <record model="ir.ui.view" id="table_wco_tree">
+        <field name="name">Midea table with company (tree)</field>
+        <field name="model">midea.table_wco</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <tree string="Midea tree">
+                <field name="name"/>
+                <field name="active"/>
+                <field name="state"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="table_wco_form">
+        <field name="name">Midea tablr with company (form)</field>
         <field name="model">midea.table_wco</field>
         <field name="type">form</field>
         <field name="priority" eval="16"/>
         <field name="arch" type="xml">
-            <!-- view content: <form>, <tree>, <graph>, … -->
             <form string="Midea form">
+                <group>
                 <field name="name"/>
                 <field name="active"/>
                 <field name="state"/>
+                    <field name="company_id"/>
+                </group>
             </form>
         </field>
     </record>
 
-    <record id="midea.action_test" model="ir.actions.act_window">
+    <record id="midea.action_test_wco" model="ir.actions.act_window">
         <field name="name">My idea test record</field>
         <field name="res_model">midea.table_wco</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="midea.table_wco"/>
+        <field name="view_id" ref="midea.table_wco_tree"/>
     </record>
 
-    <menuitem id="menu_midea_table_wco" name="My idea"
-              parent="base.menu_administration" sequence="750" />
-    <menuitem id="menu_midea_table_wco_test" name="My idea test"
-              action="midea.action_test"
-              parent="menu_midea_table_wco" sequence="60"/>
-
-</data>
-</openerp>
-
+</odoo>

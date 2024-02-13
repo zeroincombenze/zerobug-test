@@ -1,0 +1,83 @@
+2024-02-10 07:54:32,000 3165415 DAEMON test_midea_9 run_odoo_debug.sh: cd /home/odoo/9.0/venv_odoo && source ./bin/activate
+2024-02-10 06:55:26,346 3166899 INFO ? openerp: OpenERP version 9.0c
+2024-02-10 06:55:26,347 3166899 INFO ? openerp: addons paths: ['/home/odoo/.local/share/Odoo9/addons/9.0', u'/home/odoo/9.0/openerp/addons', u'/home/odoo/9.0/addons', u'/home/odoo/.local/share/Odoo12/addons', u'/home/odoo/9.0/account-closing', u'/home/odoo/9.0/account-financial-reporting', u'/home/odoo/9.0/account-financial-tools', u'/home/odoo/9.0/account-invoicing', u'/home/odoo/9.0/account-payment', u'/home/odoo/9.0/bank-payment', u'/home/odoo/9.0/connector', u'/home/odoo/9.0/contract', u'/home/odoo/9.0/crm', u'/home/odoo/9.0/knowledge', u'/home/odoo/9.0/l10n-italy', u'/home/odoo/9.0/management-system', u'/home/odoo/9.0/partner-contact', u'/home/odoo/9.0/project', u'/home/odoo/9.0/purchase-workflow', u'/home/odoo/9.0/reporting-engine', u'/home/odoo/9.0/sale-workflow', u'/home/odoo/9.0/server-tools', u'/home/odoo/9.0/stock-logistics-workflow', u'/home/odoo/9.0/web', u'/home/odoo/9.0/website', u'/home/odoo/9.0/zerobug-test/zerobug-test']
+2024-02-10 06:55:26,348 3166899 INFO ? openerp: database: odoo9@localhost:5433
+2024-02-10 06:55:26,547 3166899 INFO ? openerp.service.server: HTTP service (werkzeug) running on nb200z0.:47069
+2024-02-10 06:55:26,561 3166899 INFO test_midea_9 openerp.modules.loading: loading 1 modules...
+2024-02-10 06:55:26,574 3166899 INFO test_midea_9 openerp.modules.loading: 1 modules loaded in 0.01s, 0 queries
+2024-02-10 06:55:26,844 3166899 INFO test_midea_9 openerp.modules.loading: loading 15 modules...
+2024-02-10 06:55:27,013 3166899 INFO test_midea_9 openerp.modules.module: module midea: creating or updating database tables
+2024-02-10 06:55:27,055 3166899 INFO test_midea_9 openerp.modules.loading: loading midea/views/midea_no_company_view.xml
+2024-02-10 06:55:27,130 3166899 INFO test_midea_9 openerp.modules.loading: loading midea/views/midea_table_wco_view.xml
+2024-02-10 06:55:27,191 3166899 INFO test_midea_9 openerp.modules.loading: loading midea/security/ir.model.access.csv
+2024-02-10 06:55:27,870 3166899 INFO test_midea_9 openerp.modules.module: openerp.addons.midea.tests.test_midea_01 running tests.
+2024-02-10 06:55:27,882 3166899 INFO test_midea_9 openerp.addons.midea.tests.test_midea_01: test_midea_no_company (openerp.addons.midea.tests.test_midea_01.TestMidea)
+2024-02-10 06:55:27,894 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_01: FAIL
+2024-02-10 06:55:27,896 3166899 INFO test_midea_9 openerp.addons.midea.tests.test_midea_01: ======================================================================
+2024-02-10 06:55:27,896 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_01: FAIL: test_midea_no_company (openerp.addons.midea.tests.test_midea_01.TestMidea)
+2024-02-10 06:55:27,897 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_01: Traceback (most recent call last):
+2024-02-10 06:55:27,897 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_01: `   File "/home/odoo/9.0/zerobug-test/zerobug-test/midea/tests/test_midea_01.py", line 36, in test_midea_no_company
+2024-02-10 06:55:27,897 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_01: `     'z0bug_odoo.create_id does not return an integer id')
+2024-02-10 06:55:27,897 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_01: ` AssertionError: u'Mario Rossi' is not an instance of (<type 'int'>, <type 'long'>) : z0bug_odoo.create_id does not return an integer id
+2024-02-10 06:55:27,897 3166899 INFO test_midea_9 openerp.addons.midea.tests.test_midea_01: Ran 1 test in 0.025s
+2024-02-10 06:55:27,897 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_01: FAILED
+2024-02-10 06:55:27,897 3166899 INFO test_midea_9 openerp.addons.midea.tests.test_midea_01:  (failures=1)
+2024-02-10 06:55:27,897 3166899 ERROR test_midea_9 openerp.modules.module: Module midea: 1 failures, 0 errors
+2024-02-10 06:55:27,898 3166899 INFO test_midea_9 openerp.modules.module: openerp.addons.midea.tests.test_midea_02 running tests.
+2024-02-10 06:55:27,899 3166899 INFO test_midea_9 openerp.addons.midea.tests.test_midea_02: test_midea_table_wco (openerp.addons.midea.tests.test_midea_02.TestMidea)
+2024-02-10 06:55:28,023 3166899 INFO test_midea_9 openerp.sql_db: bad query: INSERT INTO "res_partner" ("id", "color", "company_type", "use_parent_address", "street", "city", "tz", "zip", "country_id", "company_id", "parent_id", "supplier", "type", "email", "is_company", "website", "lang", "fax", "street2", "phone", "active", "customer", "name", "vat", "employee", "create_uid", "write_uid", "create_date", "write_date") VALUES(nextval('res_partner_id_seq'), 0, 'company', false, 'Via dei Matti, 0', 'Ozzero', NULL, '20080', 'Italy', 1, NULL, true, NULL, 'info@testcompany.org', true, 'https://www.testcompany.org', NULL, NULL, NULL, '+39 025551234', true, true, 'Test Company', 'IT05111810015', false, 1, 1, (now() at time zone 'UTC'), (now() at time zone 'UTC')) RETURNING id
+2024-02-10 06:55:28,026 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: ERROR
+2024-02-10 06:55:28,028 3166899 INFO test_midea_9 openerp.addons.midea.tests.test_midea_02: ======================================================================
+2024-02-10 06:55:28,028 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: ERROR: test_midea_table_wco (openerp.addons.midea.tests.test_midea_02.TestMidea)
+2024-02-10 06:55:28,029 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: Traceback (most recent call last):
+2024-02-10 06:55:28,029 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/zerobug-test/zerobug-test/midea/tests/test_midea_02.py", line 23, in setUp
+2024-02-10 06:55:28,029 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     self.company_id = self.set_test_company()
+2024-02-10 06:55:28,029 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/venv_odoo/lib/python2.7/site-packages/z0bug_odoo/test_common.py", line 354, in set_test_company
+2024-02-10 06:55:28,029 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     return Z0bugBaseCase.set_test_company(self, xref)
+2024-02-10 06:55:28,029 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/venv_odoo/lib/python2.7/site-packages/z0bug_odoo/test_common.py", line 193, in set_test_company
+2024-02-10 06:55:28,029 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     self.build_model_data(model, xref1)
+2024-02-10 06:55:28,030 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/venv_odoo/lib/python2.7/site-packages/z0bug_odoo/test_common.py", line 351, in build_model_data
+2024-02-10 06:55:28,030 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     return Z0bugBaseCase.build_model_data(self, model, xrefs)
+2024-02-10 06:55:28,030 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/venv_odoo/lib/python2.7/site-packages/z0bug_odoo/test_common.py", line 174, in build_model_data
+2024-02-10 06:55:28,031 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     id = self.create_id(model, vals)
+2024-02-10 06:55:28,031 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/venv_odoo/lib/python2.7/site-packages/z0bug_odoo/test_common.py", line 330, in create_id
+2024-02-10 06:55:28,031 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     return Z0bugBaseCase.create_id(self, model, values)
+2024-02-10 06:55:28,031 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/venv_odoo/lib/python2.7/site-packages/z0bug_odoo/test_common.py", line 44, in create_id
+2024-02-10 06:55:28,032 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     return self.env[model].create(values).name
+2024-02-10 06:55:28,032 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/openerp/api.py", line 248, in wrapper
+2024-02-10 06:55:28,032 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     return new_api(self, *args, **kwargs)
+2024-02-10 06:55:28,032 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/openerp/addons/base/res/res_partner.py", line 538, in create
+2024-02-10 06:55:28,033 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     partner = super(res_partner, self).create(vals)
+2024-02-10 06:55:28,033 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/openerp/api.py", line 248, in wrapper
+2024-02-10 06:55:28,033 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     return new_api(self, *args, **kwargs)
+2024-02-10 06:55:28,033 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/openerp/models.py", line 4175, in create
+2024-02-10 06:55:28,033 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     record = self.browse(self._create(old_vals))
+2024-02-10 06:55:28,034 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/openerp/api.py", line 248, in wrapper
+2024-02-10 06:55:28,034 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     return new_api(self, *args, **kwargs)
+2024-02-10 06:55:28,034 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/openerp/api.py", line 490, in new_api
+2024-02-10 06:55:28,035 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     result = method(self._model, cr, uid, *args, **old_kwargs)
+2024-02-10 06:55:28,035 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/openerp/models.py", line 4319, in _create
+2024-02-10 06:55:28,035 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     tuple([u[2] for u in updates if len(u) > 2])
+2024-02-10 06:55:28,035 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/openerp/sql_db.py", line 154, in wrapper
+2024-02-10 06:55:28,035 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     return f(self, *args, **kwargs)
+2024-02-10 06:55:28,036 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `   File "/home/odoo/9.0/openerp/sql_db.py", line 233, in execute
+2024-02-10 06:55:28,036 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `     res = self._obj.execute(query, params)
+2024-02-10 06:55:28,036 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: ` InvalidTextRepresentation: invalid input syntax for integer: "Italy"
+2024-02-10 06:55:28,036 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: ` LINE 1: ...lse, 'Via dei Matti, 0', 'Ozzero', NULL, '20080', 'Italy', 1...
+2024-02-10 06:55:28,036 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: `                                                              ^
+2024-02-10 06:55:28,037 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: ` 
+2024-02-10 06:55:28,037 3166899 INFO test_midea_9 openerp.addons.midea.tests.test_midea_02: Ran 1 test in 0.130s
+2024-02-10 06:55:28,037 3166899 ERROR test_midea_9 openerp.addons.midea.tests.test_midea_02: FAILED
+2024-02-10 06:55:28,037 3166899 INFO test_midea_9 openerp.addons.midea.tests.test_midea_02:  (errors=1)
+2024-02-10 06:55:28,038 3166899 ERROR test_midea_9 openerp.modules.module: Module midea: 0 failures, 1 errors
+2024-02-10 06:55:28,181 3166899 INFO test_midea_9 openerp.addons.report.models.report: Will use the Wkhtmltopdf binary at /home/odoo/9.0/venv_odoo/bin/wkhtmltopdf
+2024-02-10 06:55:28,229 3166899 INFO test_midea_9 openerp.modules.loading: 15 modules loaded in 1.39s, 57 queries
+2024-02-10 06:55:28,562 3166899 ERROR test_midea_9 openerp.modules.loading: At least one test failed when loading the modules.
+2024-02-10 06:55:28,566 3166899 INFO test_midea_9 openerp.modules.loading: All post-tested in 0.00s, 0 queries
+2024-02-10 06:55:28,567 3166899 INFO test_midea_9 openerp.service.server: Initiating shutdown
+2024-02-10 06:55:28,567 3166899 INFO test_midea_9 openerp.service.server: Hit CTRL-C again or send a second signal to force the shutdown.
+
++===================================================================
+| please test [36mmidea[0m (9.0): [31mFAILED![0m
++===================================================================
+

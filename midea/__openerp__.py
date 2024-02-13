@@ -1,22 +1,29 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2018-19 - SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2015-24 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+# Contributions to development, thanks to:
+# * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
+#
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
 {
-    'name': 'midea',
-    'summary': 'z0bug_odoo test suite',
-    'version': '8.0.0.1.1',
-    'category': 'Generic Modules/Accounting',
-    'author': 'SHS-AV s.r.l.',
-    'website': 'https://www.zeroincombenze.it/',
-    'depends': ['base'],
-    'data': [
-        'views/midea_no_company_view.xml',
-        'views/midea_table_wco_view.xml',
-        'security/ir.model.access.csv',
+    "name": "midea",
+    "version": "9.0.0.1.7",
+    "category": "Generic Modules/Accounting",
+    "summary": "z0bug_odoo test suite",
+    "author": "SHS-AV s.r.l.",
+    "website": "https://github.com/OCA/l10n-italy",
+    "development_status": "Beta",
+    "license": "LGPL-3",
+    "depends": ["base"],
+    "data": [
+        "views/midea_qci_view.xml",
+        "views/midea_table_wco_view.xml",
+        "views/midea_menu.xml",
+        "security/ir.model.access.csv",
+        "data/midea_qci.xml",
     ],
-    'installable': True,
+    "maintainer": "Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>",
+    "installable": True,
 }
-

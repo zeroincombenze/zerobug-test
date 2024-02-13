@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#
 # Copyright 2015-24 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
@@ -9,16 +10,16 @@
 from openerp import fields, models
 
 
-class MideaNoCompany(models.Model):
-    _name = "midea.table_wco"
+class MideaQci(models.Model):
+    _name = "midea.qci"
 
-    name = fields.Char("name", required=True, translate=True)
+    code = fields.Char("Code", required=True)
+    name = fields.Char("Name", required=True, translate=True)
     active = fields.Boolean("Active", default=True)
     state = fields.Selection(
-        [("draft", "Draft"), ("confirmed", "Confirmed")],
+        [("draft", "Draft"), ("confirmed", "Confirmed"), ("cancel", "Canceled")],
         "State",
         required=True,
         readonly=True,
         default="draft",
     )
-    company_id = fields.Many2one("res.company", string="Company")

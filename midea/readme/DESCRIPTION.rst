@@ -1,14 +1,14 @@
-z0bug_odoo test suite
-=====================
+This module has no specific function for End-user, it is just designed for
+Odoo developers.
 
-This module has no specific function for End-user.
+This module aims to show the differences among different Odoo versions
 
-It is a just a Odoo module example baut tha main purpose of this module is to validate the z0bug_odoo package.
+See `development differences among Odoo version <https://itpp.dev/port/index.html>`__
 
-The tests/test_midea file executes following unit tests:
-
-* Import z0bug_odoo package -> validate the python package
-* test_common.SingleTransactionCase -> validate test class
-* create_id() function -> test result
-* browse_rec() function -> excpected result
-* write_rec() function -> test result by browsing again
+.. $if branch == "12.0"
+This module was developed for Odoo 12.0; next module versions was automatically
+migrated by arcangelo.
+You can find previous module version backported by arcangelo.
+.. $elif branch in ("11.0", "10.0")
+This module was automatically backported from 12.0 by arcangelo.
+.. $fi

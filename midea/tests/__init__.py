@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2018-19 - SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2015-24 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+# Contributions to development, thanks to:
+# * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 #
-from . import test_midea_01
-from . import test_midea_02
-
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+#
+from . import test_midea_qci
+from . import test_midea_table_wco
+from . import testenv
