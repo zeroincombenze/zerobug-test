@@ -1,0 +1,46 @@
+2024-02-13 08:03:51,000 1038802 DAEMON test_midea_8 run_odoo_debug.sh: cd /home/odoo/8.0/venv_odoo && source ./bin/activate
+/home/odoo/8.0/venv_odoo/lib/python2.7/site-packages/OpenSSL/crypto.py:14: CryptographyDeprecationWarning: Python 2 is no longer supported by the Python core team. Support for it is now deprecated in cryptography, and will be removed in the next release.
+  from cryptography import utils, x509
+2024-02-13 07:03:57,614 1040335 INFO ? openerp: OpenERP version 8.0
+2024-02-13 07:03:57,614 1040335 INFO ? openerp: addons paths: ['/home/odoo/.local/share/Odoo8/addons/8.0', u'/home/odoo/8.0/openerp/addons', u'/home/odoo/8.0/addons', u'/home/odoo/.local/share/Odoo12/addons', u'/home/odoo/8.0/account-analytic', u'/home/odoo/8.0/account-budgeting', u'/home/odoo/8.0/account-closing', u'/home/odoo/8.0/account-consolidation', u'/home/odoo/8.0/account-financial-reporting', u'/home/odoo/8.0/account-financial-tools', u'/home/odoo/8.0/account-fiscal-rule', u'/home/odoo/8.0/account-invoice-reporting', u'/home/odoo/8.0/account-invoicing', u'/home/odoo/8.0/account-payment', u'/home/odoo/8.0/account-reconcile', u'/home/odoo/8.0/bank-payment', u'/home/odoo/8.0/bank-statement-import', u'/home/odoo/8.0/business-requirement', u'/home/odoo/8.0/commission', u'/home/odoo/8.0/community-data-files', u'/home/odoo/8.0/connector', u'/home/odoo/8.0/contract', u'/home/odoo/8.0/crm', u'/home/odoo/8.0/data-protection', u'/home/odoo/8.0/delivery-carrier', u'/home/odoo/8.0/didotech_80', u'/home/odoo/8.0/e-commerce', u'/home/odoo/8.0/edi', u'/home/odoo/8.0/geospatial', u'/home/odoo/8.0/hr', u'/home/odoo/8.0/intrastat-extrastat', u'/home/odoo/8.0/knowledge', u'/home/odoo/8.0/l10n-italy', u'/home/odoo/8.0/l10n-italy-supplemental', u'/home/odoo/8.0/manufacture', u'/home/odoo/8.0/manufacture-reporting', u'/home/odoo/8.0/margin-analysis', u'/home/odoo/8.0/mgmtsystem', u'/home/odoo/8.0/mis-builder', u'/home/odoo/8.0/multi-company', u'/home/odoo/8.0/partner-contact', u'/home/odoo/8.0/pos', u'/home/odoo/8.0/product-attribute', u'/home/odoo/8.0/product-variant', u'/home/odoo/8.0/profiles', u'/home/odoo/8.0/project', u'/home/odoo/8.0/project-reporting', u'/home/odoo/8.0/purchase-reporting', u'/home/odoo/8.0/purchase-workflow', u'/home/odoo/8.0/report-print-send', u'/home/odoo/8.0/reporting-engine', u'/home/odoo/8.0/rma', u'/home/odoo/8.0/sale-financial', u'/home/odoo/8.0/sale-reporting', u'/home/odoo/8.0/sale-workflow', u'/home/odoo/8.0/server-auth', u'/home/odoo/8.0/social', u'/home/odoo/8.0/stock-logistics-barcode', u'/home/odoo/8.0/stock-logistics-reporting', u'/home/odoo/8.0/stock-logistics-tracking', u'/home/odoo/8.0/stock-logistics-transport', u'/home/odoo/8.0/stock-logistics-warehouse', u'/home/odoo/8.0/stock-logistics-workflow', u'/home/odoo/8.0/timesheet', u'/home/odoo/8.0/uncovered', u'/home/odoo/8.0/zerobug-test']
+2024-02-13 07:03:57,615 1040335 INFO ? openerp: database hostname: localhost
+2024-02-13 07:03:57,616 1040335 INFO ? openerp: database port: 5432
+2024-02-13 07:03:57,616 1040335 INFO ? openerp: database user: odoo8
+2024-02-13 07:03:57,860 1040335 INFO ? openerp.service.server: HTTP service (werkzeug) running on 0.0.0.0:30829
+2024-02-13 07:03:57,884 1040335 INFO test_midea_8 openerp.modules.loading: loading 1 modules...
+2024-02-13 07:03:57,904 1040335 INFO test_midea_8 openerp.modules.loading: 1 modules loaded in 0.02s, 0 queries
+2024-02-13 07:03:58,167 1040335 INFO test_midea_8 openerp.modules.loading: updating modules list
+2024-02-13 07:04:07,800 1040335 INFO ? openerp.addons.bus.bus: Bus.loop listen imbus on db postgres
+2024-02-13 07:04:08,217 1040335 INFO test_midea_8 openerp.addons.report.models.report: Will use the Wkhtmltopdf binary at /usr/local/bin/wkhtmltopdf
+2024-02-13 07:04:08,584 1040335 WARNING test_midea_8 openerp.addons.account_bank_statement_import_ofx.account_bank_statement_import_ofx: ofxparse not found, OFX parsing disabled.
+2024-02-13 07:04:08,789 1040335 WARNING test_midea_8 openerp.addons.base_geoengine.geo_field: Shapely or geojson are not available in the sys path
+2024-02-13 07:04:08,790 1040335 WARNING test_midea_8 openerp.addons.base_geoengine.geo_helper.geo_convertion_helper: Shapely or geojson are not available in the sys path
+2024-02-13 07:04:08,791 1040335 WARNING test_midea_8 openerp.addons.base_geoengine.fields: Shapely or geojson are not available in the sys path
+2024-02-13 07:04:10,736 1040335 INFO test_midea_8 openerp.http: HTTP Configuring static files
+2024-02-13 07:04:11,133 1040335 INFO test_midea_8 openerp.modules.loading: loading 15 modules...
+2024-02-13 07:04:11,185 1040335 INFO test_midea_8 openerp.modules.loading: 15 modules loaded in 0.05s, 0 queries
+2024-02-13 07:04:11,192 1040335 INFO test_midea_8 openerp.modules.loading: loading 16 modules...
+2024-02-13 07:04:11,433 1040335 INFO test_midea_8 openerp.modules.module: module midea: creating or updating database tables
+2024-02-13 07:04:11,646 1040335 INFO test_midea_8 openerp.modules.loading: loading midea/views/midea_qci_view.xml
+2024-02-13 07:04:11,709 1040335 INFO test_midea_8 openerp.modules.loading: loading midea/views/midea_table_wco_view.xml
+2024-02-13 07:04:11,762 1040335 INFO test_midea_8 openerp.modules.loading: loading midea/views/midea_menu.xml
+2024-02-13 07:04:11,833 1040335 INFO test_midea_8 openerp.modules.loading: loading midea/security/ir.model.access.csv
+2024-02-13 07:04:11,948 1040335 INFO test_midea_8 openerp.modules.loading: 16 modules loaded in 0.76s, 0 queries
+2024-02-13 07:04:12,442 1040335 INFO test_midea_8 openerp.modules.loading: Modules loaded.
+2024-02-13 07:04:12,444 1040335 INFO test_midea_8 openerp.modules.loading: All post-tested in 0.00s, 0 queries
+2024-02-13 07:04:12,445 1040335 INFO test_midea_8 openerp.models: Computing parent left and right for table ir_ui_menu...
+2024-02-13 07:04:12,496 1040335 INFO test_midea_8 openerp.service.server: Initiating shutdown
+2024-02-13 07:04:12,496 1040335 INFO test_midea_8 openerp.service.server: Hit CTRL-C again or send a second signal to force the shutdown.
+
++===================================================================
+| please test [36mmidea[0m (8.0): [32mSUCCESS![0m
++===================================================================
+
+[1;37;44m$ coverage report --rcfile=/home/odoo/8.0/zerobug-test/midea/tests/logs/coverage_midea_8rc -m
+[34;107mName                                                          Stmts   Miss  Cover   Missing
+-------------------------------------------------------------------------------------------
+/home/odoo/8.0/zerobug-test/midea/models/midea_qci.py             7      0   100%
+/home/odoo/8.0/zerobug-test/midea/models/midea_table_wco.py       7      0   100%
+-------------------------------------------------------------------------------------------
+TOTAL                                                            14      0   100%
+[0m

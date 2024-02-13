@@ -11,7 +11,7 @@ certifi==2021.10.8
 cffi==1.15.1
 chardet==4.0.0
 click==7.1.2
-clodoo==2.0.6
+clodoo==2.0.8
 codicefiscale==0.9
 configparser==4.0.2
 contextlib2==0.6.0.post1
@@ -49,6 +49,7 @@ jdcal==1.4.1
 Jinja2==2.7.3
 jsonlib==1.6.1
 lazy-object-proxy==1.6.0
+lisa==2.0.2
 lxml==4.9.2
 Mako==1.1.6
 MarkupSafe==0.23
@@ -57,9 +58,10 @@ mock==2.0.0
 more-itertools==5.0.0
 num2words==0.5.12
 numpy==1.16.6
-odoo-score==2.0.6
+odoo-score==1.0.1
 OdooRPC==0.9.0
 OERPLib==0.8.4
+oerplib3==0.8.4
 openerp==8.0
 openpyxl==2.6.4
 os0==2.0.1
@@ -104,7 +106,7 @@ python-dateutil==2.5.3
 python-ldap==2.4.19
 python-magic==0.4.27
 python-openid==2.2.5
-python-plus==2.0.9
+python-plus==2.0.11
 python-stdnum==1.18
 pytz==2023.3
 pyusb==1.1.0
@@ -147,11 +149,11 @@ websocket-client==0.59.0
 Werkzeug==0.9.6
 wheel==0.37.1
 whichcraft==0.6.1
-wok-code==2.0.10
+wok-code==2.0.12
 wrapt==1.15.0
 XlsxWriter==0.9.3
 xlwt==0.7.5
-z0bug-odoo==2.0.11
-z0lib==2.0.6
-zerobug==2.0.9
+z0bug-odoo==2.0.15
+z0lib==2.0.8
+zerobug==2.0.13
 zipp==1.2.0

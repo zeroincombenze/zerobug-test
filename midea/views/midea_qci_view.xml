@@ -35,10 +35,8 @@
     <record id="midea.action_qci" model="ir.actions.act_window">
         <field name="name">Quality Check Id</field>
         <field name="res_model">midea.qci</field>
-        <!-- <field name="view_mode">tree,form</field> -->
         <field name="view_id" ref="view_midea_tree"/>
     </record>
 
 </data>
 </openerp>
-
