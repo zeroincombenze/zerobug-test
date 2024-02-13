@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo (14.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-18 20:27+0000\n"
-"PO-Revision-Date: 2023-11-18 20:27+0000\n"
+"POT-Creation-Date: 2024-02-13 09:03+0000\n"
+"PO-Revision-Date: 2024-02-13 09:03+0000\n"
 "Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
 "Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
 "Language: it\n"
@@ -68,12 +68,12 @@ msgstr "Creato il"
 #. module: midea
 #: model:midea.qci,name:midea.pay_SCT
 msgid "Credit Transfer payment / Pagamento bonifico"
-msgstr ""
+msgstr "Pagamento con Bonifico / Pagamento bonifico"
 
 #. module: midea
 #: model:ir.ui.menu,name:midea.menu_midea_table
 msgid "Dev.Quality"
-msgstr ""
+msgstr "Dev.Qualità"
 
 #. module: midea
 #: model:ir.model.fields,field_description:midea.field_midea_qci__display_name
@@ -90,7 +90,7 @@ msgstr "Bozza"
 #. module: midea
 #: model:midea.qci,name:midea.einvo_ind
 msgid "E-invoice to individual / Fattura elettronica a privato"
-msgstr "E-invoice a individual / Fattura elettronica a privato"
+msgstr "E-fattura a persona / Fattura elettronica a privato"
 
 #. module: midea
 #: model:midea.qci,name:midea.einvo_stamp
@@ -123,7 +123,7 @@ msgstr ""
 #. module: midea
 #: model:midea.qci,name:midea.acc_uRB
 msgid "Insoluto RiBA"
-msgstr ""
+msgstr "Insoluto riba"
 
 #. module: midea
 #: model:midea.qci,name:midea.inv_asset
@@ -158,7 +158,7 @@ msgstr "Local come persona fisica (Italy) / Cliente italiano"
 #: model_terms:ir.ui.view,arch_db:midea.table_wco_form
 #: model_terms:ir.ui.view,arch_db:midea.view_midea_form
 msgid "Midea form"
-msgstr "Midea albero"
+msgstr "Modulo Midea"
 
 #. module: midea
 #: model_terms:ir.ui.view,arch_db:midea.table_wco_tree
@@ -168,12 +168,12 @@ msgstr "Midea predefinito"
 #. module: midea
 #: model:ir.ui.menu,name:midea.menu_midea_table_wco_test
 msgid "My idea test (with company)"
-msgstr "my idea test con azienda)"
+msgstr "My idea test con azienda)"
 
 #. module: midea
 #: model:ir.actions.act_window,name:midea.action_test_wco
 msgid "My idea test record"
-msgstr ""
+msgstr "My idea test documentazione"
 
 #. module: midea
 #: model:ir.model.fields,field_description:midea.field_midea_qci__name
@@ -183,7 +183,7 @@ msgstr "Nome"
 #. module: midea
 #: model:midea.qci,name:midea.acc_PA
 msgid "Partne is PA"
-msgstr ""
+msgstr "Il partner è PA"
 
 #. module: midea
 #: model:midea.qci,name:midea.pay_pt2
@@ -266,12 +266,12 @@ msgstr "ID controllo qualità"
 #. module: midea
 #: model:midea.qci,name:midea.acc_rc
 msgid "Reverse Charge"
-msgstr ""
+msgstr "Carica inversa"
 
 #. module: midea
 #: model:midea.qci,name:midea.pay_RB
 msgid "RiBA payment / Pagamento RiBA (IT)"
-msgstr ""
+msgstr "RiBA pagamento / Pagamento RiBA (IT)"
 
 #. module: midea
 #: model:midea.qci,name:midea.invo_eu
@@ -386,5 +386,5 @@ msgstr ""
 #. module: midea
 #: model:ir.model.fields,field_description:midea.field_midea_table_wco__name
 msgid "name"
-msgstr "nome"
+msgstr "Nome"
 

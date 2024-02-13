@@ -1,0 +1,160 @@
+2023-12-29 19:04:51,000 274665 DAEMON test_test_testenv_14 run_odoo_debug.sh: cd /home/odoo/14.0/venv_odoo && source ./bin/activate
+2023-12-29 18:04:56,765 276503 INFO ? odoo: Odoo version 14.0 
+2023-12-29 18:04:56,766 276503 INFO ? odoo: Using configuration file at /home/odoo/14.0/zerobug-test/test_testenv/tests/logs/zero14.zerobug-test.test_testenv.conf 
+2023-12-29 18:04:56,766 276503 INFO ? odoo: addons paths: ['/home/odoo/14.0/odoo/addons', '/home/odoo/14.0/venv_odoo/lib/python3.8/site-packages/odoo/addons', '/home/odoo/.local/share/Odoo14/addons/14.0', '/home/odoo/14.0/addons', '/home/odoo/.local/share/Odoo12/addons', '/home/odoo/14.0/account-analytic', '/home/odoo/14.0/account-budgeting', '/home/odoo/14.0/account-closing', '/home/odoo/14.0/account-financial-reporting', '/home/odoo/14.0/account-financial-tools', '/home/odoo/14.0/account-fiscal-rule', '/home/odoo/14.0/account-invoice-reporting', '/home/odoo/14.0/account-invoicing', '/home/odoo/14.0/account-payment', '/home/odoo/14.0/account-reconcile', '/home/odoo/14.0/apps-store', '/home/odoo/14.0/bank-payment', '/home/odoo/14.0/bank-statement-import', '/home/odoo/14.0/brand', '/home/odoo/14.0/business-requirement', '/home/odoo/14.0/calendar', '/home/odoo/14.0/commission', '/home/odoo/14.0/community-data-files', '/home/odoo/14.0/connector', '/home/odoo/14.0/contract', '/home/odoo/14.0/credit-control', '/home/odoo/14.0/crm', '/home/odoo/14.0/currency', '/home/odoo/14.0/data-protection', '/home/odoo/14.0/ddmrp', '/home/odoo/14.0/delivery-carrier', '/home/odoo/14.0/dms', '/home/odoo/14.0/e-commerce', '/home/odoo/14.0/edi', '/home/odoo/14.0/geospatial', '/home/odoo/14.0/helpdesk', '/home/odoo/14.0/hr', '/home/odoo/14.0/intrastat-extrastat', '/home/odoo/14.0/iot', '/home/odoo/14.0/knowledge', '/home/odoo/14.0/l10n-italy', '/home/odoo/14.0/l10n-italy-supplemental', '/home/odoo/14.0/maintenance', '/home/odoo/14.0/management-system', '/home/odoo/14.0/manufacture', '/home/odoo/14.0/manufacture-reporting', '/home/odoo/14.0/margin-analysis', '/home/odoo/14.0/mgmtsystem', '/home/odoo/14.0/mis-builder', '/home/odoo/14.0/mis-builder-contrib', '/home/odoo/14.0/multi-company', '/home/odoo/14.0/partner-contact', '/home/odoo/14.0/pos', '/home/odoo/14.0/product-attribute', '/home/odoo/14.0/product-pack', '/home/odoo/14.0/product-variant', '/home/odoo/14.0/project', '/home/odoo/14.0/project-agile', '/home/odoo/14.0/project-reporting', '/home/odoo/14.0/purchase-reporting', '/home/odoo/14.0/purchase-workflow', '/home/odoo/14.0/queue', '/home/odoo/14.0/report-print-send', '/home/odoo/14.0/reporting-engine', '/home/odoo/14.0/rma', '/home/odoo/14.0/sale-reporting', '/home/odoo/14.0/sale-workflow', '/home/odoo/14.0/search-engine', '/home/odoo/14.0/server-auth', '/home/odoo/14.0/server-backend', '/home/odoo/14.0/server-brand', '/home/odoo/14.0/server-env', '/home/odoo/14.0/server-tools', '/home/odoo/14.0/server-ux', '/home/odoo/14.0/social', '/home/odoo/14.0/stock-logistics-barcode', '/home/odoo/14.0/stock-logistics-reporting', '/home/odoo/14.0/stock-logistics-transport', '/home/odoo/14.0/stock-logistics-warehouse', '/home/odoo/14.0/stock-logistics-workflow', '/home/odoo/14.0/storage', '/home/odoo/14.0/timesheet', '/home/odoo/14.0/uncovered', '/home/odoo/14.0/web', '/home/odoo/14.0/website', '/home/odoo/14.0/website-cms', '/home/odoo/14.0/wms', '/home/odoo/14.0/zerobug-test'] 
+2023-12-29 18:04:56,766 276503 INFO ? odoo: database: odoo14@localhost:default 
+2023-12-29 18:04:56,970 276503 INFO ? odoo.addons.base.models.ir_actions_report: Will use the Wkhtmltopdf binary at /usr/local/bin/wkhtmltopdf 
+2023-12-29 18:04:57,066 276503 INFO ? odoo.service.server: HTTP service (werkzeug) running on nb200z0.:52088 
+2023-12-29 18:04:57,086 276503 INFO test_test_testenv_14 odoo.modules.loading: loading 1 modules... 
+2023-12-29 18:04:57,103 276503 INFO test_test_testenv_14 odoo.modules.loading: 1 modules loaded in 0.02s, 0 queries (+0 extra) 
+2023-12-29 18:04:57,232 276503 INFO test_test_testenv_14 odoo.modules.loading: updating modules list 
+2023-12-29 18:04:57,236 276503 INFO test_test_testenv_14 odoo.addons.base.models.ir_module: ALLOW access to module.update_list on [] to user __system__ #1 via n/a 
+2023-12-29 18:05:05,800 276503 INFO test_test_testenv_14 odoo.addons.base.models.ir_module: ALLOW access to module.button_install on ['testenv'] to user __system__ #1 via n/a 
+2023-12-29 18:05:05,901 276503 INFO test_test_testenv_14 odoo.addons.base.models.ir_module: python external dependency on 'past' does not appear to be a valid PyPI package. Using a PyPI package name is recommended. 
+2023-12-29 18:05:06,001 276503 INFO test_test_testenv_14 odoo.modules.loading: loading 43 modules... 
+2023-12-29 18:05:06,617 276503 INFO test_test_testenv_14 odoo.modules.loading: 43 modules loaded in 0.62s, 0 queries (+0 extra) 
+2023-12-29 18:05:06,624 276503 INFO test_test_testenv_14 odoo.modules.loading: loading 44 modules... 
+2023-12-29 18:05:06,624 276503 INFO test_test_testenv_14 odoo.modules.loading: Loading module test_testenv (44/44) 
+2023-12-29 18:05:07,041 276503 WARNING test_test_testenv_14 odoo.models: The model testenv.all.fields has no _description 
+2023-12-29 18:05:07,131 276503 INFO test_test_testenv_14 odoo.modules.registry: module test_testenv: creating or updating database tables 
+2023-12-29 18:05:07,208 276503 WARNING test_test_testenv_14 odoo.addons.base.models.ir_model: Two fields (measure, amount) of testenv.all.fields() have the same label: Amount. 
+2023-12-29 18:05:07,388 276503 INFO test_test_testenv_14 odoo.modules.loading: loading test_testenv/security/ir.model.access.csv 
+2023-12-29 18:05:07,432 276503 INFO test_test_testenv_14 odoo.modules.loading: loading test_testenv/views/testenv_model_view.xml 
+2023-12-29 18:05:07,515 276503 INFO test_test_testenv_14 odoo.modules.loading: loading test_testenv/wizard/wizard_example_menu.xml 
+2023-12-29 18:05:07,569 276503 WARNING test_test_testenv_14 odoo.modules.loading: Transient module states were reset 
+2023-12-29 18:05:07,570 276503 ERROR test_test_testenv_14 odoo.modules.registry: Failed to load registry 
+Traceback (most recent call last):
+  File "/home/odoo/14.0/odoo/tools/convert.py", line 677, in _tag_root
+    f(rec)
+  File "/home/odoo/14.0/odoo/tools/convert.py", line 580, in _tag_record
+    record = model._load_records([data], self.mode == 'update')
+  File "/home/odoo/14.0/odoo/models.py", line 4244, in _load_records
+    records = self._load_records_create([data['values'] for data in to_create])
+  File "/home/odoo/14.0/odoo/models.py", line 4160, in _load_records_create
+    return self.create(values)
+  File "<decorator-gen-48>", line 2, in create
+  File "/home/odoo/14.0/odoo/api.py", line 348, in _model_create_multi
+    return create(self, arg)
+  File "/home/odoo/14.0/odoo/addons/base/models/ir_actions.py", line 259, in create
+    return super(IrActionsActWindow, self).create(vals_list)
+  File "<decorator-gen-46>", line 2, in create
+  File "/home/odoo/14.0/odoo/api.py", line 348, in _model_create_multi
+    return create(self, arg)
+  File "/home/odoo/14.0/odoo/addons/base/models/ir_actions.py", line 47, in create
+    res = super(IrActions, self).create(vals_list)
+  File "<decorator-gen-65>", line 2, in create
+  File "/home/odoo/14.0/odoo/api.py", line 348, in _model_create_multi
+    return create(self, arg)
+  File "/home/odoo/14.0/odoo/addons/base/models/ir_fields.py", line 534, in create
+    recs = super().create(vals_list)
+  File "<decorator-gen-13>", line 2, in create
+  File "/home/odoo/14.0/odoo/api.py", line 348, in _model_create_multi
+    return create(self, arg)
+  File "/home/odoo/14.0/odoo/models.py", line 3846, in create
+    raise ValueError("Invalid field %r on model %r" % (key, self._name))
+ValueError: Invalid field 'view_type' on model 'ir.actions.act_window'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/odoo/14.0/odoo/modules/registry.py", line 89, in new
+    odoo.modules.load_modules(registry._db, force_demo, status, update_module)
+  File "/home/odoo/14.0/odoo/modules/loading.py", line 459, in load_modules
+    processed_modules += load_marked_modules(cr, graph,
+  File "/home/odoo/14.0/odoo/modules/loading.py", line 347, in load_marked_modules
+    loaded, processed = load_module_graph(
+  File "/home/odoo/14.0/odoo/modules/loading.py", line 222, in load_module_graph
+    load_data(cr, idref, mode, kind='data', package=package)
+  File "/home/odoo/14.0/odoo/modules/loading.py", line 69, in load_data
+    tools.convert_file(cr, package.name, filename, idref, mode, noupdate, kind)
+  File "/home/odoo/14.0/odoo/tools/convert.py", line 733, in convert_file
+    convert_xml_import(cr, module, fp, idref, mode, noupdate)
+  File "/home/odoo/14.0/odoo/tools/convert.py", line 799, in convert_xml_import
+    obj.parse(doc.getroot())
+  File "/home/odoo/14.0/odoo/tools/convert.py", line 719, in parse
+    self._tag_root(de)
+  File "/home/odoo/14.0/odoo/tools/convert.py", line 681, in _tag_root
+    raise ParseError('while parsing %s:%s, near\n%s' % (
+odoo.tools.convert.ParseError: while parsing /home/odoo/14.0/zerobug-test/test_testenv/wizard/wizard_example_menu.xml:42, near
+<record id="action_generate_random_example_records" model="ir.actions.act_window">
+        <field name="name">Generate random example records</field>
+        <field name="res_model">wizard.example.menu</field>
+        <!-- <field name="src_model">testenv.all.fields</field> -->
+        <field name="view_id" ref="wizard_example_menu_view"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+2023-12-29 18:05:07,572 276503 CRITICAL test_test_testenv_14 odoo.service.server: Failed to initialize database `test_test_testenv_14`. 
+Traceback (most recent call last):
+  File "/home/odoo/14.0/odoo/tools/convert.py", line 677, in _tag_root
+    f(rec)
+  File "/home/odoo/14.0/odoo/tools/convert.py", line 580, in _tag_record
+    record = model._load_records([data], self.mode == 'update')
+  File "/home/odoo/14.0/odoo/models.py", line 4244, in _load_records
+    records = self._load_records_create([data['values'] for data in to_create])
+  File "/home/odoo/14.0/odoo/models.py", line 4160, in _load_records_create
+    return self.create(values)
+  File "<decorator-gen-48>", line 2, in create
+  File "/home/odoo/14.0/odoo/api.py", line 348, in _model_create_multi
+    return create(self, arg)
+  File "/home/odoo/14.0/odoo/addons/base/models/ir_actions.py", line 259, in create
+    return super(IrActionsActWindow, self).create(vals_list)
+  File "<decorator-gen-46>", line 2, in create
+  File "/home/odoo/14.0/odoo/api.py", line 348, in _model_create_multi
+    return create(self, arg)
+  File "/home/odoo/14.0/odoo/addons/base/models/ir_actions.py", line 47, in create
+    res = super(IrActions, self).create(vals_list)
+  File "<decorator-gen-65>", line 2, in create
+  File "/home/odoo/14.0/odoo/api.py", line 348, in _model_create_multi
+    return create(self, arg)
+  File "/home/odoo/14.0/odoo/addons/base/models/ir_fields.py", line 534, in create
+    recs = super().create(vals_list)
+  File "<decorator-gen-13>", line 2, in create
+  File "/home/odoo/14.0/odoo/api.py", line 348, in _model_create_multi
+    return create(self, arg)
+  File "/home/odoo/14.0/odoo/models.py", line 3846, in create
+    raise ValueError("Invalid field %r on model %r" % (key, self._name))
+ValueError: Invalid field 'view_type' on model 'ir.actions.act_window'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/odoo/14.0/odoo/service/server.py", line 1201, in preload_registries
+    registry = Registry.new(dbname, update_module=update_module)
+  File "/home/odoo/14.0/odoo/modules/registry.py", line 89, in new
+    odoo.modules.load_modules(registry._db, force_demo, status, update_module)
+  File "/home/odoo/14.0/odoo/modules/loading.py", line 459, in load_modules
+    processed_modules += load_marked_modules(cr, graph,
+  File "/home/odoo/14.0/odoo/modules/loading.py", line 347, in load_marked_modules
+    loaded, processed = load_module_graph(
+  File "/home/odoo/14.0/odoo/modules/loading.py", line 222, in load_module_graph
+    load_data(cr, idref, mode, kind='data', package=package)
+  File "/home/odoo/14.0/odoo/modules/loading.py", line 69, in load_data
+    tools.convert_file(cr, package.name, filename, idref, mode, noupdate, kind)
+  File "/home/odoo/14.0/odoo/tools/convert.py", line 733, in convert_file
+    convert_xml_import(cr, module, fp, idref, mode, noupdate)
+  File "/home/odoo/14.0/odoo/tools/convert.py", line 799, in convert_xml_import
+    obj.parse(doc.getroot())
+  File "/home/odoo/14.0/odoo/tools/convert.py", line 719, in parse
+    self._tag_root(de)
+  File "/home/odoo/14.0/odoo/tools/convert.py", line 681, in _tag_root
+    raise ParseError('while parsing %s:%s, near\n%s' % (
+odoo.tools.convert.ParseError: while parsing /home/odoo/14.0/zerobug-test/test_testenv/wizard/wizard_example_menu.xml:42, near
+<record id="action_generate_random_example_records" model="ir.actions.act_window">
+        <field name="name">Generate random example records</field>
+        <field name="res_model">wizard.example.menu</field>
+        <!-- <field name="src_model">testenv.all.fields</field> -->
+        <field name="view_id" ref="wizard_example_menu_view"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+2023-12-29 18:05:07,572 276503 INFO test_test_testenv_14 odoo.service.server: Initiating shutdown 
+2023-12-29 18:05:07,573 276503 INFO test_test_testenv_14 odoo.service.server: Hit CTRL-C again or send a second signal to force the shutdown. 
+2023-12-29 18:05:07,605 276503 INFO test_test_testenv_14 odoo.sql_db: ConnectionPool(used=0/count=0/max=128): Closed 1 connections  
+
++===================================================================
+| please test [36mtest_testenv[0m (14.0): [31mFAILED![0m
++===================================================================
+

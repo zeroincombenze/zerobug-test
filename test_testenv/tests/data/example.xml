@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="test_testenv.testenv_all_fields_action" model="ir.actions.act_window">
+        <field name="name">Example</field>
+        <field name="res_model">testenv.all.fields</field>
+    </record>
+
+</odoo>
