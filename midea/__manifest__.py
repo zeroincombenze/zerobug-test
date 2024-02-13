@@ -1,5 +1,5 @@
 #
-# Copyright 2018-24 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
+# Copyright 2019-24 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -8,7 +8,7 @@
 #
 {
     "name": "midea",
-    "version": "12.0.0.1.7",
+    "version": "13.0.0.1.7",
     "category": "Generic Modules/Accounting",
     "summary": "z0bug_odoo test suite",
     "author": "SHS-AV s.r.l.",
