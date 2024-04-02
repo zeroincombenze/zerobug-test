@@ -1,3 +1,9 @@
+12.0.0.7.7 (2024-02-29)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Search for records that match company or w/o company
+* [IMP] Pypi packages version checked by _check4deps
+
 12.0.0.7.6 (2022-11-11)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -115,3 +121,4 @@
 ~~~~~~~~~~~~~~~~~~~~~
 
 * [REF] Refactoring
+* [QUA] Test coverage 43% (3059: 1734+1325) [36 TestPoints] - quality rating 28 (target 100)

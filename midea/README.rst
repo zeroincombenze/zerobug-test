@@ -139,7 +139,7 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History | Cronologia modifiche
 ----------------------------------------
 
-12.0.0.1.8 (2024-02-09)
+12.0.0.1.8 (2024-03-01)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Code migrated or backported with arcangelo
@@ -205,7 +205,7 @@ La distribuzione `Zeroincombenze® <https://www.zeroincombenze.it/>`__ è proget
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2024-02-11
+Last Update / Ultimo aggiornamento: 2024-03-07
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status

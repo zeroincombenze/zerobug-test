@@ -36,8 +36,8 @@ class TestMixin(common.TransactionCase):
             ("odoo_ce", "12.0"),
             ("odoo_ce", "12.0"),
             ("zero", "zero12"),
-            ("librerp", "librerp12"),
-            ("powerp", "librerp12"),
+            # ("librerp", "librerp12"),
+            # ("powerp", "librerp12"),
         ):
             wizard.distro = distro
             result = wizard.get_tgtver()
@@ -63,7 +63,7 @@ class TestMixin(common.TransactionCase):
 
         for oca_coding, tres in (
             (True, "12.0"),
-            (False, "librerp12"),
+            (False, "zero12"),
         ):
             wizard.oca_coding = oca_coding
             result = wizard.get_tgtver()

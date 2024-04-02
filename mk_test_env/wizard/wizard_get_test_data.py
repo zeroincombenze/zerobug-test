@@ -20,9 +20,9 @@ except ImportError:
         release = ""
 # from .mixin import BaseTestMixin
 
-import python_plus
+from python_plus import compute_date, str2bool
 # from clodoo import transodoo
-from os0 import os0
+# from os0 import os0
 from z0bug_odoo import z0bug_odoo_lib
 
 VERSION_ERROR = 'Invalid package version! Use: pip install "%s>=%s" -U'
@@ -51,13 +51,13 @@ class WizardGetTestData(models.TransientModel):
                 continue
             ftype = self.struct[resource][field]["type"]
             if ftype == "boolean":
-                vals[field] = os0.str2bool(vals[field], False)
+                vals[field] = str2bool(vals[field], False)
             elif ftype in ("float", "monetary") and isinstance(
                 vals[field], basestring
             ):
                 vals[field] = eval(vals[field])
             elif ftype in ("date", "datetime"):
-                vals[field] = python_plus.compute_date(vals[field])
+                vals[field] = compute_date(vals[field])
             elif (
                 ftype in ("many2one", "one2many", "many2many", "integer")
                 and isinstance(vals[field], basestring)
@@ -70,26 +70,26 @@ class WizardGetTestData(models.TransientModel):
                 vals[field] = int(vals[field])
         return vals
 
-    def diff_ver(self, min_version, module, comp):
-        text_module_ver = "0"
-        for ver_name in ("__version__", "version"):
-            if hasattr(globals()[comp], ver_name):
-                text_module_ver = ".".join(
-                    [
-                        "%03d" % int(x)
-                        for x in getattr(globals()[comp], ver_name).split(".")
-                    ]
-                )
-                break
-        text_min_ver = ".".join(["%03d" % int(x) for x in min_version.split(".")])
-        if text_module_ver < text_min_ver:
-            raise UserError(VERSION_ERROR % (module, min_version))
+    # def diff_ver(self, min_version, module, comp):
+    #     text_module_ver = "0"
+    #     for ver_name in ("__version__", "version"):
+    #         if hasattr(globals()[comp], ver_name):
+    #             text_module_ver = ".".join(
+    #                 [
+    #                     "%03d" % int(x)
+    #                     for x in getattr(globals()[comp], ver_name).split(".")
+    #                 ]
+    #             )
+    #             break
+    #     text_min_ver = ".".join(["%03d" % int(x) for x in min_version.split(".")])
+    #     if text_module_ver < text_min_ver:
+    #         raise UserError(VERSION_ERROR % (module, min_version))
 
     def make_test_pyfile(self):
-        self.diff_ver("2.0.0", "z0bug_odoo", "z0bug_odoo_lib")
-        # self.diff_ver("2.0.0", "clodoo", "transodoo")
-        self.diff_ver("2.0.0", "os0", "os0")
-        self.diff_ver("2.0.0", "python_plus", "python_plus")
+        # self.diff_ver("2.0.0", "z0bug_odoo", "z0bug_odoo_lib")
+        # # self.diff_ver("2.0.0", "clodoo", "transodoo")
+        # self.diff_ver("2.0.0", "os0", "os0")
+        # self.diff_ver("2.0.0", "python_plus", "python_plus")
 
         if not self.model2export:
             raise UserError("Missed model to export")
