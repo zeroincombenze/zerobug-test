@@ -162,7 +162,7 @@ tzlocal==2.1
 unicodecsv==0.14.1
 Unidecode==1.2.0
 unittest2==0.5.1
-urllib3==1.25.11
+urllib3==1.26.18
 urllib3-secure-extra==0.1.0
 vatnumber==1.2
 vcrpy==3.0.0
