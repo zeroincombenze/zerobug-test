@@ -172,7 +172,7 @@ vobject==0.9.3
 wcwidth==0.2.13
 weboob==1.5
 websocket-client==0.59.0
-Werkzeug==0.11.11
+Werkzeug==3.0.3
 wheel==0.37.1
 whichcraft==0.6.1
 wrapt==1.15.0
