@@ -138,7 +138,7 @@ QUnitSuite==0.4
 raven==6.10.0
 regex==2021.11.10
 reportlab==3.3.0
-requests==2.27.1
+requests==2.32.0
 requests-toolbelt==1.0.0
 responses==0.17.0
 restructuredtext-lint==1.1.0
