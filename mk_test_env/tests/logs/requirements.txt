@@ -22,7 +22,7 @@ configparser==4.0.2
 contextlib2==0.6.0.post1
 cookies==2.2.1
 coverage==5.5
-cryptography==3.3.2
+cryptography==42.0.4
 cssselect==1.1.0
 cssutils==1.0.2
 dateparser==0.7.6
