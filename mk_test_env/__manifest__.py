@@ -10,7 +10,7 @@
 {
     "name": "Manage Test Environment",
     "summary": "Create or update test environment",
-    "version": "10.0.0.7.6",
+    "version": "10.0.0.7.7",
     "category": "Tools",
     "author": "SHS-AV s.r.l.",
     "website": "https://github.com/OCA/l10n-italy",
@@ -21,6 +21,7 @@
     ],
     "external_dependencies": {
         "python": [
+            "clodoo",
             "zerobug",
             "z0bug_odoo",
             "os0",
@@ -29,6 +30,13 @@
             "past",  # TODO: pylint bug, it is to remove
         ],
     },
+    "version_external_dependencies": [
+        "clodoo>=2.0.9",
+        "zerobug>=2.0.14",
+        "z0bug_odoo>=2.0.17",
+        "os0>2.0.0",
+        "python_plus>=2.0.12"
+    ],
     "data": [
         # 'security/ir.model.access.csv',
         "views/menu.xml",
@@ -36,8 +44,8 @@
         "wizard/wizard_mk_test_pyfile_view.xml",
         "wizard/wizard_get_test_data_view.xml",
     ],
-    ## "qweb": ["static/src/xml/example.xml"],
     "installable": True,
     "maintainer": "Zeroincombenze (R)",
     "development_status": "Beta",
+    "pre_init_hook": "check_4_depending",
 }

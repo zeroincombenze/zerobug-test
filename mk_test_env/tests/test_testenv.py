@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os
+# import os
 import logging
 from .testenv import MainTest as SingleTransactionCase
 
@@ -32,10 +32,6 @@ TEST_PRODUCT_TEMPLATE = {
         "standard_price": 0.42,
         "categ_id": "product.product_category_1",
         "type": "consu",
-        # "taxes_id": "z0bug.tax_22v",
-        # "supplier_taxes_id": "z0bug.tax_22a",
-        # "property_account_income_id": "z0bug.coa_510000",
-        # "property_account_expense_id": "z0bug.coa_610100",
         "uom_id": "product.product_uom_unit",
         "uom_po_id": "product.product_uom_unit",
         "weight": 0.1,
@@ -99,14 +95,11 @@ class MyTest(SingleTransactionCase):
     def setUp(self):
         super(MyTest, self).setUp()
         self.debug_level = 0
+        self.odoo_commit_test = False
         self.iso_code = "it_IT"
 
     def tearDown(self):
         super(MyTest, self).tearDown()
-        if os.environ.get("ODOO_COMMIT_TEST", ""):
-            # Save test environment, so it is available to use
-            self.env.cr.commit()  # pylint: disable=invalid-commit
-            _logger.info("✨ Test data committed")
 
     def _test_00(self):
         # ===[Initial tests]===
@@ -122,19 +115,27 @@ class MyTest(SingleTransactionCase):
                 "z0bug.res_partner_1": {
                     "name": "Prima Alpha S.p.A.",
                     "color": 1,
+                    "not_exist_field": "INVALID",
+                    "street": None,
                 },
-            }
+            },
         )
         self.assertEqual(
             self.get_resource_list(),
-            ["res.partner"]
+            ["res.partner"],
+            "declare_resource_data() FAILED: 'res.partner' not found in resource list!",
         )
         self.assertEqual(
             self.get_resource_data_list("res.partner"),
-            ["z0bug.res_partner_1"]
+            ["z0bug.res_partner_1"],
+            (
+                "declare_resource_data() FAILED: "
+                "'z0bug.res_partner_1' xref not found in 'res.partner' data!"
+            ),
         )
         self.assertTrue(
             self.get_resource_data("res.partner", "z0bug.res_partner_1"),
+            "get_resource_data() FAILED: no value found for 'z0bug.res_partner_1'!",
         )
         self.assertEqual(
             self.get_resource_data("res.partner", "z0bug.res_partner_1")["name"],
@@ -218,18 +219,18 @@ class MyTest(SingleTransactionCase):
         model = "res.currency"
         # The resource_write activates the child record of res.currency.rate
         self.resource_write(model, "base.EUR", {"active": True})
-        self.assertTrue(self.resource_bind("base.EUR").active)
+        self.assertTrue(self.resource_browse("base.EUR").active)
         model = "res.currency.rate"
         rate_date = self.compute_date("####-12-30")
         xref = "base.EUR_%s" % rate_date
         self.assertEqual(
-            self.resource_bind(xref, resource=model).rate,
+            self.resource_browse(xref, resource=model).rate,
             0.9
         )
         rate_date = self.compute_date("+1", refdate=rate_date)
         xref = "base.EUR_%s" % rate_date
         self.assertEqual(
-            self.resource_bind(xref, resource=model).rate,
+            self.resource_browse(xref, resource=model).rate,
             0.95
         )
         rate_date = self.compute_date("+1", refdate=rate_date)
@@ -242,7 +243,7 @@ class MyTest(SingleTransactionCase):
                                "rate": "0.88",
                                "company_id": ""
                            })
-        record = self.resource_bind(xref, resource=model)
+        record = self.resource_browse(xref, resource=model)
         self.assertTrue(record)
         self.assertEqual(record.rate, 0.88)
 
@@ -254,13 +255,14 @@ class MyTest(SingleTransactionCase):
             data[item] = globals()[item]
         self.declare_all_data(data, merge="zerobug")
         self.assertEqual(
-            self.get_resource_data("res.partner.bank",
-                                   "z0bug.bank_company_1")["acc_number"].replace(" ", ""),
+            self.get_resource_data(
+                "res.partner.bank",
+                "z0bug.bank_company_1")["acc_number"].replace(" ", ""),
             "IT15A0123412345100000123456"
         )
         self.setup_env()
         self.assertEqual(
-            self.resource_bind("z0bug.bank_company_1").acc_number.replace(" ", ""),
+            self.resource_browse("z0bug.bank_company_1").acc_number.replace(" ", ""),
             "IT15A0123412345100000123456"
         )
 
@@ -276,9 +278,9 @@ class MyTest(SingleTransactionCase):
                             {
                                 "rate_ids":
                                     [(6, 0, [
-                                        self.resource_bind(
+                                        self.resource_browse(
                                             xref, resource="res.currency.rate").id,
-                                        self.resource_bind(
+                                        self.resource_browse(
                                             xref2, resource="res.currency.rate").id,
                                     ])]
                             })
@@ -287,9 +289,9 @@ class MyTest(SingleTransactionCase):
                             {
                                 "rate_ids":
                                     [
-                                        self.resource_bind(
+                                        self.resource_browse(
                                             xref, resource="res.currency.rate").id,
-                                        self.resource_bind(
+                                        self.resource_browse(
                                             xref2, resource="res.currency.rate").id,
                                     ]
                             })
@@ -312,7 +314,7 @@ class MyTest(SingleTransactionCase):
         # *xmany as integer
         self.resource_write(model, "base.EUR",
                             {
-                                "rate_ids": self.resource_bind(
+                                "rate_ids": self.resource_browse(
                                     xref, resource="res.currency.rate").id
                             })
 

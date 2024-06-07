@@ -15,9 +15,9 @@ from datetime import date, datetime
 from distutils.version import StrictVersion
 import logging
 import pytz
-import python_plus
+from python_plus import compute_date, str2bool
 from clodoo import transodoo
-from os0 import os0
+# from os0 import os0
 from z0bug_odoo import z0bug_odoo_lib
 try:
     from odoo_score.odoo_score import __version__ as odoo_score_version
@@ -553,7 +553,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
             toks = [self.translate(model, x, ttype="value", fld_name=by) for x in toks]
             if model == "account.account":
                 if hasattr(self.company_id, "chart_template_id"):
-                    code_digits = self.company_id.chart_template_id.code_digits
+                    code_digits = self.company_id.chart_template_id.code_digits or 6
                 else:
                     code_digits = 6
                 toks = [(x + ("0" * code_digits))[:code_digits] for x in toks]
@@ -658,7 +658,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                     if len(name.split(".")) == 2:
                         m = name.replace(".", "__")
                         expr = expr.replace(name, m)
-                        T[m] = os0.str2bool(self.env_ref(name), False)
+                        T[m] = str2bool(self.env_ref(name), False)
                 else:
                     T[name] = self.is_to_apply(name)
             except AttributeError:
@@ -959,11 +959,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
             if parent_id and parent_name in self.STRUCT[model]:
                 domain.append((parent_name, "=", parent_id))
             if "company_id" in self.STRUCT[model]:
+                domain.append(("|"))
                 domain.append(("company_id", "=", company_id))
+                domain.append(("company_id", "=", False))
             recs = self.env[model].with_context({"lang": "en_US"}).search(domain)
-            if not recs and model == "product.product":
-                del domain[-1]
-                recs = self.env[model].with_context({"lang": "en_US"}).search(domain)
+            # if not recs and model == "product.product":
+            #     del domain[-1]
+            #     recs = self.env[model].with_context({"lang": "en_US"}).search(domain)
             if len(recs) == 1:
                 return recs[0] if retrec else recs[0].id
         return False
@@ -989,13 +991,13 @@ class WizardMakeTestEnvironment(models.TransientModel):
 
         def cast_type(field, attrs, vals):
             if attrs["type"] == "boolean":
-                vals[field] = os0.str2bool(vals[field], False)
+                vals[field] = str2bool(vals[field], False)
             elif attrs["type"] in ("float", "monetary") and isinstance(
                 vals[field], basestring
             ):
                 vals[field] = eval(vals[field])
             elif attrs["type"] in ("date", "datetime"):
-                vals[field] = python_plus.compute_date(vals[field])
+                vals[field] = compute_date(vals[field])
                 if (
                     field == "date"
                     and vals[field]
@@ -1052,7 +1054,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
         parent_name = ""
         multi_model = parent_id and parent_name
         if hasattr(self.company_id, "chart_template_id"):
-            code_digits = self.company_id.chart_template_id.code_digits
+            code_digits = self.company_id.chart_template_id.code_digits or 6
         else:
             code_digits = 6
         for field in vals.copy().keys():
@@ -1220,7 +1222,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 elif attrs["type"] == "boolean":
                     if isinstance(vals[field], bool) and vals[field] == rec[field]:
                         del vals[field]
-                    elif os0.str2bool(vals[field], False) == rec[field]:
+                    elif str2bool(vals[field], False) == rec[field]:
                         del vals[field]
                 elif isinstance(vals[field], float) and round(vals[field], 3) == round(
                     rec[field], 3
@@ -1283,7 +1285,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 self.status_mesg += mesg
         except BaseException as e:
             self._cr.rollback()  # pylint: disable=invalid-commit
-            self.status_mesg += "*** Record %s: error %s!!!\n" % (xref, e)
+            self.status_mesg += ("*** Record %s: error %s!!!\n" % (xref, e))
             xid = False
         return xid
 
@@ -1492,7 +1494,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
     @api.model
     def make_misc(self):
         def setup_group(key, value, cur_value):
-            v = os0.str2bool(value, None)
+            v = str2bool(value, None)
             if v is not None:
                 value = v
             res = cur_value or []
@@ -1778,7 +1780,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 ]
             else:
                 if not self._feature_2_install("load_rc"):
-                    for name in ("description", "kind_id", "rc_type", "rc_sale_tax_id"):
+                    for name in ("description", "kind_id", "rc", "rc_type",
+                                 "rc_sale_tax_id"):
                         name = self.translate(model, name, ttype="field")
                         only_fields.append(name)
                 if not self._feature_2_install("load_sp"):
@@ -1883,26 +1886,26 @@ class WizardMakeTestEnvironment(models.TransientModel):
             except BaseException:
                 self.status_mesg += 'Cannot translate "%s"!!!\n' % iso
 
-    def diff_ver(self, min_version, module, comp):
-        text_module_ver = "0"
-        for ver_name in ("__version__", "version"):
-            if hasattr(globals()[comp], ver_name):
-                text_module_ver = ".".join(
-                    [
-                        "%03d" % int(x)
-                        for x in getattr(globals()[comp], ver_name).split(".")
-                    ]
-                )
-                break
-        text_min_ver = ".".join(["%03d" % int(x) for x in min_version.split(".")])
-        if text_module_ver < text_min_ver:
-            raise UserError(VERSION_ERROR % (module, min_version))
+    # def diff_ver(self, min_version, module, comp):
+    #     text_module_ver = "0"
+    #     for ver_name in ("__version__", "version"):
+    #         if hasattr(globals()[comp], ver_name):
+    #             text_module_ver = ".".join(
+    #                 [
+    #                     "%03d" % int(x)
+    #                     for x in getattr(globals()[comp], ver_name).split(".")
+    #                 ]
+    #             )
+    #             break
+    #     text_min_ver = ".".join(["%03d" % int(x) for x in min_version.split(".")])
+    #     if text_module_ver < text_min_ver:
+    #         raise UserError(VERSION_ERROR % (module, min_version))
 
     def make_test_environment(self):
-        self.diff_ver("2.0.0", "z0bug_odoo", "z0bug_odoo_lib")
-        self.diff_ver("2.0.0", "clodoo", "transodoo")
-        self.diff_ver("2.0.0", "os0", "os0")
-        self.diff_ver("2.0.0", "python_plus", "python_plus")
+        # self.diff_ver("2.0.0", "z0bug_odoo", "z0bug_odoo_lib")
+        # self.diff_ver("2.0.0", "clodoo", "transodoo")
+        # self.diff_ver("2.0.0", "os0", "os0")
+        # self.diff_ver("2.0.0", "python_plus", "python_plus")
 
         # Block 0: TODO> Separate function
         self.ctr_rec_new = 0

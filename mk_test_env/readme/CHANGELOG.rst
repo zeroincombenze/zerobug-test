@@ -1,4 +1,10 @@
-10.0.0.7.6 (2022-11-11)
+10.0.0.7.7 (2024-02-29)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Search for records that match company or w/o company
+* [IMP] Pypi packages version checked by _check4deps
+
+12.0.0.7.6 (2022-11-11)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [REF] Using odoo_score instead of odoo
