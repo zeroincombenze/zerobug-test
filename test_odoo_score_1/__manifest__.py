@@ -9,7 +9,7 @@
 {
     "name": "Test Odoo score",
     "summary": "odoo_score test suite",
-    "version": "1.0.2.0.6",
+    "version": "12.0.2.0.6",
     "category": "Generic Modules/Accounting",
     "author": "SHS-AV s.r.l.",
     "website": "https://github.com/OCA/l10n-italy",

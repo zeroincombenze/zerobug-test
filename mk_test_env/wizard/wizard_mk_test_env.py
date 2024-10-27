@@ -1778,7 +1778,8 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 ]
             else:
                 if not self._feature_2_install("load_rc"):
-                    for name in ("description", "kind_id", "rc_type", "rc_sale_tax_id"):
+                    for name in ("description", "kind_id", "rc", "rc_type",
+                                 "rc_sale_tax_id"):
                         name = self.translate(model, name, ttype="field")
                         only_fields.append(name)
                 if not self._feature_2_install("load_sp"):
