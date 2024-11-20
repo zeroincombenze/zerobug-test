@@ -159,7 +159,7 @@ smmap2==3.0.1
 soupsieve==1.9.6
 SQLAlchemy==1.4.46
 suds-jurko==0.6
-tqdm==4.64.1
+tqdm==4.66.3
 transaction==3.0.1
 twine==1.15.0
 typing==3.10.0.0
