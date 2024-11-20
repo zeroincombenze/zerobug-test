@@ -72,7 +72,7 @@ isodate==0.6.1
 isort==4.3.4
 jaraco.classes==3.2.3
 jeepney==0.8.0
-Jinja2==2.10.1
+Jinja2==3.1.4
 jmespath==1.0.1
 josepy==1.13.0
 jsonlib-python3==1.6.1
