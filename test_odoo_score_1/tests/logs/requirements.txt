@@ -177,7 +177,7 @@ webencodings==0.5.1
 WebOb==1.8.7
 websocket-client==0.59.0
 WebTest==2.0.35
-Werkzeug==0.11.11
+Werkzeug==3.0.3
 wheel==0.37.1
 whichcraft==0.6.1
 wok-code==2.0.8
