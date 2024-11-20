@@ -236,7 +236,7 @@ vobject==0.9.3
 webcolors==1.13
 webencodings==0.5.1
 websocket-client==1.6.1
-Werkzeug==0.14.1
+Werkzeug==3.0.3
 wheel==0.40.0
 whichcraft==0.6.1
 wok-code==2.0.12
