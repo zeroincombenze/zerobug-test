@@ -61,7 +61,7 @@ jmespath==0.10.0
 josepy==1.6.0
 jsonlib==1.6.1
 lazy-object-proxy==1.6.0
-lxml==3.6.4
+lxml==4.9.1
 Mako==1.1.6
 MarkupSafe==0.23
 mccabe==0.6.1
