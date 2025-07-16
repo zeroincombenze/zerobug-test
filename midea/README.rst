@@ -1,8 +1,8 @@
 =============================
-|icon| midea/Midea 12.0.0.1.7
+|icon| midea/Midea 12.0.0.1.9
 =============================
 
-**z0bug_odoo test suite**
+**Migration and backporting test suite**
 
 .. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/12.0/midea/static/description/icon.png
 
@@ -139,22 +139,24 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History | Cronologia modifiche
 ----------------------------------------
 
-12.0.0.1.8 (2024-03-01)
+12.0.0.1.9 (2025-07-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Code migrated or backported with arcangelo
-* [QUA] Test coverage 100% (14: 0+14) [16 TestPoints] - quality rating 243 (target 100)
+* [IMP] New fields added to test migration and back porting
+* [QUA] Test coverage 100% (58: 0+58) [43 TestPoints] - quality rating 101 (target 100)
+
+12.0.0.1.8 (2024-03-07)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Code migrated or backported with arcangelo
+* [QUA] Test coverage 100% (14: 0+14) [30 TestPoints] - quality rating 403 (target 100)
 
 12.0.0.1.7 (2023-11-17)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Tests upgrade
 * [QUA] Test coverage 100% (14: 0+14) [14 TestPoint]
-
-12.0.0.1.6 (2022-11-11)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* [REF] Experimental use of odoo_score for odoo
 
 
 
@@ -205,7 +207,7 @@ La distribuzione `Zeroincombenze® <https://www.zeroincombenze.it/>`__ è proget
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2024-03-07
+Last Update / Ultimo aggiornamento: 2025-07-19
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record model="midea.table_wco" id="example_a">
+        <field name="name">Example A</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+    <record model="midea.table_wco" id="example_b">
+        <field name="name">Example B</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>

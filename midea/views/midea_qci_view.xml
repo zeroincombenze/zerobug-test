@@ -7,6 +7,7 @@
         <field name="priority" eval="16"/>
         <field name="arch" type="xml">
             <tree string="Quality Check Id">
+                <field name="sequence" widget="handle"/>
                 <field name="code"/>
                 <field name="name"/>
                 <field name="active"/>
@@ -24,8 +25,18 @@
                 <group>
                     <field name="code"/>
                     <field name="name"/>
+                    <field name="measure"/>
+                    <field name="measured_ts"/>
                     <field name="active"/>
                     <field name="state"/>
+                    <field name="sequence"/>
+                </group>
+                <group>
+                    <field name="product_ids" widget="many2many_tags"/>
+                </group>
+                <group>
+                    <field name="attachment"/>
+                    <field name="note"/>
                 </group>
             </form>
         </field>

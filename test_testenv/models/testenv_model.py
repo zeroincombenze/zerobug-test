@@ -68,7 +68,7 @@ class TestenvAllFields(models.Model):
         default=_default_created_dt,
         help="Datetime field")
     updated_dt = fields.Datetime(string='Delivery timestamp', help="Datetime field")
-    attachment = fields.Binary("Attachemnt")
+    attachment = fields.Binary("Attachment")
     webpage = fields.Html("Html")
     partner_ids = fields.One2many(
         comodel_name="res.partner",
