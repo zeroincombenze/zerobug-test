@@ -152,7 +152,7 @@ def _selection_coa(self):
         ]
         countries.insert(0, "l10n_it_nocoa")
         countries.insert(0, "l10n_it_coa")
-        countries.insert(0, "l10n_it_fiscal")
+        # countries.insert(0, "l10n_it_fiscal")
         for module in self.env["ir.module.module"].search(
             [("name", "in", countries), ("state", "!=", "uninstallable")], order="name"
         ):
@@ -654,7 +654,7 @@ class WizardMakeTestEnvironment(models.TransientModel):
                 ix = expr.find(name)
                 x = re.match(r"[-\w]+\.[-\w]+", expr[ix:])
                 if x:
-                    name = expr[ix : x.end()]
+                    name = expr[ix: x.end()]
                     if len(name.split(".")) == 2:
                         m = name.replace(".", "__")
                         expr = expr.replace(name, m)

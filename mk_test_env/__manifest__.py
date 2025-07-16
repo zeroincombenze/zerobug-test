@@ -10,7 +10,7 @@
 {
     "name": "Manage Test Environment",
     "summary": "Create or update test environment",
-    "version": "10.0.0.7.7",
+    "version": "10.0.0.7.8",
     "category": "Tools",
     "author": "SHS-AV s.r.l.",
     "website": "https://github.com/OCA/l10n-italy",
@@ -24,18 +24,18 @@
             "clodoo",
             "zerobug",
             "z0bug_odoo",
-            "os0",
+            # "os0",
             "future",
             "python_plus",
             "past",  # TODO: pylint bug, it is to remove
         ],
     },
     "version_external_dependencies": [
-        "clodoo>=2.0.9",
-        "zerobug>=2.0.14",
-        "z0bug_odoo>=2.0.17",
-        "os0>2.0.0",
-        "python_plus>=2.0.12"
+        "clodoo>=2.0.14",
+        "zerobug>=2.0.19",
+        "z0bug_odoo>=2.0.21",
+        # "os0>2.0.0",
+        "python_plus>=2.0.18"
     ],
     "data": [
         # 'security/ir.model.access.csv',

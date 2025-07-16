@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Test Environment v2.0.15
+# pylint: skip-file
+"""Test Environment v2.0.22
 
 You can locate the recent testenv.py in testenv directory of module
 https://github.com/zeroincombenze/tools/tree/master/z0bug_odoo/testenv
@@ -53,7 +54,7 @@ Model data declaration
 Each model is declared in a csv file or xlsx file in test/data directory of the
 module. The file name is the same of model name with dots replaced by undescore.
 
-i.e. below the contents of res_parter.csv file:
+i.e. below the contents of res_partner.csv file:
 
     id,name,street
     z0bug.partner1,Alpha,"1, First Avenue"
@@ -233,7 +234,7 @@ various situation; the most common are:
     but they do not really simulate the user behavior because they do not engage the
     onchange methods, they do not load any view and so on.
 
-The real best way to test a create record is like the follow example
+The real best way to test a creating record is like the follow example
 based on res.partner model:
 
         partner = self.resource_edit(
@@ -293,7 +294,7 @@ Data values
 
 Data values may be raw data (string, number, dates, etc.) or external reference
 or some macro.
-You can declare data value on your own but you can discover th full test environment
+You can declare data value on your own, but you can discover th full test environment
 in https://github.com/zeroincombenze/zerobug-test/mk_test_env/ and get data
 from this environment.
 
@@ -598,6 +599,7 @@ PARENT_RESOURCE = {
 KEY_CANDIDATE = (
     "acc_number",
     "code_prefix",
+    "prefix",
     "default_code",
     "sequence",
     "login",
@@ -650,6 +652,7 @@ class MainTest(test_common.TransactionCase):
         super(MainTest, self).setUp()
         self.odoo_major_version = release.version_info[0] if release else 0
         self.debug_level = 0
+        self.title_logged = False
         self.PYCODESET = "utf-8"
         self._logger = _logger
         # List of stored data by groups: grp1: [a,b,c], grp2: [d,e,f]
@@ -699,7 +702,15 @@ class MainTest(test_common.TransactionCase):
             self.env.cr.commit()  # pylint: disable=invalid-commit
             _logger.info("✨ Test data available on database %s" % self.env.cr.dbname)
         super(MainTest, self).tearDown()
-        self._logger.info("🏆🥇 %d tests SUCCESSFULLY completed" % self.assert_counter)
+        if os.name == "posix":
+            GREEN = "\033[1;32m"
+            CLEAR = "\033[0m"
+        else:  # pragma: no cover
+            GREEN = ""
+            CLEAR = ""
+        self._logger.info(
+            ("🏆🥇 " + GREEN + "%d tests SUCCESSFULLY completed" + CLEAR)
+            % self.assert_counter)
 
     # ---------------------------------------
     # --  Unicode encode/decode functions  --
@@ -767,7 +778,13 @@ class MainTest(test_common.TransactionCase):
                 break
 
     def raise_error(self, mesg):  # pragma: no cover
-        self._logger.info("🛑 " + mesg)
+        if os.name == "posix":
+            RED = "\033[1;31m"
+            CLEAR = "\033[0m"
+        else:  # pragma: no cover
+            RED = ""
+            CLEAR = ""
+        self._logger.info("🛑 " + RED + mesg + CLEAR)
         raise ValueError(mesg)
 
     # ----------------------------------
@@ -1732,7 +1749,8 @@ class MainTest(test_common.TransactionCase):
                     6,
                     0,
                     [
-                        x.id if isinstance(x.id, (int, long)) else x.id.origin
+                        x.id if isinstance(x.id, (int, long))
+                        else getattr(x.id, "origin", False)
                         for x in value
                     ],
                 )
@@ -1834,7 +1852,11 @@ class MainTest(test_common.TransactionCase):
     def _convert_to_write(self, record, new=None, orig=None):
         values = {}
         for field in list(record._fields.keys()):
-            if field in BLACKLIST_COLUMNS or record._fields[field].readonly:
+            if (
+                    field in BLACKLIST_COLUMNS
+                    or record._fields[field].compute
+                    or record._fields[field].related
+            ):
                 continue
             value = self._convert_field_to_write(record, field)
             if value is None:  # pragma: no cover
@@ -2956,8 +2978,9 @@ class MainTest(test_common.TransactionCase):
         locale=None,
         group=None,
         merge="local",
-        setup_list=None,
+        setup_list=[],
         data_dir=None,
+        precision=None,
     ):
         """Create all record from declared data.
         This function starts the test workflow creating the test environment.
@@ -3003,28 +3026,31 @@ class MainTest(test_common.TransactionCase):
             if "TEST_SETUP_LIST" in inspect.stack()[ix][0].f_globals:
                 found = True
                 break
-        if not setup_list:
-            if found:
-                data = {
-                    "TEST_SETUP_LIST":
-                        inspect.stack()[ix][0].f_globals["TEST_SETUP_LIST"]
-                }
-                for resource in data["TEST_SETUP_LIST"]:
-                    init_resource_data(resource, data, ix + 1)
-                self.declare_all_data(data)
-        elif setup_list:
+        if setup_list:
             data = {"TEST_SETUP_LIST": setup_list}
-            for resource in setup_list:
-                init_resource_data(resource, data, ix + 1 if found else ix)
-            self.declare_all_data(data, group=group)
+        elif found:
+            data = {
+                "TEST_SETUP_LIST":
+                    inspect.stack()[ix][0].f_globals["TEST_SETUP_LIST"]
+            }
+        else:
+            self.raise_error("No data declared")
+        for resource in data["TEST_SETUP_LIST"]:
+            init_resource_data(resource, data, ix + 1 if found else ix)
+        self.declare_all_data(data, group=group)
         setup_list = setup_list or self.get_resource_list(group=group)
+        if not self.title_logged:
+            self._logger.info(
+                "🎺🎺🎺 Starting test v2.0.22 (debug_level=%s, commit=%s)"
+                % (self.debug_level, getattr(self, "odoo_commit_test", False))
+            )
+            self._logger.info(
+                "🎺🎺 Testing module: %s (%s)"
+                % (self.module.name, self.module.installed_version)
+            )
+            self.title_logged = True
         self._logger.info(
-            "🎺🎺🎺 Starting test v2.0.15 (debug_level=%s, commit=%s)"
-            % (self.debug_level, getattr(self, "odoo_commit_test", False))
-        )
-        self._logger.info(
-            "🎺🎺🎺 Testing module: %s (%s)"
-            % (self.module.name, self.module.installed_version)
+            "🎺🎺 Loading data from: %s " % ", ".join(setup_list)
         )
         self.log_stack()
         if locale:  # pragma: no cover
@@ -3032,6 +3058,15 @@ class MainTest(test_common.TransactionCase):
         if lang:  # pragma: no cover
             self.install_language(lang)
         self._convert_test_data(group=group)
+        # TODO> TO TEST
+        # if precision:
+        #     DecimalPrecision = self.env["decimal.precision"]
+        #     for (k, v) in precision.items():
+        #         DecimalPrecision.search([("name", "=", k)]).write({"digits": v})
+        #         self._logger.info(
+        #             "DecimalPrecision[%s]=%d " % (k, v)
+        #         )
+        #     # DecimalPrecision.clear_caches()
         for resource in setup_list:
             resource_parent = self.parent_resource.get(resource)
             for xref in sorted(self.get_resource_data_list(resource, group=group)):
@@ -3043,7 +3078,11 @@ class MainTest(test_common.TransactionCase):
                         # Childs record already loaded with header record
                         continue
                 self.resource_make(resource, xref, group=group)
-        if self.odoo_major_version < 13:
+        if (
+                self.odoo_major_version < 13
+                and group
+                and "account.journal" in self.setup_data_list[group]
+        ):
             self.env["account.journal"].search([("update_posted", "!=", True)]).write(
                 {"update_posted": True}
             )
@@ -3656,4 +3695,3 @@ class MainTest(test_common.TransactionCase):
             "🐞%d assertion validated for validate_records(%s)"
             % (ctr_assertion, self.tmpl_repr(template, match=True)),
         )
-

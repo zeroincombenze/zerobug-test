@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo (12.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-09 06:07+0000\n"
-"PO-Revision-Date: 2024-02-09 06:07+0000\n"
+"POT-Creation-Date: 2025-06-15 18:23+0000\n"
+"PO-Revision-Date: 2024-02-02 11:29+0000\n"
 "Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
 "Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
 "Language: it\n"
@@ -23,8 +23,18 @@ msgid "Active"
 msgstr "Attivo"
 
 #. module: midea
+#: model_terms:ir.ui.view,arch_db:midea.table_wco_form
+msgid "Cancel"
+msgstr "Annullare"
+
+#. module: midea
 #: selection:midea.qci,state:0
 msgid "Canceled"
+msgstr "Annullato"
+
+#. module: midea
+#: selection:midea.table_wco,state:0
+msgid "Cancelled"
 msgstr "Annullato"
 
 #. module: midea
@@ -38,8 +48,12 @@ msgid "Company"
 msgstr "Azienda"
 
 #. module: midea
-#: selection:midea.qci,state:0
-#: selection:midea.table_wco,state:0
+#: model_terms:ir.ui.view,arch_db:midea.table_wco_form
+msgid "Confirm"
+msgstr "Confermare"
+
+#. module: midea
+#: selection:midea.qci,state:0 selection:midea.table_wco,state:0
 msgid "Confirmed"
 msgstr "Confermato"
 
@@ -71,6 +85,11 @@ msgid "Credit Transfer payment / Pagamento bonifico"
 msgstr "Pagamento con Bonifico / Pagamento bonifico"
 
 #. module: midea
+#: model:ir.model.fields,field_description:midea.field_midea_table_wco__currency_id
+msgid "Currency"
+msgstr "Valuta"
+
+#. module: midea
 #: model:ir.ui.menu,name:midea.menu_midea_table
 msgid "Dev.Quality"
 msgstr "Dev.Qualità"
@@ -82,8 +101,8 @@ msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: midea
-#: selection:midea.qci,state:0
-#: selection:midea.table_wco,state:0
+#: model_terms:ir.ui.view,arch_db:midea.table_wco_form
+#: selection:midea.qci,state:0 selection:midea.table_wco,state:0
 msgid "Draft"
 msgstr "Bozza"
 
@@ -102,6 +121,18 @@ msgstr ""
 #: model:midea.qci,name:midea.part_eu
 msgid "EU partner / Cliente intraUE"
 msgstr "EU come persona fisica / Cliente intraUE"
+
+#. module: midea
+#: model:midea.table_wco,name:midea.example_a
+#, fuzzy
+msgid "Example A"
+msgstr "Esempio A"
+
+#. module: midea
+#: model:midea.table_wco,name:midea.example_b
+#, fuzzy
+msgid "Example B"
+msgstr "Esempio B"
 
 #. module: midea
 #: model:midea.qci,name:midea.part_xeu
@@ -189,8 +220,8 @@ msgstr "Il partner è PA"
 msgid ""
 "Partner with multiple date payment / Cliente con pagamento di più scadenze"
 msgstr ""
-"Come persona fisica con meno del multiple data payment / Cliente con pagamento "
-"di-o tricloroacetici più scadenze"
+"Come persona fisica con meno del multiple data payment / Cliente con "
+"pagamento di una o più scadenze"
 
 #. module: midea
 #: model:midea.qci,name:midea.pay_pt1
@@ -223,10 +254,11 @@ msgstr ""
 #. module: midea
 #: model:midea.qci,name:midea.invi_li
 msgid ""
-"Purchase invoice with lettera di intento / Fattura di acquisto lettera di intento"
+"Purchase invoice with lettera di intento / Fattura di acquisto lettera di "
+"intento"
 msgstr ""
-"Purchase invoice con meno del lettera di-o tricloroacetici intento / Fattura "
-"di-o tricloroacetici acquisto lettera di-o tricloroacetici intento"
+"Purchase invoice with lettera di intento / Fattura di acquisto lettera di "
+"intento"
 
 #. module: midea
 #: model:midea.qci,name:midea.invi_rc
@@ -247,9 +279,10 @@ msgstr ""
 #. module: midea
 #: model:midea.qci,name:midea.invi_wht
 msgid ""
-"Purchase invoice with withholding / Fattura da fornitore con ritenuta d'acconto"
+"Purchase invoice with withholding / Fattura da fornitore con ritenuta "
+"d'acconto"
 msgstr ""
-"Purchase invoice con meno del withholding / Fattura da fornitore con ritenuta "
+"Purchase invoice with withholding / Fattura da fornitore con ritenuta "
 "d'acconto"
 
 #. module: midea
@@ -272,28 +305,24 @@ msgstr "RiBA pagamento / Pagamento RiBA (IT)"
 #. module: midea
 #: model:midea.qci,name:midea.invo_eu
 msgid "Sale invoice to EU partner / Fattura di vendita intraUE"
-msgstr ""
-"Sale invoice a EU come persona fisica / Fattura di-o tricloroacetici vendita intraUE"
+msgstr "Sale invoice to EU partner / Fattura di vendita intraUE"
 
 #. module: midea
 #: model:midea.qci,name:midea.invo_xeu
 msgid "Sale invoice to xEU partner / Fattura di vendita extraUE"
-msgstr ""
-"Sale invoice a xEU come persona fisica / Fattura di-o tricloroacetici vendita extraUE"
+msgstr "Sale invoice to xEU partner / Fattura di vendita extraUE"
 
 #. module: midea
 #: model:midea.qci,name:midea.invo_enas
 msgid "Sale invoice with enasarco / Fattura di vendita con ensarco"
-msgstr ""
-"Sale invoice con meno del enasarco / Fattura di-o tricloroacetici vendita con ensarco"
+msgstr "Sale invoice with enasarco / Fattura di vendita con ensarco"
 
 #. module: midea
 #: model:midea.qci,name:midea.invo_li
 msgid ""
 "Sale invoice with lettera di intento / Fattura di vendita lettera di intento"
 msgstr ""
-"Sale invoice con meno del lettera di-o tricloroacetici intento / Fattura di-o "
-"tricloroacetici vendita lettera di-o tricloroacetici intento"
+"Sale invoice with lettera di intento / Fattura di vendita lettera di intento"
 
 #. module: midea
 #: model:midea.qci,name:midea.einvo_N1
@@ -314,33 +343,29 @@ msgstr ""
 #: model:midea.qci,name:midea.invo_sp
 msgid "Sale invoice with split payment / Fattura di vendita con split-payment"
 msgstr ""
-"Sale invoice con meno del split payment / Fattura di-o tricloroacetici vendita "
-"con split-payment"
+"Sale invoice with split payment / Fattura di vendita con split-payment"
 
 #. module: midea
 #: model:midea.qci,name:midea.einvo_vat2
 msgid "Sale invoice with vat 10% / Fattura di vendita con IVA 10%"
-msgstr ""
-"Sale invoice con meno del vat 10% / Fattura di-o tricloroacetici vendita con IVA 10%"
+msgstr "Sale invoice with vat 10% / Fattura di vendita con IVA 10%"
 
 #. module: midea
 #: model:midea.qci,name:midea.einvo_vat3
 msgid "Sale invoice with vat 22% / Fattura di vendita con IVA 22%"
 msgstr ""
-"Sale invoice con meno del vat 22% / Fattura di-o tricloroacetici vendita con IVA 22%"
+"Sale invoice con meno del vat 22% / Fattura di-o tricloroacetici vendita con "
+"IVA 22%"
 
 #. module: midea
 #: model:midea.qci,name:midea.einvo_vat1
 msgid "Sale invoice with vat 4% / Fattura di vendita con IVA 4%"
-msgstr ""
-"Sale invoice con meno del vat 4% / Fattura di-o tricloroacetici vendita con IVA 4%"
+msgstr "Sale invoice with vat 4% / Fattura di vendita con IVA 4%"
 
 #. module: midea
 #: model:midea.qci,name:midea.invo_wht
 msgid "Sale invoice with withholding / Fattura di vendita ritenuta d'acconto"
-msgstr ""
-"Sale invoice con meno del withholding / Fattura di-o tricloroacetici vendita "
-"ritenuta d'acconto"
+msgstr "Sale invoice with withholding / Fattura di vendita ritenuta d'acconto"
 
 #. module: midea
 #: model:midea.qci,name:midea.pay_SDD
@@ -356,7 +381,7 @@ msgstr "Scissione pagamenti"
 #: model:ir.model.fields,field_description:midea.field_midea_qci__state
 #: model:ir.model.fields,field_description:midea.field_midea_table_wco__state
 msgid "State"
-msgstr "Stato Federale"
+msgstr "Stato"
 
 #. module: midea
 #: model:midea.qci,name:midea.acc_puVAT
@@ -377,5 +402,3 @@ msgstr "midea.table_wco"
 #: model:ir.model.fields,field_description:midea.field_midea_table_wco__name
 msgid "name"
 msgstr "Nome"
-
-

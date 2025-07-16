@@ -1,0 +1,108 @@
+2025-07-03 06:57:39,000 2994825 DAEMON test_mk_test_env_10 run_odoo_debug.sh: cd /home/odoo/10.0/venv_odoo && source ./bin/activate
+2025-07-03 04:57:45,925 3012275 INFO ? odoo: Odoo version 10.0
+2025-07-03 04:57:45,925 3012275 INFO ? odoo: Using configuration file at /home/odoo/10.0/zerobug-test/mk_test_env/tests/logs/zero10.zerobug-test.mk_test_env.conf
+2025-07-03 04:57:45,925 3012275 INFO ? odoo: addons paths: ['/home/odoo/.local/share/Odoo10/addons/10.0', u'/home/odoo/10.0/odoo/addons', u'/home/odoo/10.0/addons', u'/home/odoo/.local/share/Odoo10/addons', u'/home/odoo/10.0/account-analytic', u'/home/odoo/10.0/account-budgeting', u'/home/odoo/10.0/account-closing', u'/home/odoo/10.0/account-consolidation', u'/home/odoo/10.0/account-financial-reporting', u'/home/odoo/10.0/account-financial-tools', u'/home/odoo/10.0/account-fiscal-rule', u'/home/odoo/10.0/account-invoice-reporting', u'/home/odoo/10.0/account-invoicing', u'/home/odoo/10.0/account-payment', u'/home/odoo/10.0/account-reconcile', u'/home/odoo/10.0/bank-payment', u'/home/odoo/10.0/bank-statement-import', u'/home/odoo/10.0/calendar', u'/home/odoo/10.0/commission', u'/home/odoo/10.0/community-data-files', u'/home/odoo/10.0/connector', u'/home/odoo/10.0/contract', u'/home/odoo/10.0/credit-control', u'/home/odoo/10.0/crm', u'/home/odoo/10.0/currency', u'/home/odoo/10.0/data-protection', u'/home/odoo/10.0/delivery-carrier', u'/home/odoo/10.0/e-commerce', u'/home/odoo/10.0/edi', u'/home/odoo/10.0/helpdesk', u'/home/odoo/10.0/hr', u'/home/odoo/10.0/intrastat-extrastat', u'/home/odoo/10.0/knowledge', u'/home/odoo/10.0/l10n-italy', u'/home/odoo/10.0/l10n-italy-supplemental', u'/home/odoo/10.0/maintenance', u'/home/odoo/10.0/management-system', u'/home/odoo/10.0/manufacture', u'/home/odoo/10.0/margin-analysis', u'/home/odoo/10.0/marketplace', u'/home/odoo/10.0/mis-builder', u'/home/odoo/10.0/multi-company', u'/home/odoo/10.0/partner-contact', u'/home/odoo/10.0/product-attribute', u'/home/odoo/10.0/product-kitting', u'/home/odoo/10.0/product-variant', u'/home/odoo/10.0/profiles', u'/home/odoo/10.0/project', u'/home/odoo/10.0/purchase-reporting', u'/home/odoo/10.0/purchase-workflow', u'/home/odoo/10.0/queue', u'/home/odoo/10.0/report-print-send', u'/home/odoo/10.0/reporting-engine', u'/home/odoo/10.0/rma', u'/home/odoo/10.0/sale-financial', u'/home/odoo/10.0/sale-reporting', u'/home/odoo/10.0/sale-workflow', u'/home/odoo/10.0/search-engine', u'/home/odoo/10.0/server-auth', u'/home/odoo/10.0/server-tools', u'/home/odoo/10.0/server-ux', u'/home/odoo/10.0/social', u'/home/odoo/10.0/stock-logistics-barcode', u'/home/odoo/10.0/stock-logistics-reporting', u'/home/odoo/10.0/stock-logistics-tracking', u'/home/odoo/10.0/stock-logistics-transport', u'/home/odoo/10.0/stock-logistics-warehouse', u'/home/odoo/10.0/stock-logistics-workflow', u'/home/odoo/10.0/storage', u'/home/odoo/10.0/timesheet', u'/home/odoo/10.0/uncovered', u'/home/odoo/10.0/web', u'/home/odoo/10.0/webhook', u'/home/odoo/10.0/website', u'/home/odoo/10.0/wms', u'/home/odoo/10.0/zerobug-test']
+2025-07-03 04:57:45,926 3012275 INFO ? odoo: database: odoo10@localhost:5432
+2025-07-03 04:57:45,946 3012275 INFO ? odoo.service.server: HTTP service (werkzeug) running on NB200Z0.localdomain:41657
+2025-07-03 04:57:45,960 3012275 INFO test_mk_test_env_10 odoo.modules.loading: loading 1 modules...
+2025-07-03 04:57:46,068 3012275 INFO test_mk_test_env_10 odoo.modules.loading: 1 modules loaded in 0.11s, 0 queries
+2025-07-03 04:57:46,875 3012275 INFO test_mk_test_env_10 odoo.modules.loading: loading 22 modules...
+2025-07-03 04:57:46,995 3012275 INFO test_mk_test_env_10 odoo.addons.report.models.report: Will use the Wkhtmltopdf binary at /home/odoo/10.0/venv_odoo/bin/wkhtmltopdf
+2025-07-03 04:57:47,042 3012275 INFO test_mk_test_env_10 odoo.modules.loading: 22 modules loaded in 0.17s, 0 queries
+2025-07-03 04:57:47,048 3012275 INFO test_mk_test_env_10 odoo.modules.loading: loading 23 modules...
+2025-07-03 04:57:47,180 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.wizard.wizard_mk_test_env: Not found valid odoo_score package: use odoo standard functions!
+2025-07-03 04:57:47,248 3012275 INFO test_mk_test_env_10 odoo.modules.registry: module mk_test_env: creating or updating database tables
+2025-07-03 04:57:47,656 3012275 INFO test_mk_test_env_10 odoo.modules.loading: loading mk_test_env/views/menu.xml
+2025-07-03 04:57:47,800 3012275 INFO test_mk_test_env_10 odoo.modules.loading: loading mk_test_env/wizard/wizard_mk_test_env_view.xml
+2025-07-03 04:57:47,991 3012275 INFO test_mk_test_env_10 odoo.modules.loading: loading mk_test_env/wizard/wizard_mk_test_pyfile_view.xml
+2025-07-03 04:57:48,097 3012275 INFO test_mk_test_env_10 odoo.modules.loading: loading mk_test_env/wizard/wizard_get_test_data_view.xml
+2025-07-03 04:57:48,290 3012275 INFO test_mk_test_env_10 odoo.modules.module: odoo.addons.mk_test_env.tests.test_mixin running tests.
+2025-07-03 04:57:48,291 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.test_mixin: test_mk_test_env (odoo.addons.mk_test_env.tests.test_mixin.TestMixin)
+2025-07-03 04:57:49,117 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.test_mixin: 🎺 Testing test_mk_test_env()
+2025-07-03 04:57:49,148 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.test_mixin: test_mk_test_pyfile (odoo.addons.mk_test_env.tests.test_mixin.TestMixin)
+2025-07-03 04:57:49,312 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.test_mixin: 🎺 Testing test_mk_test_pyfile()
+2025-07-03 04:57:49,362 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.test_mixin: Ran 2 tests in 1.071s
+2025-07-03 04:57:49,362 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.test_mixin: OK
+2025-07-03 04:57:49,362 3012275 INFO test_mk_test_env_10 odoo.modules.module: odoo.addons.mk_test_env.tests.test_testenv running tests.
+2025-07-03 04:57:49,363 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.test_testenv: test_mytest (odoo.addons.mk_test_env.tests.test_testenv.MyTest)
+2025-07-03 04:57:49,689 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.testenv: 🎺🎺🎺 Starting test v2.0.22 (debug_level=0, commit=False)
+2025-07-03 04:57:49,693 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.testenv: 🎺🎺 Testing module: mk_test_env (10.0.0.7.8)
+2025-07-03 04:57:49,694 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.testenv: 🎺🎺 Loading data from: res.partner, res.currency.rate, res.partner.bank, product.template 
+2025-07-03 04:57:49,701 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.testenv: ⚠ Invalid value it_IT
+2025-07-03 04:57:49,813 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.testenv: ⚠ Invalid value it_IT
+2025-07-03 04:57:49,934 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.testenv: ⚠ External reference z0bug.bank_bps not found
+2025-07-03 04:57:49,960 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.testenv: ⚠ External reference z0bug.bank_unicr not found
+2025-07-03 04:57:50,293 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.test_testenv: 🎺 Testing wizard.lang_install()
+2025-07-03 04:57:50,360 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module base: loading translation file (it) for language it_IT
+2025-07-03 04:57:50,361 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/odoo/addons/base/i18n/it.po
+2025-07-03 04:57:51,988 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module web: loading translation file (it) for language it_IT
+2025-07-03 04:57:51,989 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/web/i18n/it.po
+2025-07-03 04:57:52,100 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module web_kanban: loading translation file (it) for language it_IT
+2025-07-03 04:57:52,100 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/web_kanban/i18n/it.po
+2025-07-03 04:57:52,114 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module base_setup: loading translation file (it) for language it_IT
+2025-07-03 04:57:52,114 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/base_setup/i18n/it.po
+2025-07-03 04:57:52,146 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module bus: loading translation file (it) for language it_IT
+2025-07-03 04:57:52,146 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/bus/i18n/it.po
+2025-07-03 04:57:52,827 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module web_tour: loading translation file (it) for language it_IT
+2025-07-03 04:57:52,827 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/web_tour/i18n/it.po
+2025-07-03 04:57:52,843 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module mail: loading translation file (it) for language it_IT
+2025-07-03 04:57:52,843 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/mail/i18n/it.po
+2025-07-03 04:57:53,535 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module fetchmail: loading translation file (it) for language it_IT
+2025-07-03 04:57:53,535 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/fetchmail/i18n/it.po
+2025-07-03 04:57:53,587 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module auth_crypt: loading translation file (it) for language it_IT
+2025-07-03 04:57:53,588 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/auth_crypt/i18n/it.po
+2025-07-03 04:57:54,474 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module web_editor: loading translation file (it) for language it_IT
+2025-07-03 04:57:54,474 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/web_editor/i18n/it.po
+2025-07-03 04:57:54,541 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module web_planner: loading translation file (it) for language it_IT
+2025-07-03 04:57:54,541 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/web_planner/i18n/it.po
+2025-07-03 04:57:54,562 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module web_settings_dashboard: loading translation file (it) for language it_IT
+2025-07-03 04:57:54,562 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/web_settings_dashboard/i18n/it.po
+2025-07-03 04:57:54,581 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module decimal_precision: loading translation file (it) for language it_IT
+2025-07-03 04:57:54,582 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/decimal_precision/i18n/it.po
+2025-07-03 04:57:55,295 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module report: loading translation file (it) for language it_IT
+2025-07-03 04:57:55,295 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/report/i18n/it.po
+2025-07-03 04:57:55,354 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module product: loading translation file (it) for language it_IT
+2025-07-03 04:57:55,355 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/product/i18n/it.po
+2025-07-03 04:57:55,820 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module base_import: loading translation file (it) for language it_IT
+2025-07-03 04:57:55,820 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/base_import/i18n/it.po
+2025-07-03 04:57:55,957 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module web_calendar: loading translation file (it) for language it_IT
+2025-07-03 04:57:55,958 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/web_calendar/i18n/it.po
+2025-07-03 04:57:56,711 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module auth_signup: loading translation file (it) for language it_IT
+2025-07-03 04:57:56,712 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/auth_signup/i18n/it.po
+2025-07-03 04:57:56,745 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module portal: loading translation file (it) for language it_IT
+2025-07-03 04:57:56,745 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/portal/i18n/it.po
+2025-07-03 04:57:57,494 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module web_diagram: loading translation file (it) for language it_IT
+2025-07-03 04:57:57,494 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/web_diagram/i18n/it.po
+2025-07-03 04:57:58,259 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module procurement: loading translation file (it) for language it_IT
+2025-07-03 04:57:58,259 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/procurement/i18n/it.po
+2025-07-03 04:57:58,364 3012275 INFO test_mk_test_env_10 odoo.addons.base.ir.ir_translation: module web_kanban_gauge: loading translation file (it) for language it_IT
+2025-07-03 04:57:58,364 3012275 INFO test_mk_test_env_10 odoo.tools.translate: loading /home/odoo/10.0/addons/web_kanban_gauge/i18n/it.po
+2025-07-03 04:57:58,381 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.testenv: 🏆🥇 [1;32m24 tests SUCCESSFULLY completed[0m
+2025-07-03 04:57:58,386 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.test_testenv: Ran 1 test in 9.023s
+2025-07-03 04:57:58,386 3012275 INFO test_mk_test_env_10 odoo.addons.mk_test_env.tests.test_testenv: OK
+2025-07-03 04:57:58,386 3012275 INFO test_mk_test_env_10 odoo.modules.module: odoo.addons.mk_test_env.tests.test_testenv tested in 9.02s, 20065 queries
+2025-07-03 04:57:58,403 3012275 INFO test_mk_test_env_10 odoo.modules.loading: 23 modules loaded in 11.36s, 20441 queries
+2025-07-03 04:57:58,663 3012275 INFO test_mk_test_env_10 odoo.modules.loading: Modules loaded.
+2025-07-03 04:57:58,666 3012275 INFO test_mk_test_env_10 odoo.modules.loading: All post-tested in 0.00s, 0 queries
+2025-07-03 04:57:58,667 3012275 INFO test_mk_test_env_10 odoo.models: Computing parent left and right for table ir_ui_menu...
+2025-07-03 04:57:58,725 3012275 INFO test_mk_test_env_10 odoo.modules.registry: Registry changed, signaling through the database
+2025-07-03 04:57:58,726 3012275 INFO test_mk_test_env_10 odoo.service.server: Initiating shutdown
+2025-07-03 04:57:58,727 3012275 INFO test_mk_test_env_10 odoo.service.server: Hit CTRL-C again or send a second signal to force the shutdown.
+
++===================================================================
+| please test [36mmk_test_env[0m (10.0): [32mSUCCESS![0m
++===================================================================
+
+[1;37;44m$ coverage report --rcfile=/home/odoo/10.0/zerobug-test/mk_test_env/tests/logs/coverage_mk_test_env_10rc -m
+[34;107mName                                                                       Stmts   Miss  Cover   Missing
+--------------------------------------------------------------------------------------------------------
+/home/odoo/10.0/zerobug-test/mk_test_env/tests/test_mixin.py                  40      0   100%
+/home/odoo/10.0/zerobug-test/mk_test_env/tests/test_testenv.py                96      0   100%
+/home/odoo/10.0/zerobug-test/mk_test_env/tests/testenv.py                   1314    517    61%   538-542, 811-812, 815-816, 819-820, 823-824, 827-828, 831-832, 835-836, 839-840, 843-844, 847-848, 851-852, 855-856, 859-860, 879-889, 910-915, 926, 932, 938, 960-969, 989, 1077, 1087, 1091, 1100-1102, 1106, 1110, 1116, 1139, 1160-1180, 1183, 1227-1229, 1270-1279, 1288, 1298, 1311, 1315, 1380, 1389, 1401, 1419-1420, 1429-1434, 1438-1444, 1447-1448, 1457, 1462, 1469-1473, 1480, 1506, 1510-1514, 1524, 1600-1607, 1626-1630, 1637-1644, 1653-1657, 1670, 1701-1718, 1731, 1736, 1745-1758, 1761-1762, 1844, 1860, 1866-1867, 1905-1914, 1927, 1929, 1937, 1939, 1943-1953, 1962-1963, 1967, 1971-1972, 1976-1985, 1994, 2002-2007, 2015, 2023-2025, 2027-2029, 2037, 2039-2044, 2053, 2059-2070, 2073, 2077, 2079, 2126, 2133-2154, 2236-2238, 2264-2291, 2338-2340, 2355, 2372-2376, 2384, 2457, 2468, 2533, 2575, 2581, 2588-2593, 2652-2653, 2669, 2671, 2674-2680, 2723, 2738-2739, 2803-2804, 2850-2854, 2905-2973, 3014-3019, 3022, 3030, 3037, 3079, 3086, 3153-3185, 3188-3201, 3251-3266, 3379-3402, 3412-3431, 3440-3525, 3528-3608, 3611-3647, 3680-3694
+/home/odoo/10.0/zerobug-test/mk_test_env/wizard/mixin.py                      39      6    85%   140, 184-185, 189-191
+/home/odoo/10.0/zerobug-test/mk_test_env/wizard/wizard_get_test_data.py       61     44    28%   43-71, 94-129, 143
+/home/odoo/10.0/zerobug-test/mk_test_env/wizard/wizard_mk_test_env.py       1188    899    24%   28-30, 117-123, 127, 129, 132, 138, 148, 167, 174, 176, 192, 205, 238, 259, 265, 268-273, 277, 281, 285, 290, 301-306, 443-445, 448-449, 452-456, 459-480, 483-494, 505-593, 596-608, 611-620, 623, 652-665, 713-716, 726, 730-731, 749-751, 765-860, 875-877, 879, 892-899, 912-971, 985-1189, 1192-1199, 1202-1236, 1240-1263, 1267-1290, 1324-1386, 1390-1429, 1432-1433, 1437-1446, 1449-1469, 1472-1492, 1495-1557, 1569-1725, 1729-1836, 1846-1848, 1851-1852, 1855-1863, 1867-1887, 1911-2072, 2086
+/home/odoo/10.0/zerobug-test/mk_test_env/wizard/wizard_mk_test_pyfile.py     321    262    18%   486, 489, 528, 592-623, 626, 633-635, 641-647, 658-663, 666-670, 673-678, 681-723, 730-764, 767-797, 800-891, 913-1020, 1034
+--------------------------------------------------------------------------------------------------------
+TOTAL                                                                       3059   1728    44%
+[0m
