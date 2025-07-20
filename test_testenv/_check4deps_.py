@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2023 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+# Copyright 2023-24 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 #
@@ -9,20 +9,20 @@ import sys
 import re
 import logging
 
-from odoo import api, SUPERUSER_ID
-from odoo.exceptions import UserError
+from odoo import api, SUPERUSER_ID      # pylint: disable=import-error
+from odoo.exceptions import UserError   # pylint: disable=import-error
 
 _logger = logging.getLogger(__name__)
 
 
 def check_4_depending(cr):
-    """check_4_depending v0.1.0
+    """check_4_depending v2.0.22
     This function check for valid modules which current module depends on.
-    Usually Odoo checks for depending on through "depends" field in the manifest, but
+    Usually Odoo checks for depending on, through "depends" field in the manifest, but
     Odoo does not check for the version range neither check for incompatibilities.
-    With three new fields "version_depends", "conflicts" (for odoo modules) and
-    "version_external_dependencies" (for python packages), this function checks for
-    version range, like pip or apt/yum etc. Example:
+    With three new fields: "version_depends", "conflicts" (on odoo modules) and
+    "version_external_dependencies" (on python packages), this function checks for
+    version range, like pip or apt/yum commands. Example:
         "version_depends": ["dep_module>=12.0.2.0"],
         "version_external_dependencies": ["Werkzeug>=0.16"],
         "conflicts": [
@@ -31,23 +31,26 @@ def check_4_depending(cr):
         ],
         "pre_init_hook": "check_4_depending",
     In above example, current module installation fails if:
-    * version of the module named "dep_module" is less than 12.0.2.0
-    * modules named "incompatible" is installed
-    * module "quite_incompatible" is installed (*)
-    * author name or maintainer name of module "inv_auth" is 'Danger' (**)
-    * author name or maintainer name of module "req_ath" is not 'MySelf' (**)
-    * python package Werkzeug is less than 0.16.
-    Installation can even continue if system parameter "disable_module_incompatibility"
-    is True when:
-    (*) module name to match does not end with symbol "!"
-    (**) regex operators are '=~?' or '!=~?'
+        * version of the module named "dep_module" is less than 12.0.2.0
+        * modules named "incompatible" is installed
+        * module "quite_incompatible" is installed (*)
+        * author name or maintainer name of module "inv_auth" is 'Danger' (**)
+        * author name or maintainer name of module "req_ath" is not 'MySelf' (**)
+        * python package Werkzeug is less than 0.16.
+    Incompatibility is overridden if system parameter "disable_module_incompatibility"
+    is True and one of following rules is true:
+        (*) module name to match does not end with symbol "!"
+        (**) regex operators are '=~?' or '!=~?'
     Summary:
-    - Operators == != >= <= > < match always with module version
-    - Conflicts key 'name' (can disable) or 'name!' (always) match installed module
-    - Operators =~ (always) !=~ (negate+always) =~? (disable) !=~? (negate+disable)
-      match module author o maintainer
-    Notice: __init__.py in current module root must contain the statement:
+        - Operators == != >= <= > < match with module version
+        - "Conflicts" key matches module 'name' (can be disabled) or 'name!' (always)
+        - Operators =~ (always) !=~ (negate+always) =~? (disable) !=~? (negate+disable)
+          match regex on module author or module maintainer
+    Notice:
+    __init__.py in current module root must contain the statement:
         from ._check4deps_ import check_4_depending
+    __manifest__.py in current module root must contain the statement:
+        "pre_init_hook": "check_4_depending",
     """
 
     def comp_versions(version):
@@ -71,7 +74,8 @@ def check_4_depending(cr):
             )
             if "!" not in op:
                 uninstallable_reason += (
-                    " - Use config param <disable_module_incompatibility> to install!")
+                    " - Set system param <disable_module_incompatibility> to True"
+                    " in order to force installation or upgrade!")
             _logger.error(uninstallable_reason)
             if not disable_check or "!" in op:
                 return uninstallable_reason
@@ -93,7 +97,8 @@ def check_4_depending(cr):
             )
             if "?" in op:
                 uninstallable_reason += (
-                    " - Use config param <disable_module_incompatibility> to install!")
+                    " - Set system param <disable_module_incompatibility> to True"
+                    " in order to force installation or upgrade!")
             _logger.error(uninstallable_reason)
             if not disable_check or "?" not in op:
                 return uninstallable_reason
@@ -110,7 +115,8 @@ def check_4_depending(cr):
             )
             if "?" in op:
                 uninstallable_reason += (
-                    " - Use config param <disable_module_incompatibility> to install!")
+                    " - Set system param <disable_module_incompatibility> to True"
+                    " in order to force installation or upgrade!")
             _logger.error(uninstallable_reason)
             if not disable_check or "?" not in op:
                 return uninstallable_reason
@@ -133,6 +139,7 @@ def check_4_depending(cr):
             )
             _logger.error(uninstallable_reason)
             return uninstallable_reason
+        return ""
 
     def eval_condition(mtype, app, condition, disable_check):
         """evaluate condition and return reason for match"""

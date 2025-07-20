@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from future.utils import PY2
 # import os
 from datetime import date, datetime
@@ -11,43 +10,6 @@ from .testenv import MainTest as SingleTransactionCase
 import python_plus
 
 _logger = logging.getLogger(__name__)
-
-
-# TEST_ACCOUNT_ACCOUNT = {
-#     # Output (paid) VAT account
-#     "l10n_generic_coa.conf_ova": {
-#         "code": "101300",
-#         "reconcile": False,
-#         "user_type_id": "account.data_account_type_current_assets",
-#         "name": "IVA n/credito",
-#     },
-#     # The bank account is linked to demo data: usually is 101401
-#     "z0bug.coa_bank": {
-#         # "code": "101401",
-#         "name": "Banca",
-#         "reconcile": False,
-#         "user_type_id": "account.data_account_type_liquidity",
-#     },
-#     # Input (received) VAT account
-#     "l10n_generic_coa.conf_a_recv": {
-#         "code": "111200",
-#         "reconcile": False,
-#         "user_type_id": "account.data_account_type_current_liabilities",
-#         "name": "IVA n/debito",
-#     },
-#     "l10n_generic_coa.conf_a_sale": {
-#         "code": "200000",
-#         "name": "Merci c/vendita",
-#         "user_type_id": "account.data_account_type_revenue",
-#         "reconcile": False,
-#     },
-#     "z0bug.conf_a_sale2": {
-#         "code": "200010",
-#         "name": "Ricavi da servizi",
-#         "user_type_id": "account.data_account_type_revenue",
-#         "reconcile": False,
-#     },
-# }
 
 TEST_ACCOUNT_JOURNAL = {
     "external.INV": {
@@ -198,19 +160,6 @@ TEST_ACCOUNT_PAYMENT_TERM_LINE = {
         "value": "balance",
     },
 }
-
-# TEST_ACCOUNT_TAX = {
-#     "z0bug.tax_22v": {
-#         "description": "22v",
-#         "name": "IVA 22% su vendite",
-#         "amount_type": "percent",
-#         "account_id": "l10n_generic_coa.conf_a_recv",
-#         "refund_account_id": "l10n_generic_coa.conf_a_recv",
-#         "amount": 22,
-#         "type_tax_use": "sale",
-#         "price_include": False,
-#     },
-# }
 
 TEST_PRODUCT_TEMPLATE = {
     # Consumable product
@@ -372,18 +321,14 @@ TEST_SETUP_LIST = [
 class MyTest(SingleTransactionCase):
 
     def setUp(self):
-        super(MyTest, self).setUp()
+        super().setUp()
         self.debug_level = 0
         self.odoo_commit_test = False
         self.iso_code = "it_IT"
         self.date_rate_0 = self.compute_date("####-12-30")
 
     def tearDown(self):
-        super(MyTest, self).tearDown()
-        # if os.environ.get("ODOO_COMMIT_TEST", ""):  # pragma: no cover
-        #     # Save test environment, so it is available to use
-        #     self.env.cr.commit()  # pylint: disable=invalid-commit
-        #     _logger.info("✨ Test data committed")
+        super().tearDown()
 
     def _test_00(self):
         # ===[Preliminary tests]===
