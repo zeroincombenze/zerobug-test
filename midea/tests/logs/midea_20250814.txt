@@ -1,0 +1,246 @@
+2025-08-14 15:03:46,000 125089 DAEMON test_midea_18 run_odoo_debug.sh: cd /home/odoo/odoo18/venv_odoo && source ./bin/activate
+2025-08-14 13:03:51,144 127676 INFO ? odoo: Odoo version 18.0 
+2025-08-14 13:03:51,144 127676 INFO ? odoo: Using configuration file at /home/odoo/odoo18/zerobug-test/midea/tests/logs/zero18.zerobug-test.midea.conf 
+2025-08-14 13:03:51,144 127676 INFO ? odoo: addons paths: ['/home/odoo/odoo18/odoo/addons', '/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/odoo/addons', '/home/odoo/.local/share/Odoo18/addons/18.0', '/home/odoo/odoo18/addons', '/home/odoo/.local/share/Odoo18/addons', '/home/odoo/odoo18/account-analytic', '/home/odoo/odoo18/account-budgeting', '/home/odoo/odoo18/account-closing', '/home/odoo/odoo18/account-consolidation', '/home/odoo/odoo18/account-financial-reporting', '/home/odoo/odoo18/account-financial-tools', '/home/odoo/odoo18/account-fiscal-rule', '/home/odoo/odoo18/account-invoice-reporting', '/home/odoo/odoo18/account-invoicing', '/home/odoo/odoo18/account-payment', '/home/odoo/odoo18/account-reconcile', '/home/odoo/odoo18/bank-payment', '/home/odoo/odoo18/bank-statement-import', '/home/odoo/odoo18/brand', '/home/odoo/odoo18/calendar', '/home/odoo/odoo18/commission', '/home/odoo/odoo18/community-data-files', '/home/odoo/odoo18/connector', '/home/odoo/odoo18/contract', '/home/odoo/odoo18/credit-control', '/home/odoo/odoo18/crm', '/home/odoo/odoo18/currency', '/home/odoo/odoo18/data-protection', '/home/odoo/odoo18/ddmrp', '/home/odoo/odoo18/delivery-carrier', '/home/odoo/odoo18/dms', '/home/odoo/odoo18/e-commerce', '/home/odoo/odoo18/edi', '/home/odoo/odoo18/helpdesk', '/home/odoo/odoo18/hr', '/home/odoo/odoo18/intrastat-extrastat', '/home/odoo/odoo18/knowledge', '/home/odoo/odoo18/l10n-italy', '/home/odoo/odoo18/l10n-italy-supplemental', '/home/odoo/odoo18/maintenance', '/home/odoo/odoo18/management-system', '/home/odoo/odoo18/manufacture', '/home/odoo/odoo18/margin-analysis', '/home/odoo/odoo18/mis-builder', '/home/odoo/odoo18/multi-company', '/home/odoo/odoo18/partner-contact', '/home/odoo/odoo18/product-attribute', '/home/odoo/odoo18/product-kitting', '/home/odoo/odoo18/product-pack', '/home/odoo/odoo18/product-variant', '/home/odoo/odoo18/project', '/home/odoo/odoo18/purchase-reporting', '/home/odoo/odoo18/purchase-workflow', '/home/odoo/odoo18/queue', '/home/odoo/odoo18/report-print-send', '/home/odoo/odoo18/reporting-engine', '/home/odoo/odoo18/ridix', '/home/odoo/odoo18/rma', '/home/odoo/odoo18/sale-financial', '/home/odoo/odoo18/sale-reporting', '/home/odoo/odoo18/sale-workflow', '/home/odoo/odoo18/search-engine', '/home/odoo/odoo18/server-auth', '/home/odoo/odoo18/server-backend', '/home/odoo/odoo18/server-brand', '/home/odoo/odoo18/server-env', '/home/odoo/odoo18/server-tools', '/home/odoo/odoo18/server-ux', '/home/odoo/odoo18/social', '/home/odoo/odoo18/stock-logistics-barcode', '/home/odoo/odoo18/stock-logistics-reporting', '/home/odoo/odoo18/stock-logistics-tracking', '/home/odoo/odoo18/stock-logistics-transport', '/home/odoo/odoo18/stock-logistics-warehouse', '/home/odoo/odoo18/stock-logistics-workflow', '/home/odoo/odoo18/storage', '/home/odoo/odoo18/timesheet', '/home/odoo/odoo18/web', '/home/odoo/odoo18/webhook', '/home/odoo/odoo18/website', '/home/odoo/odoo18/wms', '/home/odoo/odoo18/zerobug-test'] 
+2025-08-14 13:03:51,144 127676 INFO ? odoo: database: odoo18@localhost:5434 
+2025-08-14 13:03:51,277 127676 INFO ? odoo.addons.base.models.ir_actions_report: Will use the Wkhtmltopdf binary at /usr/local/bin/wkhtmltopdf 
+2025-08-14 13:03:51,282 127676 INFO ? odoo.addons.base.models.ir_actions_report: Will use the Wkhtmltoimage binary at /usr/local/bin/wkhtmltoimage 
+2025-08-14 13:03:51,413 127676 INFO ? odoo.service.server: HTTP service (werkzeug) running on NB200Z0.localdomain:19625 
+2025-08-14 13:03:51,424 127676 INFO test_midea_18 odoo.tests.common: Importing test framework 
+2025-08-14 13:03:51,444 127676 INFO test_midea_18 odoo.modules.loading: loading 1 modules... 
+2025-08-14 13:03:51,453 127676 INFO test_midea_18 odoo.modules.loading: 1 modules loaded in 0.01s, 0 queries (+0 extra) 
+2025-08-14 13:03:51,483 127676 INFO test_midea_18 odoo.modules.loading: updating modules list 
+2025-08-14 13:03:51,485 127676 INFO test_midea_18 odoo.addons.base.models.ir_module: ALLOW access to module.update_list on [] to user __system__ #1 via n/a 
+2025-08-14 13:03:56,416 127676 INFO test_midea_18 odoo.addons.base.models.ir_module: ALLOW access to module.button_install on ['midea'] to user __system__ #1 via n/a 
+2025-08-14 13:03:56,528 127676 INFO test_midea_18 odoo.modules.loading: loading 26 modules... 
+2025-08-14 13:03:56,966 127676 INFO test_midea_18 odoo.modules.loading: 26 modules loaded in 0.44s, 0 queries (+0 extra) 
+2025-08-14 13:03:56,968 127676 INFO test_midea_18 odoo.modules.loading: loading 27 modules... 
+2025-08-14 13:03:56,969 127676 INFO test_midea_18 odoo.modules.loading: Loading module midea (24/27) 
+2025-08-14 13:03:57,069 127676 INFO test_midea_18 odoo.modules.registry: module midea: creating or updating database tables 
+2025-08-14 13:03:57,237 127676 INFO test_midea_18 odoo.modules.loading: loading midea/views/midea_qci_view.xml 
+2025-08-14 13:03:57,260 127676 INFO test_midea_18 odoo.modules.loading: loading midea/views/midea_table_wco_view.xml 
+2025-08-14 13:03:57,273 127676 INFO test_midea_18 odoo.modules.loading: loading midea/views/midea_menu.xml 
+2025-08-14 13:03:57,284 127676 INFO test_midea_18 odoo.modules.loading: loading midea/security/ir.model.access.csv 
+2025-08-14 13:03:57,295 127676 WARNING test_midea_18 odoo.addons.base.models.ir_model: Rule access_midea_qci has no group, this is a deprecated feature. Every access-granting rule should specify a group. 
+2025-08-14 13:03:57,295 127676 WARNING test_midea_18 odoo.addons.base.models.ir_model: Rule access_midea_table_wco has no group, this is a deprecated feature. Every access-granting rule should specify a group. 
+2025-08-14 13:03:57,298 127676 INFO test_midea_18 odoo.modules.loading: loading midea/data/midea_qci.xml 
+2025-08-14 13:03:57,354 127676 INFO test_midea_18 odoo.modules.loading: loading midea/data/midea_table_wco.xml 
+2025-08-14 13:03:57,497 127676 INFO test_midea_18 odoo.addons.midea.tests.test_midea_qci: Starting TestMideaQci.test_midea_no_company ... 
+2025-08-14 13:03:57,507 127676 WARNING test_midea_18 py.warnings: /home/odoo/odoo18/odoo/modules/module.py:194: DeprecationWarning: Since 17.0: use tools.misc.file_path instead of get_resource_path(midea, ('tests', 'data'))
+  File "/home/odoo/odoo18/venv_odoo/bin/coverage", line 8, in <module>
+    sys.exit(main())
+  File "/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/coverage/cmdline.py", line 970, in main
+    status = CoverageScript().command_line(argv)
+  File "/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/coverage/cmdline.py", line 681, in command_line
+    return self.do_run(options, args)
+  File "/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/coverage/cmdline.py", line 858, in do_run
+    runner.run()
+  File "/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/coverage/execfile.py", line 211, in run
+    exec(code, main_mod.__dict__)
+  File "/home/odoo/odoo18/odoo-bin", line 8, in <module>
+    odoo.cli.main()
+  File "/home/odoo/odoo18/odoo/cli/command.py", line 66, in main
+    o.run(args)
+  File "/home/odoo/odoo18/odoo/cli/server.py", line 182, in run
+    main(args)
+  File "/home/odoo/odoo18/odoo/cli/server.py", line 175, in main
+    rc = odoo.service.server.start(preload=preload, stop=stop)
+  File "/home/odoo/odoo18/odoo/service/server.py", line 1457, in start
+    rc = server.run(preload, stop)
+  File "/home/odoo/odoo18/odoo/service/server.py", line 622, in run
+    rc = preload_registries(preload)
+  File "/home/odoo/odoo18/odoo/service/server.py", line 1361, in preload_registries
+    registry = Registry.new(dbname, update_module=update_module)
+  File "<decorator-gen-13>", line 2, in new
+  File "/home/odoo/odoo18/odoo/tools/func.py", line 97, in locked
+    return func(inst, *args, **kwargs)
+  File "/home/odoo/odoo18/odoo/modules/registry.py", line 129, in new
+    odoo.modules.load_modules(registry, force_demo, status, update_module)
+  File "/home/odoo/odoo18/odoo/modules/loading.py", line 489, in load_modules
+    processed_modules += load_marked_modules(env, graph,
+  File "/home/odoo/odoo18/odoo/modules/loading.py", line 365, in load_marked_modules
+    loaded, processed = load_module_graph(
+  File "/home/odoo/odoo18/odoo/modules/loading.py", line 284, in load_module_graph
+    test_results = loader.run_suite(suite, global_report=report)
+  File "/home/odoo/odoo18/odoo/tests/loader.py", line 118, in run_suite
+    suite(results)
+  File "/usr/local/lib/python3.10/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+  File "/home/odoo/odoo18/odoo/tests/suite.py", line 47, in run
+    test(result)
+  File "/usr/local/lib/python3.10/unittest/case.py", line 650, in __call__
+    return self.run(*args, **kwds)
+  File "/home/odoo/odoo18/odoo/tests/common.py", line 349, in run
+    super().run(result)
+  File "/home/odoo/odoo18/odoo/tests/case.py", line 213, in run
+    self._callSetUp()
+  File "/home/odoo/odoo18/odoo/tests/case.py", line 181, in _callSetUp
+    self.setUp()
+  File "/home/odoo/odoo18/zerobug-test/midea/tests/test_midea_qci.py", line 27, in setUp
+    super().setUp()
+  File "/home/odoo/odoo18/zerobug-test/midea/tests/testenv.py", line 690, in setUp
+    self.set_datadir(raise_if_not_found=False)
+  File "/home/odoo/odoo18/zerobug-test/midea/tests/testenv.py", line 994, in set_datadir
+    self.data_dir = data_dir or getattr(self, "datadir", get_default_data_dir())
+  File "/home/odoo/odoo18/zerobug-test/midea/tests/testenv.py", line 983, in get_default_data_dir
+    get_module_resource(self.module.name, "tests", "data"),
+  File "/home/odoo/odoo18/odoo/modules/module.py", line 194, in get_resource_path
+    warnings.warn(
+ 
+2025-08-14 13:03:57,508 127676 WARNING test_midea_18 py.warnings: /home/odoo/odoo18/odoo/modules/module.py:194: DeprecationWarning: Since 17.0: use tools.misc.file_path instead of get_resource_path(midea, ('data',))
+  File "/home/odoo/odoo18/venv_odoo/bin/coverage", line 8, in <module>
+    sys.exit(main())
+  File "/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/coverage/cmdline.py", line 970, in main
+    status = CoverageScript().command_line(argv)
+  File "/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/coverage/cmdline.py", line 681, in command_line
+    return self.do_run(options, args)
+  File "/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/coverage/cmdline.py", line 858, in do_run
+    runner.run()
+  File "/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/coverage/execfile.py", line 211, in run
+    exec(code, main_mod.__dict__)
+  File "/home/odoo/odoo18/odoo-bin", line 8, in <module>
+    odoo.cli.main()
+  File "/home/odoo/odoo18/odoo/cli/command.py", line 66, in main
+    o.run(args)
+  File "/home/odoo/odoo18/odoo/cli/server.py", line 182, in run
+    main(args)
+  File "/home/odoo/odoo18/odoo/cli/server.py", line 175, in main
+    rc = odoo.service.server.start(preload=preload, stop=stop)
+  File "/home/odoo/odoo18/odoo/service/server.py", line 1457, in start
+    rc = server.run(preload, stop)
+  File "/home/odoo/odoo18/odoo/service/server.py", line 622, in run
+    rc = preload_registries(preload)
+  File "/home/odoo/odoo18/odoo/service/server.py", line 1361, in preload_registries
+    registry = Registry.new(dbname, update_module=update_module)
+  File "<decorator-gen-13>", line 2, in new
+  File "/home/odoo/odoo18/odoo/tools/func.py", line 97, in locked
+    return func(inst, *args, **kwargs)
+  File "/home/odoo/odoo18/odoo/modules/registry.py", line 129, in new
+    odoo.modules.load_modules(registry, force_demo, status, update_module)
+  File "/home/odoo/odoo18/odoo/modules/loading.py", line 489, in load_modules
+    processed_modules += load_marked_modules(env, graph,
+  File "/home/odoo/odoo18/odoo/modules/loading.py", line 365, in load_marked_modules
+    loaded, processed = load_module_graph(
+  File "/home/odoo/odoo18/odoo/modules/loading.py", line 284, in load_module_graph
+    test_results = loader.run_suite(suite, global_report=report)
+  File "/home/odoo/odoo18/odoo/tests/loader.py", line 118, in run_suite
+    suite(results)
+  File "/usr/local/lib/python3.10/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+  File "/home/odoo/odoo18/odoo/tests/suite.py", line 47, in run
+    test(result)
+  File "/usr/local/lib/python3.10/unittest/case.py", line 650, in __call__
+    return self.run(*args, **kwds)
+  File "/home/odoo/odoo18/odoo/tests/common.py", line 349, in run
+    super().run(result)
+  File "/home/odoo/odoo18/odoo/tests/case.py", line 213, in run
+    self._callSetUp()
+  File "/home/odoo/odoo18/odoo/tests/case.py", line 181, in _callSetUp
+    self.setUp()
+  File "/home/odoo/odoo18/zerobug-test/midea/tests/test_midea_qci.py", line 27, in setUp
+    super().setUp()
+  File "/home/odoo/odoo18/zerobug-test/midea/tests/testenv.py", line 690, in setUp
+    self.set_datadir(raise_if_not_found=False)
+  File "/home/odoo/odoo18/zerobug-test/midea/tests/testenv.py", line 994, in set_datadir
+    self.data_dir = data_dir or getattr(self, "datadir", get_default_data_dir())
+  File "/home/odoo/odoo18/zerobug-test/midea/tests/testenv.py", line 984, in get_default_data_dir
+    get_module_resource(self.module.name, "data"),
+  File "/home/odoo/odoo18/odoo/modules/module.py", line 194, in get_resource_path
+    warnings.warn(
+ 
+2025-08-14 13:03:57,509 127676 WARNING test_midea_18 py.warnings: /home/odoo/odoo18/odoo/modules/module.py:194: DeprecationWarning: Since 17.0: use tools.misc.file_path instead of get_resource_path(midea, ('tests',))
+  File "/home/odoo/odoo18/venv_odoo/bin/coverage", line 8, in <module>
+    sys.exit(main())
+  File "/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/coverage/cmdline.py", line 970, in main
+    status = CoverageScript().command_line(argv)
+  File "/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/coverage/cmdline.py", line 681, in command_line
+    return self.do_run(options, args)
+  File "/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/coverage/cmdline.py", line 858, in do_run
+    runner.run()
+  File "/home/odoo/odoo18/venv_odoo/lib/python3.10/site-packages/coverage/execfile.py", line 211, in run
+    exec(code, main_mod.__dict__)
+  File "/home/odoo/odoo18/odoo-bin", line 8, in <module>
+    odoo.cli.main()
+  File "/home/odoo/odoo18/odoo/cli/command.py", line 66, in main
+    o.run(args)
+  File "/home/odoo/odoo18/odoo/cli/server.py", line 182, in run
+    main(args)
+  File "/home/odoo/odoo18/odoo/cli/server.py", line 175, in main
+    rc = odoo.service.server.start(preload=preload, stop=stop)
+  File "/home/odoo/odoo18/odoo/service/server.py", line 1457, in start
+    rc = server.run(preload, stop)
+  File "/home/odoo/odoo18/odoo/service/server.py", line 622, in run
+    rc = preload_registries(preload)
+  File "/home/odoo/odoo18/odoo/service/server.py", line 1361, in preload_registries
+    registry = Registry.new(dbname, update_module=update_module)
+  File "<decorator-gen-13>", line 2, in new
+  File "/home/odoo/odoo18/odoo/tools/func.py", line 97, in locked
+    return func(inst, *args, **kwargs)
+  File "/home/odoo/odoo18/odoo/modules/registry.py", line 129, in new
+    odoo.modules.load_modules(registry, force_demo, status, update_module)
+  File "/home/odoo/odoo18/odoo/modules/loading.py", line 489, in load_modules
+    processed_modules += load_marked_modules(env, graph,
+  File "/home/odoo/odoo18/odoo/modules/loading.py", line 365, in load_marked_modules
+    loaded, processed = load_module_graph(
+  File "/home/odoo/odoo18/odoo/modules/loading.py", line 284, in load_module_graph
+    test_results = loader.run_suite(suite, global_report=report)
+  File "/home/odoo/odoo18/odoo/tests/loader.py", line 118, in run_suite
+    suite(results)
+  File "/usr/local/lib/python3.10/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+  File "/home/odoo/odoo18/odoo/tests/suite.py", line 47, in run
+    test(result)
+  File "/usr/local/lib/python3.10/unittest/case.py", line 650, in __call__
+    return self.run(*args, **kwds)
+  File "/home/odoo/odoo18/odoo/tests/common.py", line 349, in run
+    super().run(result)
+  File "/home/odoo/odoo18/odoo/tests/case.py", line 213, in run
+    self._callSetUp()
+  File "/home/odoo/odoo18/odoo/tests/case.py", line 181, in _callSetUp
+    self.setUp()
+  File "/home/odoo/odoo18/zerobug-test/midea/tests/test_midea_qci.py", line 27, in setUp
+    super().setUp()
+  File "/home/odoo/odoo18/zerobug-test/midea/tests/testenv.py", line 690, in setUp
+    self.set_datadir(raise_if_not_found=False)
+  File "/home/odoo/odoo18/zerobug-test/midea/tests/testenv.py", line 994, in set_datadir
+    self.data_dir = data_dir or getattr(self, "datadir", get_default_data_dir())
+  File "/home/odoo/odoo18/zerobug-test/midea/tests/testenv.py", line 985, in get_default_data_dir
+    get_module_resource(self.module.name, "tests")
+  File "/home/odoo/odoo18/odoo/modules/module.py", line 194, in get_resource_path
+    warnings.warn(
+ 
+2025-08-14 13:03:57,510 127676 INFO test_midea_18 odoo.addons.midea.tests.test_midea_qci: 🎺 Testing test_midea_no_company() 
+2025-08-14 13:03:57,624 127676 INFO test_midea_18 odoo.addons.midea.tests.test_midea_qci: Test /home/odoo/odoo18/zerobug-test/midea/tests/test_midea_qci.py SUCCESSFULLY ended. 
+2025-08-14 13:03:57,624 127676 INFO test_midea_18 odoo.addons.midea.tests.testenv: 🏆🥇 [1;32m16 tests SUCCESSFULLY completed[0m 
+2025-08-14 13:03:57,729 127676 INFO test_midea_18 odoo.addons.base.models.ir_attachment: filestore gc 0 checked, 0 removed 
+2025-08-14 13:03:57,730 127676 INFO test_midea_18 odoo.addons.midea.tests.test_midea_table_wco: Starting TestMidea.test_midea_table_wco ... 
+2025-08-14 13:03:57,735 127676 INFO test_midea_18 odoo.addons.midea.tests.test_midea_table_wco: 🎺 Testing test_midea_table_wco() 
+2025-08-14 13:03:57,820 127676 INFO test_midea_18 odoo.addons.midea.tests.test_midea_table_wco: Test /home/odoo/odoo18/zerobug-test/midea/tests/test_midea_table_wco.py SUCCESSFULLY ended. 
+2025-08-14 13:03:57,820 127676 INFO test_midea_18 odoo.addons.midea.tests.testenv: 🏆🥇 [1;32m25 tests SUCCESSFULLY completed[0m 
+2025-08-14 13:03:57,896 127676 INFO test_midea_18 odoo.addons.base.models.ir_attachment: filestore gc 0 checked, 0 removed 
+2025-08-14 13:03:57,924 127676 INFO test_midea_18 odoo.modules.loading: Module midea loaded in 0.96s (incl. 0.40s test), 349 queries (+31 test, +349 other) 
+2025-08-14 13:03:57,924 127676 INFO test_midea_18 odoo.modules.loading: 27 modules loaded in 0.96s, 349 queries (+380 extra) 
+2025-08-14 13:03:58,469 127676 INFO test_midea_18 odoo.modules.loading: Modules loaded. 
+2025-08-14 13:03:58,474 127676 INFO test_midea_18 odoo.modules.registry: Registry changed, signaling through the database 
+2025-08-14 13:03:58,475 127676 INFO test_midea_18 odoo.modules.registry: Registry loaded in 7.062s 
+2025-08-14 13:03:58,475 127676 INFO test_midea_18 odoo.service.server: Starting post tests 
+2025-08-14 13:03:58,478 127676 INFO test_midea_18 odoo.service.server: 0 post-tests in 0.00s, 0 queries 
+2025-08-14 13:03:58,478 127676 INFO test_midea_18 odoo.tests.stats: midea: 6 tests 0.40s 31 queries 
+2025-08-14 13:03:58,478 127676 INFO test_midea_18 odoo.tests.result: 0 failed, 0 error(s) of 2 tests when loading database 'test_midea_18' 
+2025-08-14 13:03:58,478 127676 INFO test_midea_18 odoo.service.server: Initiating shutdown 
+2025-08-14 13:03:58,478 127676 INFO test_midea_18 odoo.service.server: Hit CTRL-C again or send a second signal to force the shutdown. 
+2025-08-14 13:03:58,941 127676 INFO test_midea_18 odoo.sql_db: ConnectionPool(read/write;used=0/count=0/max=64): Closed 2 connections  
+
++===================================================================
+| please test [36mmidea[0m (18.0): [32mSUCCESS![0m
++===================================================================
+
+[1;37;44m$ coverage report --rcfile=/home/odoo/odoo18/zerobug-test/midea/tests/logs/coverage_midea_18rc -m
+[34;107mName                                                             Stmts   Miss  Cover   Missing
+----------------------------------------------------------------------------------------------
+/home/odoo/odoo18/zerobug-test/midea/models/midea_qci.py            19      0   100%
+/home/odoo/odoo18/zerobug-test/midea/models/midea_table_wco.py      35      0   100%
+/home/odoo/odoo18/zerobug-test/midea/models/partner.py               4      0   100%
+----------------------------------------------------------------------------------------------
+TOTAL                                                               58      0   100%
+[0m

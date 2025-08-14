@@ -1,5 +1,5 @@
 #
-# Copyright 2022-24 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
+# Copyright 2024-25 - SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 #
 # Contributions to development, thanks to:
 # * Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
@@ -54,7 +54,8 @@ class TestMidea(SingleTransactionCase):
         self.assertEqual(rec.name, self.MIDEA_TABLE_WCO_NAME)
         self.assertEqual(rec.state, self.MIDEA_TABLE_WCO_STATE)
         self.assertEqual(rec.company_id, self.company)
-        # Now test the <write_rec> functon
+
+        # Now test the <write> functon
         self.resource_write(
             model_name,
             self.midea_table_wco.id,
@@ -64,4 +65,17 @@ class TestMidea(SingleTransactionCase):
         self.assertEqual(rec.name, self.MIDEA_TABLE_WCO_ALTER_NAME)
         self.assertEqual(rec.state, self.MIDEA_TABLE_WCO_STATE)
         self.assertEqual(rec.company_id, self.company)
+
+        rec.action_done()
+        rec = self.resource_browse(self.midea_table_wco.id, resource=model_name)
+        self.assertEqual(rec.state, "done")
+
+        rec.action_cancel()
+        rec = self.resource_browse(self.midea_table_wco.id, resource=model_name)
+        self.assertEqual(rec.state, "cancel")
+
+        rec.action_draft()
+        rec = self.resource_browse(self.midea_table_wco.id, resource=model_name)
+        self.assertEqual(rec.state, self.MIDEA_TABLE_WCO_STATE)
+
         _logger.info("Test %s SUCCESSFULLY ended." % __file__)

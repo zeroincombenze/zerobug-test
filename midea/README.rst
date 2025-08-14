@@ -1,10 +1,10 @@
 =============================
-|icon| midea/Midea 16.0.0.1.7
+|icon| midea/Midea 18.0.0.1.9
 =============================
 
-**z0bug_odoo test suite**
+**Migration and backporting test suite**
 
-.. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/16.0/midea/static/description/icon.png
+.. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/18.0/midea/static/description/icon.png
 
 
 .. contents::
@@ -33,7 +33,7 @@ Vedere `development differences among Odoo version <https://itpp.dev/port/index.
 
 |thumbnail|
 
-.. |thumbnail| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/16.0/midea/static/description/description.png
+.. |thumbnail| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/18.0/midea/static/description/description.png
 
 
 Getting started | Primi passi
@@ -44,9 +44,6 @@ Getting started | Primi passi
 
 Prerequisites | Prerequisiti
 ----------------------------
-
-* python 3.8
-* postgresql 12.0+ (warning for 14.0)
 
 ::
 
@@ -76,15 +73,15 @@ Installation | Installazione
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
-| $HOME/16.0 |
+| $HOME/18.0 |
 +----------------------------------------------------------------------------+
 
 ::
 
     # Odoo repository installation; OCB repository must be installed
-    deploy_odoo clone -r zerobug-test -b 16.0 -G zero -p $HOME/16.0
+    deploy_odoo clone -r zerobug-test -b 18.0 -G zero -p $HOME/18.0
     # Upgrade virtual environment
-    vem amend $HOME/16.0/venv_odoo
+    vem amend $HOME/18.0/venv_odoo
 
 
 
@@ -93,8 +90,8 @@ Upgrade | Aggiornamento
 
 ::
 
-    deploy_odoo update -r zerobug-test -b 16.0 -G zero -p $HOME/16.0
-    vem amend $HOME/16.0/venv_odoo
+    deploy_odoo update -r zerobug-test -b 18.0 -G zero -p $HOME/18.0
+    vem amend $HOME/18.0/venv_odoo
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
@@ -131,22 +128,24 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History | Cronologia modifiche
 ----------------------------------------
 
-16.0.0.1.8 (2024-02-11)
+18.0.0.1.9 (2025-07-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Code migrated or backported with arcangelo
-* [QUA] Test coverage 100% (14: 0+14) [16 TestPoints] - quality rating 243 (target 100)
+* [IMP] New fields added to test migration and back porting
+* [QUA] Test coverage 100% (58: 0+58) [43 TestPoints] - quality rating 101 (target 100)
 
-16.0.0.1.7 (2023-11-17)
+18.0.0.1.8 (2024-03-07)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Code migrated or backported with arcangelo
+* [QUA] Test coverage 100% (14: 0+14) [30 TestPoints] - quality rating 403 (target 100)
+
+18.0.0.1.7 (2023-11-17)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Tests upgrade
 * [QUA] Test coverage 100% (14: 0+14) [14 TestPoint]
-
-16.0.0.1.6 (2022-11-11)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* [REF] Experimental use of odoo_score for odoo
 
 
 
@@ -197,7 +196,7 @@ La distribuzione `Zeroincombenze® <https://www.zeroincombenze.it/>`__ è proget
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2024-02-13
+Last Update / Ultimo aggiornamento: 2025-08-14
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
@@ -208,8 +207,8 @@ Last Update / Ultimo aggiornamento: 2024-02-13
 .. |license opl| image:: https://img.shields.io/badge/licence-OPL-7379c3.svg
     :target: https://www.odoo.com/documentation/user/14.0/legal/licenses/licenses.html
     :alt: License: OPL
-.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-16.svg
-    :target: https://erp16.zeroincombenze.it
+.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-18.svg
+    :target: https://erp18.zeroincombenze.it
     :alt: Try Me
 .. |Zeroincombenze| image:: https://avatars0.githubusercontent.com/u/6972555?s=460&v=4
    :target: https://www.zeroincombenze.it/
