@@ -1,0 +1,74 @@
+2025-07-29 19:05:17,000 200342 DAEMON test_test_testenv_12 run_odoo_debug.sh: cd /home/odoo/12.0/venv_odoo && source ./bin/activate
+2025-07-29 17:05:23,366 203346 INFO ? odoo: Odoo version 12.0 
+2025-07-29 17:05:23,366 203346 INFO ? odoo: Using configuration file at /home/odoo/12.0/zerobug-test/test_testenv/tests/logs/zero12.zerobug-test.test_testenv.conf 
+2025-07-29 17:05:23,366 203346 INFO ? odoo: addons paths: ['/home/odoo/.local/share/Odoo12/addons/12.0', '/home/odoo/12.0/odoo/addons', '/home/odoo/12.0/addons', '/home/odoo/.local/share/Odoo12/addons', '/home/odoo/12.0/account-analytic', '/home/odoo/12.0/account-budgeting', '/home/odoo/12.0/account-closing', '/home/odoo/12.0/account-consolidation', '/home/odoo/12.0/account-financial-reporting', '/home/odoo/12.0/account-financial-tools', '/home/odoo/12.0/account-fiscal-rule', '/home/odoo/12.0/account-invoice-reporting', '/home/odoo/12.0/account-invoicing', '/home/odoo/12.0/account-payment', '/home/odoo/12.0/account-reconcile', '/home/odoo/12.0/bank-payment', '/home/odoo/12.0/bank-statement-import', '/home/odoo/12.0/brand', '/home/odoo/12.0/calendar', '/home/odoo/12.0/commission', '/home/odoo/12.0/community-data-files', '/home/odoo/12.0/connector', '/home/odoo/12.0/contract', '/home/odoo/12.0/credit-control', '/home/odoo/12.0/crm', '/home/odoo/12.0/currency', '/home/odoo/12.0/data-protection', '/home/odoo/12.0/ddmrp', '/home/odoo/12.0/delivery-carrier', '/home/odoo/12.0/dms', '/home/odoo/12.0/e-commerce', '/home/odoo/12.0/edi', '/home/odoo/12.0/field-service', '/home/odoo/12.0/helpdesk', '/home/odoo/12.0/hr', '/home/odoo/12.0/intrastat-extrastat', '/home/odoo/12.0/knowledge', '/home/odoo/12.0/l10n-italy', '/home/odoo/12.0/l10n-italy-supplemental', '/home/odoo/12.0/maintenance', '/home/odoo/12.0/management-system', '/home/odoo/12.0/manufacture', '/home/odoo/12.0/margin-analysis', '/home/odoo/12.0/marketplace', '/home/odoo/12.0/mis-builder', '/home/odoo/12.0/multi-company', '/home/odoo/12.0/partner-contact', '/home/odoo/12.0/product-attribute', '/home/odoo/12.0/product-kitting', '/home/odoo/12.0/product-pack', '/home/odoo/12.0/product-variant', '/home/odoo/12.0/profiles', '/home/odoo/12.0/project', '/home/odoo/12.0/purchase-reporting', '/home/odoo/12.0/purchase-workflow', '/home/odoo/12.0/queue', '/home/odoo/12.0/report-print-send', '/home/odoo/12.0/reporting-engine', '/home/odoo/12.0/rma', '/home/odoo/12.0/sale-financial', '/home/odoo/12.0/sale-reporting', '/home/odoo/12.0/sale-workflow', '/home/odoo/12.0/search-engine', '/home/odoo/12.0/server-auth', '/home/odoo/12.0/server-backend', '/home/odoo/12.0/server-brand', '/home/odoo/12.0/server-env', '/home/odoo/12.0/server-tools', '/home/odoo/12.0/server-ux', '/home/odoo/12.0/social', '/home/odoo/12.0/stock-logistics-barcode', '/home/odoo/12.0/stock-logistics-reporting', '/home/odoo/12.0/stock-logistics-tracking', '/home/odoo/12.0/stock-logistics-transport', '/home/odoo/12.0/stock-logistics-warehouse', '/home/odoo/12.0/stock-logistics-workflow', '/home/odoo/12.0/storage', '/home/odoo/12.0/timesheet', '/home/odoo/12.0/uncovered', '/home/odoo/12.0/web', '/home/odoo/12.0/webhook', '/home/odoo/12.0/website', '/home/odoo/12.0/wms', '/home/odoo/12.0/zerobug-test', '/home/odoo/12.0/venv_odoo/lib/python3.7/site-packages/odoo/addons'] 
+2025-07-29 17:05:23,366 203346 INFO ? odoo: database: odoo12@localhost:5432 
+2025-07-29 17:05:23,397 203346 INFO ? odoo.addons.server_environment.serv_config: not using server_environment_files for configuration, no directory found 
+2025-07-29 17:05:23,397 203346 INFO ? odoo.addons.server_environment.serv_config: `running_env` not found. Using default = `test`. 
+2025-07-29 17:05:23,397 203346 INFO ? odoo.addons.server_environment.serv_config: We strongly recommend against using the rc file but instead use an explicit config file or env variable. 
+2025-07-29 17:05:23,558 203346 INFO ? odoo.addons.base.models.ir_actions_report: Will use the Wkhtmltopdf binary at /home/odoo/12.0/venv_odoo/bin/wkhtmltopdf 
+2025-07-29 17:05:23,686 203346 INFO ? odoo.service.server: HTTP service (werkzeug) running on NB200Z0.localdomain:31714 
+2025-07-29 17:05:23,699 203346 INFO test_test_testenv_12 odoo.modules.loading: loading 1 modules... 
+2025-07-29 17:05:23,706 203346 INFO test_test_testenv_12 odoo.modules.loading: 1 modules loaded in 0.01s, 0 queries 
+2025-07-29 17:05:23,806 203346 INFO test_test_testenv_12 odoo.modules.loading: updating modules list 
+2025-07-29 17:05:23,808 203346 INFO test_test_testenv_12 odoo.addons.base.models.ir_module: ALLOW access to module.update_list on [] to user __system__ #1 via n/a 
+2025-07-29 17:05:32,002 203346 INFO test_test_testenv_12 odoo.addons.base.models.ir_module: ALLOW access to module.button_install on ['test_testenv'] to user __system__ #1 via n/a 
+2025-07-29 17:05:32,249 203346 INFO test_test_testenv_12 odoo.modules.loading: loading 37 modules... 
+2025-07-29 17:05:32,517 203346 INFO test_test_testenv_12 odoo.modules.loading: 37 modules loaded in 0.27s, 0 queries 
+2025-07-29 17:05:32,522 203346 INFO test_test_testenv_12 odoo.modules.loading: loading 38 modules... 
+2025-07-29 17:05:32,911 203346 WARNING test_test_testenv_12 odoo.models: The model testenv.all.fields has no _description 
+2025-07-29 17:05:33,062 203346 INFO test_test_testenv_12 odoo.modules.registry: module test_testenv: creating or updating database tables 
+2025-07-29 17:05:33,192 203346 WARNING test_test_testenv_12 odoo.addons.base.models.ir_model: Two fields (measure, amount) of testenv.all.fields() have the same label: Amount. 
+2025-07-29 17:05:33,255 203346 INFO test_test_testenv_12 odoo.modules.loading: loading test_testenv/security/ir.model.access.csv 
+2025-07-29 17:05:33,280 203346 INFO test_test_testenv_12 odoo.modules.loading: loading test_testenv/views/testenv_model_view.xml 
+2025-07-29 17:05:33,335 203346 INFO test_test_testenv_12 odoo.modules.loading: loading test_testenv/wizard/wizard_example_menu.xml 
+2025-07-29 17:05:33,379 203346 INFO test_test_testenv_12 odoo.modules.loading: Module test_testenv: loading demo 
+2025-07-29 17:05:33,542 203346 INFO test_test_testenv_12 odoo.modules.module: odoo.addons.test_testenv.tests.test_testenv running tests. 
+2025-07-29 17:05:33,543 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: test_mytest (odoo.addons.test_testenv.tests.test_testenv.MyTest) 
+2025-07-29 17:05:33,568 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: Please, ignore messages 'field <...> does not exist in <...>' 
+2025-07-29 17:05:33,600 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: Now, all warning & messages are valid! 
+2025-07-29 17:05:33,732 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.fiscalpos_it not found 
+2025-07-29 17:05:33,741 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.payment_2 not found 
+2025-07-29 17:05:33,742 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ Invalid value it_IT 
+2025-07-29 17:05:33,925 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ xref 'z0bug.mycompany' -> 'base.main_company' 
+2025-07-29 17:05:33,926 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ xref 'z0bug.partner_mycompany' -> 'base.main_partner' 
+2025-07-29 17:05:33,983 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺🎺 Starting test v2.0.22 (debug_level=0, commit=False) 
+2025-07-29 17:05:33,988 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Testing module: test_testenv (12.0.2.0.23) 
+2025-07-29 17:05:33,988 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Loading data from: res.partner, res.currency.rate, res.partner.bank, product.template  
+2025-07-29 17:05:34,390 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference z0bug.conf_a_sale2 not found 
+2025-07-29 17:05:34,672 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🎺🎺 Loading data from: account.payment.term, account.payment.term.line, res.partner, res.partner.bank, product.template  
+2025-07-29 17:05:34,915 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: ⚠ External reference external.109 not found 
+2025-07-29 17:05:34,916 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: 🎺 Testing test_currency_2many() 
+2025-07-29 17:05:34,956 203346 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted res.currency.rate records with IDs: [176] 
+2025-07-29 17:05:35,093 203346 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted ir.model.data records with IDs: [11337] 
+2025-07-29 17:05:35,099 203346 INFO test_test_testenv_12 odoo.models.unlink: User #1 deleted res.currency.rate records with IDs: [173] 
+2025-07-29 17:05:35,114 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🛑 [1;31mExternal ID base.EUR_2025-12-30 not found[0m 
+2025-07-29 17:05:35,114 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.testenv: 🏆🥇 [1;32m80 tests SUCCESSFULLY completed[0m 
+2025-07-29 17:05:35,223 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: ERROR 
+2025-07-29 17:05:35,224 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: ====================================================================== 
+2025-07-29 17:05:35,224 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: ERROR: test_mytest (odoo.addons.test_testenv.tests.test_testenv.MyTest) 
+2025-07-29 17:05:35,224 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: Traceback (most recent call last): 
+2025-07-29 17:05:35,224 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: `   File "/home/odoo/12.0/zerobug-test/test_testenv/tests/test_testenv.py", line 1489, in test_mytest 
+2025-07-29 17:05:35,224 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: `     self._test_currency_2many() 
+2025-07-29 17:05:35,224 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: `   File "/home/odoo/12.0/zerobug-test/test_testenv/tests/test_testenv.py", line 872, in _test_currency_2many 
+2025-07-29 17:05:35,224 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: `     self.assertTrue(self.resource_browse(ccy_xref)) 
+2025-07-29 17:05:35,224 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: `   File "/home/odoo/12.0/zerobug-test/test_testenv/tests/testenv.py", line 2536, in resource_browse 
+2025-07-29 17:05:35,224 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: `     self.raise_error("External ID %s not found" % xref)  # pragma: no cover 
+2025-07-29 17:05:35,224 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: `   File "/home/odoo/12.0/zerobug-test/test_testenv/tests/testenv.py", line 788, in raise_error 
+2025-07-29 17:05:35,224 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: `     raise ValueError(mesg) 
+2025-07-29 17:05:35,224 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: ` ValueError: External ID base.EUR_2025-12-30 not found 
+2025-07-29 17:05:35,224 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: Ran 1 test in 1.681s 
+2025-07-29 17:05:35,224 203346 ERROR test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv: FAILED 
+2025-07-29 17:05:35,224 203346 INFO test_test_testenv_12 odoo.addons.test_testenv.tests.test_testenv:  (errors=1) 
+2025-07-29 17:05:35,225 203346 ERROR test_test_testenv_12 odoo.modules.module: Module test_testenv: 0 failures, 1 errors 
+2025-07-29 17:05:35,249 203346 INFO test_test_testenv_12 odoo.modules.loading: 38 modules loaded in 2.73s, 1852 queries 
+2025-07-29 17:05:35,649 203346 ERROR test_test_testenv_12 odoo.modules.loading: At least one test failed when loading the modules. 
+2025-07-29 17:05:35,657 203346 INFO test_test_testenv_12 odoo.service.server: Starting post tests 
+2025-07-29 17:05:35,659 203346 INFO test_test_testenv_12 odoo.service.server: All post-tested in 0.00s, 0 queries 
+2025-07-29 17:05:35,659 203346 INFO test_test_testenv_12 odoo.service.server: Initiating shutdown 
+2025-07-29 17:05:35,659 203346 INFO test_test_testenv_12 odoo.service.server: Hit CTRL-C again or send a second signal to force the shutdown. 
+
++===================================================================
+| please test [36mtest_testenv[0m (12.0): [31mFAILED![0m
++===================================================================
+

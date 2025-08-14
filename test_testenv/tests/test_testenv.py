@@ -1,5 +1,4 @@
 from future.utils import PY2
-# import os
 from datetime import date, datetime
 import logging
 import base64
@@ -467,11 +466,11 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(self.get_resource_data("res.currency.rate", xref)["rate"], 0.9)
 
         self.date_rate_1 = self.compute_date("+1", refdate=rate_date)
-        xref = "base.EUR_%s" % self.date_rate_1
+        xref1 = "base.EUR_%s" % self.date_rate_1
         self.declare_resource_data(
             "res.currency.rate",
             {
-                xref: {
+                xref1: {
                     "currency_id": "base.EUR",
                     "name": ["+1", self.date_rate_0],
                     "rate": "0.95",
@@ -480,13 +479,16 @@ class MyTest(SingleTransactionCase):
             },
         )
         self.assertEqual(
-            self.get_resource_data("res.currency.rate", xref)["rate"], 0.95
+            self.get_resource_data("res.currency.rate", xref1)["rate"], 0.95
         )
 
     def _test_04(self):
         # ===[Test child records + conversion data]===
+        # Two rate records are written in prior test:
+        # xref -> ####-12-30 and xref1 -> ####-12-31
+        # Now we make these record available on database because resource_write
+        # automatically adds declared child records
         model = "res.currency"
-        # The resource_write activates the child record of res.currency.rate
         self.resource_write(model, "base.EUR", {"active": True})
         self.assertTrue(self.resource_browse("base.EUR").active)
 
@@ -496,22 +498,22 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(self.resource_browse(xref, resource=model).rate, 0.9)
 
         # Test binding without declared resource
-        xref = "base.EUR_%s" % self.date_rate_1
-        self.assertEqual(self.resource_browse(xref).rate, 0.95)
+        xref1 = "base.EUR_%s" % self.date_rate_1
+        self.assertEqual(self.resource_browse(xref1).rate, 0.95)
 
         # Now create a record out of test environment (w/o xref)
         # then we test binding w/o declared resource
         self.date_rate_2 = self.compute_date("+1", refdate=self.date_rate_1)
-        xref = "base.EUR_%s" % self.date_rate_2
+        xref2 = "base.EUR_%s" % self.date_rate_2
         self.env[model].create(
             {
                 "currency_id": self.env.ref("base.EUR").id,
-                "name": self.date_rate_2,
+                "name": datetime.strptime(self.date_rate_2, "%Y-%m-%d").date(),
                 "rate": "0.88",
                 "company_id": self.default_company().id,
             }
         )
-        self.assertEqual(self.resource_browse(xref).rate, 0.88)
+        self.assertEqual(self.resource_browse(xref2).rate, 0.88)
 
     def _test_setup(self):
         # ===[setup_env() functions]===
@@ -527,6 +529,10 @@ class MyTest(SingleTransactionCase):
                 "vat": "IT05111810015",
                 "country_id": "base.it",
             },
+        )
+        # In TEST_RES_PARTNER vat is not declared
+        self.assertIsNone(
+            self.get_resource_data("res.partner", "z0bug.partner_mycompany").get("vat")
         )
         self.setup_env()
         self.assertEqual(
@@ -594,7 +600,7 @@ class MyTest(SingleTransactionCase):
         # (g)  [(6,0,[xref,...])]      | [(6,0,[ids])]      | [ids]      | [ids]
         # (h)  dict                    | [(0,0,dict)        | [dict]     | [dict]
         # (i)  xref (exists)           | [(6,0,[id])]       | [id]       | [id]
-        # (j)  xref (not exists)       | [(0,0,dict)]       | [dict]     | [dict]
+        # (j)  xref (not exists)       | [(0,0,dict)]       | [dict]     | [dict] (*)
         # (k)  [xref] (exists)         | [(6,0,[id])]       | [id]       | [id]
         # (l)  [xref] (not exists)     | [(0,0,dict)]       | [dict]     | [dict]
         # (m)  [xref,...] (exists)     | [(6,0,[ids])]      | [ids]      | [ids]
@@ -603,35 +609,45 @@ class MyTest(SingleTransactionCase):
         # (p)  id                      | [(6,0,[id])]       | [id]       | [id]
         # (q)  "xref,..." (exists)     | [(6,0,[ids])]      | [ids]      | [ids]
         # (r)  "xref,..." (not exists) | [(0,0,dict),(...)] | [dict,...] | [dict,...]
+        # * This command adds xref to *2many field
         def read_curreny_rate(name):
             ccy_id = self.env.ref("base.EUR").id
             res = self.env["res.currency.rate"].search(
-                [("currency_id", "=", ccy_id), ("name", "=", name)])
+                [("currency_id", "=", ccy_id), ("name", "=", name)]
+            )
             if res:
                 return res[0]
             return res
 
+        # Three rate records are written in prior test:
+        # xref -> ####-12-30, rate=0.9
+        # xref1 -> ####-12-31, rate=0.95
+        # xref2 -> ###>-01-01, rate=0.88
         _logger.info("🎺 Testing test_currency_2many()")
         model = "res.currency"
         ccy_xref = "base.EUR_%s" % self.date_rate_0
         ccy_xref1 = "base.EUR_%s" % self.date_rate_1
+        ccy_xref2 = "base.EUR_%s" % self.date_rate_2
         # Default rate for xref nd xref1
         def_rate = self.get_resource_data("res.currency.rate", ccy_xref)["rate"]
         def_rate1 = self.get_resource_data("res.currency.rate", ccy_xref1)["rate"]
+        date_value = datetime.strptime("2025-01-01", "%Y-%m-%d").date()
 
         # *xmany as Odoo convention - test-case (a)
         self.resource_write(
             model,
             "base.EUR",
-            {
-                "rate_ids": [
-                    (0, 0, {"name": "2022-01-01", "rate": 0.77}),
-                ]
-            },
+            {"rate_ids": [(0, 0, {"name": date_value, "rate": 0.77})]},
         )
-        self.assertEqual(read_curreny_rate("2022-01-01").rate, 0.77)
+        self.assertEqual(read_curreny_rate(date_value).rate, 0.77)
 
         # *xmany as Odoo convention - test-case (a)
+        # Now, we have 3 rate records
+        # xref -> ####-12-30, rate=0.9
+        # xref1 -> ####-12-31, rate=0.95
+        # xref2 -> ###>-01-01, rate=0.88
+        # ONLY DB -> ####-01-01, rate=0.77
+        # OTHER RATE RECORDS
         self.resource_write(
             model,
             "base.EUR",
@@ -639,17 +655,25 @@ class MyTest(SingleTransactionCase):
                 "rate_ids": [
                     (
                         1,
-                        read_curreny_rate("2022-01-01").id,
-                        {"name": "2022-01-01", "rate": 0.67}
+                        read_curreny_rate(date_value).id,
+                        {"name": date_value, "rate": 0.67}
                     ),
                 ]
             },
         )
-        self.assertEqual(read_curreny_rate("2022-01-01").rate, 0.67)
+        self.assertEqual(read_curreny_rate(date_value).rate, 0.67)
 
         # *xmany as Odoo convention - test-case (a)
+        # xref -> ####-12-30, rate=0.9
+        # xref1 -> ####-12-31, rate=0.95
+        # xref2 -> ###>-01-01, rate=0.88
+        # ONLY DB -> ####-01-01, rate=0.67
+        # OTHER RATE RECORDS
         self.resource_browse(ccy_xref).write({"rate": def_rate - 0.2})
         self.resource_browse(ccy_xref1).write({"rate": def_rate1 - 0.2})
+        # xref -> ####-12-30, rate=0.7
+        # xref1 -> ####-12-31, rate=0.75
+        # Now restore original values
         self.resource_write(
             model,
             "base.EUR",
@@ -672,6 +696,11 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(self.resource_browse(ccy_xref1).rate, def_rate1)
 
         # *xmany as Odoo convention and xref - test-case (b)
+        # xref -> ####-12-30, rate=0.9
+        # xref1 -> ####-12-31, rate=0.95
+        # xref2 -> ###>-01-01, rate=0.88
+        # ONLY DB -> ####-01-01, rate=0.67
+        # OTHER RATE RECORDS
         self.resource_browse(ccy_xref).write({"rate": def_rate - 0.2})
         self.assertLess(self.resource_browse(ccy_xref).rate, def_rate)
         self.resource_write(
@@ -684,36 +713,50 @@ class MyTest(SingleTransactionCase):
         self.assertEqual(self.resource_browse(ccy_xref).rate, def_rate)
 
         # *xmany as Odoo convention [(2,id)] - test-case (c)
+        # Warning: linked rate record will be deleted
+        # xref -> ####-12-30, rate=0.9
+        # xref1 -> ####-12-31, rate=0.95
+        # xref2 -> ###>-01-01, rate=0.88
+        # ONLY DB -> ####-01-01, rate=0.67
+        # OTHER RATE RECORDS
         self.resource_write(
             model,
             "base.EUR",
             {
-                "rate_ids": [(2, read_curreny_rate("2022-01-01").id)],
+                "rate_ids": [(2, read_curreny_rate(date_value).id)],
             },
         )
-        self.assertFalse(read_curreny_rate("2022-01-01"))
+        self.assertFalse(read_curreny_rate(date_value))
 
-        # *xmany as Odoo convention [(3,xref1)] - test-case (d)
+        # *xmany as Odoo convention [(3,xref2)] - test-case (d): unlink
+        # Warning: weird behavior, xref2 record is deleted
+        # xref -> ####-12-30, rate=0.9
+        # xref1 -> ####-12-31, rate=0.95
+        # xref2 -> ###>-01-01, rate=0.88
+        # OTHER RATE RECORDS
         self.resource_write(
             model,
             "base.EUR",
             {
-                "rate_ids": [(3, ccy_xref1)],
+                "rate_ids": [(3, ccy_xref2)],
             },
         )
-        # TODO> Weird behavior, xref1 record is deleted
-        #  self.assertTrue(self.resource_browse(xref1))
-        self.resource_make("res.currency.rate", xref=ccy_xref1)
+
+        # xref -> ####-12-30, rate=0.9
+        # xref1 -> ####-12-31, rate=0.95
         self.assertIn(
             self.resource_browse(ccy_xref),
             self.resource_browse("base.EUR").rate_ids,
         )
-        self.assertNotIn(
+        self.assertIn(
             self.resource_browse(ccy_xref1),
             self.resource_browse("base.EUR").rate_ids,
         )
 
-        # *xmany as Odoo convention [(4,xref1)] - test-case (d)
+        # *xmany as Odoo convention [(4,xref1)] - test-case (d), relink record
+        # xref -> ####-12-30, rate=0.9
+        # xref1 -> ####-12-31, rate=0.95
+        # OTHER RATE RECORDS
         self.resource_write(
             model,
             "base.EUR",
@@ -731,6 +774,7 @@ class MyTest(SingleTransactionCase):
         )
 
         # *xmany as Odoo convention - test-case (e)
+        # Warning: all other records will be deleted
         self.resource_write(
             model,
             "base.EUR",
@@ -756,20 +800,33 @@ class MyTest(SingleTransactionCase):
             self.resource_browse("base.EUR").rate_ids,
         )
 
-        # test-case (f) (g)
+        # xref -> ####-12-30, rate=0.9
+        # xref1 -> ####-12-31, rate=0.95
+        # We constrain only xref with [(6,0,ccy_xref)] which remove xref1
+        # Then we recreate xref1 and do test-case (f) and finally (g)
         self.resource_write(model, "base.EUR", {"rate_ids": [(6, 0, ccy_xref)]})
-        self.resource_write(
-            model, "base.EUR", {"rate_ids": [(6, 0, [ccy_xref, ccy_xref1])]})
-
-        # *xmany as Odoo convention - test-case (h)
+        self.resource_create("res.currency.rate", xref=ccy_xref1)
         self.resource_write(
             model,
             "base.EUR",
             {
-                "rate_ids": {"name": "2022-01-01", "rate": 0.68},
+                "rate_ids": [(4, ccy_xref1)],
             },
         )
-        self.assertEqual(read_curreny_rate("2022-01-01").rate, 0.68)
+        self.resource_write(
+            model, "base.EUR", {"rate_ids": [(6, 0, [ccy_xref, ccy_xref1])]})
+
+        # *xmany as Odoo convention - test-case (h)
+        # xref -> ####-12-30, rate=0.9
+        # xref1 -> ####-12-31, rate=0.95
+        self.resource_write(
+            model,
+            "base.EUR",
+            {
+                "rate_ids": {"name": date_value, "rate": 0.68},
+            },
+        )
+        self.assertEqual(read_curreny_rate(date_value).rate, 0.68)
         self.assertIn(
             self.resource_browse(ccy_xref),
             self.resource_browse("base.EUR").rate_ids,
@@ -779,28 +836,38 @@ class MyTest(SingleTransactionCase):
             self.resource_browse("base.EUR").rate_ids,
         )
 
-        # *2many as text value - test-case (i)
+        # xref -> ####-12-30, rate=0.9
+        # xref1 -> ####-12-31, rate=0.95
+        # ONLY DB -> ####-01-01, rate=0.68
+        # We constrain only xref with 6,0,ccy_xref which remove xref1 and ONLY DB
+        # Then we do test-case (i): *2many as text value
         self.resource_write(model, "base.EUR", {"rate_ids": ccy_xref})
-        self.assertIn(
+        self.assertEqual(
             self.resource_browse(ccy_xref),
-            self.resource_browse("base.EUR").rate_ids,
-        )
-        self.assertNotIn(
-            self.resource_browse(ccy_xref1),
             self.resource_browse("base.EUR").rate_ids,
         )
 
         # *2many as text value - test-case (j)
-        self.resource_browse(ccy_xref1).unlink()
+        # xref -> ####-12-30, rate=0.9
+        # We add ccy_xref with xref1
         self.resource_write(model, "base.EUR", {"rate_ids": ccy_xref1})
-        self.assertTrue(self.resource_browse(ccy_xref1))
+        self.assertIn(
+            self.resource_browse(ccy_xref1),
+            self.resource_browse("base.EUR").rate_ids,
+        )
 
-        # *2many as text value - test-case (k)
+        # xref -> ####-12-30, rate=0.9
+        # xref1 -> ####-12-31, rate=0.95
+        # We constrain only xref with [ccy_xref] which remove xref1
+        # Then we do test-case (k): *2many as text value enclosed in list
         self.resource_write(model, "base.EUR", {"rate_ids": [ccy_xref]})
-        self.assertTrue(self.resource_browse(ccy_xref))
+        self.assertEqual(
+            self.resource_browse(ccy_xref),
+            self.resource_browse("base.EUR").rate_ids,
+        )
 
         # *2many as text value - test-case (l) (m) (n)
-        # self.resource_browse(ccy_xref1).unlink()
+        self.resource_browse(ccy_xref).unlink()
         self.resource_write(model, "base.EUR", {"rate_ids": [ccy_xref, ccy_xref1]})
         self.assertTrue(self.resource_browse(ccy_xref))
         self.assertTrue(self.resource_browse(ccy_xref1))
