@@ -3,7 +3,7 @@
 
 * [IMP] Code migrated or backported with arcangelo
 * [IMP] New fields added to test migration and back porting
-* [QUA] Test coverage 100% (58: 0+58) [19 TestPoints] - quality rating 76 (target 100)
+* [QUA] Test coverage 100% (58: 0+58) [43 TestPoints] - quality rating 101 (target 100)
 
 10.0.0.1.8 (2024-03-07)
 ~~~~~~~~~~~~~~~~~~~~~~~

@@ -33,7 +33,7 @@ Vedere `development differences among Odoo version <https://itpp.dev/port/index.
 
 |thumbnail|
 
-.. |thumbnail| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/10.0/midea/static/description/description.gif
+.. |thumbnail| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/10.0/midea/static/description/description.png
 
 
 Getting started | Primi passi
@@ -136,7 +136,7 @@ ChangeLog History | Cronologia modifiche
 
 * [IMP] Code migrated or backported with arcangelo
 * [IMP] New fields added to test migration and back porting
-* [QUA] Test coverage 100% (58: 0+58) [19 TestPoints] - quality rating 76 (target 100)
+* [QUA] Test coverage 100% (58: 0+58) [43 TestPoints] - quality rating 101 (target 100)
 
 10.0.0.1.8 (2024-03-07)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -199,7 +199,7 @@ La distribuzione `Zeroincombenze® <https://www.zeroincombenze.it/>`__ è proget
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2025-07-19
+Last Update / Ultimo aggiornamento: 2025-08-14
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
