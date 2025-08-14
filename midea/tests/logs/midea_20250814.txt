@@ -1,0 +1,128 @@
+2025-08-14 12:41:49,799 70306 INFO ? odoo: Odoo version 16.0 
+2025-08-14 12:41:49,799 70306 INFO ? odoo: Using configuration file at /home/odoo/odoo16/zerobug-test/midea/tests/logs/zero16.zerobug-test.midea.conf 
+2025-08-14 12:41:49,799 70306 INFO ? odoo: addons paths: ['/home/odoo/odoo16/odoo/addons', '/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/odoo/addons', '/home/odoo/.local/share/Odoo16/addons/16.0', '/home/odoo/odoo16/addons', '/home/odoo/.local/share/Odoo16/addons', '/home/odoo/odoo16/account-analytic', '/home/odoo/odoo16/account-budgeting', '/home/odoo/odoo16/account-closing', '/home/odoo/odoo16/account-consolidation', '/home/odoo/odoo16/account-financial-reporting', '/home/odoo/odoo16/account-financial-tools', '/home/odoo/odoo16/account-fiscal-rule', '/home/odoo/odoo16/account-invoice-reporting', '/home/odoo/odoo16/account-invoicing', '/home/odoo/odoo16/account-payment', '/home/odoo/odoo16/account-reconcile', '/home/odoo/odoo16/automation', '/home/odoo/odoo16/bank-payment', '/home/odoo/odoo16/bank-statement-import', '/home/odoo/odoo16/brand', '/home/odoo/odoo16/calendar', '/home/odoo/odoo16/commission', '/home/odoo/odoo16/community-data-files', '/home/odoo/odoo16/connector', '/home/odoo/odoo16/contract', '/home/odoo/odoo16/credit-control', '/home/odoo/odoo16/crm', '/home/odoo/odoo16/currency', '/home/odoo/odoo16/data-protection', '/home/odoo/odoo16/ddmrp', '/home/odoo/odoo16/delivery-carrier', '/home/odoo/odoo16/dms', '/home/odoo/odoo16/e-commerce', '/home/odoo/odoo16/e-learning', '/home/odoo/odoo16/edi', '/home/odoo/odoo16/edi-framework', '/home/odoo/odoo16/helpdesk', '/home/odoo/odoo16/hr', '/home/odoo/odoo16/intrastat-extrastat', '/home/odoo/odoo16/knowledge', '/home/odoo/odoo16/l10n-italy', '/home/odoo/odoo16/l10n-italy-supplemental', '/home/odoo/odoo16/maintenance', '/home/odoo/odoo16/management-system', '/home/odoo/odoo16/manufacture', '/home/odoo/odoo16/margin-analysis', '/home/odoo/odoo16/marketplace', '/home/odoo/odoo16/mis-builder', '/home/odoo/odoo16/multi-company', '/home/odoo/odoo16/partner-contact', '/home/odoo/odoo16/product-attribute', '/home/odoo/odoo16/product-kitting', '/home/odoo/odoo16/product-pack', '/home/odoo/odoo16/product-variant', '/home/odoo/odoo16/profiles', '/home/odoo/odoo16/project', '/home/odoo/odoo16/purchase-reporting', '/home/odoo/odoo16/purchase-workflow', '/home/odoo/odoo16/queue', '/home/odoo/odoo16/report-print-send', '/home/odoo/odoo16/reporting-engine', '/home/odoo/odoo16/rma', '/home/odoo/odoo16/sale-financial', '/home/odoo/odoo16/sale-reporting', '/home/odoo/odoo16/sale-workflow', '/home/odoo/odoo16/search-engine', '/home/odoo/odoo16/server-auth', '/home/odoo/odoo16/server-backend', '/home/odoo/odoo16/server-brand', '/home/odoo/odoo16/server-env', '/home/odoo/odoo16/server-tools', '/home/odoo/odoo16/server-ux', '/home/odoo/odoo16/social', '/home/odoo/odoo16/stock-logistics-barcode', '/home/odoo/odoo16/stock-logistics-reporting', '/home/odoo/odoo16/stock-logistics-tracking', '/home/odoo/odoo16/stock-logistics-transport', '/home/odoo/odoo16/stock-logistics-warehouse', '/home/odoo/odoo16/stock-logistics-workflow', '/home/odoo/odoo16/storage', '/home/odoo/odoo16/timesheet', '/home/odoo/odoo16/uncovered', '/home/odoo/odoo16/web', '/home/odoo/odoo16/webhook', '/home/odoo/odoo16/website', '/home/odoo/odoo16/wms', '/home/odoo/odoo16/zerobug-test'] 
+2025-08-14 12:41:49,799 70306 INFO ? odoo: database: odoo16@localhost:5434 
+2025-08-14 12:41:49,916 70306 INFO ? odoo.addons.base.models.ir_actions_report: Will use the Wkhtmltopdf binary at /usr/local/bin/wkhtmltopdf 
+2025-08-14 12:41:50,067 70306 INFO ? odoo.service.server: HTTP service (werkzeug) running on NB200Z0.localdomain:64275 
+2025-08-14 12:41:50,078 70306 INFO test_midea_16 odoo.modules.loading: loading 1 modules... 
+2025-08-14 12:41:50,086 70306 INFO test_midea_16 odoo.modules.loading: 1 modules loaded in 0.01s, 0 queries (+0 extra) 
+2025-08-14 12:41:50,111 70306 INFO test_midea_16 odoo.modules.loading: updating modules list 
+2025-08-14 12:41:50,112 70306 INFO test_midea_16 odoo.addons.base.models.ir_module: ALLOW access to module.update_list on [] to user __system__ #1 via n/a 
+2025-08-14 12:41:56,639 70306 INFO test_midea_16 odoo.addons.base.models.ir_module: ALLOW access to module.button_install on ['midea'] to user __system__ #1 via n/a 
+2025-08-14 12:41:56,742 70306 INFO test_midea_16 odoo.modules.loading: loading 25 modules... 
+2025-08-14 12:41:57,207 70306 INFO test_midea_16 odoo.modules.loading: 25 modules loaded in 0.47s, 0 queries (+0 extra) 
+2025-08-14 12:41:57,209 70306 INFO test_midea_16 odoo.modules.loading: loading 26 modules... 
+2025-08-14 12:41:57,210 70306 INFO test_midea_16 odoo.modules.loading: Loading module midea (23/26) 
+2025-08-14 12:41:57,301 70306 INFO test_midea_16 odoo.modules.registry: module midea: creating or updating database tables 
+2025-08-14 12:41:57,425 70306 INFO test_midea_16 odoo.modules.loading: loading midea/views/midea_qci_view.xml 
+2025-08-14 12:41:57,446 70306 INFO test_midea_16 odoo.modules.loading: loading midea/views/midea_table_wco_view.xml 
+2025-08-14 12:41:57,460 70306 INFO test_midea_16 odoo.modules.loading: loading midea/views/midea_menu.xml 
+2025-08-14 12:41:57,471 70306 INFO test_midea_16 odoo.modules.loading: loading midea/security/ir.model.access.csv 
+2025-08-14 12:41:57,492 70306 INFO test_midea_16 odoo.modules.loading: loading midea/data/midea_qci.xml 
+2025-08-14 12:41:57,547 70306 INFO test_midea_16 odoo.modules.loading: loading midea/data/midea_table_wco.xml 
+2025-08-14 12:41:57,647 70306 WARNING test_midea_16 py.warnings: /home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/oerplib3/tools/__init__.py:30: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+  File "/home/odoo/odoo16/venv_odoo/bin/coverage", line 8, in <module>
+    sys.exit(main())
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/coverage/cmdline.py", line 970, in main
+    status = CoverageScript().command_line(argv)
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/coverage/cmdline.py", line 681, in command_line
+    return self.do_run(options, args)
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/coverage/cmdline.py", line 858, in do_run
+    runner.run()
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/coverage/execfile.py", line 211, in run
+    exec(code, main_mod.__dict__)
+  File "/home/odoo/odoo16/odoo-bin", line 8, in <module>
+    odoo.cli.main()
+  File "/home/odoo/odoo16/odoo/cli/command.py", line 66, in main
+    o.run(args)
+  File "/home/odoo/odoo16/odoo/cli/server.py", line 187, in run
+    main(args)
+  File "/home/odoo/odoo16/odoo/cli/server.py", line 180, in main
+    rc = odoo.service.server.start(preload=preload, stop=stop)
+  File "/home/odoo/odoo16/odoo/service/server.py", line 1433, in start
+    rc = server.run(preload, stop)
+  File "/home/odoo/odoo16/odoo/service/server.py", line 602, in run
+    rc = preload_registries(preload)
+  File "/home/odoo/odoo16/odoo/service/server.py", line 1333, in preload_registries
+    registry = Registry.new(dbname, update_module=update_module)
+  File "<decorator-gen-16>", line 2, in new
+  File "/home/odoo/odoo16/odoo/tools/func.py", line 87, in locked
+    return func(inst, *args, **kwargs)
+  File "/home/odoo/odoo16/odoo/modules/registry.py", line 87, in new
+    odoo.modules.load_modules(registry, force_demo, status, update_module)
+  File "/home/odoo/odoo16/odoo/modules/loading.py", line 493, in load_modules
+    processed_modules += load_marked_modules(cr, graph,
+  File "/home/odoo/odoo16/odoo/modules/loading.py", line 374, in load_marked_modules
+    loaded, processed = load_module_graph(
+  File "/home/odoo/odoo16/odoo/modules/loading.py", line 284, in load_module_graph
+    suite = loader.make_suite([module_name], 'at_install')
+  File "/home/odoo/odoo16/odoo/tests/loader.py", line 76, in make_suite
+    return OdooSuite(sorted(tests, key=lambda t: t.test_sequence))
+  File "/home/odoo/odoo16/odoo/tests/loader.py", line 72, in <genexpr>
+    for m in get_test_modules(module_name)
+  File "/home/odoo/odoo16/odoo/tests/loader.py", line 19, in get_test_modules
+    results = _get_tests_modules(importlib.util.find_spec(f'odoo.addons.{module}'))
+  File "/home/odoo/odoo16/odoo/tests/loader.py", line 30, in _get_tests_modules
+    tests_mod = importlib.import_module(spec.name)
+  File "/home/odoo/odoo16/zerobug-test/midea/tests/__init__.py", line 9, in <module>
+    from . import test_midea_qci
+  File "/home/odoo/odoo16/zerobug-test/midea/tests/test_midea_qci.py", line 12, in <module>
+    from .testenv import MainTest as SingleTransactionCase
+  File "/home/odoo/odoo16/zerobug-test/midea/tests/testenv.py", line 550, in <module>
+    from z0bug_odoo import z0bug_odoo_lib
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/z0bug_odoo/__init__.py", line 7, in <module>
+    from . import travis
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/z0bug_odoo/travis/__init__.py", line 10, in <module>
+    from . import travis_tnlbot
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/z0bug_odoo/travis/travis_tnlbot.py", line 14, in <module>
+    from clodoo import clodoo
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/clodoo/__init__.py", line 4, in <module>
+    from . import clodoo_main as clodoo
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/clodoo/clodoo_main.py", line 191, in <module>
+    from clodoo.clodoocore import browseL8              # noqa: F401
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/clodoo/clodoocore.py", line 44, in <module>
+    import oerplib3 as oerplib
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/oerplib3/__init__.py", line 39, in <module>
+    from oerplib3.oerp import OERP
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/oerplib3/oerp.py", line 34, in <module>
+    from oerplib3 import rpc, error, tools
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/oerplib3/rpc/__init__.py", line 35, in <module>
+    from oerplib3.tools import v
+  File "/home/odoo/odoo16/venv_odoo/lib/python3.9/site-packages/oerplib3/tools/__init__.py", line 30, in <module>
+    from collections import MutableMapping
+ 
+2025-08-14 12:41:57,674 70306 INFO test_midea_16 odoo.addons.midea.tests.test_midea_qci: Starting TestMideaQci.test_midea_no_company ... 
+2025-08-14 12:41:57,680 70306 INFO test_midea_16 odoo.addons.midea.tests.test_midea_qci: 🎺 Testing test_midea_no_company() 
+2025-08-14 12:41:57,787 70306 INFO test_midea_16 odoo.addons.midea.tests.test_midea_qci: Test /home/odoo/odoo16/zerobug-test/midea/tests/test_midea_qci.py SUCCESSFULLY ended. 
+2025-08-14 12:41:57,787 70306 INFO test_midea_16 odoo.addons.midea.tests.testenv: 🏆🥇 [1;32m16 tests SUCCESSFULLY completed[0m 
+2025-08-14 12:41:57,884 70306 INFO test_midea_16 odoo.addons.base.models.ir_attachment: filestore gc 0 checked, 0 removed 
+2025-08-14 12:41:57,885 70306 INFO test_midea_16 odoo.addons.midea.tests.test_midea_table_wco: Starting TestMidea.test_midea_table_wco ... 
+2025-08-14 12:41:57,890 70306 INFO test_midea_16 odoo.addons.midea.tests.test_midea_table_wco: 🎺 Testing test_midea_table_wco() 
+2025-08-14 12:41:58,009 70306 INFO test_midea_16 odoo.addons.midea.tests.test_midea_table_wco: Test /home/odoo/odoo16/zerobug-test/midea/tests/test_midea_table_wco.py SUCCESSFULLY ended. 
+2025-08-14 12:41:58,009 70306 INFO test_midea_16 odoo.addons.midea.tests.testenv: 🏆🥇 [1;32m25 tests SUCCESSFULLY completed[0m 
+2025-08-14 12:41:58,014 70306 INFO test_midea_16 odoo.addons.base.models.ir_attachment: filestore gc 0 checked, 0 removed 
+2025-08-14 12:41:58,025 70306 INFO test_midea_16 odoo.modules.loading: Module midea loaded in 0.82s (incl. 0.35s test), 330 queries (+26 test, +330 other) 
+2025-08-14 12:41:58,026 70306 INFO test_midea_16 odoo.modules.loading: 26 modules loaded in 0.82s, 330 queries (+356 extra) 
+2025-08-14 12:41:58,414 70306 INFO test_midea_16 odoo.modules.loading: Modules loaded. 
+2025-08-14 12:41:58,419 70306 INFO test_midea_16 odoo.modules.registry: Registry loaded in 8.352s 
+2025-08-14 12:41:58,419 70306 INFO test_midea_16 odoo.service.server: Starting post tests 
+2025-08-14 12:41:58,423 70306 INFO test_midea_16 odoo.service.server: 0 post-tests in 0.00s, 0 queries 
+2025-08-14 12:41:58,423 70306 INFO test_midea_16 odoo.tests.stats: midea: 6 tests 0.35s 26 queries 
+2025-08-14 12:41:58,423 70306 INFO test_midea_16 odoo.tests.result: 0 failed, 0 error(s) of 2 tests when loading database 'test_midea_16' 
+2025-08-14 12:41:58,423 70306 INFO test_midea_16 odoo.service.server: Initiating shutdown 
+2025-08-14 12:41:58,424 70306 INFO test_midea_16 odoo.service.server: Hit CTRL-C again or send a second signal to force the shutdown. 
+2025-08-14 12:41:58,607 70306 INFO test_midea_16 odoo.sql_db: ConnectionPool(used=0/count=0/max=64): Closed 2 connections  
+
++===================================================================
+| please test [36mmidea[0m (16.0): [32mSUCCESS![0m
++===================================================================
+
+[1;37;44m$ coverage report --rcfile=/home/odoo/odoo16/zerobug-test/midea/tests/logs/coverage_midea_16rc -m
+[34;107mName                                           Stmts   Miss  Cover   Missing
+----------------------------------------------------------------------------
+zerobug-test/midea/models/midea_qci.py            19      0   100%
+zerobug-test/midea/models/midea_table_wco.py      35      0   100%
+zerobug-test/midea/models/partner.py               4      0   100%
+----------------------------------------------------------------------------
+TOTAL                                             58      0   100%
+[0m

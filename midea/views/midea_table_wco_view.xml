@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record model="ir.ui.view" id="table_wco_tree">
@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <tree string="Midea tree">
                 <field name="name"/>
+                <field name="date"/>
                 <field name="active"/>
                 <field name="state"/>
                 <field name="company_id"/>
@@ -16,17 +17,33 @@
     </record>
 
     <record model="ir.ui.view" id="table_wco_form">
-        <field name="name">Midea tablr with company (form)</field>
+        <field name="name">Midea table with company (form)</field>
         <field name="model">midea.table_wco</field>
         <field name="type">form</field>
         <field name="priority" eval="16"/>
         <field name="arch" type="xml">
             <form string="Midea form">
+                <header>
+                    <button name="action_draft" string="Draft" type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <button name="action_done" string="Confirm" type="object" attrs="{'invisible': [('state', '=', 'done')]}"/>
+                    <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', '=', 'cancel')]}"/>
+                    <field name="state" widget="statusbar" attrs="{'invisible': [('active','=',False)]}"/>
+                </header>
                 <group>
-                <field name="name"/>
-                <field name="active"/>
-                <field name="state"/>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <field name="name"/>
+                    <field name="rank"/>
+                    <field name="currency_id"/>
+                    <field name="amount"/>
+                    <field name="date"/>
+                    <field name="active"/>
                     <field name="company_id"/>
+                </group>
+                <group>
+                    <field name="partner_ids" widget="many2many_tags"/>
+                </group>
+                <group>
+                    <field name="description"/>
                 </group>
             </form>
         </field>

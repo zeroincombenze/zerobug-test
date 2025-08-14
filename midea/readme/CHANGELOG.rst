@@ -1,8 +1,15 @@
-16.0.0.1.8 (2024-02-13)
+16.0.0.1.9 (2025-07-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Code migrated or backported with arcangelo
-* [QUA] Test coverage 100% (14: 0+14) [16 TestPoints] - quality rating 243 (target 100)
+* [IMP] New fields added to test migration and back porting
+* [QUA] Test coverage 100% (58: 0+58) [43 TestPoints] - quality rating 101 (target 100)
+
+16.0.0.1.8 (2024-03-07)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Code migrated or backported with arcangelo
+* [QUA] Test coverage 100% (14: 0+14) [30 TestPoints] - quality rating 403 (target 100)
 
 16.0.0.1.7 (2023-11-17)
 ~~~~~~~~~~~~~~~~~~~~~~~

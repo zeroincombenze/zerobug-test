@@ -6,6 +6,10 @@
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
-from . import partner
-from . import midea_qci
-from . import midea_table_wco
+from odoo import fields, models
+
+
+class ResPartner(models.Model):
+    _inherit = "res.partner"
+
+    testenv_id = fields.Many2one("midea.table_wco")
