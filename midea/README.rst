@@ -1,10 +1,10 @@
 =============================
-|icon| midea/Midea 14.0.0.1.7
+|icon| midea/Midea 12.0.0.1.9
 =============================
 
-**z0bug_odoo test suite**
+**Migration and backporting test suite**
 
-.. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/14.0/midea/static/description/icon.png
+.. |icon| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/12.0/midea/static/description/icon.png
 
 
 .. contents::
@@ -21,6 +21,10 @@ This module aims to show the differences among different Odoo versions
 
 See `development differences among Odoo version <https://itpp.dev/port/index.html>`__
 
+This module was developed for Odoo 12.0; next module versions was automatically
+migrated by arcangelo.
+You can find previous module version backported by arcangelo.
+
 
 |it| Questo modulo non ha una precisa utilità per l'utente finale; è stato progettato
 per l'utilizzo degli sviluppatori.
@@ -30,10 +34,14 @@ di Odoo.
 
 Vedere `development differences among Odoo version <https://itpp.dev/port/index.html>`__
 
+Questo module è stato sviluppato per Odoo 12.0; le versioni successive sono state
+migrate automaticamente tramite arcangelo.
+Ci sono anche versioni precedente portate all'indietro con arcangelo.
+
 
 |thumbnail|
 
-.. |thumbnail| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/14.0/midea/static/description/description.png
+.. |thumbnail| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/12.0/midea/static/description/description.png
 
 
 Getting started | Primi passi
@@ -44,6 +52,9 @@ Getting started | Primi passi
 
 Prerequisites | Prerequisiti
 ----------------------------
+
+* python 3.7
+* postgresql 9.6+ (best 10.0+)
 
 ::
 
@@ -73,15 +84,15 @@ Installation | Installazione
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
-| $HOME/14.0 |
+| $HOME/12.0 |
 +----------------------------------------------------------------------------+
 
 ::
 
     # Odoo repository installation; OCB repository must be installed
-    deploy_odoo clone -r zerobug-test -b 14.0 -G zero -p $HOME/14.0
+    deploy_odoo clone -r zerobug-test -b 12.0 -G zero -p $HOME/12.0
     # Upgrade virtual environment
-    vem amend $HOME/14.0/venv_odoo
+    vem amend $HOME/12.0/venv_odoo
 
 
 
@@ -90,8 +101,8 @@ Upgrade | Aggiornamento
 
 ::
 
-    deploy_odoo update -r zerobug-test -b 14.0 -G zero -p $HOME/14.0
-    vem amend $HOME/14.0/venv_odoo
+    deploy_odoo update -r zerobug-test -b 12.0 -G zero -p $HOME/12.0
+    vem amend $HOME/12.0/venv_odoo
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
@@ -128,22 +139,24 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History | Cronologia modifiche
 ----------------------------------------
 
-14.0.0.1.8 (2024-02-11)
+12.0.0.1.9 (2025-07-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Code migrated or backported with arcangelo
-* [QUA] Test coverage 100% (14: 0+14) [16 TestPoints] - quality rating 243 (target 100)
+* [IMP] New fields added to test migration and back porting
+* [QUA] Test coverage 100% (58: 0+58) [43 TestPoints] - quality rating 101 (target 100)
 
-14.0.0.1.7 (2023-11-17)
+12.0.0.1.8 (2024-03-07)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Code migrated or backported with arcangelo
+* [QUA] Test coverage 100% (14: 0+14) [30 TestPoints] - quality rating 403 (target 100)
+
+12.0.0.1.7 (2023-11-17)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Tests upgrade
 * [QUA] Test coverage 100% (14: 0+14) [14 TestPoint]
-
-14.0.0.1.6 (2022-11-11)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* [REF] Experimental use of odoo_score for odoo
 
 
 
@@ -194,7 +207,7 @@ La distribuzione `Zeroincombenze® <https://www.zeroincombenze.it/>`__ è proget
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2024-02-13
+Last Update / Ultimo aggiornamento: 2025-08-14
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
@@ -205,8 +218,8 @@ Last Update / Ultimo aggiornamento: 2024-02-13
 .. |license opl| image:: https://img.shields.io/badge/licence-OPL-7379c3.svg
     :target: https://www.odoo.com/documentation/user/14.0/legal/licenses/licenses.html
     :alt: License: OPL
-.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-14.svg
-    :target: https://erp14.zeroincombenze.it
+.. |Try Me| image:: https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-12.svg
+    :target: https://erp12.zeroincombenze.it
     :alt: Try Me
 .. |Zeroincombenze| image:: https://avatars0.githubusercontent.com/u/6972555?s=460&v=4
    :target: https://www.zeroincombenze.it/

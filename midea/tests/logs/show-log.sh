@@ -1,1 +1,1 @@
-less -R $(readlink -f $(dirname $0))/midea_20240213.txt
+less -R $(readlink -f $(dirname $0))/midea_20250814.txt

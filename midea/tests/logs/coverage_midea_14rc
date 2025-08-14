@@ -1,7 +1,7 @@
 # Config file .coveragerc 2022-04-07
 [run]
 
-data_file=/home/odoo/14.0/zerobug-test/midea/tests/logs/coverage_midea_14
+data_file=/home/odoo/odoo14/zerobug-test/midea/tests/logs/coverage_midea_14
 
 # to avoid being overridden by server tests
 omit = *system_site_packages*, *site-packages*, *virtualenv*, *venv_odoo*
@@ -10,7 +10,7 @@ omit = *system_site_packages*, *site-packages*, *virtualenv*, *venv_odoo*
 include =
 #    ${TRAVIS_BUILD_DIR}/*
 #    *.py
-    /home/odoo/14.0/zerobug-test/midea/*
+    /home/odoo/odoo14/zerobug-test/midea/*
 
 omit =
     */scenario/*
