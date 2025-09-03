@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<openerp>
-<data>
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
 
     <record model="ir.ui.view" id="table_wco_tree">
         <field name="name">Midea table with company (tree)</field>
@@ -17,17 +16,23 @@
     </record>
 
     <record model="ir.ui.view" id="table_wco_form">
-        <field name="name">Midea tablr with company (form)</field>
+        <field name="name">Midea table with company (form)</field>
         <field name="model">midea.table_wco</field>
         <field name="type">form</field>
         <field name="priority" eval="16"/>
         <field name="arch" type="xml">
             <form string="Midea form">
+                <header>
+                    <button name="action_draft" string="Draft" type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <button name="action_done" string="Confirm" type="object" attrs="{'invisible': [('state', '=', 'done')]}"/>
+                    <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', '=', 'cancel')]}"/>
+                    <field name="state" widget="statusbar" attrs="{'invisible': [('active','=',False)]}"/>
+                </header>
                 <group>
-                <field name="name"/>
-                <field name="active"/>
-                <field name="state"/>
+                    <field name="name"/>
+                    <field name="active"/>
                     <field name="company_id"/>
+                    <field name="currency_id"/>
                 </group>
             </form>
         </field>
@@ -39,5 +44,4 @@
         <field name="view_id" ref="midea.table_wco_tree"/>
     </record>
 
-</data>
-</openerp>
+</odoo>

@@ -7,5 +7,6 @@
 #
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 #
-from . import midea_qci
-from . import midea_table_wco
+from . import test_midea_qci
+from . import test_midea_table_wco
+from . import testenv
