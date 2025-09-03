@@ -148,16 +148,17 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History | Cronologia modifiche
 ----------------------------------------
 
+10.0.0.7.8 (2025-07-03)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Minor updates
+* [QUA] Test coverage 44% (3059: 1728+1331) [24 TestPoints] - quality rating 29 (target 100)
+
 10.0.0.7.7 (2024-02-29)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Search for records that match company or w/o company
 * [IMP] Pypi packages version checked by _check4deps
-
-10.0.0
-~~~~~~
-
-* [REF] Using odoo_score instead of odoo
 
 
 

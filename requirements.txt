@@ -1,6 +1,6 @@
 # generated from manifests external_dependencies
 future
-os0
+# os0
 past
 python_plus
 z0bug_odoo
