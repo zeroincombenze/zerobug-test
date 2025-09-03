@@ -9,7 +9,7 @@
 #
 {
     "name": "midea",
-    "version": "8.0.12.0.0.1.9",
+    "version": "8.0.0.1.9",
     "category": "Generic Modules/Accounting",
     "summary": "Migration and backporting test suite",
     "author": "SHS-AV s.r.l.",
