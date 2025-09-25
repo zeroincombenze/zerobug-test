@@ -15,7 +15,10 @@
     "website": "https://github.com/OCA/l10n-italy",
     "development_status": "Beta",
     "license": "LGPL-3",
-    "depends": ["base", "product"],
+    "depends": [
+        "base",
+        "product",
+    ],
     "data": [
         "views/midea_qci_view.xml",
         "views/midea_table_wco_view.xml",

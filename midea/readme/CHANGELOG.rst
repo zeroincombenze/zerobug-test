@@ -1,11 +1,11 @@
-12.0.0.1.9 (2025-07-19)
+12.0.0.1.9 (2025-09-25)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* [IMP] Code migrated or backported with arcangelo
+* [IMP] File xml view with attrs to test migration Odoo 15.0
 * [IMP] New fields added to test migration and back porting
 * [QUA] Test coverage 100% (58: 0+58) [43 TestPoints] - quality rating 101 (target 100)
 
-12.0.0.1.8 (2024-03-07)
+12.0.0.1.8 (2025-07-26)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Code migrated or backported with arcangelo

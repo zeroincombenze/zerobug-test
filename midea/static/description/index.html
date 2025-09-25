@@ -3,14 +3,14 @@
     <div class="oe_row oe_spaced">
         <div class="oe_span6">
             <p align="center">
-                <img src="/l10n_uk/static/description/icon.png" alt="English" style="width:16px;height:16px;"/>
-                <img src="/l10n_us/static/description/icon.png" alt="English" style="width:16px;height:16px;"/>
+                <img src="l10n_uk.png" alt="English" style="width:28px;height:16px;"/>
+                <img src="l10n_us.png" alt="English" style="width:28px;height:16px;"/>
             </p>
             <h2 class="oe_slogan" style="color:#162832;">Migration and backporting test suite</h2>
         </div>
         <div class="oe_span6">
             <p align="center">
-                <img src="/l10n_it/static/description/icon.png" alt="Italiano" style="width:16px;height:16px;"/>
+                <img src="l10n_it.png" alt="Italiano" style="width:28px;height:16px;"/>
             </p>
             <h2 class="oe_slogan" style="color:#162832;">Suite per test migrazione</h2>
         </div>
@@ -24,15 +24,16 @@
     <div>
         <div class="oe_span6">
             <p align="center">
-                <img src="/l10n_uk/static/description/icon.png" alt="English" style="width:16px;height:16px;"/>
-                <img src="/l10n_us/static/description/icon.png" alt="English" style="width:16px;height:16px;"/>
+                <img src="l10n_uk.png" alt="English" style="width:28px;height:16px;"/>
+                <img src="l10n_us.png" alt="English" style="width:28px;height:16px;"/>
             </p>
-            <p class="oe_mt16" align="justify">This module has no specific function for End-user, it is just designed for
-Odoo developers.
+            <p class="oe_mt16" align="justify">This module has no specific function for End-user, it is just designed to supply an
+Odoo source code example for developers.
 <p align="justify">
 This module aims to show the differences among different Odoo versions
 </p><p align="justify">
 See <a href="https://itpp.dev/port/index.html">development differences among Odoo version</a>
+and <a href="https://github.com/OCA/maintainer-tools/wiki/">Odoo maintainer tools</a>
 </p><p align="justify">
 This module was developed for Odoo 12.0; next module versions was automatically
 migrated by arcangelo.
@@ -41,15 +42,16 @@ You can find previous module version backported by arcangelo.
         </div>
         <div class="oe_span6">
             <p align="center">
-                <img src="/l10n_it/static/description/icon.png" alt="Italiano" style="width:16px;height:16px;"/>
+                <img src="l10n_it.png" alt="Italiano" style="width:28px;height:16px;"/>
             </p>
-            <p class="oe_mt16" align="justify">Questo modulo non ha una precisa utilit&#224; per l'utente finale; &#232; stato progettato
-per l'utilizzo degli sviluppatori.
+            <p class="oe_mt16" align="justify">Questo modulo non ha una funzione specifica per l'utente finale, &#232; stato progettato
+solo per fornire un esempio di codice sorgente Odoo agli sviluppatori.
 <p align="justify">
 Questo modulo &#232; orientato a mostrare le differenze di sviluppo tra le varie versioni
 di Odoo.
 </p><p align="justify">
 Vedere <a href="https://itpp.dev/port/index.html">development differences among Odoo version</a>
+e <a href="https://github.com/OCA/maintainer-tools/wiki/">Odoo maintainer tools</a>
 </p><p align="justify">
 Questo module &#232; stato sviluppato per Odoo 12.0; le versioni successive sono state
 migrate automaticamente tramite arcangelo.
@@ -61,17 +63,111 @@ Ci sono anche versioni precedente portate all'indietro con arcangelo.
 
 <section>
     <div class="oe_row oe_spaced">
+        <h3 align="center" style="color:#162832;font-size: 26px;font-weight: 300;">Usage | Utilizzo</h3>
+        <div class="oe_span6">
+            <p align="center">
+                <img src="l10n_uk.png" alt="English" style="width:28px;height:16px;"/>
+                <img src="l10n_us.png" alt="English" style="width:28px;height:16px;"/>
+            </p>
+            <p class="oe_mt16" align="justify">There are 2 tables in order to show Odoo base features and migration work-flow.
+<p align="justify">
+The 1st table is called "Midea QCI (non company)", based on Odoo model "midea.qci" is
+a generica table not company dependent.
+</p><p align="justify">
+The 2nd table id called "Midea with Company", based on Odoo model "midea.table_wco".
+This table is company dependent.
+</p><p align="justify">
+Both tables, togheter, manage all Odoo field types, so you can see how Odoo fields
+are showed on UI across versions and how they are coded inside python source.
+</p><p align="justify">
+The following Odoo features are managed:
+</p><p align="justify">
+<ul>
+<li>Field "Char"</li>
+<li>Field "Text"</li>
+<li>Field "Html"</li>
+<li>Magic field active ("Boolean")</li>
+<li>Magic field state ("Selection")</li>
+<li>Field "Date"</li>
+<li>Field "Datetime"</li>
+<li>Field "Integer"</li>
+<li>Magic field sequence ("Integer")</li>
+<li>Field "Float"</li>
+<li>Field "Monetary"</li>
+<li>Magic field company_id ("Many2one")</li>
+<li>Field "One2many"</li>
+<li>Field "Many2many"</li>
+<li>Field "Binary"</li>
+<li>Magic field image ("Image")</li>
+<li>Buttons to manage state work-flow with right visibility</li>
+<li>Read-only and invisible management based on state</li>
+</ul>
+</p><p align="justify">
+Original source code was written on Odoo 12.0; all other versions are automatically
+migrated by arcangelo without human development activities.
+</p></p>
+        </div>
+        <div class="oe_span6">
+            <p align="center">
+                <img src="l10n_it.png" alt="Italiano" style="width:28px;height:16px;"/>
+            </p>
+            <p class="oe_mt16" align="justify">Sono presenti 2 tabelle che illustrano le funzionalit&#224; di base di Odoo e il flusso di
+lavoro della migrazione.
+<p align="justify">
+La prima tabella si chiama "Midea QCI (non aziendale)", basata sul modello
+Odoo "midea.qci" ed &#232; una tabella generica, non dipendente dall'azienda.
+</p><p align="justify">
+La seconda tabella si chiama "Midea con azienda", basata sul modello
+Odoo "midea.table_wco". Questa tabella dipende dall'azienda.
+</p><p align="justify">
+Entrambe le tabelle, insieme, gestiscono tutti i tipi di campo di Odoo,
+cos&#236; p&#232; possibile veder come i campi di Odoo vengono visualizzati
+nell'interfaccia utente nelle diverse versioni e come sono codificati nel
+codice sorgente Python.
+</p><p align="justify">
+Sono gestite le seguenti funzionalit&#224; di Odoo:
+</p><p align="justify">
+<ul>
+<li>Campo "Char"</li>
+<li>Campo "Text"</li>
+<li>Campo "Html"</li>
+<li>Campo magico active ("Boolean")</li>
+<li>Campo magico state ("Selction")</li>
+<li>Campo "Date"</li>
+<li>Campo "Datetime"</li>
+<li>Campo "Integer"</li>
+<li>Campo magico sequence ("Integer")</li>
+<li>Campo "Float"</li>
+<li>Campo "Monetary"</li>
+<li>Campo magico company_id ("Many2one")</li>
+<li>Campo "One2many"</li>
+<li>Campo "Many2many"</li>
+<li>Campo "Binary"</li>
+<li>Campo magico immage ("Immage")</li>
+<li>Pulsanti per gestire il flusso di lavoro dello stato con la corretta visibilit&#224;</li>
+<li>Gestione campi invisibile e di sola lettura in base allo stato</li>
+</ul>
+</p><p align="justify">
+Il codice sorgente originale &#232; stato scritto su Odoo 12.0; tutte le altre versioni
+vengono migrate automaticamente da arcangelo senza attivit&#224; di sviluppo umano.
+</p></p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="oe_row oe_spaced">
         <h3 align="center" style="color:#162832;font-size: 26px;font-weight: 300;">ChangeLog History | Cronologia modifiche</h3>
         <div class="oe_span12">
-<h4>12.0.0.1.9 (2025-07-19)</h4>
+<h4>12.0.0.1.9 (2025-09-25)</h4>
 <p align="justify">
 <ul>
-<li>[IMP] Code migrated or backported with arcangelo</li>
+<li>[IMP] File xml view with attrs to test migration Odoo 15.0</li>
 <li>[IMP] New fields added to test migration and back porting</li>
 <li>[QUA] Test coverage 100% (58: 0+58) [43 TestPoints] - quality rating 101 (target 100)</li>
 </ul>
 </p><p align="justify">
-<h4>12.0.0.1.8 (2024-03-07)</h4>
+<h4>12.0.0.1.8 (2025-07-26)</h4>
 </p><p align="justify">
 <ul>
 <li>[IMP] Code migrated or backported with arcangelo</li>
@@ -112,6 +208,6 @@ Ci sono anche versioni precedente portate all'indietro con arcangelo.
     </div>
     <div class="oe_row oe_spaced">
         <p>This module is part of <a href="https://github.com/zeroincombenze/zerobug-test">zerobug-test</a> project.</p>
-        <p>Published information on | Informazioni pubblicate: 2025-08-27</p>
+        <p>Published information on | Informazioni pubblicate: 2025-09-25</p>
     </div>
 </section>
