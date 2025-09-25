@@ -31,8 +31,9 @@ class MideaQci(models.Model):
     )
     measure = fields.Float("Measure", default=_default_measure, help="Float field")
     measured_ts = fields.Datetime(
-        string="Measured on", default=_default_measured_ts, help="Datetime field"
-    )
+        string='Measured on',
+        default=_default_measured_ts,
+        help="Datetime field")
     note = fields.Html("Notes")
     product_ids = fields.Many2many(
         comodel_name="product.product",

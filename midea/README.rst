@@ -14,26 +14,68 @@
 Overview | Panoramica
 =====================
 
-|en| This module has no specific function for End-user, it is just designed for
-Odoo developers.
+|en| This module has no specific function for End-user, it is just designed to supply an
+Odoo source code example for developers.
 
 This module aims to show the differences among different Odoo versions
 
 See `development differences among Odoo version <https://itpp.dev/port/index.html>`__
+and `Odoo maintainer tools <https://github.com/OCA/maintainer-tools/wiki/>`__
 
 
-|it| Questo modulo non ha una precisa utilità per l'utente finale; è stato progettato
-per l'utilizzo degli sviluppatori.
+|it| Questo modulo non ha una funzione specifica per l'utente finale, è stato progettato
+solo per fornire un esempio di codice sorgente Odoo agli sviluppatori.
 
 Questo modulo è orientato a mostrare le differenze di sviluppo tra le varie versioni
 di Odoo.
 
 Vedere `development differences among Odoo version <https://itpp.dev/port/index.html>`__
+e `Odoo maintainer tools <https://github.com/OCA/maintainer-tools/wiki/>`__
 
 
 |thumbnail|
 
 .. |thumbnail| image:: https://raw.githubusercontent.com/zeroincombenze/zerobug-test/18.0/midea/static/description/description.png
+
+
+Usage | Utilizzo
+----------------
+
+There are 2 tables in order to show Odoo base features and migration work-flow.
+
+The 1st table is called "Midea QCI (non company)", based on Odoo model "midea.qci" is
+a generica table not company dependent.
+
+The 2nd table id called "Midea with Company", based on Odoo model "midea.table_wco".
+This table is company dependent.
+
+Both tables, togheter, manage all Odoo field types, so you can see how Odoo fields
+are showed on UI across versions and how they are coded inside python source.
+
+The following Odoo features are managed:
+
+* Field "Char"
+* Field "Text"
+* Field "Html"
+* Magic field active ("Boolean")
+* Magic field state ("Selection")
+* Field "Date"
+* Field "Datetime"
+* Field "Integer"
+* Magic field sequence ("Integer")
+* Field "Float"
+* Field "Monetary"
+* Magic field company_id ("Many2one")
+* Field "One2many"
+* Field "Many2many"
+* Field "Binary"
+* Magic field image ("Image")
+* Buttons to manage state work-flow with right visibility
+* Read-only and invisible management based on state
+
+Original source code was written on Odoo 12.0; all other versions are automatically
+migrated by arcangelo without human development activities.
+
 
 
 Getting started | Primi passi
@@ -128,14 +170,14 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History | Cronologia modifiche
 ----------------------------------------
 
-18.0.0.1.9 (2025-07-19)
+18.0.0.1.9 (2025-09-25)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* [IMP] Code migrated or backported with arcangelo
+* [IMP] File xml view with attrs to test migration Odoo 15.0
 * [IMP] New fields added to test migration and back porting
-* [QUA] Test coverage 100% (58: 0+58) [43 TestPoints] - quality rating 101 (target 100)
+* [QUA] Test coverage 100% (58: 0+58) [41 TestPoints] - quality rating 98 (target 100)
 
-18.0.0.1.8 (2024-03-07)
+18.0.0.1.8 (2025-07-26)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [IMP] Code migrated or backported with arcangelo
@@ -196,7 +238,7 @@ La distribuzione `Zeroincombenze® <https://www.zeroincombenze.it/>`__ è proget
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2025-08-14
+Last Update / Ultimo aggiornamento: 2025-09-25
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status

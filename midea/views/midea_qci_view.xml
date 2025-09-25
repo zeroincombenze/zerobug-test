@@ -29,7 +29,7 @@
                     <field name="measured_ts"/>
                     <field name="active"/>
                     <field name="state"/>
-                    <field name="sequence"/>
+                    <field name="sequence" invisible="state == 'cancel'"/>
                 </group>
                 <group>
                     <field name="product_ids" widget="many2many_tags"/>

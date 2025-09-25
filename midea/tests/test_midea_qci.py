@@ -44,7 +44,8 @@ class TestMideaQci(SingleTransactionCase):
         # Test the <create> function
         self.midea_no_company = self.resource_create(model_name, vals)
         self.assertTrue(
-            self.midea_no_company, "z0bug_odoo.create_id does not return a valid record"
+            self.midea_no_company,
+            "z0bug_odoo.create_id does not return a valid record"
         )
         self.assertIsInstance(
             self.midea_no_company.id,

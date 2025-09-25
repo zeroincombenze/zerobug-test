@@ -27,14 +27,14 @@
                     <button name="action_draft" string="Draft" type="object" invisible="state == 'draft'"/>
                     <button name="action_done" string="Confirm" type="object" invisible="state == 'done'"/>
                     <button name="action_cancel" string="Cancel" type="object" invisible="state == 'cancel'"/>
-                    <field name="state" widget="statusbar" invisible="active == False"/>
+                    <field name="state" widget="statusbar" invisible="not active"/>
                 </header>
                 <group>
-                    <field name="image" widget="image" class="oe_avatar"/>
+                    <field name="image" widget="image" class="oe_avatar" invisible="state == 'cancel'"/>
                     <field name="name"/>
                     <field name="rank"/>
-                    <field name="currency_id"/>
-                    <field name="amount"/>
+                    <field name="currency_id" readonly="state == 'done'"/>
+                    <field name="amount" readonly="state == 'done'"/>
                     <field name="date"/>
                     <field name="active"/>
                     <field name="company_id"/>

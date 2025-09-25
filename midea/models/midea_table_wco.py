@@ -50,7 +50,7 @@ class MideaNoCompany(models.Model):
         default=_default_amount,
         help="Monetary field",
     )
-    date = fields.Date(string="Date", default=_default_date, help="Date field")
+    date = fields.Date(string='Date', default=_default_date, help="Date field")
     partner_ids = fields.One2many(
         comodel_name="res.partner",
         inverse_name="testenv_id",
