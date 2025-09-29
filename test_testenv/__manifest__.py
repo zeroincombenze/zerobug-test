@@ -20,7 +20,7 @@
             "past",  # TODO: pylint bug, it is to remove
         ],
     },
-    "version_external_dependencies": ["z0bug_odoo==2.0.23"],
+    "version_external_dependencies": ["z0bug_odoo==2.0.24"],
     "depends": [
         "base",
         "account",
