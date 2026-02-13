@@ -1,5 +1,5 @@
 =======================================
-|icon| testenv/test_testenv 12.0.2.0.23
+|icon| testenv/test_testenv 12.0.2.0.24
 =======================================
 
 **z0bug_odoo test suite**
@@ -125,10 +125,10 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 ChangeLog History | Cronologia modifiche
 ----------------------------------------
 
-12.0.2.0.24 (2025-09-29)
+12.0.2.0.24 (2026-02-13)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-* [QUA] Test coverage 94% (1867: 118+1749) [351 TestPoints] - quality rating 73 (target 100)
+* [QUA] Test coverage 93% (1876: 127+1749) [351 TestPoints] - quality rating 73 (target 100)
 
 12.0.2.0.23 (2024-07-20)
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -139,17 +139,6 @@ ChangeLog History | Cronologia modifiche
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 * [QUA] Test coverage 93% (1754: 128+1626) [295 TestPoints] - quality rating 83 (target 100)
-
-12.0.2.0.14 (2024-01-11)
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [IMP] Test download file
-* [QUA] Test coverage 92% (1758: 135+1623) [295 TestPoints] - quality rating 83 (target 100)
-
-12.0.2.0.13 (2023-12-03)
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-* [QUA] Test coverage 92% (1698: 130+1568) [297 TestPoints] - quality rating 36/100
 
 
 
@@ -200,7 +189,7 @@ La distribuzione `Zeroincombenze® <https://www.zeroincombenze.it/>`__ è proget
 
 This module is part of zerobug-test project.
 
-Last Update / Ultimo aggiornamento: 2025-09-29
+Last Update / Ultimo aggiornamento: 2026-02-13
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Mature-green.png
     :target: https://odoo-community.org/page/development-status

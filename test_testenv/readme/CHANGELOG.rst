@@ -1,7 +1,7 @@
-12.0.2.0.24 (2025-09-29)
+12.0.2.0.24 (2026-02-13)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-* [QUA] Test coverage 94% (1867: 118+1749) [351 TestPoints] - quality rating 73 (target 100)
+* [QUA] Test coverage 93% (1876: 127+1749) [351 TestPoints] - quality rating 73 (target 100)
 
 12.0.2.0.23 (2024-07-20)
 ~~~~~~~~~~~~~~~~~~~~~~~~
