@@ -1,6 +1,6 @@
 # pylint: skip-file
 # -*- coding: utf-8 -*-
-"""Test Environment v2.0.24
+"""Test Environment v2.0.26
 
 You can locate the recent testenv.py in testenv directory of module
 https://github.com/zeroincombenze/tools/tree/master/z0bug_odoo/testenv
@@ -514,6 +514,7 @@ Examples:
 from __future__ import unicode_literals
 
 import base64
+import copy
 import inspect
 import json
 import logging
@@ -540,11 +541,16 @@ if release:
         import openerp.tests.common as test_common
         from openerp import workflow  # noqa: F401
         from openerp.modules.module import get_module_resource  # noqa: F401
-    else:
+    elif int(release.major_version.split(".")[0]) < 17:  # pragma: no cover
         from odoo import api  # noqa: F401
         import odoo.tests.common as test_common
         from odoo.modules.module import get_module_resource  # noqa: F401
         from odoo.tools.safe_eval import safe_eval
+    else:
+        from odoo import api  # noqa: F401
+        import odoo.tests.common as test_common
+        from odoo.tools.safe_eval import safe_eval
+        from odoo.tools.misc import file_path
 
 import python_plus
 from z0bug_odoo import z0bug_odoo_lib
@@ -647,6 +653,15 @@ def is_iterable(obj):
 
 
 class MainTest(test_common.TransactionCase):
+    # Class attribute (not instance attribute): unittest creates a fresh MainTest
+    # instance per test method, so an instance attribute would reset to 0 on every
+    # setUp(). Keeping the counter on the class itself lets it accumulate across
+    # every test method and every test class that subclasses this MainTest, for
+    # the whole test run. All increments below deliberately write to
+    # "MainTest.assert_counter" (not "self." or "type(self)."), so a subclass's
+    # own assertion calls still add to this one shared total instead of
+    # shadowing it with a per-subclass counter.
+    assert_counter = 0
 
     def setUp(self):
         super(MainTest, self).setUp()
@@ -677,8 +692,6 @@ class MainTest(test_common.TransactionCase):
         self.convey_record = {}
         # Enable commit data
         self.odoo_commit_test = True
-        if not hasattr(self, "assert_counter"):
-            self.assert_counter = 0
         self.module = None
         for item in self.__module__.split("."):
             if item not in ("odoo", "openerp", "addons"):
@@ -709,7 +722,7 @@ class MainTest(test_common.TransactionCase):
             GREEN = ""
             CLEAR = ""
         self._logger.info(
-            ("🏆🥇 " + GREEN + "%d tests SUCCESSFULLY completed" + CLEAR)
+            ("🏆🥇 " + GREEN + "%d assertions SUCCESSFULLY completed so far" + CLEAR)
             % self.assert_counter)
 
     # ---------------------------------------
@@ -792,71 +805,71 @@ class MainTest(test_common.TransactionCase):
     # ----------------------------------
 
     def assertFalse(self, expr, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertFalse(expr, msg=msg)
 
     def assertTrue(self, expr, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertTrue(expr, msg=msg)
 
     def assertRaises(self, expected_exception, *args, **kwargs):  # pragma: no cover
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertRaises(expected_exception, *args, **kwargs)
 
     def assertEqual(self, first, second, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertEqual(first, second, msg=msg)
 
     def assertNotEqual(self, first, second, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertNotEqual(first, second, msg=msg)
 
     def assertIn(self, member, container, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertIn(member, container, msg=msg)
 
     def assertNotIn(self, member, container, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertNotIn(member, container, msg=msg)
 
     def assertIs(self, expr1, expr2, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertIs(expr1, expr2, msg=msg)
 
     def assertIsNot(self, expr1, expr2, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertIsNot(expr1, expr2, msg=msg)
 
     def assertLess(self, a, b, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertLess(a, b, msg=msg)
 
     def assertLessEqual(self, a, b, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertLessEqual(a, b, msg=msg)
 
     def assertGreater(self, a, b, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertGreater(a, b, msg=msg)
 
     def assertGreaterEqual(self, a, b, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertGreaterEqual(a, b, msg=msg)
 
     def assertIsNone(self, obj, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertIsNone(obj, msg=msg)
 
     def assertIsNotNone(self, obj, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertIsNotNone(obj, msg=msg)
 
     def assertIsInstance(self, obj, cls, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertIsInstance(obj, cls, msg=msg)
 
     def assertNotIsInstance(self, obj, cls, msg=None):
-        self.assert_counter += 1
+        MainTest.assert_counter += 1
         return super(MainTest, self).assertNotIsInstance(obj, cls, msg=msg)
 
     # ----------------------------
@@ -978,7 +991,8 @@ class MainTest(test_common.TransactionCase):
         )
 
     def set_datadir(self, data_dir=None, merge="local", raise_if_not_found=True):
-        def get_default_data_dir():
+
+        def _get_default_data_dir16():
             for data_dir in (
                 get_module_resource(self.module.name, "tests", "data"),
                 get_module_resource(self.module.name, "data"),
@@ -987,6 +1001,22 @@ class MainTest(test_common.TransactionCase):
                 if data_dir and os.path.isdir(data_dir):
                     return data_dir
             return None
+
+        def _get_default_data_dir17():
+            module_root = file_path(self.module.name)
+            for data_dir in (
+                os.path.join(module_root, "tests", "data"),
+                os.path.join(module_root, "data"),
+                os.path.join(module_root, "tests"),
+            ):
+                if data_dir and os.path.isdir(data_dir):
+                    return data_dir
+            return None
+
+        def get_default_data_dir():
+            if self.odoo_major_version < 17:
+                return _get_default_data_dir16()
+            return _get_default_data_dir17()
 
         if merge not in ("local", "zerobug"):  # pragma: no cover
             self.raise_error("Invalid value %s ('zerobug' or 'local')" % merge)
@@ -2750,6 +2780,18 @@ class MainTest(test_common.TransactionCase):
         self.set_datadir(merge=merge)
         if not data and merge == "local":
             data = {k: {} for k in self.z0bug_lib.get_test_xrefs(resource)}
+        # Deep copy: "data" is the caller's module-level TEST_<MODEL> dict, held
+        # by reference (declare_all_data() reads it straight out of the calling
+        # frame's globals). cast_types(), called a few lines below via
+        # store_resource_data(), resolves xref strings (many2one, dates, ...)
+        # and rewrites them into the values dict IN PLACE. Without this copy,
+        # the very first setup_env() call would permanently bake resolved
+        # database ids into the shared TEST_<MODEL> globals; every later
+        # setup_env() call (a fresh setUp() on a fresh transaction, as with
+        # independent test_* methods) would then reuse those stale ids instead
+        # of re-resolving the xrefs against its own transaction, and fail with
+        # a foreign key violation once the original transaction is rolled back.
+        data = copy.deepcopy(data)
         data = self.unicodes(data)
         for xref in list(sorted(data.keys())):
             if merge in ("local", "zerobug"):
@@ -3075,7 +3117,7 @@ class MainTest(test_common.TransactionCase):
         setup_list = setup_list or self.get_resource_list(group=group)
         if not self.title_logged:
             self._logger.info(
-                "🎺🎺🎺 Starting test v2.0.24 (debug_level=%s, commit=%s)"
+                "🎺🎺🎺 Starting test v2.0.26 (debug_level=%s, commit=%s)"
                 % (self.debug_level, getattr(self, "odoo_commit_test", False))
             )
             self._logger.info(
