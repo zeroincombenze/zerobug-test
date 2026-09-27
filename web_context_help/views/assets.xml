@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Zeroincombenze srls <https://www.zeroincombenze.it>
+     License LGPL-3.0-or-later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+
+    <template id="assets_backend" name="web_context_help assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/less"
+                href="/web_context_help/static/src/v10/context_help.less"/>
+            <script type="text/javascript"
+                src="/web_context_help/static/src/v10/context_help.js"/>
+        </xpath>
+    </template>
+
+</odoo>

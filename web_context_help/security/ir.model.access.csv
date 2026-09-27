@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_context_help_page_user,context.help.page user,model_context_help_page,base.group_user,1,0,0,0
+access_context_help_page_admin,context.help.page admin,model_context_help_page,base.group_system,1,1,1,1
+access_context_help_section_user,context.help.section user,model_context_help_section,base.group_user,1,0,0,0
+access_context_help_section_admin,context.help.section admin,model_context_help_section,base.group_system,1,1,1,1
+access_context_help_source_admin,context.help.source admin,model_context_help_source,base.group_system,1,1,1,1
+access_context_help_question_admin,context.help.question admin,model_context_help_question,base.group_system,1,1,1,1
