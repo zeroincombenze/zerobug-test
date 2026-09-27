@@ -21,6 +21,7 @@ develop-eggs/
 dist/
 eggs/
 lib/
+!web_context_help/lib/
 lib64/
 parts/
 sdist/

@@ -168,6 +168,13 @@ class ContextHelpPage(models.Model):
         return self._wch_best_lang(pages, lang) if pages else pages
 
     @api.model
+    def _wch_with_lang(self, lang):
+        """Self in lang when installed: Odoo 17+ rejects any other code"""
+        if lang in dict(self.env["res.lang"].get_installed()):
+            return self.with_context(lang=lang)
+        return self
+
+    @api.model
     def fields_help(self, model):
         """[(name, string, help)] of the fields of model having a help"""
         if model not in self.env:
@@ -332,7 +339,7 @@ class ContextHelpPage(models.Model):
                     help_dir,
                     group,
                     lang,
-                    fields_help=self.with_context(lang=lang).fields_help,
+                    fields_help=self._wch_with_lang(lang).fields_help,
                 )
             except Exception as e:
                 _logger.warning("web_context_help: %s not parsed: %s", path, e)
@@ -388,7 +395,7 @@ class ContextHelpPage(models.Model):
                     item["help_dir"],
                     group,
                     item["lang"],
-                    self.with_context(lang=item["lang"]).fields_help,
+                    self._wch_with_lang(item["lang"]).fields_help,
                 )
                 if not ok:
                     _logger.warning(

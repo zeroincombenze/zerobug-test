@@ -129,8 +129,8 @@ msgstr "Raggruppa per"
 
 #. module: web_context_help
 #. odoo-javascript
-#: code:addons/web_context_help/static/src/v16_20/control_panel.xml:0
-#: code:addons/web_context_help/static/src/v16_20/control_panel.xml:0
+#: code:addons/web_context_help/static/src/v10/control_panel.xml:0
+#: code:addons/web_context_help/static/src/v10/control_panel.xml:0
 #, python-format
 msgid "Help"
 msgstr "Aiuto"
