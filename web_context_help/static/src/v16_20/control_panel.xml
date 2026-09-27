@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2026 Zeroincombenze srls <https://www.zeroincombenze.it>
+     License LGPL-3.0-or-later (https://www.gnu.org/licenses/lgpl).
+     VERSION-DEPENDENT: Odoo 16-20 adapter. -->
+<templates xml:space="preserve">
+    <t t-name="web_context_help.Button" owl="1">
+        <button type="button" class="btn btn-link o_wch_button"
+            title="Help" aria-label="Help" data-hotkey="shift+h"
+            t-on-click="onContextHelpClick">
+            <i class="fa fa-life-ring text-danger"/>
+        </button>
+    </t>
+    <t t-inherit="web.ControlPanel.Regular" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_cp_top_right')]" position="inside">
+            <t t-call="web_context_help.Button"/>
+        </xpath>
+    </t>
+    <t t-inherit="web.ControlPanel.Small" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_cp_top')]" position="inside">
+            <t t-call="web_context_help.Button"/>
+        </xpath>
+    </t>
+    <t t-inherit="web.FormControlPanel" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_cp_bottom_right')]" position="inside">
+            <t t-call="web_context_help.Button"/>
+        </xpath>
+    </t>
+</templates>

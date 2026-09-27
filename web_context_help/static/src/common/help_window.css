@@ -1,0 +1,56 @@
+/* Copyright 2026 Zeroincombenze srls <https://www.zeroincombenze.it>
+ * License LGPL-3.0-or-later (https://www.gnu.org/licenses/lgpl). */
+:root {
+    --wch-bg: #ffffff;
+    --wch-fg: #212529;
+    --wch-muted: #6c757d;
+    --wch-accent: #714b67;
+    --wch-panel: #f5f5f7;
+    --wch-border: #dee2e6;
+    --wch-warn: #fff3cd;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --wch-bg: #1e1e24;
+        --wch-fg: #e4e4e7;
+        --wch-muted: #a1a1aa;
+        --wch-accent: #c29fbb;
+        --wch-panel: #2a2a31;
+        --wch-border: #3f3f46;
+        --wch-warn: #4a3f1a;
+    }
+}
+body.wch-body {
+    margin: 0;
+    background: var(--wch-bg);
+    color: var(--wch-fg);
+    font: 15px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.wch-header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 8px 16px;
+    background: var(--wch-panel);
+    border-bottom: 1px solid var(--wch-border);
+}
+.wch-follow { white-space: nowrap; font-size: 13px; color: var(--wch-muted); }
+.wch-ask { display: flex; flex: 1; gap: 6px; }
+.wch-ask input { flex: 1; min-width: 0; padding: 4px 8px; border: 1px solid var(--wch-border);
+    border-radius: 4px; background: var(--wch-bg); color: var(--wch-fg); }
+.wch-answers { padding: 0 16px; }
+.wch-answer { border-bottom: 1px solid var(--wch-border); padding: 8px 0; }
+.wch-answer p { margin: 4px 0 0; color: var(--wch-muted); font-size: 13px; }
+.wch-page, .wch-none { color: var(--wch-muted); }
+.wch-warning { margin: 12px 16px 0; padding: 8px 12px; background: var(--wch-warn); border-radius: 4px; }
+.wch-content { padding: 8px 16px 32px; max-width: 860px; }
+.wch-content a, .wch-answers a { color: var(--wch-accent); }
+a.wch-field, a.wch-tour { text-decoration: none; border-bottom: 1px dashed var(--wch-accent); }
+a.wch-tour::before { content: "▶ "; }
+.wch-question { margin: 8px 0; padding: 8px 12px; background: var(--wch-panel); border-radius: 4px; }
+.wch-question .wch-q { margin: 0; font-weight: 600; }
+.wch-question .wch-a > :last-child { margin-bottom: 0; }
+.wch-auto dt { font-weight: 600; margin-top: 8px; }
+.wch-auto dd { margin-left: 16px; color: var(--wch-muted); }

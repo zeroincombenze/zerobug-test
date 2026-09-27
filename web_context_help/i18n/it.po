@@ -1,0 +1,347 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_context_help
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-27 10:30+0000\n"
+"PO-Revision-Date: 2026-09-27 10:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_context_help
+#: model:ir.model.fields,help:web_context_help.field_context_help_page__key
+msgid "<module>.<name>"
+msgstr "<modulo>.<nome>"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__active
+msgid "Active"
+msgstr "Attivo"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__answer_page_id
+msgid "Answer Page"
+msgstr "Pagina di risposta"
+
+#. module: web_context_help
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_search
+msgid "Archived"
+msgstr "Archiviato"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_source__checksum
+msgid "Checksum"
+msgstr "Checksum"
+
+#. module: web_context_help
+#: model:ir.model.fields,help:web_context_help.field_context_help_page__view_xmlid
+msgid "Comma separated xmlids of the views this page explains"
+msgstr "Xmlid, separati da virgola, delle viste spiegate da questa pagina"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__html
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_form
+msgid "Content"
+msgstr "Contenuto"
+
+#. module: web_context_help
+#: model:ir.model.fields,help:web_context_help.field_context_help_page__edited
+msgid "Content was changed by an administrator"
+msgstr "Il contenuto è stato modificato da un amministratore"
+
+#. module: web_context_help
+#: model:ir.ui.menu,name:web_context_help.menu_context_help
+msgid "Context Help"
+msgstr "Aiuto contestuale"
+
+#. module: web_context_help
+#: model:ir.model,name:web_context_help.model_context_help_page
+msgid "Context help page"
+msgstr "Pagina di aiuto contestuale"
+
+#. module: web_context_help
+#: model:ir.model,name:web_context_help.model_context_help_question
+msgid "Context help question log"
+msgstr "Registro domande aiuto contestuale"
+
+#. module: web_context_help
+#: model:ir.model,name:web_context_help.model_context_help_section
+msgid "Context help section"
+msgstr "Sezione aiuto contestuale"
+
+#. module: web_context_help
+#: model:ir.model,name:web_context_help.model_context_help_source
+msgid "Context help source checksum"
+msgstr "Checksum sorgenti aiuto contestuale"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__create_uid
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__create_uid
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section__create_uid
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_source__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__create_date
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__create_date
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section__create_date
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_source__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: web_context_help
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_form
+msgid "Discard the changes made to this page?"
+msgstr "Scartare le modifiche fatte a questa pagina?"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__display_name
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__display_name
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section__display_name
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_source__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__edited
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_search
+msgid "Edited"
+msgstr "Modificata"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__found
+msgid "Found"
+msgstr "Trovata"
+
+#. module: web_context_help
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_search
+msgid "Group By"
+msgstr "Raggruppa per"
+
+#. module: web_context_help
+#. odoo-javascript
+#: code:addons/web_context_help/static/src/v16_20/control_panel.xml:0
+#: code:addons/web_context_help/static/src/v16_20/control_panel.xml:0
+#, python-format
+msgid "Help"
+msgstr "Aiuto"
+
+#. module: web_context_help
+#: model:ir.actions.act_window,name:web_context_help.action_context_help_page
+#: model:ir.ui.menu,name:web_context_help.menu_context_help_page
+msgid "Help Pages"
+msgstr "Pagine di aiuto"
+
+#. module: web_context_help
+#: model:ir.actions.act_window,name:web_context_help.action_context_help_question
+#: model:ir.ui.menu,name:web_context_help.menu_context_help_question
+msgid "Help Questions"
+msgstr "Domande di aiuto"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__id
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__id
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section__id
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_source__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_context_help
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_form
+msgid "Keep my version"
+msgstr "Mantieni la mia versione"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__key
+msgid "Key"
+msgstr "Chiave"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section__label
+msgid "Label"
+msgstr "Etichetta"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__lang
+msgid "Lang"
+msgstr "Lingua"
+
+#. module: web_context_help
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_search
+msgid "Language"
+msgstr "Lingua"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page____last_update
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question____last_update
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section____last_update
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_source____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__write_uid
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__write_uid
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section__write_uid
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_source__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__write_date
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__write_date
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section__write_date
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_source__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__model
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__model
+msgid "Model"
+msgstr "Modello"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__module
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_source__module
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_search
+msgid "Module"
+msgstr "Modulo"
+
+#. module: web_context_help
+#: model:ir.model.constraint,message:web_context_help.constraint_context_help_source_module_uniq
+msgid "Module must be unique"
+msgstr "Il modulo deve essere univoco"
+
+#. module: web_context_help
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_form
+msgid "Open"
+msgstr "Apri"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section__page_id
+msgid "Page"
+msgstr "Pagina"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__page_key
+msgid "Page Key"
+msgstr "Chiave pagina"
+
+#. module: web_context_help
+#: model:ir.model.constraint,message:web_context_help.constraint_context_help_page_key_lang_uniq
+msgid "Page key must be unique per language"
+msgstr "La chiave della pagina deve essere univoca per lingua"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__provider
+msgid "Provider"
+msgstr "Fornitore"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__question
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section__question
+msgid "Question"
+msgstr "Domanda"
+
+#. module: web_context_help
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_form
+msgid "Rebuild all pages"
+msgstr "Ricostruisci tutte le pagine"
+
+#. module: web_context_help
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_form
+msgid "Reset to source"
+msgstr "Ripristina la sorgente"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__section_ids
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_form
+msgid "Sections"
+msgstr "Sezioni"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section__sequence
+msgid "Sequence"
+msgstr "Sequenza"
+
+#. module: web_context_help
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_form
+msgid "Source"
+msgstr "Sorgente"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__source_changed
+msgid "Source Changed"
+msgstr "Sorgente cambiata"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__source_file
+msgid "Source File"
+msgstr "File sorgente"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__source_html
+msgid "Source Html"
+msgstr "HTML sorgente"
+
+#. module: web_context_help
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_search
+msgid "Source changed"
+msgstr "Sorgente cambiata"
+
+#. module: web_context_help
+#: model:ir.model.fields,help:web_context_help.field_context_help_page__source_changed
+msgid "Source changed after the content was edited by an administrator"
+msgstr ""
+"La sorgente è cambiata dopo la modifica del contenuto da parte di un "
+"amministratore"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section__text
+msgid "Text"
+msgstr "Testo"
+
+#. module: web_context_help
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_page_form
+msgid ""
+"The source of this page changed after it was edited:\n"
+"                        reset to source or keep your version."
+msgstr ""
+"La sorgente di questa pagina è cambiata dopo la modifica:\n"
+"                        ripristinare la sorgente o mantenere la propria versione."
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__name
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_section__title
+msgid "Title"
+msgstr "Titolo"
+
+#. module: web_context_help
+#: model_terms:ir.ui.view,arch_db:web_context_help.context_help_question_search
+msgid "Unanswered"
+msgstr "Senza risposta"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_question__user_id
+msgid "User"
+msgstr "Utente"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__view_type
+msgid "View Type"
+msgstr "Tipo vista"
+
+#. module: web_context_help
+#: model:ir.model.fields,field_description:web_context_help.field_context_help_page__view_xmlid
+msgid "Views"
+msgstr "Viste"
