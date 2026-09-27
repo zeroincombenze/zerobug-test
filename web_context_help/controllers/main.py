@@ -51,10 +51,10 @@ class ContextHelp(http.Controller):
         lang = self._lang(lang)
         if model not in request.env:
             raise NotFound()
-        Page = request.env["context.help.page"].with_context(lang=lang)
+        Page = request.env["context.help.page"]._wch_with_lang(lang)
         title = (
             request.env["ir.model"]
-            .with_context(lang=lang)
+            .with_env(Page.env)
             .search([("model", "=", model)], limit=1)
             .name
         )

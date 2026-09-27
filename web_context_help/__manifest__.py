@@ -9,7 +9,7 @@
 #
 {
     "name": "Context help",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "category": "Hidden/Tools",
     "summary": "Context help button, pages written in RST by each module",
     "author": "Zeroincombenze srls",
@@ -24,10 +24,10 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "web_context_help/static/src/v16_20/context_help_service.js",
-            "web_context_help/static/src/v16_20/control_panel.js",
-            "web_context_help/static/src/v16_20/control_panel.xml",
-            "web_context_help/static/src/v16_20/context_help.scss",
+            "web_context_help/static/src/v16/context_help_service.js",
+            "web_context_help/static/src/v16/control_panel.js",
+            "web_context_help/static/src/v16/control_panel.xml",
+            "web_context_help/static/src/v16/context_help.scss",
         ],
     },
     "maintainer": "Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>",

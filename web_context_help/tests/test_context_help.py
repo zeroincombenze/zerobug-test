@@ -172,14 +172,20 @@ class TestContextHelpHttp(common.HttpCase):
             "/web_context_help/lookup",
             {"model": "context.help.page", "view_type": "form", "view_id": view.id},
         )
-        self.assertIn("/web_context_help/page/web_context_help.context_help_page", res["url"])
+        self.assertIn(
+            "/web_context_help/page/web_context_help.context_help_page", res["url"]
+        )
         res = self.url_open(res["url"])
         self.assertEqual(res.status_code, 200)
         self.assertIn("help_window.js", res.text)
         res = self._json("/web_context_help/lookup", {"model": "res.country"})
         self.assertIn("/web_context_help/auto/res.country", res["url"])
         self.assertEqual(self.url_open(res["url"]).status_code, 200)
-        self.assertEqual(self.url_open("/web_context_help/page/no.page").status_code, 404)
-        self.assertEqual(self.url_open("/web_context_help/auto/no.model").status_code, 404)
+        self.assertEqual(
+            self.url_open("/web_context_help/page/no.page").status_code, 404
+        )
+        self.assertEqual(
+            self.url_open("/web_context_help/auto/no.model").status_code, 404
+        )
         res = self._json("/web_context_help/ask", {"question": "rebuilt checksum"})
         self.assertTrue(res["results"])

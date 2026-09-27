@@ -120,8 +120,12 @@ class ContextHelpPage(models.Model):
     def _wch_view_xmlid(self, view_id):
         if not view_id:
             return False
-        data = self.env["ir.model.data"].sudo().search(
-            [("model", "=", "ir.ui.view"), ("res_id", "=", int(view_id))], limit=1
+        data = (
+            self.env["ir.model.data"]
+            .sudo()
+            .search(
+                [("model", "=", "ir.ui.view"), ("res_id", "=", int(view_id))], limit=1
+            )
         )
         return "%s.%s" % (data.module, data.name) if data else False
 
@@ -161,6 +165,13 @@ class ContextHelpPage(models.Model):
         lang = lang or self.env.context.get("lang") or rst_help.DEFAULT_LANG
         pages = self.search([("key", "=", key)])
         return self._wch_best_lang(pages, lang) if pages else pages
+
+    @api.model
+    def _wch_with_lang(self, lang):
+        """Self in lang when installed: Odoo 17+ rejects any other code"""
+        if lang in dict(self.env["res.lang"].get_installed()):
+            return self.with_context(lang=lang)
+        return self
 
     @api.model
     def fields_help(self, model):
@@ -213,14 +224,21 @@ class ContextHelpPage(models.Model):
         words = set(w.lower() for w in RE_WORD.findall(question))
         if not words:
             return []
-        lang = context.get("lang") or self.env.context.get("lang") or rst_help.DEFAULT_LANG
-        domain = [("page_id.active", "=", True), ("page_id.lang", "in", (lang, rst_help.DEFAULT_LANG))]
+        lang = (
+            context.get("lang") or self.env.context.get("lang") or rst_help.DEFAULT_LANG
+        )
+        domain = [
+            ("page_id.active", "=", True),
+            ("page_id.lang", "in", (lang, rst_help.DEFAULT_LANG)),
+        ]
         scored = []
         for section in self.env["context.help.section"].search(domain):
             title = (section.title or "").lower()
             text = (section.text or "").lower()
             score = sum(
-                3 * (w in title) + (w in text) + 2 * (w in (section.question or "").lower())
+                3 * (w in title)
+                + (w in text)
+                + 2 * (w in (section.question or "").lower())
                 for w in words
             )
             if context.get("model") and section.page_id.model == context["model"]:
@@ -241,7 +259,8 @@ class ContextHelpPage(models.Model):
                     "page_title": page.name,
                     "title": section.title,
                     "snippet": (section.text or "")[:300],
-                    "url": "%s#%s" % (self.page_url(page.key, page.lang), section.label),
+                    "url": "%s#%s"
+                    % (self.page_url(page.key, page.lang), section.label),
                     "score": score,
                 }
             )
@@ -327,7 +346,7 @@ class ContextHelpPage(models.Model):
                     help_dir,
                     group,
                     lang,
-                    fields_help=self.with_context(lang=lang).fields_help,
+                    fields_help=self._wch_with_lang(lang).fields_help,
                 )
             except Exception as e:
                 _logger.warning("web_context_help: %s not parsed: %s", path, e)
@@ -383,7 +402,7 @@ class ContextHelpPage(models.Model):
                     item["help_dir"],
                     group,
                     item["lang"],
-                    self.with_context(lang=item["lang"]).fields_help,
+                    self._wch_with_lang(item["lang"]).fields_help,
                 )
                 if not ok:
                     _logger.warning(
@@ -455,4 +474,3 @@ class ContextHelpQuestion(models.Model):
     found = fields.Boolean()
     provider = fields.Char()
     answer_page_id = fields.Many2one("context.help.page", ondelete="set null")
-

@@ -130,7 +130,9 @@ class TestRstHelp(common.BaseCase):
         self.assertEqual(len(inherit), 1)
         self.assertEqual(inherit[0]["target"], "a.partner")
         cases = {
-            "after": lambda h: h.index("Usage") < h.index("extra text") < h.index("Other"),
+            "after": lambda h: h.index("Usage")
+            < h.index("extra text")
+            < h.index("Other"),
             "before": lambda h: h.index("extra text") < h.index("Usage"),
             "replace": lambda h: "extra text" in h and "Fill" not in h,
             "remove": lambda h: "Fill" not in h and "extra text" not in h,
@@ -149,7 +151,11 @@ class TestRstHelp(common.BaseCase):
         doc = self._parse()
         self.assertFalse(
             rst_help.apply_inherit(
-                doc, dict(inherit[0], section="nothing"), self.help_dir, "v16_20", "en_US"
+                doc,
+                dict(inherit[0], section="nothing"),
+                self.help_dir,
+                "v16_20",
+                "en_US",
             )
         )
         rst_help.apply_inherit(
@@ -176,6 +182,8 @@ class TestRstHelp(common.BaseCase):
         self.assertNotIn("<button", body)
         self.assertEqual(html_page.ASK_ENABLED, "wch_ask" in body)
         self.assertRegex(body, r"help_window\.css\?v=[0-9]+")
-        body = html_page.render_auto("P", [("name", "Name", "a<b")], model="res.partner")
+        body = html_page.render_auto(
+            "P", [("name", "Name", "a<b")], model="res.partner"
+        )
         self.assertIn('data-field="name"', body)
         self.assertIn("a&lt;b", body)
