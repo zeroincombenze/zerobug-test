@@ -1,0 +1,230 @@
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <p align="center">
+                <img src="l10n_uk.png" alt="English" style="width:28px;height:16px;"/>
+                <img src="l10n_us.png" alt="English" style="width:28px;height:16px;"/>
+            </p>
+            <h2 class="oe_slogan" style="color:#162832;">Context help button, pages written in RST by each module</h2>
+        </div>
+        <div class="oe_span6">
+            <p align="center">
+                <img src="l10n_it.png" alt="Italiano" style="width:28px;height:16px;"/>
+            </p>
+            <h2 class="oe_slogan" style="color:#162832;">Pulsante di aiuto contestuale, pagine scritte in RST da ogni modulo</h2>
+        </div>
+        <div class="oe_demo oe_screenshot">
+            Unknown description_img
+        </div>
+    </div>
+</section>
+
+<section>
+    <div>
+        <div class="oe_span6">
+            <p align="center">
+                <img src="l10n_uk.png" alt="English" style="width:28px;height:16px;"/>
+                <img src="l10n_us.png" alt="English" style="width:28px;height:16px;"/>
+            </p>
+            <p class="oe_mt16" align="justify">Adds a |sos| button to the control panel of every view: it opens the help of the
+current view in a separate window, so the Odoo tab stays usable.
+<p align="justify">
+<ul>
+<li>Help pages are written in RST by each module, in its <code>help/</code> directory</li>
+<li>The help window follows the navigation (<i>Follow Odoo</i>), highlights the fields
+  named by the page and can start a guided tour</li>
+<li>Questions are answered by a full-text search over the help sections; every
+  question is logged for the administrator</li>
+<li>Administrators can edit a page; the edited version survives the upgrades and
+  a warning appears when the original source changes</li>
+<li>Views without a page get an automatic page built from the fields help</li>
+</ul>
+</p><p align="justify">
+</p>
+.. |sos| unicode:: U+1F6DF</p>
+        </div>
+        <div class="oe_span6">
+            <p align="center">
+                <img src="l10n_it.png" alt="Italiano" style="width:28px;height:16px;"/>
+            </p>
+            <p class="oe_mt16" align="justify">Aggiunge un pulsante |sos| al pannello di controllo di ogni vista: apre l'aiuto
+della vista corrente in una finestra separata, cos&#236; la scheda di Odoo resta
+utilizzabile.
+<p align="justify">
+<ul>
+<li>Le pagine di aiuto sono scritte in RST da ogni modulo, nella cartella <code>help/</code></li>
+<li>La finestra di aiuto segue la navigazione (<i>Segui Odoo</i>), evidenzia i campi
+  citati dalla pagina e pu&#242; avviare un tour guidato</li>
+<li>Le domande hanno risposta da una ricerca testuale nelle sezioni di aiuto;
+  ogni domanda &#232; registrata per l'amministratore</li>
+<li>Gli amministratori possono modificare una pagina; la versione modificata
+  sopravvive agli aggiornamenti e un avviso compare quando cambia la sorgente</li>
+<li>Le viste senza pagina ricevono una pagina automatica costruita dall'aiuto dei campi</li>
+</ul>
+</p><p align="justify">
+</p>
+.. |sos| unicode:: U+1F6DF</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="oe_row oe_spaced">
+        <h3 align="center" style="color:#162832;font-size: 26px;font-weight: 300;">Configuration | Configurazione</h3>
+        <div class="oe_span6">
+            <p align="center">
+                <img src="l10n_uk.png" alt="English" style="width:28px;height:16px;"/>
+                <img src="l10n_us.png" alt="English" style="width:28px;height:16px;"/>
+            </p>
+            <p class="oe_mt16" align="justify">No configuration is needed. Pages are rebuilt at server start when a help
+source changes; the administrator can force it with <b>Rebuild all pages</b> in
+<i>Settings &gt; Technical &gt; Context Help &gt; Help Pages</i>.</p>
+        </div>
+        <div class="oe_span6">
+            <p align="center">
+                <img src="l10n_it.png" alt="Italiano" style="width:28px;height:16px;"/>
+            </p>
+            <p class="oe_mt16" align="justify">Non serve configurazione. Le pagine sono ricostruite all'avvio del server
+quando cambia una sorgente di aiuto; l'amministratore pu&#242; forzarlo con
+<b>Ricostruisci tutte le pagine</b> in <i>Impostazioni &gt; Tecnico &gt; Aiuto contestuale &gt; Pagine di aiuto</i>.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="oe_row oe_spaced">
+        <h3 align="center" style="color:#162832;font-size: 26px;font-weight: 300;">Usage | Utilizzo</h3>
+        <div class="oe_span6">
+            <p align="center">
+                <img src="l10n_uk.png" alt="English" style="width:28px;height:16px;"/>
+                <img src="l10n_us.png" alt="English" style="width:28px;height:16px;"/>
+            </p>
+            <p class="oe_mt16" align="justify">Press the |sos| button in the control panel. Pages are looked up by view xmlid,
+then by model and view type, then by model; otherwise an automatic page lists
+the fields help.
+<p align="justify">
+Writing help for a module: put RST files in <code>help/common/</code> or in the
+directory of a group of Odoo versions (<code>help/v10</code>, <code>help/v11_14</code>,
+<code>help/v15</code>, <code>help/v16_20</code>); a group file overrides the common one with the
+same name. Italian twins are named <code>page.it_IT.rst</code>.
+</p><p align="justify">
+
+<code>
+    .. help-page:: partner
+       :title: Partners
+       :model: res.partner
+       :view: base.view_partner_form
+       :view-type: form
+</code>
+</p><p align="justify">
+    .. help-include:: common_part.rst
+</p><p align="justify">
+    .. help-inherit:: other_module.partner
+       :section: usage
+       :position: after
+</p><p align="justify">
+       RST added after the section labelled "usage"
+</p><p align="justify">
+    .. help-question:: How do I add a tag?
+</p><p align="justify">
+       Use the :field:`Tags &lt;category_id&gt;` field.
+</p><p align="justify">
+    .. help-question::
+       :auto:
+</p><p align="justify">
+<code>:position:</code> is one of <code>before</code>, <code>after</code>, <code>replace</code>, <code>remove</code>.
+<code>:auto:</code> builds the questions from the fields help of the page model.
+Roles <code>:field:</code> and <code>:tour:</code> highlight a field or run a tour in the Odoo tab.
+</p><p align="justify">
+</p>
+.. |sos| unicode:: U+1F6DF</p>
+        </div>
+        <div class="oe_span6">
+            <p align="center">
+                <img src="l10n_it.png" alt="Italiano" style="width:28px;height:16px;"/>
+            </p>
+            <p class="oe_mt16" align="justify">Premere il pulsante |sos| del pannello di controllo. La pagina &#232; cercata per
+xmlid della vista, poi per modello e tipo vista, poi per modello; altrimenti
+una pagina automatica elenca l'aiuto dei campi.
+<p align="justify">
+Scrivere l'aiuto di un modulo: mettere i file RST in <code>help/common/</code> o nella
+cartella di un gruppo di versioni Odoo (<code>help/v10</code>, <code>help/v11_14</code>,
+<code>help/v15</code>, <code>help/v16_20</code>); il file del gruppo prevale su quello comune con
+lo stesso nome. I gemelli italiani si chiamano <code>pagina.it_IT.rst</code>.
+</p><p align="justify">
+
+<code>
+    .. help-page:: partner
+       :title: Partner
+       :model: res.partner
+       :view: base.view_partner_form
+       :view-type: form
+</code>
+</p><p align="justify">
+    .. help-include:: parte_comune.rst
+</p><p align="justify">
+    .. help-inherit:: altro_modulo.partner
+       :section: usage
+       :position: after
+</p><p align="justify">
+       RST aggiunto dopo la sezione con etichetta "usage"
+</p><p align="justify">
+    .. help-question:: Come aggiungo un'etichetta?
+</p><p align="justify">
+       Usare il campo :field:`Etichette &lt;category_id&gt;`.
+</p><p align="justify">
+    .. help-question::
+       :auto:
+</p><p align="justify">
+<code>:position:</code> vale <code>before</code>, <code>after</code>, <code>replace</code> o <code>remove</code>.
+<code>:auto:</code> costruisce le domande dall'aiuto dei campi del modello della pagina.
+I ruoli <code>:field:</code> e <code>:tour:</code> evidenziano un campo o avviano un tour nella scheda di Odoo.
+</p><p align="justify">
+</p>
+.. |sos| unicode:: U+1F6DF</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="oe_row oe_spaced">
+        <h3 align="center" style="color:#162832;font-size: 26px;font-weight: 300;">ChangeLog History | Cronologia modifiche</h3>
+        <div class="oe_span12">
+<h4>12.0.1.0.0 (2026-09-27)</h4>
+<p align="justify">
+<ul>
+<li>[NEW] Porting from 16.0: context help button, help pages built from the RST sources of each module</li>
+</ul>
+</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 align="center" style="color:#162832;font-size: 26px;font-weight: 300;">Credits | Ringraziamenti</h3>
+        <div class="oe_span6" align="left">
+            <p class="oe_mt16"><b>Authors | Autori:</b></p>
+            <p class="oe_mt16"><ul>
+<li>Zeroincombenze srls &lt;False&gt;</li>
+<li><a href="https://www.zeroincombenze.it">SHS-AV s.r.l.</a></li>
+</ul></p>
+        </div>
+        <div class="oe_span6" align="left">
+            <p class="oe_mt16"><b>Contributors | Partecipanti:</b></p>
+            <p class="oe_mt16"><ul>
+<li><a href="mailto:antoniomaria.vigliotti@gmail.com">Antonio Maria Vigliotti</a></li>
+</ul></p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <p>This module is maintained by the <b><a href="https://www.shs-av.com">SHS_AV s.r.l.</a></b>.</p>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <p>This module is part of <a href="https://github.com/zeroincombenze/zerobug-test">zerobug-test</a> project.</p>
+        <p>Published information on | Informazioni pubblicate: 2026-09-27</p>
+    </div>
+</section>

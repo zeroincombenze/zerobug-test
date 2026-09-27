@@ -118,3 +118,6 @@ stdout.log
 #
 # tools building path
 !static/lib/
+
+# lib/ above is the packaging directory, not the lib package of an addon
+!web_context_help/lib/

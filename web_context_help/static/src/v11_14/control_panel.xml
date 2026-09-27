@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2026 Zeroincombenze srls <https://www.zeroincombenze.it>
+     License LGPL-3.0-or-later (https://www.gnu.org/licenses/lgpl).
+     VERSION-DEPENDENT: Odoo 11-14 adapter. -->
+<templates xml:space="preserve">
+    <t t-name="web_context_help.Button">
+        <button type="button" class="btn btn-link o_wch_button"
+            title="Help" aria-label="Help" accesskey="h">
+            <i class="fa fa-life-ring text-danger"/>
+        </button>
+    </t>
+</templates>
